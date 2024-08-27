@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px; /* Altura do header ajustada */
+    width: 1560px; /* Largura do header ajustada */
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu superior */
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centraliza a logo horizontalmente no espaço destinado */
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px; /* Altura da logo ajustada */
+    max-width: 300px;  /* Largura da logo ajustada */
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;  /* Largura da barra de pesquisa ajustada */
+    height: 15px;  /* Altura da barra de pesquisa ajustada */
+    padding: 8px;
+    border-radius: 9.75px; /* Cantos arredondados com 9.75px */
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Alinha os links no canto direito */
+    gap: 15px; /* Espaçamento entre os links */
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu */
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 100px;
+    margin-top: 500px; /* Aumenta o espaço acima do conteúdo para 100px */
+}
+
+#corpo {
+    max-width: 100%; /* Ajusta conforme necessário */
+    text-align: center;
+    margin-top: 90px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color:  rgba(0, 0, 0, 0.6);;
+}
+#input{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+#nome-sobrenome{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    margin-left: 580px;
+    padding-top: 30px;
+    
+}
+
+#email-senha{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-left: 580px;
+  width: 375px;
+  padding-top: 30px;
+}
+
+#button{
+    background-color: #00DB09;
+    width: 300px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 25px;
+} 
