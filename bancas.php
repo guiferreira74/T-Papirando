@@ -9,7 +9,7 @@
 <body>
     <header class="header-prc">
         <a href="topapirando.php">
-            <img class="logo" src="logo.svg" alt="topapirando">
+            <<a href="inicio.php"><img class="logo" src="Logo.svg" alt="topapirando"></a>
         </a>
         <div class="search-bar">
             <input type="text" placeholder="Digite seu texto aqui">  
@@ -17,11 +17,11 @@
         <div class="links">
             <a href="">Sobre</a>
             <a href="">Ajuda</a>
-            <a href="">Entrar</a>
+            <a href="cadastro.php">Entrar</a>
         </div>
     </header>
     <div class="menu">
-        <a href="topapirando.php">Inicio</a>
+        <a href="inicio.php">Inicio</a>
         <a href="">Simulados</a>
         <a href="">Bancas</a> 
         <a href="">Desempenho</a>

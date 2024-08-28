@@ -9,7 +9,7 @@ body {
     padding: 10px;
     height: 85px; /* Altura do header ajustada */
     width: 100%; /* Largura do header ajustada */
-    background-color: 
+    background-color: #2118CD;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu superior */
     box-sizing: border-box;
     justify-content: space-around;
@@ -139,21 +139,3 @@ body {
     
     .esquerda { grid-area: 1 / 1 / 2 / 2; }
     .direita { grid-area: 1 / 2 / 2 / 3; }
-    #input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza os itens horizontalmente dentro do contêiner */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#button {
-    background-color: #00DB09;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px; /* Ajuste o padding conforme necessário */
-    margin-top: 25px;
-    text-align: center; /* Centraliza o texto do botão */
-}

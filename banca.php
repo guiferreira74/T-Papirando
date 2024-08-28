@@ -1,210 +1,187 @@
-<?php
-
-// Conexão com o banco de dados
-$servername = "localhost";  // Servidor
-$username = "root";         // Usuário do banco de dados
-$password = "admin";        // Senha do banco de dados
-$dbname = "topapirando";    // Nome do banco de dados
-
-// Cria a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verifica se há erros na conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
-
-// Variável para controle da exibição da tabela
-$showTable = false;
-
-// Verifica se o formulário de inserção foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['acao']) && $_POST['acao'] == 'inserir') {
-        $nome_banca = $_POST['nome_banca'];
-        $link_banca = $_POST['link_banca'];
-        
-        // Validação básica
-        if (!empty($nome_banca) && !empty($link_banca)) {
-            // Insere a nova banca na tabela banca
-            $sql = "INSERT INTO banca (nome, link) VALUES ('$nome_banca', '$link_banca')";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "Banca inserida com sucesso!";
-            } else {
-                echo "Erro: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Por favor, preencha todos os campos.";
-        }
-    } elseif (isset($_POST['acao']) && $_POST['acao'] == 'alterar') {
-        $cod_banca = $_POST['cod_banca'];
-        $nome_banca = $_POST['nome_banca'];
-        $link_banca = $_POST['link_banca'];
-        
-        // Validação básica
-        if (!empty($nome_banca) && !empty($link_banca) && !empty($cod_banca)) {
-            // Atualiza a banca na tabela banca
-            $sql = "UPDATE banca SET nome='$nome_banca', link='$link_banca' WHERE cod_banca='$cod_banca'";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "Banca alterada com sucesso!";
-            } else {
-                echo "Erro: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Por favor, insira todos os campos.";
-        }
-    } elseif (isset($_POST['acao']) && $_POST['acao'] == 'excluir') {
-        $cod_banca = $_POST['cod_banca'];
-        
-        // Validação básica
-        if (!empty($cod_banca)) {
-            // Exclui a banca da tabela banca
-            $sql = "DELETE FROM banca WHERE cod_banca='$cod_banca'";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "Banca excluída com sucesso!";
-            } else {
-                echo "Erro: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Por favor, selecione uma banca para excluir.";
-        }
-    } elseif (isset($_POST['acao']) && $_POST['acao'] == 'consultar') {
-        $showTable = true;
-    }
-}
-
-// Consulta todas as bancas
-$sql = "SELECT cod_banca, nome, link FROM banca";
-$result = $conn->query($sql);
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro da Banca</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>Gerenciar Bancas</title>
+    <link rel="stylesheet" href="banca.css">
+    
+        
+    
 </head>
 <body>
-    <h2>Cadastro da Banca</h2>
-    
-    <!-- Formulário para inserir novas bancas -->
-    <form action="banca.php" method="POST">
-        <input type="hidden" name="acao" value="inserir">
-        <label for="nome_banca">Nome da Banca:</label>
-        <input type="text" name="nome_banca" id="nome_banca" required>
-        <label for="link_banca">Link da Banca:</label>
-        <input type="text" name="link_banca" id="link_banca" required>
-        
-        <button type="submit">Salvar Banca</button>
-    </form>
+    <header class="header-prc">
+        <a href="topapirando.php">
+            <img class="logo" src="logo.svg" alt="topapirando">
+        </a>
+        <div class="search-bar">
+            <input type="text" placeholder="Digite seu texto aqui">
+        </div>
+        <div class="links">
+            <a href="">Sobre</a>
+            <a href="">Ajuda</a>
+            <a href="">Entrar</a>
+        </div>
+    </header>
+    <div class="menu">
+        <a href="">Inicio</a>
+        <a href="">Simulados</a>
+        <a href="banca.html">Bancas</a>
+        <a href="">Desempenho</a>
+    </div>
 
-    <hr>
-    
-    <!-- Formulário para consultar bancas -->
-    <form action="banca.php" method="POST">
-        <input type="hidden" name="acao" value="consultar">
-        <button type="submit">Consultar Bancas</button>
-    </form>
-    
-    <hr>
-    
-    <!-- Formulário para consultar e alterar bancas -->
-    <form action="banca.php" method="POST">
-        <label for="cod_banca">Escolha uma Banca para Alterar:</label>
-        <select name="cod_banca" id="cod_banca" required>
-            <option value="">Selecione uma banca</option>
+    <div id="main-container">
+        <div id="corpo">
+            <h1>Gerenciar Bancas</h1>
+
             <?php
-            if ($result->num_rows > 0) {
-                // Reposiciona o ponteiro do resultado para o início
-                $result->data_seek(0);
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["cod_banca"] . "'>" . $row["nome"] . "</option>";
+            // Conexão com o banco de dados
+            $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+
+            if ($conn->connect_error) {
+                die("Conexão falhou: " . $conn->connect_error);
+            }
+
+            $error_message = '';
+            $success_message = '';
+
+            // Inserir ou atualizar registro
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nome = $_POST['nome'];
+                $link = $_POST['link'];
+                $cod_banca = $_POST['cod_banca'] ?? null;
+
+                // Verificar se o nome e o link já estão registrados
+                $check_sql = "SELECT * FROM banca WHERE nome='$nome' AND link='$link'";
+                if ($cod_banca) {
+                    $check_sql .= " AND cod_banca != $cod_banca";
+                }
+                $check_result = $conn->query($check_sql);
+
+                if ($check_result->num_rows > 0) {
+                    $error_message = "Erro: banca e link já registrados";
+                } else {
+                    if ($cod_banca) {
+                        // Atualizar registro
+                        $sql = "UPDATE banca SET nome='$nome', link='$link' WHERE cod_banca=$cod_banca";
+                    } else {
+                        // Inserir novo registro
+                        $sql = "INSERT INTO banca (nome, link) VALUES ('$nome', '$link')";
+                    }
+
+                    if ($conn->query($sql) === TRUE) {
+                        $success_message = "Registro salvo com sucesso!";
+                    } else {
+                        $error_message = "Erro: " . $conn->error;
+                    }
                 }
             }
-            ?>
-        </select>
 
-        <label for="nome_banca_alterar">Novo Nome da Banca:</label>
-        <input type="text" name="nome_banca" id="nome_banca_alterar" required>
-        <label for="link_banca_alterar">Novo Link da Banca:</label>
-        <input type="text" name="link_banca" id="link_banca_alterar" required>
-
-        <input type="hidden" name="acao" value="alterar">
-        
-        <button type="submit">Alterar Banca</button>
-    </form>
-    
-    <hr>
-    
-    <!-- Formulário para excluir bancas -->
-    <form action="banca.php" method="POST">
-        <label for="cod_banca_excluir">Escolha uma Banca para Excluir:</label>
-        <select name="cod_banca" id="cod_banca_excluir" required>
-            <option value="">Selecione uma banca</option>
-            <?php
-            // Reabre a conexão para consultar novamente as bancas
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            $sql = "SELECT cod_banca, nome FROM banca";
-            $result = $conn->query($sql);
-            
-            if ($result->num_rows > 0) {
-                // Reposiciona o ponteiro do resultado para o início
-                $result->data_seek(0);
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["cod_banca"] . "'>" . $row["nome"] . "</option>";
+            // Excluir registro
+            if (isset($_GET['delete'])) {
+                $cod_banca = $_GET['delete'];
+                $sql = "DELETE FROM banca WHERE cod_banca=$cod_banca";
+                if ($conn->query($sql) === TRUE) {
+                    $success_message = "Registro excluído com sucesso!";
+                } else {
+                    $error_message = "Erro: " . $conn->error;
                 }
             }
-            $conn->close();
-            ?>
-        </select>
 
-        <input type="hidden" name="acao" value="excluir">
-        
-        <button type="submit">Excluir Banca</button>
-    </form>
-    
-    <hr>
-    
-    <!-- Tabela para exibir as bancas existentes -->
-    <?php if ($showTable): ?>
-        <h3>Bancas Cadastradas</h3>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome da Banca</th>
-                    <th>Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Reabre a conexão para consultar as bancas
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                $sql = "SELECT cod_banca, nome, link FROM banca";
-                $result = $conn->query($sql);
-                
+            // Formulário para criar/atualizar registros
+            $cod_banca = $_GET['edit'] ?? null;
+            $nome = '';
+            $link = '';
+
+            if ($cod_banca) {
+                $result = $conn->query("SELECT * FROM banca WHERE cod_banca=$cod_banca");
                 if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $nome = $row['nome'];
+                    $link = $row['link'];
+                }
+            }
+            ?>
+
+            <?php if ($error_message): ?>
+                <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
+            <?php elseif ($success_message): ?>
+                <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
+            <?php endif; ?>
+
+            <form action="banca.php" method="POST">
+                <input type="hidden" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
+                <div id="input">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" title="Preencha o nome da banca" required>
+                    <label for="link">Link:</label>
+                    <input type="text" id="link" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" title="Preencha o link da banca" required>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="save-button">Salvar</button>
+                    <button type="reset" class="clear-button">Limpar</button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <?php
+                $result = $conn->query("SELECT * FROM banca");
+
+                if ($result->num_rows > 0) {
+                    echo "<table>";
+                    echo "<tr><th>Nome</th><th>Link</th><th>Ações</th></tr>";
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td>" . $row["cod_banca"] . "</td>";
-                        echo "<td>" . $row["nome"] . "</td>";
-                        echo "<td>" . $row["link"] . "</td>";
+                        echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['link']) . "</td>";
+                        echo "<td>";
+                        echo "<a class='edit-button' href='banca.php?edit=" . $row['cod_banca'] . "'>Editar</a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;'>Excluir</a>";
+                        echo "</td>";
                         echo "</tr>";
                     }
+                    echo "</table>";
                 } else {
-                    echo "<tr><td colspan='3'>Nenhuma banca encontrada.</td></tr>";
+                    echo "<p>Nenhum registro encontrado.</p>";
                 }
-                
+
                 $conn->close();
                 ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p>Você tem certeza que quer excluir?</p>
+            <button id="confirm-delete">Excluir</button>
+            <button onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("confirm-modal");
+        var confirmButton = document.getElementById("confirm-delete");
+
+        function openModal(deleteUrl) {
+            modal.style.display = "block";
+            confirmButton.onclick = function() {
+                window.location.href = deleteUrl;
+            };
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Fechar o modal se o usuário clicar fora do conteúdo
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
+    </script>
 </body>
 </html>

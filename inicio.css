@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px; /* Altura do header ajustada */
+    width: 100%; /* Largura do header ajustada */
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu superior */
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centraliza a logo horizontalmente no espaço destinado */
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px; /* Altura da logo ajustada */
+    max-width: 300px;  /* Largura da logo ajustada */
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;  /* Largura da barra de pesquisa ajustada */
+    height: 15px;  /* Altura da barra de pesquisa ajustada */
+    padding: 8px;
+    border-radius: 9.75px; /* Cantos arredondados com 9.75px */
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Alinha os links no canto direito */
+    gap: 15px; /* Espaçamento entre os links */
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu */
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.div1{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+#text1{
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+#mulher{
+    width: 400px;
+}
+
+.div2{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+}
+#button{
+    border: none;
+    background-color: #17B509;
+    width:610px ;
+    height:50px ;
+    color: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.div3{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px; /* Altura do header ajustada */
+    width: 100%; /* Largura do header ajustada */
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu superior */
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centraliza a logo horizontalmente no espaço destinado */
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px; /* Altura da logo ajustada */
+    max-width: 300px;  /* Largura da logo ajustada */
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;  /* Largura da barra de pesquisa ajustada */
+    height: 15px;  /* Altura da barra de pesquisa ajustada */
+    padding: 8px;
+    border-radius: 9.75px; /* Cantos arredondados com 9.75px */
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Alinha os links no canto direito */
+    gap: 15px; /* Espaçamento entre os links */
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu */
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.div1{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+#text1{
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+#mulher{
+    width: 400px;
+}
+
+.div2{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+}
+#button{
+    border: none;
+    background-color: #17B509;
+    width:610px ;
+    height:50px ;
+    color: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.div3{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+}
