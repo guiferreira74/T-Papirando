@@ -9,7 +9,7 @@ body {
     padding: 10px;
     height: 85px;
     width: 100%;
-    background-color: #2118CD;
+    background-color: #2118CD; /* Cor de fundo do cabeçalho */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     justify-content: space-around;
@@ -50,7 +50,7 @@ body {
 }
 
 .links a {
-    color: white;
+    color: white; /* Cor dos links no cabeçalho */
     text-decoration: none;
     font-weight: bold;
     padding-left: 49px;
@@ -171,7 +171,7 @@ a.edit-button, a.delete-button {
 }
 
 a.edit-button {
-    background-color: #2118CD;; 
+    background-color: #2118CD; /* Cor do botão Editar */
 }
 
 a.edit-button:hover {
@@ -179,7 +179,7 @@ a.edit-button:hover {
 }
 
 a.delete-button {
-    background-color: #f44336; 
+    background-color: #f44336; /* Cor do botão Excluir */
 }
 
 a.delete-button:hover {
@@ -205,7 +205,7 @@ a.delete-button:hover {
 
 .save-button,
 .clear-button {
-    background-color: #2118CD;
+    background-color: #2118CD; /* Cor de fundo dos botões */
     color: white;
     border: none;
     border-radius: 5px;
@@ -260,9 +260,39 @@ a.delete-button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
 .success-message {
-    color: #2118CD;
+    color: #2118CD; /* Cor da mensagem de sucesso */
 }
+
 .error-message {
     color: red;
+}
+
+/* Define a cor para o botão "Salvar" */
+.save-button {
+    background-color: #2118CD; /* Cor azul-dodger */
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #1817A1; /* Cor azul-céu profundo para hover */
+}
+
+/* Define a mesma cor para o botão "Consultar" */
+.consultar-button {
+    background-color: #2118CD; /* Cor azul-dodger */
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.consultar-button:hover {
+    background-color: #1817A1; /* Cor azul-céu profundo para hover */
 }

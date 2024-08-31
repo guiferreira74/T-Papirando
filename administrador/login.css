@@ -9,7 +9,7 @@ body {
     padding: 10px;
     height: 85px; /* Altura do header ajustada */
     width: 100%; /* Largura do header ajustada */
-    background-color: 
+    background-color: #2118CD;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu superior */
     box-sizing: border-box;
     justify-content: space-around;
@@ -70,65 +70,6 @@ body {
     font-weight: bold;
 }
 
-#main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 100px;
-    margin-top: 500px; /* Aumenta o espaço acima do conteúdo para 100px */
-}
-
-#corpo {
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 90px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    color:  rgba(0, 0, 0, 0.6);
-}
-#input{
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#nome-sobrenome{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    padding-top: 30px;
-    border: none;
-    
-}
-
-#email-senha{
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 375px;
-  padding-top: 30px;
-  border: none;
-  
-}
-
-#button{
-    background-color: #00DB09;
-    width: 300px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-top: 25px;
-}
-
 .grid-duplo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -139,21 +80,82 @@ body {
     
     .esquerda { grid-area: 1 / 1 / 2 / 2; }
     .direita { grid-area: 1 / 2 / 2 / 3; }
-    #input {
-    width: 100%;
+
+.esquerda{
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    align-items: center; /* Centraliza os itens horizontalmente dentro do contêiner */
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+    margin-top: 100px;
+    
+    
+} 
+
+.direita{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+
 }
 
-#button {
-    background-color: #00DB09;
+#button-esquerda{
+    width: 350px ;
+    height:50px ;
+    background-color: #2118CD;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 8px 16px; /* Ajuste o padding conforme necessário */
+    border-radius: 10px;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+#button-direita{
+    width: 350px ;
+    height:50px ;
+    background-color:#00DB09;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+#checar{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+#checa{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 15px;
+}
+
+#input-senha{
     margin-top: 25px;
-    text-align: center; /* Centraliza o texto do botão */
+    width: 400px ;
+    height: 35px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+    border-radius: 3px;
+
+}
+
+#input-email{
+    width: 400px;
+    height: 35px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+    border-radius: 3px;
+}
+
+#cadastro{
+    width: 100px ;
+}
+
+#login{
+    width: 100px ;
 }

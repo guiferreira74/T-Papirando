@@ -1,0 +1,268 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px;
+    max-width: 300px;
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 15px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
+    padding: 0 100px;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+}
+
+#corpo {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+#input {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#nome-sobrenome {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding-top: 30px;
+    border: none;
+}
+
+#email-senha {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 375px;
+    padding-top: 30px;
+    border: none;
+}
+
+#button {
+    background-color: #00DB09;
+    width: 300px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#button:hover {
+    background-color: #00b300;
+}
+
+.table-container {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+a.edit-button, a.delete-button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+a.edit-button {
+    background-color: #2118CD;
+}
+
+a.edit-button:hover {
+    background-color: #2118CD;
+}
+
+a.delete-button {
+    background-color: #f44336; 
+}
+
+a.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.grid-duplo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+}
+
+.esquerda { grid-area: 1 / 1 / 2 / 2; }
+.direita { grid-area: 1 / 2 / 2 / 3; }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.save-button,
+.clear-button {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.clear-button {
+    background-color: #f44336; /* Cor vermelha para o botão Limpar */
+}
+
+.save-button:hover,
+.clear-button:hover {
+    opacity: 0.8;
+}
+
+/* Modal */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.success-message {
+    color: #2118CD;
+}
+.error-message {
+    color: red;
+}

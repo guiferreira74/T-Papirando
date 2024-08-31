@@ -1,3 +1,5 @@
+@import url(bootstrap.css);
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -35,7 +37,7 @@ body {
 
 .search-bar input {
     width: 300px;  /* Largura da barra de pesquisa ajustada */
-    height: 15px;  /* Altura da barra de pesquisa ajustada */
+    height: 30px;  /* Altura da barra de pesquisa ajustada */
     padding: 8px;
     border-radius: 9.75px; /* Cantos arredondados com 9.75px */
     border: 1px solid #ccc;
@@ -218,3 +220,176 @@ body {
     justify-content: space-around;
     margin-top: 100px;
 }
+
+
+/* edson */
+
+/* header.header-bg{
+    background-color: var(--cor-primaria);
+    display: block;
+    width: 100%;
+    height: 100px;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.header-content{
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+/* .header-logo img{
+    width: 90px;
+    height: auto;
+} */
+
+
+/* NAVEGACAO */
+
+/* .header-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.header-nav .botao-nav{
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-left: 20px;
+    color: var(--cor-secundaria);
+}
+
+.header-nav a{
+    display: inline-block;
+    position: relative;
+}
+
+.header-nav a:after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 0px;
+    background: var(--cor-secundaria);
+    margin-top: 4px;
+    transition: 0.3s;
+    position: absolute;
+}
+
+.header-nav a:hover:after{
+    width: 100%;
+} */
+
+
+
+/* BOTÃO DE CONSULTA */
+
+/* .botao-consulta{
+    display: flex;
+    width: 340px;
+    justify-content: center;
+    background: var(--cor-secundaria);
+    color: var(--cor-primaria) !important;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    text-transform: uppercase;
+    align-items: center;
+}
+
+.botao-consulta i{
+    font-size: 1.4rem;
+    margin-right: 10px;
+}
+
+.botao-consulta span{
+    font-weight: 500;
+}
+
+.botao-consulta:hover{
+    background: #fff;
+}
+
+
+.botao-consulta-p{
+    margin-left: 40px;
+    display: flex;
+    justify-content: center;
+    background: var(--cor-secundaria);
+    color: var(--cor-primaria) !important;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: 0.3s;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    text-transform: uppercase;
+    align-items: center;
+}
+
+.botao-consulta-p i{
+    font-size: 1rem;
+}
+
+.botao-consulta-p span{
+    font-weight: 400;
+}
+
+.botao-consulta-p:hover{
+    background: #fff;
+}
+
+.linha{
+    color: rgba(0, 0, 0, 0.50);
+    height: 2px;
+    margin-bottom: 20px;
+} */
+
+
+/* introducao */
+
+/* .intro-bg{
+    display: flex;
+    align-items: start;
+    height: 100vh;
+    background-color: var(--cor-primaria);
+}
+
+.intro-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.intro-text{
+    width: 700px;
+}
+
+.intro-text h2{
+    color: var(--dark-grey);
+}
+
+.intro-img img{
+    object-fit: cover;
+    height: 550px;
+    width: auto;
+}
+
+
+@media (max-width: 1400px){
+    .intro-img img{
+        height: 400px;
+    }
+} */
+
+
+/* .reveal-txt, .reveal-img{
+    visibility: hidden;
+} */

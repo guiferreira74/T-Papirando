@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>topapirando</title>
+    <title>cadastro</title>
     <link rel="stylesheet" href="cadastro.css">
 </head>
 <body>
 
 <div id="conteudo-header">
     <header class="header-prc">
-        <a href="inicio.php"><img class="logo" src="Logo.svg" alt="topapirando"></a>
+        <a href="index.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
         <div class="search-bar">
             <input type="text" placeholder="Digite seu texto aqui">  
         </div>
         <div class="links">
             <a href="">Sobre</a>
             <a href="">Ajuda</a>
-            <a href="">Entrar</a>
+            <a href="login.php">Entrar</a>
         </div>
     </header>
     <div class="menu">
-        <a href="inicio.php">Inicio</a>
+        <a href="index.php">Inicio</a>
         <a href="">Simulados</a>
         <a href="bancas.php">Bancas</a>
         <a href="">Desempenho</a>
@@ -30,7 +30,7 @@
 
 <main id="main-conteiner">
     <div id="corpo">
-        <img id="img main" src="cadastro.svg" alt="">
+        <img id="img main" src="assets/login verde.svg" alt="">
 
         <h1>Criar minha conta!</h1>
         <h2>Informe seus dados abaixo para criar sua conta</h2>

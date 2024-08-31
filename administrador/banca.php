@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Níveis</title>
+    <title>Gerenciar Bancas</title>
     <link rel="stylesheet" href="banca.css">
+    
+        
+    
 </head>
 <body>
     <header class="header-prc">
         <a href="topapirando.php">
-            <img class="logo" src="logo.svg" alt="topapirando">
+            <img class="logo" src="assets/logo.svg" alt="topapirando">
         </a>
         <div class="search-bar">
             <input type="text" placeholder="Digite seu texto aqui">
@@ -23,13 +26,13 @@
     <div class="menu">
         <a href="">Inicio</a>
         <a href="">Simulados</a>
-        <a href="nivel.php">Níveis</a>
+        <a href="banca.html">Bancas</a>
         <a href="">Desempenho</a>
     </div>
 
     <div id="main-container">
         <div id="corpo">
-            <h1>Gerenciar Níveis</h1>
+            <h1>Gerenciar Bancas</h1>
 
             <?php
             // Conexão com o banco de dados
@@ -44,25 +47,26 @@
 
             // Inserir ou atualizar registro
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $tipo_nivel = $_POST['tipo_nivel'];
-                $cod_nivel = $_POST['cod_nivel'] ?? null;
+                $nome = $_POST['nome'];
+                $link = $_POST['link'];
+                $cod_banca = $_POST['cod_banca'] ?? null;
 
-                // Verificar se o tipo de nível já está registrado
-                $check_sql = "SELECT * FROM nivel WHERE tipo_nivel='$tipo_nivel'";
-                if ($cod_nivel) {
-                    $check_sql .= " AND cod_nivel != $cod_nivel";
+                // Verificar se o nome e o link já estão registrados
+                $check_sql = "SELECT * FROM banca WHERE nome='$nome' AND link='$link'";
+                if ($cod_banca) {
+                    $check_sql .= " AND cod_banca != $cod_banca";
                 }
                 $check_result = $conn->query($check_sql);
 
                 if ($check_result->num_rows > 0) {
-                    $error_message = "Erro: nível já registrado";
+                    $error_message = "Erro: banca e link já registrados";
                 } else {
-                    if ($cod_nivel) {
+                    if ($cod_banca) {
                         // Atualizar registro
-                        $sql = "UPDATE nivel SET tipo_nivel='$tipo_nivel' WHERE cod_nivel=$cod_nivel";
+                        $sql = "UPDATE banca SET nome='$nome', link='$link' WHERE cod_banca=$cod_banca";
                     } else {
                         // Inserir novo registro
-                        $sql = "INSERT INTO nivel (tipo_nivel) VALUES ('$tipo_nivel')";
+                        $sql = "INSERT INTO banca (nome, link) VALUES ('$nome', '$link')";
                     }
 
                     if ($conn->query($sql) === TRUE) {
@@ -75,8 +79,8 @@
 
             // Excluir registro
             if (isset($_GET['delete'])) {
-                $cod_nivel = $_GET['delete'];
-                $sql = "DELETE FROM nivel WHERE cod_nivel=$cod_nivel";
+                $cod_banca = $_GET['delete'];
+                $sql = "DELETE FROM banca WHERE cod_banca=$cod_banca";
                 if ($conn->query($sql) === TRUE) {
                     $success_message = "Registro excluído com sucesso!";
                 } else {
@@ -85,14 +89,16 @@
             }
 
             // Formulário para criar/atualizar registros
-            $cod_nivel = $_GET['edit'] ?? null;
-            $tipo_nivel = '';
+            $cod_banca = $_GET['edit'] ?? null;
+            $nome = '';
+            $link = '';
 
-            if ($cod_nivel) {
-                $result = $conn->query("SELECT * FROM nivel WHERE cod_nivel=$cod_nivel");
+            if ($cod_banca) {
+                $result = $conn->query("SELECT * FROM banca WHERE cod_banca=$cod_banca");
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
-                    $tipo_nivel = $row['tipo_nivel'];
+                    $nome = $row['nome'];
+                    $link = $row['link'];
                 }
             }
             ?>
@@ -103,11 +109,13 @@
                 <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
             <?php endif; ?>
 
-            <form action="nivel.php" method="POST">
-                <input type="hidden" name="cod_nivel" value="<?php echo htmlspecialchars($cod_nivel); ?>">
+            <form action="banca.php" method="POST">
+                <input type="hidden" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
                 <div id="input">
-                    <label for="tipo_nivel">Tipo de Nível:</label>
-                    <input type="text" id="tipo_nivel" name="tipo_nivel" value="<?php echo htmlspecialchars($tipo_nivel); ?>" placeholder="Preencha o tipo de nível" title="Preencha o tipo de nível" required>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" title="Preencha o nome da banca" required>
+                    <label for="link">Link:</label>
+                    <input type="text" id="link" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" title="Preencha o link da banca" required>
                 </div>
                 <div class="button-container">
                     <button type="submit" class="save-button">Salvar</button>
@@ -117,17 +125,18 @@
 
             <div class="table-container">
                 <?php
-                $result = $conn->query("SELECT * FROM nivel");
+                $result = $conn->query("SELECT * FROM banca");
 
                 if ($result->num_rows > 0) {
                     echo "<table>";
-                    echo "<tr><th>Tipo de Nível</th><th>Ações</th></tr>";
+                    echo "<tr><th>Nome</th><th>Link</th><th>Ações</th></tr>";
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['tipo_nivel']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['link']) . "</td>";
                         echo "<td>";
-                        echo "<a class='edit-button' href='nivel.php?edit=" . $row['cod_nivel'] . "'>Editar</a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"nivel.php?delete=" . $row['cod_nivel'] . "\"); return false;'>Excluir</a>";
+                        echo "<a class='edit-button' href='banca.php?edit=" . $row['cod_banca'] . "'>Editar</a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;'>Excluir</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
