@@ -171,7 +171,7 @@ a.edit-button {
 }
 
 a.edit-button:hover {
-    background-color: #2118CD;
+    background-color: #0036A6; /* Cor azul mais escura para o botão Editar */
 }
 
 a.delete-button {
@@ -179,7 +179,7 @@ a.delete-button {
 }
 
 a.delete-button:hover {
-    background-color: #d32f2f;
+    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Excluir */
 }
 
 .grid-duplo {

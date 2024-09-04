@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Topapirando</title>
     <link rel="stylesheet" href="inicio.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <!-- Navigation-->
@@ -25,7 +24,6 @@
                 <a class="botao-consulta-p font-1-m" href="">
                     <i class="fa-solid fa-calendar-days"></i>
                 </a>
-
             </div>
         </div>
     </nav> -->
@@ -52,17 +50,16 @@
             </div>
             <div class="links">
                 <a href="#">Sobre</a>
-                <a href="#">Ajuda</a>
+                <a href="ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
         </header>
         <div class="menu">
             <a href="index.php">Inicio</a>
-            <a href="#">Simulados</a>
+            <a href="simulados.php">Simulados</a>
             <a href="bancas.php">Bancas</a>
-            <a href="#">Desempenho</a>
+            <a href="desempenhos.php">Desempenho</a>
         </div>
-    
     </div>
 
     <main> 
@@ -82,14 +79,15 @@
              </div>
 
              <div class="div3">
-
                 <img id="celular" src="assets/imagem celular.svg" alt="">
                 <img id="not" src="assets/imagem noteboooke.svg" alt="">
-
              </div>
       </div>
-      
     </main>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <!-- Footer -->
+    <footer style="background-color: #000; padding: 20px; text-align: center;">
+        <p style="margin: 0; color: #fff;">© 2024, Topapirando</p>
+    </footer>
 </body>
 </html>

@@ -16,15 +16,15 @@
         </div>
         <div class="links">
             <a href="">Sobre</a>
-            <a href="">Ajuda</a>
+            <a href="ajuda.php">Ajuda</a>
             <a href="login.php">Entrar</a>
         </div>
     </header>
     <div class="menu">
         <a href="index.php">Inicio</a>
-        <a href="">Simulados</a>
+        <a href="simulados.php">Simulados</a>
         <a href="bancas.php">Bancas</a>
-        <a href="">Desempenho</a>
+        <a href="desempenhos.php">Desempenho</a>
     </div>
 </div>
 
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<p>Erro: O e-mail já está registrado.</p>";
         } else {
             // Inserir os dados no banco de dados
-            $sql = "INSERT INTO usuarios (nome, sobrenome, email, senha, tipo_acesso_cod_acesso) VALUES (?, ?, ?, ?, 4)";
+            $sql = "INSERT INTO usuarios (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssss", $nome, $sobrenome, $email, $senha);
 

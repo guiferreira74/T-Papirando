@@ -69,7 +69,10 @@ if ($cod_instituicao) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Instituições</title>
-    <link rel="stylesheet" href="banca.css"> 
+    <link rel="stylesheet" href="instituicao.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
 <body>
     <header class="header-prc">
         <a href="topapirando.php">
@@ -81,13 +84,13 @@ if ($cod_instituicao) {
         <div class="links">
             <a href="">Sobre</a>
             <a href="">Ajuda</a>
-            <a href="">Entrarr</a>
+            <a href="">Entrar</a>
         </div>
     </header>
     <div class="menu">
         <a href="">Inicio</a>
         <a href="">Simulados</a>
-        <a href="disciplina.php">Disciplinas</a>
+        <a href="instituicao.php">Instituições</a>
         <a href="">Desempenho</a>
     </div>
 
@@ -124,9 +127,9 @@ if ($cod_instituicao) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['cod_instituicao']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                        echo "<td>";
-                        echo "<a class='edit-button' href='instituicao.php?edit=" . $row['cod_instituicao'] . "'>Editar</a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"instituicao.php?delete=" . $row['cod_instituicao'] . "\"); return false;'>Excluir</a>";
+                        echo "<td class='actions'>";
+                        echo "<a class='edit-button' href='instituicao.php?edit=" . $row['cod_instituicao'] . "' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"instituicao.php?delete=" . $row['cod_instituicao'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }

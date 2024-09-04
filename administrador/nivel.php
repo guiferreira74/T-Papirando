@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Níveis</title>
-    <link rel="stylesheet" href="banca.css">
+    <link rel="stylesheet" href="nivel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header class="header-prc">
@@ -15,19 +16,19 @@
             <input type="text" placeholder="Digite seu texto aqui">
         </div>
         <div class="links">
-            <a href="">Sobre</a>
-            <a href="">Ajuda</a>
-            <a href="">Entrar</a>
+            <a href="#">Sobre</a>
+            <a href="#">Ajuda</a>
+            <a href="#">Entrar</a>
         </div>
     </header>
-    <div class="menu">
-        <a href="">Inicio</a>
-        <a href="">Simulados</a>
+    <nav class="menu">
+        <a href="#">Inicio</a>
+        <a href="#">Simulados</a>
         <a href="nivel.php">Níveis</a>
-        <a href="">Desempenho</a>
-    </div>
+        <a href="#">Desempenho</a>
+    </nav>
 
-    <div id="main-container">
+    <main id="main-container">
         <div id="corpo">
             <h1>Gerenciar Níveis</h1>
 
@@ -125,9 +126,9 @@
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['tipo_nivel']) . "</td>";
-                        echo "<td>";
-                        echo "<a class='edit-button' href='nivel.php?edit=" . $row['cod_nivel'] . "'>Editar</a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"nivel.php?delete=" . $row['cod_nivel'] . "\"); return false;'>Excluir</a>";
+                        echo "<td class='actions'>";
+                        echo "<a class='edit-button' href='nivel.php?edit=" . $row['cod_nivel'] . "' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"nivel.php?delete=" . $row['cod_nivel'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -140,7 +141,7 @@
                 ?>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Modal de confirmação -->
     <div id="confirm-modal" class="modal">

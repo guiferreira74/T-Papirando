@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Bancas</title>
     <link rel="stylesheet" href="banca.css">
-    
-        
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header class="header-prc">
@@ -135,8 +133,8 @@
                         echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['link']) . "</td>";
                         echo "<td>";
-                        echo "<a class='edit-button' href='banca.php?edit=" . $row['cod_banca'] . "'>Editar</a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;'>Excluir</a>";
+                        echo "<a class='edit-button' href='banca.php?edit=" . $row['cod_banca'] . "' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }

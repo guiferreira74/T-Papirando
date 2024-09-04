@@ -140,16 +140,20 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
 }
 
 th, td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #f2f2f2;
 }
 
 tr:nth-child(even) {
@@ -175,7 +179,7 @@ a.edit-button:hover {
 }
 
 a.delete-button {
-    background-color: #f44336;
+    background-color: #f44336; 
 }
 
 a.delete-button:hover {
@@ -213,12 +217,9 @@ a.delete-button:hover {
     background-color: #f44336; /* Cor vermelha para o botão Limpar */
 }
 
-.save-button:hover {
-    background-color: #0036A6; /* Cor azul mais escura para o botão Salvar */
-}
-
+.save-button:hover,
 .clear-button:hover {
-    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Limpar */
+    opacity: 0.8;
 }
 
 /* Modal */
@@ -259,15 +260,12 @@ a.delete-button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
 .success-message {
     color: #2118CD;
 }
-
 .error-message {
     color: red;
 }
-
 /* Estilos para a tabela */
 table {
     width: 100%;

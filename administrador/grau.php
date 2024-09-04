@@ -64,15 +64,15 @@ if ($cod_grau) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Graus</title>
-    <link rel="stylesheet" href="banca.css">
+    <link rel="stylesheet" href="grau.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Conteúdo HTML começa aqui -->
     <header class="header-prc">
         <a href="topapirando.php">
             <img class="logo" src="assets/logo.svg" alt="topapirando">
@@ -81,16 +81,16 @@ if ($cod_grau) {
             <input type="text" placeholder="Digite seu texto aqui">
         </div>
         <div class="links">
-            <a href="">Sobre</a>
-            <a href="">Ajuda</a>
-            <a href="">Entrar</a>
+            <a href="#">Sobre</a>
+            <a href="#">Ajuda</a>
+            <a href="#">Entrar</a>
         </div>
     </header>
     <div class="menu">
-        <a href="">Inicio</a>
-        <a href="">Simulados</a>
+        <a href="#">Inicio</a>
+        <a href="#">Simulados</a>
         <a href="grau.php">Graus</a>
-        <a href="">Desempenho</a>
+        <a href="#">Desempenho</a>
     </div>
 
     <div id="main-container">
@@ -125,9 +125,9 @@ if ($cod_grau) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['tipo_grau']) . "</td>";
-                        echo "<td>";
-                        echo "<a class='edit-button' href='grau.php?edit=" . $row['cod_grau'] . "'>Editar</a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"grau.php?delete=" . $row['cod_grau'] . "\"); return false;'>Excluir</a>";
+                        echo "<td class='actions'>";
+                        echo "<a class='edit-button' href='grau.php?edit=" . $row['cod_grau'] . "' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"grau.php?delete=" . $row['cod_grau'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }
