@@ -68,6 +68,19 @@ body {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    transition: color 0.3s, background-color 0.3s;  /* Transição suave */
+}
+/* Estilo para links restritos */
+.menu a.restricted {
+color: gray; /* Cor cinza para links restritos */
+pointer-events: none; /* Desabilita eventos de clique */
+cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitida */
+}
+ 
+/* Efeito de hover no menu */
+.menu a:hover {
+    color: #2118CD;  /* Cor do texto ao passar o mouse */
+    border-radius: 5px;  /* Cantos arredondados */
 }
 
 .grid-duplo {
@@ -76,10 +89,10 @@ body {
     grid-template-rows: 1fr;
     grid-column-gap: 40px;
     grid-row-gap: 0px;
-    }
+}
     
-    .esquerda { grid-area: 1 / 1 / 2 / 2; }
-    .direita { grid-area: 1 / 2 / 2 / 3; }
+.esquerda { grid-area: 1 / 1 / 2 / 2; }
+.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .esquerda{
     display: flex;
@@ -87,23 +100,19 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
-    
-    
-} 
+}
 
 .direita{
-
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     margin-top: 0px;
-
 }
 
 #button-esquerda{
-    width: 350px ;
-    height:50px ;
+    width: 350px;
+    height: 50px;
     background-color: #2118CD;
     color: white;
     border: none;
@@ -111,41 +120,41 @@ body {
     margin-top: 50px;
     font-size: 20px;
 }
-/* Centraliza o botão dentro do contêiner */
-/* Centraliza o botão dentro do contêiner e ajusta a margem superior */
+
 .button-container {
     text-align: center; /* Centraliza o conteúdo horizontalmente */
     margin-top: -20px;  /* Ajusta a margem superior para mover o botão para cima */
 }
 
 #button-direita{
-    width: 350px ;
-    height:50px ;
-    background-color:#00DB09;
+    width: 350px;
+    height: 50px;
+    background-color: #00DB09;
     color: white;
     border: none;
     border-radius: 10px;
     margin-top: 10px;
     font-size: 20px;
 }
-#checar{
+
+#checar {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 }
-#checa{
+
+#checa {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin-top: 15px;
 }
 
-
 #input-email {
     display: block;
-    margin: 25px auto 0; 
-    width: 400px;  
-    height: 35px;  
+    margin: 25px auto 0;
+    width: 400px;
+    height: 35px;
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
     border-radius: 3px;
@@ -153,19 +162,72 @@ body {
 
 #input-senha {
     display: block;
-    margin: 25px auto 0; 
-    width: 400px; 
-    height: 35px; 
+    margin: 25px auto 0;
+    width: 400px;
+    height: 35px;
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
     border-radius: 3px;
 }
 
-
-#cadastro{
-    width: 100px ;
+#cadastro, #login {
+    width: 100px;
 }
 
-#login{
-    width: 100px ;
+.modal {
+    display: none; /* O modal é ocultado por padrão */
+    position: fixed; /* Posiciona o modal fixamente na tela */
+    z-index: 1; /* Garante que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Tamanho total da tela */
+    height: 100%;
+    overflow: auto; /* Adiciona rolagem se o conteúdo for muito grande */
+    background-color: rgba(0,0,0,0.4); /* Fundo semitransparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Centraliza o modal vertical e horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    text-align: center; /* Centraliza o conteúdo do modal */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar o modal */
+    border-radius: 8px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal button {
+    background-color:#2118CD;
+
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #2118CD;
 }

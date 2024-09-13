@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro</title>
+    <title>Cadastro</title>
     <link rel="stylesheet" href="cadastro.css">
 </head>
 <body>
@@ -51,9 +51,32 @@
         </form>
     </div>
 </main>
-</body>
-</html>
+
+<!-- Modal de Sucesso -->
+<div id="modal-sucesso" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="assets/ticken.svg" alt="Sucesso" class="tick-image">
+        <p>Conta criada com sucesso!</p>
+        <button class="ok-button" id="ok-sucesso">OK</button>
+    </div>
+</div>
+
+<!-- Modal de Erro -->
+<div id="modal-erro" class="modal">
+    <div class="modal-content">
+        <span class="close-erro">&times;</span>
+        <img src="assets/erro.svg" alt="Erro" class="error-image">
+        <p>Erro: O e-mail já está registrado.</p>
+        <button class="ok-button" id="ok-erro">OK</button>
+    </div>
+</div>
+
+
 <?php
+$success = false;
+$error = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conectar ao banco de dados
     $servername = "localhost";
@@ -86,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            echo "<p>Erro: O e-mail já está registrado.</p>";
+            $error = true;
         } else {
             // Inserir os dados no banco de dados
             $sql = "INSERT INTO usuarios (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
@@ -94,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("ssss", $nome, $sobrenome, $email, $senha);
 
             if ($stmt->execute()) {
-                echo "<p>Conta criada com sucesso!</p>";
+                $success = true;
             } else {
                 echo "<p>Erro: " . $stmt->error . "</p>";
             }
@@ -106,3 +129,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var modalSucesso = document.getElementById("modal-sucesso");
+    var modalErro = document.getElementById("modal-erro");
+    var closeSucesso = document.getElementsByClassName("close")[0];
+    var closeErro = document.getElementsByClassName("close-erro")[0];
+    var okSucesso = document.getElementById("ok-sucesso");
+    var okErro = document.getElementById("ok-erro");
+
+    // Mostrar o modal adequado com base na resposta do PHP
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <?php if ($success): ?>
+            modalSucesso.style.display = "block";
+        <?php elseif ($error): ?>
+            modalErro.style.display = "block";
+        <?php endif; ?>
+    <?php endif; ?>
+
+    // Fechar o modal de sucesso quando o usuário clicar no botão de fechar
+    closeSucesso.onclick = function() {
+        modalSucesso.style.display = "none";
+    }
+
+    // Fechar o modal de erro quando o usuário clicar no botão de fechar
+    closeErro.onclick = function() {
+        modalErro.style.display = "none";
+    }
+
+    // Fechar o modal de sucesso quando o usuário clicar no botão OK
+    okSucesso.onclick = function() {
+        modalSucesso.style.display = "none";
+    }
+
+    // Fechar o modal de erro quando o usuário clicar no botão OK
+    okErro.onclick = function() {
+        modalErro.style.display = "none";
+    }
+
+    // Fechar o modal quando o usuário clicar fora da área do modal
+    window.onclick = function(event) {
+        if (event.target == modalSucesso) {
+            modalSucesso.style.display = "none";
+        }
+        if (event.target == modalErro) {
+            modalErro.style.display = "none";
+        }
+    }
+});
+</script>
+
+
+</body>
+</html>

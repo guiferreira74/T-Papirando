@@ -74,9 +74,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Alinha o conteúdo no topo */
-    height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
+    height: 500px; /* Remove a altura fixa para que o conteúdo se ajuste */
     padding: 0 100px;
     margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    margin: auto;
 }
 
 #corpo {
@@ -297,4 +298,108 @@ th {
 
 .edit-button:hover, .delete-button:hover {
     color: #007BFF; /* Cor ao passar o mouse */
+}
+.d-flex {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+    height: 100vh;
+    width: 250px;
+}
+
+.sidebar-header h4 {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: none;
+}
+
+.components {
+    padding-left: 0;
+}
+
+.components hr {
+    margin: 10px 0;
+    border-color: black;
+}
+
+#sidebar .components a {
+    color: #343a40;
+    text-decoration: none;
+    padding: 8px 20px;
+    display: block;
+    font-weight: 500;
+    text-align: center;
+}
+
+#sidebar .components a:hover, 
+#sidebar .components a.active {
+    background-color: #2118CD;
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Conteúdo principal */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.encima {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.enbaixo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.enbaixo img {
+    max-width: 45%;
+    height: auto;
+    width: 400px;
+}
+
+#pesquisa {
+    margin-top: 50px;
+    width: 900px;
+    height: 40px;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+#titulo {
+    font-size: 40px;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+}
+
+hr {
+    color: black;
+}
+
+.logo{
+    width: 400px;
 }

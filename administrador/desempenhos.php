@@ -15,7 +15,7 @@
                 <input type="text" placeholder="Digite seu texto aqui">  
             </div>
             <div class="links">
-                <a href="#">Sobre</a>
+                <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>

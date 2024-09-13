@@ -6,27 +6,72 @@
     <title>Gerenciar Provas</title>
     <link rel="stylesheet" href="simulado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header class="header-prc">
-        <a href="topapirando.php">
+        <a href="adm.php">
             <img class="logo" src="assets/logo.svg" alt="topapirando">
         </a>
-        <div class="search-bar">
-            <input type="text" placeholder="Digite seu texto aqui">
-        </div>
         <div class="links">
-            <a href="#">Sobre</a>
-            <a href="#">Ajuda</a>
-            <a href="#">Entrar</a>
+                <a id="sobre" href="sobre.html">Sobre</a>
+                <a href="#">Ajuda</a>
+                <a href="#">Sair</a>
+                <img id="user" src="assets/user.svg" alt="">
+            </div>
+        </header>
+    </div>
+
+   <div class="d-flex">
+        <!-- Sidebar -->
+        <div id="sidebar" class="bg-light border-right">
+            <div class="sidebar-header p-3">
+                <h4>Menu</h4>
+            </div>
+            <ul class="list-unstyled components">
+            <li>
+                    <a href="adm.php">Início</a>
+                </li>
+                <li>
+                    <a href="#">Ajuda</a>
+                </li>
+                <li>
+                    <a href="#">Parâmetros</a>
+                </li>
+                <hr>
+                <p>Gerenciar Conteudo</p>
+                <li>
+                    <a href="banca.php">Bancas</a>
+                </li>
+                <li>
+                    <a href="nivel.php">Niveis</a>
+                </li>
+                <li>
+                    <a href="grau.php">Graus</a>
+                </li>
+                <li>
+                    <a href="disciplina.php">Disciplinas</a>
+                </li>
+                <li>
+                    <a href="duracao.php">Durações</a>
+                </li>
+                <li>
+                    <a href="instituicao.php">Instituições</a>
+                </li>
+                <li>
+                    <a href="simulado.php">Simulados</a>
+                </li>
+                <li>
+                    <a href="prova.php">Provas</a>
+                </li>
+                <li>
+                    <a href="concurso.php">Concursos</a>
+                </li>
+                <li>
+                    <a href="questao.php">Questões</a>
+                </li>
+            </ul>
         </div>
-    </header>
-    <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#">Provas</a>
-        <a href="banca.html">Bancas</a>
-        <a href="#">Desempenho</a>
-    </nav>
 
     <main id="main-container">
         <div id="corpo">
@@ -56,10 +101,10 @@
                 $cod_prova = $_POST['cod_prova'] ?? null;
                 $nome = $_POST['nome'];
                 $tempo = $_POST['tempo'];
-                $Banca_cod_banca = $_POST['Banca_cod_banca'];
+                $banca_cod_banca = $_POST['banca_cod_banca'] ?? '';
             
                 // Verificar se o registro já existe
-                $sql_check = "SELECT * FROM prova WHERE nome='$nome' AND Banca_cod_banca='$Banca_cod_banca' AND cod_prova != '$cod_prova'";
+                $sql_check = "SELECT * FROM prova WHERE nome='$nome' AND banca_cod_banca='$banca_cod_banca' AND cod_prova != '$cod_prova'";
                 $result_check = $conn->query($sql_check);
             
                 if ($result_check->num_rows > 0) {
@@ -71,8 +116,8 @@
                     } else {
                         if ($acao == 'inserir') {
                             // Validação básica
-                            if (!empty($nome) && !empty($Banca_cod_banca)) {
-                                $sql = "INSERT INTO prova (nome, tempo, Banca_cod_banca) VALUES ('$nome', '$tempo', '$Banca_cod_banca')";
+                            if (!empty($nome) && !empty($banca_cod_banca)) {
+                                $sql = "INSERT INTO prova (nome, tempo, banca_cod_banca) VALUES ('$nome', '$tempo', '$banca_cod_banca')";
                                 if ($conn->query($sql) === TRUE) {
                                     $success_message = "Prova inserida com sucesso!";
                                 } else {
@@ -83,8 +128,8 @@
                             }
                         } elseif ($acao == 'alterar') {
                             // Atualizar registro
-                            if (!empty($cod_prova) && !empty($nome) && !empty($Banca_cod_banca)) {
-                                $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', Banca_cod_banca='$Banca_cod_banca' WHERE cod_prova='$cod_prova'";
+                            if (!empty($cod_prova) && !empty($nome) && !empty($banca_cod_banca)) {
+                                $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', banca_cod_banca='$banca_cod_banca' WHERE cod_prova='$cod_prova'";
                                 if ($conn->query($sql) === TRUE) {
                                     $success_message = "Prova alterada com sucesso!";
                                 } else {
@@ -112,7 +157,7 @@
             $cod_prova = $_GET['edit'] ?? null;
             $nome = '';
             $tempo = '';
-            $Banca_cod_banca = '';
+            $banca_cod_banca = '';
 
             if ($cod_prova) {
                 $result = $conn->query("SELECT * FROM prova WHERE cod_prova=$cod_prova");
@@ -120,7 +165,7 @@
                     $row = $result->fetch_assoc();
                     $nome = $row['nome'];
                     $tempo = $row['tempo'];
-                    $Banca_cod_banca = $row['Banca_cod_banca'];
+                    $banca_cod_banca = $row['banca_cod_banca'];
                 }
             }
             ?>
@@ -141,12 +186,12 @@
                     <label for="tempo">Tempo (HH:MM:SS):</label>
                     <input type="text" id="tempo" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" placeholder="Preencha o tempo (HH:MM:SS)" title="Preencha o tempo" required>
 
-                    <label for="Banca_cod_banca">Banca:</label>
-                    <select id="Banca_cod_banca" name="Banca_cod_banca" required>
+                    <label for="banca_cod_banca">Banca:</label>
+                    <select id="banca_cod_banca" name="banca_cod_banca" required>
                         <?php
-                        $result = $conn->query("SELECT cod_banca, nome FROM Banca");
+                        $result = $conn->query("SELECT cod_banca, nome FROM banca");
                         while ($row = $result->fetch_assoc()) {
-                            $selected = $row['cod_banca'] == $Banca_cod_banca ? 'selected' : '';
+                            $selected = $row['cod_banca'] == $banca_cod_banca ? 'selected' : '';
                             echo "<option value='{$row['cod_banca']}' $selected>{$row['nome']}</option>";
                         }
                         ?>
@@ -158,7 +203,7 @@
                 </div>
             </form>
 
-            <h2>Provas</h2>
+            <h2></h2>
             <table>
                 <thead>
                     <tr>
@@ -170,7 +215,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $result = $conn->query("SELECT p.cod_prova, p.nome, p.tempo, b.nome as banca FROM prova p JOIN Banca b ON p.Banca_cod_banca = b.cod_banca");
+                    $result = $conn->query("SELECT p.cod_prova, p.nome, p.tempo, b.nome as banca FROM prova p JOIN banca b ON p.banca_cod_banca = b.cod_banca");
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
                             <td>{$row['nome']}</td>
@@ -189,30 +234,36 @@
     </main>
 
     <!-- Modal de confirmação -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Você tem certeza de que deseja excluir este registro?</p>
-            <a id="confirmButton" href="#" class="confirm-button">Confirmar</a>
-            <button class="cancel-button" onclick="closeModal()">Cancelar</button>
-        </div>
+<div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <p>Você tem certeza que quer excluir?</p>
+        <button id="confirm-delete">Excluir</button>
+        <button onclick="closeModal()">Cancelar</button>
     </div>
+</div>
 
-    <script>
-        function openModal(url) {
-            document.getElementById('confirmButton').href = url;
-            document.getElementById('confirmModal').style.display = 'block';
-        }
+<script>
+    var modal = document.getElementById("confirm-modal");
+    var confirmButton = document.getElementById("confirm-delete");
 
-        function closeModal() {
-            document.getElementById('confirmModal').style.display = 'none';
-        }
+    function openModal(deleteUrl) {
+        modal.style.display = "block";
+        confirmButton.onclick = function() {
+            window.location.href = deleteUrl;
+        };
+    }
 
-        window.onclick = function(event) {
-            if (event.target === document.getElementById('confirmModal')) {
-                closeModal();
-            }
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Fechar o modal se o usuário clicar fora do conteúdo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
         }
-    </script>
+    };
+</script>
 </body>
 </html>

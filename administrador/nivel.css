@@ -74,9 +74,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Alinha o conteúdo no topo */
-    height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
+    height: 500px; /* Remove a altura fixa para que o conteúdo se ajuste */
     padding: 0 100px;
     margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    margin: auto;
 }
 
 #corpo {
@@ -295,4 +296,105 @@ th {
 
 .edit-button:hover, .delete-button:hover {
     color: #007BFF; /* Cor ao passar o mouse */
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo {
+    max-height: 237.85px;
+    max-width: 300px;
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 15px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+    margin-top: 15px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o menu e o conteúdo no topo */
+    padding-top: 20px; /* Adiciona um pequeno espaçamento superior */
+    height: 100vh; /* Faz a sidebar ocupar a altura total da viewport */
+    width: 200PX;
+}
+
+.sidebar-header h4 {
+    text-align: center; /* Centraliza o título "Menu" */
+    padding-bottom: 10px; /* Reduz o espaçamento inferior */
+    border-bottom: none; /* Remove a linha abaixo do título */
+}
+
+.components {
+    padding-left: 0;
+}
+
+.components hr {
+    margin: 10px 0; /* Reduz o espaçamento ao redor da linha */
+    border-color: black;
+}
+
+#sidebar .components a {
+    color: #343a40;
+    text-decoration: none;
+    padding: 8px 20px; /* Reduz o padding para diminuir a altura dos itens */
+    display: block;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Estilizando o hover e o estado ativo para os links do menu */
+#sidebar .components a:hover, 
+#sidebar .components a.active {
+    background-color: #2118CD;
+    color: #fff;
+    border-radius: 5px;
+}
+
+hr{
+    color: black;
+}
+
+p{
+    display: flex;
+    justify-content: center;
 }

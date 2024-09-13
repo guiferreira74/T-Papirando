@@ -1,0 +1,268 @@
+.grupo{
+    width: 500px;
+    border-radius: 15px;
+}
+
+.encima{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    
+}
+
+.enbaixo{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+    gap: 500px;
+    margin: 200px;
+}
+.contaieiner{
+    display: flex;
+    justify-content: space-around;
+}
+
+#img-enbaixo{
+    font-size: 50px;
+    color: #2118CD;
+
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo {
+    max-height: 237.85px;
+    max-width: 300px;
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 15px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+    margin-top: 15px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px;
+    max-width: 300px;
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 15px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+.d-flex {
+    display: flex;
+}
+
+@import url('bootstrap.css');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-height: 237.85px;
+    max-width: 300px;
+    padding-top: 30px;
+}
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 35px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s, background-color 0.3s;  /* Transição suave */
+}
+/* Estilo para links restritos */
+.menu a.restricted {
+color: gray; /* Cor cinza para links restritos */
+pointer-events: none; /* Desabilita eventos de clique */
+cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitida */
+}
+   
+.menu a:hover {
+    color: #2118CD;  /* Cor do texto ao passar o mouse */
+    border-radius: 5px;  /* Cantos arredondados */
+}
+
+.div1 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+#text1 {
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+#mulher {
+    width: 400px;
+}
+
+.div2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#button {
+    border: none;
+    background-color: #17B509;
+    width: 610px;
+    height: 50px;
+    color: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.div3 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+}

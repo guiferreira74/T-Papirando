@@ -5,28 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Níveis</title>
     <link rel="stylesheet" href="nivel.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header class="header-prc">
-        <a href="topapirando.php">
-            <img class="logo" src="assets/logo.svg" alt="topapirando">
-        </a>
-        <div class="search-bar">
-            <input type="text" placeholder="Digite seu texto aqui">
-        </div>
-        <div class="links">
-            <a href="#">Sobre</a>
+    <div id="conteudo-header">
+        <header class="header-prc">
+           <a href="adm.php"><img class="logo" src="assets/Logo.svg"/> </a>
+           <div class="search-bar">
+
+            <div class="links">
+            <a id="sobre" href="sobre.html">Sobre</a>
             <a href="#">Ajuda</a>
-            <a href="#">Entrar</a>
+            <a href="#">Sair</a>
+            <img id="user" src="assets/user.svg" alt="">
+    </div>
+           
+        </header>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="d-flex">
+        <div id="sidebar" class="bg-light border-right">
+            <div class="sidebar-header p-3">
+                <h4>Menu</h4>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="adm.php">Início</a>
+                </li>
+                <li>
+                    <a href="#">Ajuda</a>
+                </li>
+                <li>
+                    <a href="#">Parâmetros </a>
+                </li>
+                <hr>
+                <p>Gerenciar Conteudo</p>
+                <li>
+                    <a href="banca.php">Bancas</a>
+                </li>
+                <li>
+                    <a href="nivel.php">Niveis</a>
+                </li>
+                <li>
+                    <a href="grau.php">Graus</a>
+                </li>
+                <li>
+                    <a href="disciplina.php">Disciplinas</a>
+                </li>
+                <li>
+                    <a href="duracao.php">Durações</a>
+                </li>
+                <li>
+                    <a href="instituicao.php">Instituições</a>
+                </li>
+                <li>
+                    <a href="simulado.php">Simulados</a>
+                </li>
+                <li>
+                    <a href="prova.php">Provas</a>
+                </li>
+                <li>
+                    <a href="concurso.php">Concursos</a>
+                </li>
+                <li>
+                    <a href="questao.php">Questões</a>
+                </li>
+            </ul>
         </div>
-    </header>
-    <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#">Simulados</a>
-        <a href="nivel.php">Níveis</a>
-        <a href="#">Desempenho</a>
-    </nav>
 
     <main id="main-container">
         <div id="corpo">

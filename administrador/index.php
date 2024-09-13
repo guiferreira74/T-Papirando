@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Topapirando</title>
     <link rel="stylesheet" href="inicio.css">
+    <link rel="icon" href="assets/Pré - Projeto  TôPapirando! 1.svg" type="image/x-icon">
 </head>
 <body>
     <!-- Navigation-->
@@ -49,16 +50,16 @@
                 <input type="text" placeholder="Digite seu texto aqui">  
             </div>
             <div class="links">
-                <a href="#">Sobre</a>
+                <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
         </header>
         <div class="menu">
             <a href="index.php">Inicio</a>
-            <a href="simulados.php">Simulados</a>
+            <a href="simulados.php" class="restricted">Simulados</a>
             <a href="bancas.php">Bancas</a>
-            <a href="desempenhos.php">Desempenho</a>
+            <a href="desempenhos.php" class="restricted">Desempenho</a>
         </div>
     </div>
 
@@ -75,12 +76,7 @@
              <div class="div2">
                 <h1>Seu guia  para a vitória em concursos </h1>
                 <a href="cadastro.php"><button id="button">Crie sua Conta </button></a>
-                <h2>Crie sua conta e aproveite todos os beneficio de se ter uma conta  </h2>
-             </div>
-
-             <div class="div3">
-                <img id="celular" src="assets/imagem celular.svg" alt="">
-                <img id="not" src="assets/imagem noteboooke.svg" alt="">
+                <h2>Crie sua conta e aproveite todos os beneficios de se ter uma conta  </h2>
              </div>
       </div>
     </main>
@@ -89,5 +85,26 @@
     <footer style="background-color: #000; padding: 20px; text-align: center;">
         <p style="margin: 0; color: #fff;">© 2024, Topapirando</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Example check to determine if user is logged in
+            var loggedIn = false; // Replace with actual login status check
+
+            // Get all elements with class 'restricted'
+            var restrictedLinks = document.querySelectorAll('.menu a.restricted');
+            
+            // Update the visibility and access based on login status
+            restrictedLinks.forEach(function(link) {
+                if (loggedIn) {
+                    link.classList.remove('restricted');
+                    link.style.color = ''; // Reset color
+                    link.style.pointerEvents = ''; // Reset pointer events
+                } else {
+                    link.classList.add('restricted');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

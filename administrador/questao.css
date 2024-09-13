@@ -74,7 +74,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Alinha o conteúdo no topo */
-    height: 500px; /* Remove a altura fixa para que o conteúdo se ajuste */
+    height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
     padding: 0 100px;
     margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
     margin: auto;
@@ -141,6 +141,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 table, th, td {
@@ -260,19 +261,18 @@ a.delete-button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
 .success-message {
     color: #2118CD;
 }
-
 .error-message {
     color: red;
 }
-
 /* Estilos para a tabela */
 table {
-    width: 100%;
+    width: 200%; /* Ajusta a largura da tabela se necessário */
     border-collapse: collapse;
+    margin: 0 auto; /* Centraliza a tabela horizontalmente */
+    transform: translateX(-300px); /* Move a tabela 20px para a esquerda */
 }
 
 th, td {
@@ -298,108 +298,6 @@ th {
 
 .edit-button:hover, .delete-button:hover {
     color: #007BFF; /* Cor ao passar o mouse */
-}
-
-/* Estilos do Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
- /* Estilos para a tabela */
- table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end; /* Alinha os ícones no lado direito */
-    gap: 10px; /* Espaçamento entre os ícones */
-}
-
-.edit-button, .delete-button {
-    color: #333;
-    text-decoration: none;
-}
-
-.edit-button:hover, .delete-button:hover {
-    color: #007BFF; /* Cor ao passar o mouse */
-}
-
-/* Estilos do Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 /* Sidebar e layout do conteúdo principal */
 .d-flex {
@@ -505,4 +403,14 @@ hr {
 
 .logo{
     width: 400px;
+}
+.btn-edit {
+    background-color: #2118CD;
+    border: 1px solid #2118CD;
+    color: white; /* Texto em branco para contraste */
+}
+
+.btn-edit:hover {
+    background-color: #1a0f9e; /* Cor um pouco mais escura para o efeito hover */
+    border-color: #1a0f9e;
 }

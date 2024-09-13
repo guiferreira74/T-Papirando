@@ -73,11 +73,10 @@ body {
     transition: color 0.3s, background-color 0.3s;  /* Transição suave */
 }
 .menu a.restricted {
-    color: gray; /* Gray color for restricted links */
-    pointer-events: none; /* Disable click events */
-    cursor: not-allowed; /* Change cursor to indicate restriction */
+    color: gray; /* Cor cinza para links restritos */
+    pointer-events: none; /* Desabilita eventos de clique */
+    cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitida */
 }
-
 /* Efeito de hover no menu */
 .menu a:hover {
     color: #2118CD;  /* Cor do texto ao passar o mouse */
@@ -267,17 +266,16 @@ body {
     margin-top: 100px; /* Ajuste conforme necessário */
 }
 
-#enem, #esa {
+#enem {
     flex: 1; /* Faz com que os elementos se ajustem igualmente */
-    text-align: center;
-    margin: 0 20px; /* Espaçamento entre os elementos */
+    text-align: center; /* Centraliza o texto internamente */
+    margin: 0 20px; /* Espaçamento horizontal entre os dois elementos */
 }
-
-.logo-enem {
-    width: 300px;
+#esa {
+    flex: 1; /* Faz com que os elementos se ajustem igualmente */
+    text-align: center; /* Centraliza o texto internamente */
+    margin: 0 20px; /* Espaçamento horizontal entre os dois elementos */
 }
-
 #link {
-    padding: 20px;
+    padding: 0px;
 }
-
