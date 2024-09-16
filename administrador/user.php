@@ -12,20 +12,17 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre</title>
     <link rel="stylesheet" href="user.css">
-    <link rel="stylesheet" href="user-logado.css">
-    <script src="scripst.js"></script>
-    <link rel="stylesheet" href="scripst.js">
     <link   rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
 </head>
 <body>
     <div id="conteudo-header">
         <header class="header-prc">
-           <a href="inicio.html"><img class="logo" src="assets/Logo.svg"/> </a>
+           <a href="user.php"><img class="logo" src="assets/Logo.svg"/> </a>
             <div class="search-bar">
                 <input type="text" placeholder="Digite seu texto aqui">  
             </div>
             <div class="links">
-                <a id="sobre" href="sobre.html">Sobre</a>
+                <a id="sobre" href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="sair.php">Sair</a>
             </div>

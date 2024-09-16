@@ -74,13 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
-
 </head>
 <body>
     <div id="conteudo-header">
@@ -90,16 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" placeholder="Digite seu texto aqui">  
             </div>
             <div class="links">
-                <a href="#">Sobre</a>
+                <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
-            </header>
+        </header>
         <div class="menu">
             <a href="index.php">Início</a>
-            <a href="#" class="restricted">Simulados</a>
+            <a href="#" class="">Simulados</a>
             <a href="bancas.php">Bancas</a>
-            <a href="#" class="restricted">Desempenho</a>
+            <a href="#" class="">Desempenho</a>
         </div>
     </div>
 
@@ -123,9 +122,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button id="button-esquerda" type="submit">Acessar Conta</button>
                 </div>
                 </form>
-                </div>
+            </div>
                 
-                <div class="direita">
+            <div class="direita">
                 <img id="Log" src="assets/login verde.svg" alt="">
                 <h1>Novo usuário</h1>
                 <p>Criar uma conta é fácil! Informe seus dados e uma senha para <br> aproveitar todos os benefícios de ter uma conta.</p>
@@ -134,45 +133,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 
-    <!-- Modal HTML -->
-    <div id="errorModal" class="modal">
+    <!-- Modal Simulados -->
+    <div id="modal-simulados" class="modal modal-custom">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, crie sua conta para ver o simulado.</p>
+            <button id="ok-btn-simulados" class="btn-custom">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal Desempenho -->
+    <div id="modal-desempenho" class="modal modal-custom">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, crie sua conta para ver o desempenho.</p>
+            <button id="ok-btn-desempenho" class="btn-custom">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal Erro -->
+    <div id="errorModal" class="modal modal-custom">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <?php if (!empty($error_message)): ?>
                 <p class="error-message"><?php echo $error_message; ?></p>
             <?php endif; ?>
-            <button onclick="closeModal()">OK</button>
+            <button onclick="closeModal()" class="btn-custom">OK</button>
         </div>
     </div>
 
     <script>
-        // Função para abrir o modal
-        function showModal() {
+        // Obter elementos dos modais e botões
+        var modalSimulados = document.getElementById("modal-simulados");
+        var modalDesempenho = document.getElementById("modal-desempenho");
+        var modalErro = document.getElementById("errorModal");
+
+        var closeBtns = document.getElementsByClassName("close-btn");
+        var okBtnSimulados = document.getElementById("ok-btn-simulados");
+        var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+
+        // Função para mostrar um modal específico
+        function showModal(modal) {
+            modal.style.display = "block";
+        }
+
+        // Função para esconder todos os modais
+        function closeModal() {
+            modalSimulados.style.display = "none";
+            modalDesempenho.style.display = "none";
+            modalErro.style.display = "none";
+        }
+
+        // Adicionar eventos de clique para os links Simulados e Desempenho
+        document.querySelectorAll('.menu a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (this.textContent === "Simulados") {
+                    e.preventDefault(); // Previne a navegação padrão
+                    showModal(modalSimulados);
+                } else if (this.textContent === "Desempenho") {
+                    e.preventDefault(); // Previne a navegação padrão
+                    showModal(modalDesempenho);
+                }
+            });
+        });
+
+        // Adicionar eventos de clique para os botões de fechar e os botões OK
+        Array.from(closeBtns).forEach(function(btn) {
+            btn.onclick = closeModal;
+        });
+        okBtnSimulados.onclick = closeModal;
+        okBtnDesempenho.onclick = closeModal;
+
+        // Fechar o modal se o usuário clicar fora dele
+        window.onclick = function(event) {
+            if (event.target == modalSimulados || event.target == modalDesempenho || event.target == modalErro) {
+                closeModal();
+            }
+        }
+
+        // Função para abrir o modal de erro
+        function showModalErro() {
             document.getElementById('errorModal').style.display = 'block';
         }
 
-        // Função para fechar o modal
-        function closeModal() {
-            document.getElementById('errorModal').style.display = 'none';
-        }
-
-        // Mostrar modal com mensagens de erro se houver
+        // Mostrar modal de erro com mensagens se houver
         <?php if (!empty($error_message)): ?>
-            showModal();
+            showModalErro();
         <?php endif; ?>
-    </script>
-       <script>
-        // Exemplo de controle de acesso
-        document.addEventListener("DOMContentLoaded", function() {
-            var loggedIn = false; // Substitua isso pela sua lógica de verificação de login
-            
-            // Se estiver logado, remova a classe de restrição dos links
-            if (loggedIn) {
-                document.querySelectorAll('.menu a.restricted').forEach(link => {
-                    link.classList.remove('restricted');
-                });
-            }
-        });
     </script>
 </body>
 </html>

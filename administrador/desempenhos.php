@@ -10,7 +10,7 @@
 
 <div id="conteudo-header">
         <header class="header-prc">
-           <a href="index.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
+           <a href="user.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
             <div class="search-bar">
                 <input type="text" placeholder="Digite seu texto aqui">  
             </div>
@@ -21,7 +21,7 @@
             </div>
         </header>
         <div class="menu">
-            <a href="index.php">Inicio</a>
+            <a href="user.php">Inicio</a>
             <a href="simulados.php">Simulados</a>
             <a href="bancas.php">Bancas</a>
             <a href="desempenhos.php">Desempenho</a>

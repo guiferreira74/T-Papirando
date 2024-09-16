@@ -57,9 +57,9 @@
         </header>
         <div class="menu">
             <a href="index.php">Inicio</a>
-            <a href="simulados.php" class="restricted">Simulados</a>
+            <a href="simulados.php" class="#">Simulados</a>
             <a href="bancas.php">Bancas</a>
-            <a href="desempenhos.php" class="restricted">Desempenho</a>
+            <a href="desempenhos.php" class="#">Desempenho</a>
         </div>
     </div>
 
@@ -80,31 +80,73 @@
              </div>
       </div>
     </main>
-    
+      <!-- Modal Simulados -->
+<div id="modal-simulados" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Por favor, crie sua conta para ver o simulado.</p>
+        <button id="ok-btn-simulados" class="ok-btn">OK</button>
+    </div>
+</div>
+
+<!-- Modal Desempenho -->
+<div id="modal-desempenho" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Por favor, crie sua conta para ver o desempenho.</p>
+        <button id="ok-btn-desempenho" class="ok-btn">OK</button>
+    </div>
+</div>
+<script>
+// Obter elementos dos modais e botões
+var modalSimulados = document.getElementById("modal-simulados");
+var modalDesempenho = document.getElementById("modal-desempenho");
+
+var closeBtns = document.getElementsByClassName("close-btn");
+var okBtnSimulados = document.getElementById("ok-btn-simulados");
+var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+
+// Função para mostrar um modal específico
+function showModal(modal) {
+    modal.style.display = "block";
+}
+
+// Função para esconder o modal
+function closeModal() {
+    modalSimulados.style.display = "none";
+    modalDesempenho.style.display = "none";
+}
+
+// Adicionar eventos de clique para os links Simulados e Desempenho
+document.querySelectorAll('.menu a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        if (this.textContent === "Simulados") {
+            e.preventDefault(); // Previne a navegação padrão
+            showModal(modalSimulados);
+        } else if (this.textContent === "Desempenho") {
+            e.preventDefault(); // Previne a navegação padrão
+            showModal(modalDesempenho);
+        }
+    });
+});
+
+// Adicionar eventos de clique para os botões de fechar e os botões OK
+Array.from(closeBtns).forEach(function(btn) {
+    btn.onclick = closeModal;
+});
+okBtnSimulados.onclick = closeModal;
+okBtnDesempenho.onclick = closeModal;
+
+// Fechar o modal se o usuário clicar fora dele
+window.onclick = function(event) {
+    if (event.target == modalSimulados || event.target == modalDesempenho) {
+        closeModal();
+    }
+}
+</script>
     <!-- Footer -->
     <footer style="background-color: #000; padding: 20px; text-align: center;">
         <p style="margin: 0; color: #fff;">© 2024, Topapirando</p>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Example check to determine if user is logged in
-            var loggedIn = false; // Replace with actual login status check
-
-            // Get all elements with class 'restricted'
-            var restrictedLinks = document.querySelectorAll('.menu a.restricted');
-            
-            // Update the visibility and access based on login status
-            restrictedLinks.forEach(function(link) {
-                if (loggedIn) {
-                    link.classList.remove('restricted');
-                    link.style.color = ''; // Reset color
-                    link.style.pointerEvents = ''; // Reset pointer events
-                } else {
-                    link.classList.add('restricted');
-                }
-            });
-        });
-    </script>
 </body>
 </html>

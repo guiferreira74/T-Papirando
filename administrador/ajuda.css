@@ -130,3 +130,108 @@ hr {
 .logo{
     width: 400px;
 }
+.titulos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas com tamanhos iguais */
+    gap: 20px; /* Espaçamento entre as colunas */
+    padding: 50px; /* Adiciona um espaçamento ao redor da área do container */
+    width: 100%; /* Garante que o container ocupe a largura completa da página */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo de largura */
+}
+
+.esquerda1, .direita1, .esquerda2, .direta2, .esquerda3, .direita3 {
+    background-color: #f0f0f0; /* Cor de fundo das colunas */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona sombra para destaque */
+}
+
+.titulos {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.item h1 {
+    color: #2118CD;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Alinha em uma coluna em telas menores */
+    }
+}
+
+#faq{
+    color: #2118CD;
+}
+
+#pf{
+    margin-top: 1px;
+}
+/* Estilos para o modal */
+.modal {
+    display: none; /* Esconde o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo semitransparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px; /* Define uma largura máxima para o modal */
+    text-align: center; /* Centraliza o conteúdo do modal */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 2px solid #333; /* Exemplo de estilo adicional */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Exemplo de sombra adicional */
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal p {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.modal button {
+    background-color: #2118CD;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal button:hover {
+    background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
