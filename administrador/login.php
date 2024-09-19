@@ -82,25 +82,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <div id="conteudo-header">
-        <header class="header-prc">
-           <a href="index.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
-            <div class="search-bar">
-                <input type="text" placeholder="Digite seu texto aqui">  
-            </div>
-            <div class="links">
-                <a href="sobre.php">Sobre</a>
+        <header>
+        <div class="interface">
+            <div class="logo">
+                <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+            </div><!--logo-->
+
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="index.php" class="simulados">Início</a></li>
+                    <li><a href="simulados.php" class="simulados">Simulados</a></li>
+                    <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
+                </ul>
+            </nav>
+
+            <div class="info"> 
+                <a href="">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
+        </div> <!--interface-->
         </header>
-        <div class="menu">
-            <a href="index.php">Início</a>
-            <a href="#" class="">Simulados</a>
-            <a href="bancas.php">Bancas</a>
-            <a href="#" class="">Desempenho</a>
-        </div>
-    </div>
 
     <main>
         <div class="grid-duplo">
@@ -137,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="modal-simulados" class="modal modal-custom">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor, crie sua conta para ver o simulado.</p>
+            <p>Por favor,faça o login para ver o simulado.</p>
             <button id="ok-btn-simulados" class="btn-custom">OK</button>
         </div>
     </div>
@@ -146,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="modal-desempenho" class="modal modal-custom">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor, crie sua conta para ver o desempenho.</p>
+            <p>Por favor,faça o login para ver o seu desempenho.</p>
             <button id="ok-btn-desempenho" class="btn-custom">OK</button>
         </div>
     </div>
@@ -185,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Adicionar eventos de clique para os links Simulados e Desempenho
-        document.querySelectorAll('.menu a').forEach(function(link) {
+        document.querySelectorAll('.menu-desktop a').forEach(function(link) {
             link.addEventListener('click', function(e) {
                 if (this.textContent === "Simulados") {
                     e.preventDefault(); // Previne a navegação padrão

@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
 }
 
 .header-prc {
@@ -16,9 +17,7 @@ body {
 }
 
 .logo {
-    max-height: 237.85px;
-    max-width: 300px;
-    padding-top: 30px;
+    width: 250px;
 }
 
 .search-bar {
@@ -151,9 +150,10 @@ hr {
     color: black;
 }
 
-.logo{
-    width: 400px;
+.logo {
+    width: 250px;
 }
+
 .header-prc .links span {
     color: white; /* Define a cor do texto como branco */
 }

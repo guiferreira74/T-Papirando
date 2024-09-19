@@ -8,29 +8,32 @@
 </head>
 <body>
 
-<div id="conteudo-header">
-    <header class="header-prc">
-        <a href="index.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
-        <div class="search-bar">
-            <input type="text" placeholder="Digite seu texto aqui">  
-        </div>
-        <div class="links">
-            <a href="">Sobre</a>
+<header>
+    <div class="interface">
+        <div class="logo">
+            <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+        </div><!--logo-->
+
+        <nav class="menu-desktop">
+            <ul>
+                <li><a href="index.php" class="simulados">Início</a></li>
+                <li><a href="simulados.php" class="simulados" id="link-simulados">Simulados</a></li>
+                <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                <li><a href="desempenhos.php" class="desempenho" id="link-desempenho">Desempenho</a></li>
+            </ul>
+        </nav>
+
+        <div class="info"> 
+            <a href="sobre.php">Sobre</a>
             <a href="ajuda.php">Ajuda</a>
             <a href="login.php">Entrar</a>
         </div>
-    </header>
-    <div class="menu">
-        <a href="index.php">Inicio</a>
-        <a href="simulados.php">Simulados</a>
-        <a href="bancas.php">Bancas</a>
-        <a href="desempenhos.php">Desempenho</a>
-    </div>
-</div>
+    </div> <!--interface-->
+</header>
 
 <main id="main-conteiner">
     <div id="corpo">
-        <img id="img main" src="assets/login verde.svg" alt="">
+        <img id="img-main" src="assets/login verde.svg" alt="">
 
         <h1>Criar minha conta!</h1>
         <h2>Informe seus dados abaixo para criar sua conta</h2>
@@ -43,7 +46,7 @@
                     <input class="direita" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" required>
                 </div>    
 
-                <input id="e-mail" name="email" type="text" placeholder="E-mail" required>
+                <input id="e-mail" name="email" type="email" placeholder="E-mail" required>
                 <input id="senha" name="senha" type="password" placeholder="Senha" required>
             </div>
 
@@ -53,7 +56,7 @@
 </main>
 
 <!-- Modal de Sucesso -->
-<div id="modal-sucesso" class="modal">
+<div id="modal-sucesso" class="modal modal-sucesso" style="display:none;">
     <div class="modal-content">
         <span class="close">&times;</span>
         <img src="assets/ticken.svg" alt="Sucesso" class="tick-image">
@@ -63,15 +66,32 @@
 </div>
 
 <!-- Modal de Erro -->
-<div id="modal-erro" class="modal">
+<div id="modal-erro" class="modal modal-erro" style="display:none;">
     <div class="modal-content">
         <span class="close-erro">&times;</span>
         <img src="assets/erro.svg" alt="Erro" class="error-image">
-        <p>Erro: O e-mail já está registrado.</p>
+        <p>Erro: O email já está registrado.</p>
         <button class="ok-button" id="ok-erro">OK</button>
     </div>
 </div>
 
+<!-- Modal Simulados -->
+<div id="modal-simulados" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Por favor, faça o login para ver o simulado.</p>
+        <button id="ok-btn-simulados" class="ok-btn">OK</button>
+    </div>
+</div>
+
+<!-- Modal Desempenho -->
+<div id="modal-desempenho" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Por favor, faça o login para ver o seu desempenho.</p>
+        <button id="ok-btn-desempenho" class="ok-btn">OK</button>
+    </div>
+</div>
 
 <?php
 $success = false;
@@ -99,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
 
     if ($email === false) {
-        echo "<p>Por favor, insira um e-mail válido.</p>";
+        echo "<script>document.getElementById('modal-erro').style.display = 'block';</script>";
     } else {
         // Verificar se o e-mail já está cadastrado
         $checkEmailSql = "SELECT email FROM usuarios WHERE email = ?";
@@ -119,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $success = true;
             } else {
-                echo "<p>Erro: " . $stmt->error . "</p>";
+                echo "<script>alert('Erro: " . $stmt->error . "');</script>";
             }
         }
 
@@ -148,27 +168,24 @@ document.addEventListener("DOMContentLoaded", function() {
         <?php endif; ?>
     <?php endif; ?>
 
-    // Fechar o modal de sucesso quando o usuário clicar no botão de fechar
+    // Fechar os modais
     closeSucesso.onclick = function() {
         modalSucesso.style.display = "none";
     }
 
-    // Fechar o modal de erro quando o usuário clicar no botão de fechar
     closeErro.onclick = function() {
         modalErro.style.display = "none";
     }
 
-    // Fechar o modal de sucesso quando o usuário clicar no botão OK
     okSucesso.onclick = function() {
         modalSucesso.style.display = "none";
     }
 
-    // Fechar o modal de erro quando o usuário clicar no botão OK
     okErro.onclick = function() {
         modalErro.style.display = "none";
     }
 
-    // Fechar o modal quando o usuário clicar fora da área do modal
+    // Fechar os modais quando o usuário clicar fora da área do modal
     window.onclick = function(event) {
         if (event.target == modalSucesso) {
             modalSucesso.style.display = "none";
@@ -177,9 +194,43 @@ document.addEventListener("DOMContentLoaded", function() {
             modalErro.style.display = "none";
         }
     }
+
+    // Funções para os modais de Simulados e Desempenho
+    var modalSimulados = document.getElementById("modal-simulados");
+    var modalDesempenho = document.getElementById("modal-desempenho");
+
+    // Mostrar modais ao clicar nos links
+    document.getElementById("link-simulados").onclick = function(event) {
+        event.preventDefault(); // Evitar o comportamento padrão do link
+        modalSimulados.style.display = "block";
+    };
+
+    document.getElementById("link-desempenho").onclick = function(event) {
+        event.preventDefault(); // Evitar o comportamento padrão do link
+        modalDesempenho.style.display = "block";
+    };
+    
+    // Fechar os modais de Simulados e Desempenho
+    var closeBtns = document.getElementsByClassName("close-btn");
+    var okBtnSimulados = document.getElementById("ok-btn-simulados");
+    var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+
+    Array.from(closeBtns).forEach(function(btn) {
+        btn.onclick = function() {
+            modalSimulados.style.display = "none";
+            modalDesempenho.style.display = "none";
+        };
+    });
+
+    okBtnSimulados.onclick = function() {
+        modalSimulados.style.display = "none";
+    };
+
+    okBtnDesempenho.onclick = function() {
+        modalDesempenho.style.display = "none";
+    };
 });
 </script>
-
 
 </body>
 </html>

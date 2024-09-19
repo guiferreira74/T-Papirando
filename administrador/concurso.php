@@ -11,7 +11,7 @@
 <body>
     <header class="header-prc">
         <a href="adm.php">
-            <img class="logo" src="assets/logo.svg" alt="topapirando">
+            <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
         </a>
         <div class="links">
             <a id="sobre" href="sobre.html">Sobre</a>
@@ -137,11 +137,7 @@
                 }
                 ?>
 
-                <?php if ($error_message): ?>
-                    <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
-                <?php elseif ($success_message): ?>
-                    <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
-                <?php endif; ?>
+    
                 
                 <form action="concurso.php" method="POST">
                     <input type="hidden" name="cod_concurso" value="<?php echo htmlspecialchars($cod_concurso); ?>">
@@ -161,8 +157,9 @@
                         <label for="vagas">Vagas:</label>
                         <input type="text" id="vagas" name="vagas" value="<?php echo htmlspecialchars($vagas); ?>" placeholder="Preencha a quantidade de vagas" title="Preencha a quantidade de vagas" required>
 
-                        <label for="nivel_cod_nivel">Nível:</label>
-                        <select id="nivel_cod_nivel" name="nivel_cod_nivel" required>
+                                                <label for="nivel_cod_nivel">Nível:</label>
+                        <select id="nivel_cod_nivel" name="nivel_cod_nivel" required title="Selecione o Nível de Escolaridade">
+                            <option value="" selected>Selecione o Nível de Escolaridade</option>
                             <?php
                             $result = $conn->query("SELECT cod_nivel, tipo_nivel FROM nivel");
                             while ($row = $result->fetch_assoc()) {
@@ -170,10 +167,12 @@
                                 echo "<option value='{$row['cod_nivel']}' $selected>{$row['tipo_nivel']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ novo nível</option>
                         </select>
 
                         <label for="banca_cod_banca">Banca:</label>
-                        <select id="banca_cod_banca" name="banca_cod_banca" required>
+                        <select id="banca_cod_banca" name="banca_cod_banca" required title="Selecione a Banca">
+                            <option value="" selected>Selecione a Banca</option>
                             <?php
                             $result = $conn->query("SELECT cod_banca, nome FROM banca");
                             while ($row = $result->fetch_assoc()) {
@@ -181,10 +180,12 @@
                                 echo "<option value='{$row['cod_banca']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ nova banca</option>
                         </select>
 
                         <label for="instituicao_cod_instituicao">Instituição:</label>
-                        <select id="instituicao_cod_instituicao" name="instituicao_cod_instituicao" required>
+                        <select id="instituicao_cod_instituicao" name="instituicao_cod_instituicao" required title="Selecione a Instituição">
+                            <option value="" selected>Selecione a Instituição</option>
                             <?php
                             $result = $conn->query("SELECT cod_instituicao, nome FROM instituicao");
                             while ($row = $result->fetch_assoc()) {
@@ -192,7 +193,30 @@
                                 echo "<option value='{$row['cod_instituicao']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ nova instituição</option>
                         </select>
+
+                        <script>
+                            document.getElementById('nivel_cod_nivel').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'nivel.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('banca_cod_banca').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'banca.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('instituicao_cod_instituicao').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'instituicao.php'; // Mude para a página do seu formulário
+                                }
+                            });
+                        </script>
+
+
                     </div>
                     <div class="button-container">
                         <button type="submit" class="save-button">Salvar</button>
@@ -201,83 +225,179 @@
                 </form>
 
                 <h2></h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Qtd. Questões</th>
-                            <th>Data</th>
-                            <th>Vagas</th>
-                            <th>Nível</th>
-                            <th>Banca</th>
-                            <th>Instituição</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $result = $conn->query("
-                            SELECT c.cod_concurso, c.nome, c.descricao, c.qtd_questoes, c.data, c.vagas, n.tipo_nivel, b.nome as banca, i.nome as instituicao 
-                            FROM concurso c 
-                            JOIN nivel n ON c.nivel_cod_nivel = n.cod_nivel 
-                            JOIN banca b ON c.banca_cod_banca = b.cod_banca 
-                            JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
-                        ");
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>
-                                <td>{$row['nome']}</td>
-                                <td>{$row['descricao']}</td>
-                                <td>{$row['qtd_questoes']}</td>
-                                <td>{$row['data']}</td>
-                                <td>{$row['vagas']}</td>
-                                <td>{$row['tipo_nivel']}</td>
-                                <td>{$row['banca']}</td>
-                                <td>{$row['instituicao']}</td>
-                                <td class='actions'>
-                                    <a href='concurso.php?edit={$row['cod_concurso']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
-                                    <a href='#' onclick='openModal(\"concurso.php?delete={$row['cod_concurso']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
-                                </td>
-                            </tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                <div class="table-container">
+    <button id="toggle-concursos" style="background-color: blue; color: white; border: none; padding: 10px 15px; cursor: pointer;">Mostrar Concursos Cadastrados</button>
+    <div id="concursos-content" style="display:none;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Qtd. Questões</th>
+                    <th>Data</th>
+                    <th>Vagas</th>
+                    <th>Nível</th>
+                    <th>Banca</th>
+                    <th>Instituição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $result = $conn->query("
+                    SELECT c.cod_concurso, c.nome, c.descricao, c.qtd_questoes, c.data, c.vagas, n.tipo_nivel, b.nome as banca, i.nome as instituicao 
+                    FROM concurso c 
+                    JOIN nivel n ON c.nivel_cod_nivel = n.cod_nivel 
+                    JOIN banca b ON c.banca_cod_banca = b.cod_banca 
+                    JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
+                ");
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                        <td>" . htmlspecialchars($row['nome']) . "</td>
+                        <td>" . htmlspecialchars($row['descricao']) . "</td>
+                        <td>" . htmlspecialchars($row['qtd_questoes']) . "</td>
+                        <td>" . htmlspecialchars($row['data']) . "</td>
+                        <td>" . htmlspecialchars($row['vagas']) . "</td>
+                        <td>" . htmlspecialchars($row['tipo_nivel']) . "</td>
+                        <td>" . htmlspecialchars($row['banca']) . "</td>
+                        <td>" . htmlspecialchars($row['instituicao']) . "</td>
+                        <td class='actions'>
+                            <a href='concurso.php?edit={$row['cod_concurso']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
+                            <a href='#' onclick='openModal(\"concurso.php?delete={$row['cod_concurso']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
+                        </td>
+                    </tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
         </main>
+        <script>
+    document.getElementById("toggle-concursos").addEventListener("click", function() {
+        var concursosContent = document.getElementById("concursos-content");
+        if (concursosContent.style.display === "none") {
+            concursosContent.style.display = "block";
+            this.textContent = "Ocultar Concursos Cadastrados"; // Muda o texto do botão
+        } else {
+            concursosContent.style.display = "none";
+            this.textContent = "Mostrar Concursos Cadastrados"; // Muda o texto do botão
+        }
+    });
+</script>
 
         <!-- Modal de confirmação -->
-        <div id="confirm-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal()">&times;</span>
-                <p>Você tem certeza que quer excluir?</p>
-                <button id="confirm-delete">Excluir</button>
-                <button onclick="closeModal()">Cancelar</button>
+<div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-body">
+            <p>Você tem certeza que quer excluir?</p>
+            <div class="button-container">
+                <button id="confirm-delete" class="btn-delete">Excluir</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
             </div>
         </div>
+    </div>
+</div>
 
-        <script>
-            var modal = document.getElementById("confirm-modal");
-            var confirmButton = document.getElementById("confirm-delete");
+<script>
+    // Referência ao modal e aos botões
+    var confirmModal = document.getElementById("confirm-modal");
+    var confirmButton = document.getElementById("confirm-delete");
 
-            function openModal(deleteUrl) {
-                modal.style.display = "block";
-                confirmButton.onclick = function() {
-                    window.location.href = deleteUrl;
-                };
-            }
+    // Função para abrir o modal
+    function openModal(deleteUrl) {
+        confirmModal.style.display = "block";
+        confirmButton.onclick = function() {
+            window.location.href = deleteUrl;
+        };
+    }
 
-            function closeModal() {
-                modal.style.display = "none";
-            }
+    // Função para fechar o modal
+    function closeModal() {
+        confirmModal.style.display = "none";
+    }
 
-            // Fechar o modal se o usuário clicar fora do conteúdo
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    closeModal();
+    // Fechar o modal se o usuário clicar fora dele
+    window.onclick = function(event) {
+        if (event.target === confirmModal) {
+            closeModal();
+        }
+    };
+
+    // Adicionar eventos de clique para os botões
+    document.querySelector(".close-btn").onclick = closeModal;
+    document.querySelector(".btn-cancel").onclick = closeModal;
+</script>
+
+          <!-- Modais de Sucesso e Erro -->
+<div id="modal-erro" class="modal modal-erro">
+    <div class="modal-content modal-content-erro">
+        <span class="close-btn close-btn-erro" onclick="closeModal('erro')">&times;</span>
+        <p id="erro-mensagem">Erro!</p>
+        <button id="ok-btn-erro" class="ok-btn ok-btn-erro">OK</button>
+    </div>
+</div>
+
+<div id="modal-sucesso" class="modal modal-sucesso">
+    <div class="modal-content modal-content-sucesso">
+        <span class="close-btn close-btn-sucesso" onclick="closeModal('sucesso')">&times;</span>
+        <p id="sucesso-mensagem">Sucesso!</p>
+        <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
+    </div>
+</div>
+
+
+
+            <script>
+                // Obter elementos dos modais e botões
+                var modalErro = document.getElementById("modal-erro");
+                var modalSucesso = document.getElementById("modal-sucesso");
+
+                var okBtnErro = document.getElementById("ok-btn-erro");
+                var okBtnSucesso = document.getElementById("ok-btn-sucesso");
+
+                // Função para mostrar um modal específico
+                function showModal(type, message) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    var messageElem = modal.querySelector('p');
+                    messageElem.textContent = message;
+                    modal.style.display = "block";
                 }
-            };
-        </script>
+
+                // Função para esconder o modal
+                function closeModal(type) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    modal.style.display = "none";
+                }
+
+                // Adicionar eventos de clique para os botões OK
+                okBtnErro.onclick = function() {
+                    closeModal('erro');
+                };
+                okBtnSucesso.onclick = function() {
+                    closeModal('sucesso');
+                };
+
+                // Fechar o modal se o usuário clicar fora dele
+                window.onclick = function(event) {
+                    if (event.target == modalErro || event.target == modalSucesso) {
+                        closeModal(event.target === modalErro ? 'erro' : 'sucesso');
+                    }
+                };
+
+                // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
+                <?php if ($error_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('erro', '<?php echo htmlspecialchars($error_message); ?>');
+                    });
+                <?php elseif ($success_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('sucesso', '<?php echo htmlspecialchars($success_message); ?>');
+                    });
+                <?php endif; ?>
+            </script>
     </div>
 </body>
 </html>

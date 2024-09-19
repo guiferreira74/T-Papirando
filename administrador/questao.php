@@ -11,7 +11,7 @@
 <body>
     <header class="header-prc">
         <a href="adm.php">
-            <img class="logo" src="assets/logo.svg" alt="topapirando">
+            <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
         </a>
         <div class="links">
             <a id="sobre" href="sobre.html">Sobre</a>
@@ -148,15 +148,9 @@ if ($cod_questao) {
         $grau_cod_grau = $row['grau_cod_grau'] ?? '';
     }
 }
+?>
 
-                ?>
-
-                <?php if ($error_message): ?>
-                    <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
-                <?php elseif ($success_message): ?>
-                    <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
-                <?php endif; ?>
-
+              
                 <form action="questao.php" method="POST">
                     <input type="hidden" name="cod_questao" value="<?php echo htmlspecialchars($cod_questao); ?>">
                     <div id="input">
@@ -179,9 +173,9 @@ if ($cod_questao) {
 
 
 
-
-                        <label for="disciplina_cod_disciplina">Disciplina:</label>
-                        <select id="disciplina_cod_disciplina" name="disciplina_cod_disciplina" required>
+                                                <label for="disciplina_cod_disciplina">Disciplina:</label>
+                        <select id="disciplina_cod_disciplina" name="disciplina_cod_disciplina" required title="Selecione a disciplina">
+                            <option value="" selected>Selecione a Disciplina</option>
                             <?php
                             $result = $conn->query("SELECT cod_disciplina, nome FROM disciplina");
                             while ($row = $result->fetch_assoc()) {
@@ -189,10 +183,12 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_disciplina']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ nova disciplina</option>
                         </select>
 
                         <label for="concurso_cod_concurso">Concurso:</label>
-                        <select id="concurso_cod_concurso" name="concurso_cod_concurso" required>
+                        <select id="concurso_cod_concurso" name="concurso_cod_concurso" required title="Selecione o concurso">
+                            <option value="" selected>Selecione o Concurso</option>
                             <?php
                             $result = $conn->query("SELECT cod_concurso, nome FROM concurso");
                             while ($row = $result->fetch_assoc()) {
@@ -200,10 +196,12 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_concurso']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ novo concurso</option>
                         </select>
 
                         <label for="nivel_cod_nivel">Nível:</label>
-                        <select id="nivel_cod_nivel" name="nivel_cod_nivel" required>
+                        <select id="nivel_cod_nivel" name="nivel_cod_nivel" required title="Selecione o nível de Escolaridade">
+                            <option value="" selected>Selecione o Nível de Escolaridade</option>
                             <?php
                             $result = $conn->query("SELECT cod_nivel, tipo_nivel FROM nivel");
                             while ($row = $result->fetch_assoc()) {
@@ -211,10 +209,12 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_nivel']}' $selected>{$row['tipo_nivel']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ novo nível</option>
                         </select>
 
                         <label for="banca_cod_banca">Banca:</label>
-                        <select id="banca_cod_banca" name="banca_cod_banca" required>
+                        <select id="banca_cod_banca" name="banca_cod_banca" required title="Selecione a banca">
+                            <option value="" selected>Selecione a Banca</option>
                             <?php
                             $result = $conn->query("SELECT cod_banca, nome FROM banca");
                             while ($row = $result->fetch_assoc()) {
@@ -222,10 +222,12 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_banca']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ nova banca</option>
                         </select>
 
                         <label for="prova_cod_prova">Prova:</label>
-                        <select id="prova_cod_prova" name="prova_cod_prova" required>
+                        <select id="prova_cod_prova" name="prova_cod_prova" required title="Selecione a prova">
+                            <option value="" selected>Selecione a Prova</option>
                             <?php
                             $result = $conn->query("SELECT cod_prova, nome FROM prova");
                             while ($row = $result->fetch_assoc()) {
@@ -233,10 +235,12 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_prova']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ nova prova</option>
                         </select>
 
                         <label for="grau_cod_grau">Grau:</label>
-                        <select id="grau_cod_grau" name="grau_cod_grau" required>
+                        <select id="grau_cod_grau" name="grau_cod_grau" required title="Selecione o grau ">
+                            <option value="" selected>Selecione o Grau</option>
                             <?php
                             $result = $conn->query("SELECT cod_grau, tipo_grau FROM grau");
                             while ($row = $result->fetch_assoc()) {
@@ -244,7 +248,48 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_grau']}' $selected>{$row['tipo_grau']}</option>";
                             }
                             ?>
+                            <option value="add_new">+ novo grau</option>
                         </select>
+
+                        <script>
+                            document.getElementById('disciplina_cod_disciplina').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'disciplina.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('concurso_cod_concurso').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'concurso.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('nivel_cod_nivel').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'nivel.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('banca_cod_banca').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'banca.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('prova_cod_prova').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'prova.php'; // Mude para a página do seu formulário
+                                }
+                            });
+
+                            document.getElementById('grau_cod_grau').addEventListener('change', function() {
+                                if (this.value === 'add_new') {
+                                    window.location.href = 'grau.php'; // Mude para a página do seu formulário
+                                }
+                            });
+                        </script>
+
+
                     </div>
                     <div class="button-container">
                         <button type="submit" class="save-button">Salvar</button>
@@ -252,101 +297,209 @@ if ($cod_questao) {
                     </div>
                 </form>
                 <h2></h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Pergunta</th>
-            <th>Resposta 1</th>
-            <th>Resposta 2</th>
-            <th>Resposta 3</th>
-            <th>Resposta 4</th>
-            <th>Resposta Correta</th> <!-- Nova coluna adicionada -->
-            <th>Disciplina</th>
-            <th>Concurso</th>
-            <th>Nível</th>
-            <th>Banca</th>
-            <th>Prova</th>
-            <th>Grau</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-       $result = $conn->query("SELECT q.cod_questao, q.pergunta, q.resposta1, q.resposta2, q.resposta3, q.resposta4, q.respostacorreta, d.nome as disciplina, c.nome as concurso, n.tipo_nivel, b.nome as banca, p.nome as prova, g.tipo_grau FROM questao q JOIN disciplina d ON q.disciplina_cod_disciplina = d.cod_disciplina JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso JOIN nivel n ON q.nivel_cod_nivel = n.cod_nivel JOIN banca b ON q.banca_cod_banca = b.cod_banca JOIN prova p ON q.prova_cod_prova = p.cod_prova JOIN grau g ON q.grau_cod_grau = g.cod_grau");
+                <div class="table-container">
+    <button id="toggle-questoes" style="background-color: blue; color: white; border: none; padding: 10px 15px; cursor: pointer;">Mostrar Questões Cadastradas</button>
+    <div id="questoes-content" style="display:none;">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pergunta</th>
+                    <th>Resposta 1</th>
+                    <th>Resposta 2</th>
+                    <th>Resposta 3</th>
+                    <th>Resposta 4</th>
+                    <th>Resposta Correta</th>
+                    <th>Disciplina</th>
+                    <th>Concurso</th>
+                    <th>Nível</th>
+                    <th>Banca</th>
+                    <th>Prova</th>
+                    <th>Grau</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $result = $conn->query("
+                    SELECT q.cod_questao, q.pergunta, q.resposta1, q.resposta2, q.resposta3, q.resposta4, q.respostacorreta, 
+                           d.nome as disciplina, c.nome as concurso, n.tipo_nivel, b.nome as banca, p.nome as prova, 
+                           g.tipo_grau 
+                    FROM questao q 
+                    JOIN disciplina d ON q.disciplina_cod_disciplina = d.cod_disciplina 
+                    JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso 
+                    JOIN nivel n ON q.nivel_cod_nivel = n.cod_nivel 
+                    JOIN banca b ON q.banca_cod_banca = b.cod_banca 
+                    JOIN prova p ON q.prova_cod_prova = p.cod_prova 
+                    JOIN grau g ON q.grau_cod_grau = g.cod_grau
+                ");
 
-       while ($row = $result->fetch_assoc()) {
-           $resposta_correta = '';
-       
-           switch ($row['respostacorreta']) {
-               case 'resposta1':
-                   $resposta_correta = $row['resposta1'];
-                   break;
-               case 'resposta2':
-                   $resposta_correta = $row['resposta2'];
-                   break;
-               case 'resposta3':
-                   $resposta_correta = $row['resposta3'];
-                   break;
-               case 'resposta4':
-                   $resposta_correta = $row['resposta4'];
-                   break;
-           }
-       
-           echo "<tr>
-               <td>{$row['pergunta']}</td>
-               <td>{$row['resposta1']}</td>
-               <td>{$row['resposta2']}</td>
-               <td>{$row['resposta3']}</td>
-               <td>{$row['resposta4']}</td>
-               <td>{$row['respostacorreta']}</td>
-               <td>{$row['disciplina']}</td>
-               <td>{$row['concurso']}</td>
-               <td>{$row['tipo_nivel']}</td>
-               <td>{$row['banca']}</td>
-               <td>{$row['prova']}</td>
-               <td>{$row['tipo_grau']}</td>
-               <td class='actions'>
-                   <a href='questao.php?edit={$row['cod_questao']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
-                   <a href='#' onclick='openModal(\"questao.php?delete={$row['cod_questao']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
-               </td>
-           </tr>";
-       }
-       
-        ?>
-    </tbody>
-</table>
+                while ($row = $result->fetch_assoc()) {
+                    $resposta_correta = '';
 
-<!-- Modal de confirmação -->
-<div id="confirm-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <p>Você tem certeza que quer excluir?</p>
-        <button id="confirm-delete">Excluir</button>
-        <button onclick="closeModal()">Cancelar</button>
+                    switch ($row['respostacorreta']) {
+                        case 'resposta1':
+                            $resposta_correta = $row['resposta1'];
+                            break;
+                        case 'resposta2':
+                            $resposta_correta = $row['resposta2'];
+                            break;
+                        case 'resposta3':
+                            $resposta_correta = $row['resposta3'];
+                            break;
+                        case 'resposta4':
+                            $resposta_correta = $row['resposta4'];
+                            break;
+                    }
+
+                    echo "<tr>
+                        <td>{$row['pergunta']}</td>
+                        <td>{$row['resposta1']}</td>
+                        <td>{$row['resposta2']}</td>
+                        <td>{$row['resposta3']}</td>
+                        <td>{$row['resposta4']}</td>
+                        <td>{$resposta_correta}</td>
+                        <td>{$row['disciplina']}</td>
+                        <td>{$row['concurso']}</td>
+                        <td>{$row['tipo_nivel']}</td>
+                        <td>{$row['banca']}</td>
+                        <td>{$row['prova']}</td>
+                        <td>{$row['tipo_grau']}</td>
+                        <td class='actions'>
+                            <a href='questao.php?edit={$row['cod_questao']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
+                            <a href='#' onclick='openModal(\"questao.php?delete={$row['cod_questao']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
+                        </td>
+                    </tr>";
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    var modal = document.getElementById("confirm-modal");
+    document.getElementById("toggle-questoes").addEventListener("click", function() {
+        var questoesContent = document.getElementById("questoes-content");
+        if (questoesContent.style.display === "none") {
+            questoesContent.style.display = "block";
+            this.textContent = "Ocultar Questões Cadastradas"; // Muda o texto do botão
+        } else {
+            questoesContent.style.display = "none";
+            this.textContent = "Mostrar Questões Cadastradas"; // Muda o texto do botão
+        }
+    });
+</script>
+
+
+ <!-- Modal de confirmação -->
+ <div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-body">
+            <p>Você tem certeza que quer excluir?</p>
+            <div class="button-container">
+                <button id="confirm-delete" class="btn-delete">Excluir</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Referência ao modal e aos botões
+    var confirmModal = document.getElementById("confirm-modal");
     var confirmButton = document.getElementById("confirm-delete");
 
+    // Função para abrir o modal
     function openModal(deleteUrl) {
-        modal.style.display = "block";
+        confirmModal.style.display = "block";
         confirmButton.onclick = function() {
             window.location.href = deleteUrl;
         };
     }
 
+    // Função para fechar o modal
     function closeModal() {
-        modal.style.display = "none";
+        confirmModal.style.display = "none";
     }
 
-    // Fechar o modal se o usuário clicar fora do conteúdo
+    // Fechar o modal se o usuário clicar fora dele
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === confirmModal) {
             closeModal();
         }
     };
+
+    // Adicionar eventos de clique para os botões
+    document.querySelector(".close-btn").onclick = closeModal;
+    document.querySelector(".btn-cancel").onclick = closeModal;
 </script>
+
+  <!-- Modais de Sucesso e Erro -->
+  <div id="modal-erro" class="modal modal-erro">
+    <div class="modal-content modal-content-erro">
+        <span class="close-btn close-btn-erro" onclick="closeModal('erro')">&times;</span>
+        <p id="erro-mensagem">Erro!</p>
+        <button id="ok-btn-erro" class="ok-btn ok-btn-erro">OK</button>
+    </div>
+</div>
+
+<div id="modal-sucesso" class="modal modal-sucesso">
+    <div class="modal-content modal-content-sucesso">
+        <span class="close-btn close-btn-sucesso" onclick="closeModal('sucesso')">&times;</span>
+        <p id="sucesso-mensagem">Sucesso!</p>
+        <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
+    </div>
+</div>
+
+
+
+            <script>
+                // Obter elementos dos modais e botões
+                var modalErro = document.getElementById("modal-erro");
+                var modalSucesso = document.getElementById("modal-sucesso");
+
+                var okBtnErro = document.getElementById("ok-btn-erro");
+                var okBtnSucesso = document.getElementById("ok-btn-sucesso");
+
+                // Função para mostrar um modal específico
+                function showModal(type, message) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    var messageElem = modal.querySelector('p');
+                    messageElem.textContent = message;
+                    modal.style.display = "block";
+                }
+
+                // Função para esconder o modal
+                function closeModal(type) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    modal.style.display = "none";
+                }
+
+                // Adicionar eventos de clique para os botões OK
+                okBtnErro.onclick = function() {
+                    closeModal('erro');
+                };
+                okBtnSucesso.onclick = function() {
+                    closeModal('sucesso');
+                };
+
+                // Fechar o modal se o usuário clicar fora dele
+                window.onclick = function(event) {
+                    if (event.target == modalErro || event.target == modalSucesso) {
+                        closeModal(event.target === modalErro ? 'erro' : 'sucesso');
+                    }
+                };
+
+                // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
+                <?php if ($error_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('erro', '<?php echo htmlspecialchars($error_message); ?>');
+                    });
+                <?php elseif ($success_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('sucesso', '<?php echo htmlspecialchars($success_message); ?>');
+                    });
+                <?php endif; ?>
+            </script>
 </body>
 </html>

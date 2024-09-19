@@ -1,33 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banca</title>
+    <title>Banca</title> 
     <link rel="stylesheet" href="bancas.css">
-   
+    <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
 </head>
 <body>
-    <header class="header-prc">
-        <a href="index.php">
-            <img class="logo" src="assets/logo.svg" alt="Logo do Topapirando">
-        </a>
-        <div class="search-bar">
-            <input type="text" placeholder="Digite seu texto aqui">  
-        </div>
-        <div class="links">
-            <a href="sobre.php">Sobre</a>
-            <a href="ajuda.php">Ajuda</a>
-            <a href="login.php">Entrar</a>
-        </div>
+<header>
+        <div class="interface">
+            <div class="logo">
+                <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a> 
+            </div>
+
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="index.php">Início</a></li>
+                    <li><a class="simulados" href="#">Simulados</a></li>
+                    <li><a href="bancas.php">Bancas</a></li>
+                    <li><a class="desempenho" href="#">Desempenho</a></li>
+                </ul>
+            </nav>
+
+            <div class="info">
+                <a href="sobre.php">Sobre</a>
+                <a href="ajuda.php">Ajuda</a>
+                <a href="login.php">Entrar</a>
+            </div>
+        </div> <!--interface-->
     </header>
 
-    <nav class="menu">
-        <a href="index.php">Início</a>
-        <a href="#" id="link-simulados">Simulados</a>
-        <a href="#">Bancas</a> 
-        <a href="#" id="link-desempenho">Desempenho</a>
-    </nav>
+    <!-- Modal Simulados -->
+    <div id="modal-simulados" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, faça o login para ver o simulado.</p>
+            <button id="ok-btn-simulados" class="ok-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal Desempenho -->
+    <div id="modal-desempenho" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, faça o login para ver o seu desempenho.</p>
+            <button id="ok-btn-desempenho" class="ok-btn">OK</button>
+        </div>
+    </div>
 
     <main class="content-container">
         <section id="enem">
@@ -50,32 +70,12 @@
         </section>
     </main>
 
-    <!-- Modal Simulados -->
-    <div id="modal-simulados" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p>Por favor, crie sua conta para ver o simulado.</p>
-            <button id="ok-btn-simulados" class="ok-btn">OK</button>
-        </div>
-    </div>
-
-    <!-- Modal Desempenho -->
-    <div id="modal-desempenho" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p>Por favor, crie sua conta para ver o desempenho.</p>
-            <button id="ok-btn-desempenho" class="ok-btn">OK</button>
-        </div>
-    </div>
-
     <script>
         // Seleciona todos os links externos
         document.querySelectorAll('.external-link').forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault(); // Impede o clique padrão
-                // Exibe o alerta personalizado
                 if (confirm("Você será direcionado para outra página. Clique em 'OK' para continuar ou 'Cancelar' para permanecer na página atual.")) {
-                    // Se o usuário clicar em 'OK', abre o link em uma nova guia
                     window.open(link.href, '_blank');
                 }
             });
@@ -101,14 +101,18 @@
         }
 
         // Adicionar eventos de clique para os links que mostram os modais
-        document.getElementById('link-simulados').addEventListener('click', function(e) {
-            e.preventDefault(); // Previne a navegação padrão
-            showModal(modalSimulados);
+        document.querySelectorAll('.simulados').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Previne a navegação padrão
+                showModal(modalSimulados);
+            });
         });
 
-        document.getElementById('link-desempenho').addEventListener('click', function(e) {
-            e.preventDefault(); // Previne a navegação padrão
-            showModal(modalDesempenho);
+        document.querySelectorAll('.desempenho').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Previne a navegação padrão
+                showModal(modalDesempenho);
+            });
         });
 
         // Adicionar eventos de clique para os botões de fechar e os botões OK

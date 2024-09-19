@@ -11,7 +11,7 @@
 <body>
     <header class="header-prc">
         <a href="adm.php">
-            <img class="logo" src="assets/logo.svg" alt="topapirando">
+            <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
         </a>
         <div class="links">
                 <a id="sobre" href="sobre.html">Sobre</a>
@@ -169,11 +169,6 @@
                 }
             }
             ?>
-<?php if ($error_message): ?>
-    <p class="error-message" style="color: red;"><?php echo htmlspecialchars($error_message); ?></p>
-<?php elseif ($success_message): ?>
-    <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
-<?php endif; ?>
 
 
             <form action="prova.php" method="POST">
@@ -187,7 +182,8 @@
                     <input type="text" id="tempo" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" placeholder="Preencha o tempo (HH:MM:SS)" title="Preencha o tempo" required>
 
                     <label for="banca_cod_banca">Banca:</label>
-                    <select id="banca_cod_banca" name="banca_cod_banca" required>
+                    <select id="banca_cod_banca" name="banca_cod_banca" required title="Selecione a Banca">
+                        <option value="" selected>Selecione a Banca</option>
                         <?php
                         $result = $conn->query("SELECT cod_banca, nome FROM banca");
                         while ($row = $result->fetch_assoc()) {
@@ -195,7 +191,18 @@
                             echo "<option value='{$row['cod_banca']}' $selected>{$row['nome']}</option>";
                         }
                         ?>
+                        <option value="add_new">+ nova banca</option>
                     </select>
+                    <script>
+                    document.getElementById('banca_cod_banca').addEventListener('change', function() {
+                        if (this.value === 'add_new') {
+                            window.location.href = 'banca.php'; // Mude para a página do seu formulário
+                        }
+                    });
+                    </script>
+
+
+
                 </div>
                 <div class="button-container">
                     <button type="submit" class="save-button">Salvar</button>
@@ -204,66 +211,161 @@
             </form>
 
             <h2></h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Tempo</th>
-                        <th>Banca</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $result = $conn->query("SELECT p.cod_prova, p.nome, p.tempo, b.nome as banca FROM prova p JOIN banca b ON p.banca_cod_banca = b.cod_banca");
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                            <td>{$row['nome']}</td>
-                            <td>{$row['tempo']}</td>
-                            <td>{$row['banca']}</td>
-                            <td class='actions'>
-                                <a href='prova.php?edit={$row['cod_prova']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
-                                <a href='#' onclick='openModal(\"prova.php?delete={$row['cod_prova']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
-                            </td>
-                        </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            <div class="table-container">
+    <button id="toggle-table" style="background-color: blue; color: white; border: none; padding: 10px 15px; cursor: pointer;">Mostrar Provas Cadastradas</button>
+    <div id="table-content" style="display:none;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tempo</th>
+                    <th>Banca</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $result = $conn->query("SELECT p.cod_prova, p.nome, p.tempo, b.nome as banca FROM prova p JOIN banca b ON p.banca_cod_banca = b.cod_banca");
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                        <td>" . htmlspecialchars($row['nome']) . "</td>
+                        <td>" . htmlspecialchars($row['tempo']) . "</td>
+                        <td>" . htmlspecialchars($row['banca']) . "</td>
+                        <td class='actions'>
+                            <a href='prova.php?edit={$row['cod_prova']}' class='edit-button' title='Editar'><i class='fas fa-pencil-alt'></i></a>
+                            <a href='#' onclick='openModal(\"prova.php?delete={$row['cod_prova']}\"); return false;' class='delete-button' title='Excluir'><i class='fas fa-trash-alt'></i></a>
+                        </td>
+                    </tr>";
+                }
+                ?>
+            </tbody>
+        </table>
         </div>
-    </main>
 
-    <!-- Modal de confirmação -->
+    </main>
+    <script>
+    document.getElementById("toggle-table").addEventListener("click", function() {
+        var tableContent = document.getElementById("table-content");
+        if (tableContent.style.display === "none") {
+            tableContent.style.display = "block";
+            this.textContent = "Ocultar Provas Cadastradas"; // Muda o texto do botão
+        } else {
+            tableContent.style.display = "none";
+            this.textContent = "Mostrar Provas Cadastradas"; // Muda o texto do botão
+        }
+    });
+</script>
+
+   <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <p>Você tem certeza que quer excluir?</p>
-        <button id="confirm-delete">Excluir</button>
-        <button onclick="closeModal()">Cancelar</button>
+        <div class="modal-body">
+            <p>Você tem certeza que quer excluir?</p>
+            <div class="button-container">
+                <button id="confirm-delete" class="btn-delete">Excluir</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    var modal = document.getElementById("confirm-modal");
+    // Referência ao modal e aos botões
+    var confirmModal = document.getElementById("confirm-modal");
     var confirmButton = document.getElementById("confirm-delete");
 
+    // Função para abrir o modal
     function openModal(deleteUrl) {
-        modal.style.display = "block";
+        confirmModal.style.display = "block";
         confirmButton.onclick = function() {
             window.location.href = deleteUrl;
         };
     }
 
+    // Função para fechar o modal
     function closeModal() {
-        modal.style.display = "none";
+        confirmModal.style.display = "none";
     }
 
-    // Fechar o modal se o usuário clicar fora do conteúdo
+    // Fechar o modal se o usuário clicar fora dele
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === confirmModal) {
             closeModal();
         }
     };
+
+    // Adicionar eventos de clique para os botões
+    document.querySelector(".close-btn").onclick = closeModal;
+    document.querySelector(".btn-cancel").onclick = closeModal;
 </script>
+
+ <!-- Modais de Sucesso e Erro -->
+ <div id="modal-erro" class="modal modal-erro">
+    <div class="modal-content modal-content-erro">
+        <span class="close-btn close-btn-erro" onclick="closeModal('erro')">&times;</span>
+        <p id="erro-mensagem">Erro!</p>
+        <button id="ok-btn-erro" class="ok-btn ok-btn-erro">OK</button>
+    </div>
+</div>
+
+<div id="modal-sucesso" class="modal modal-sucesso">
+    <div class="modal-content modal-content-sucesso">
+        <span class="close-btn close-btn-sucesso" onclick="closeModal('sucesso')">&times;</span>
+        <p id="sucesso-mensagem">Sucesso!</p>
+        <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
+    </div>
+</div>
+
+
+
+            <script>
+                // Obter elementos dos modais e botões
+                var modalErro = document.getElementById("modal-erro");
+                var modalSucesso = document.getElementById("modal-sucesso");
+
+                var okBtnErro = document.getElementById("ok-btn-erro");
+                var okBtnSucesso = document.getElementById("ok-btn-sucesso");
+
+                // Função para mostrar um modal específico
+                function showModal(type, message) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    var messageElem = modal.querySelector('p');
+                    messageElem.textContent = message;
+                    modal.style.display = "block";
+                }
+
+                // Função para esconder o modal
+                function closeModal(type) {
+                    var modal = type === 'erro' ? modalErro : modalSucesso;
+                    modal.style.display = "none";
+                }
+
+                // Adicionar eventos de clique para os botões OK
+                okBtnErro.onclick = function() {
+                    closeModal('erro');
+                };
+                okBtnSucesso.onclick = function() {
+                    closeModal('sucesso');
+                };
+
+                // Fechar o modal se o usuário clicar fora dele
+                window.onclick = function(event) {
+                    if (event.target == modalErro || event.target == modalSucesso) {
+                        closeModal(event.target === modalErro ? 'erro' : 'sucesso');
+                    }
+                };
+
+                // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
+                <?php if ($error_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('erro', '<?php echo htmlspecialchars($error_message); ?>');
+                    });
+                <?php elseif ($success_message): ?>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        showModal('sucesso', '<?php echo htmlspecialchars($success_message); ?>');
+                    });
+                <?php endif; ?>
+            </script>
 </body>
 </html>

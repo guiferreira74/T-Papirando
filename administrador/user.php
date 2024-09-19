@@ -15,25 +15,28 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
     <link   rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
 </head>
 <body>
-    <div id="conteudo-header">
-        <header class="header-prc">
-           <a href="user.php"><img class="logo" src="assets/Logo.svg"/> </a>
-            <div class="search-bar">
-                <input type="text" placeholder="Digite seu texto aqui">  
-            </div>
-            <div class="links">
-                <a id="sobre" href="sobre.php">Sobre</a>
+<header>
+        <div class="interface">
+            <div class="logo">
+                <a href="user.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+            </div><!--logo-->
+
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="user.php" class="inicio">Início</a></li>
+                    <li><a href="simulados.php" class="simulados">Simulados</a></li>
+                    <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
+                </ul>
+            </nav>
+
+            <div class="info"> 
+                <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
                 <a href="sair.php">Sair</a>
             </div>
-        </header>
-        <div class="menu">
-            <a href="user.php">Inicio</a>
-            <a href="simulados.php">Simulados</a>
-            <a href="bancas.php">Bancas</a>
-            <a href="desempenhos.php">Desempenho</a>
-        </div>
-     </div>
+        </div> <!--interface-->
+    </header>
 
      <main>
 

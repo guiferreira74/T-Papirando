@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
 }
 
 .header-prc {
@@ -23,10 +24,9 @@ body {
 }
 
 .logo {
-    max-height: 237.85px;
-    max-width: 300px;
-    padding-top: 30px;
+    width: 250px;
 }
+
 
 .search-bar {
     flex: 2;
@@ -272,7 +272,7 @@ table {
     width: 200%; /* Ajusta a largura da tabela se necessário */
     border-collapse: collapse;
     margin: 0 auto; /* Centraliza a tabela horizontalmente */
-    transform: translateX(-300px); /* Move a tabela 20px para a esquerda */
+    transform: translateX(-100px); /* Move a tabela 20px para a esquerda */
 }
 
 
@@ -402,7 +402,157 @@ p {
 hr {
     color: black;
 }
-
-.logo{
-    width: 400px;
+/* Modal */
+.modal {
+    display: none; /* Ocultado por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
 }
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.modal-body {
+    margin-top: 20px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn-delete,
+.btn-cancel {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.btn-cancel {
+    background-color: #e74c3c; /* Vermelho para Cancelar */
+}
+
+.btn-delete:hover,
+.btn-cancel:hover {
+    opacity: 0.8;
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+/* Estilos específicos para o botão de fechar no modal de erro */
+.modal-erro .close-btn {
+    color: #e74c3c; /* Cor vermelha para o botão de fechar no modal de erro */
+}
+
+.modal-erro .close-btn:hover,
+.modal-erro .close-btn:focus {
+    color: #c0392b; /* Cor vermelha mais escura no hover e focus */
+}
+
+/* Estilos específicos para o modal de erro */
+.modal-erro p {
+    color: #e74c3c; /* Texto em vermelho para erro */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-erro .ok-btn-erro {
+    background-color: #2118CD; /* Botão azul para erro */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-erro .ok-btn-erro:hover {
+    background-color: #2980b9; /* Cor um pouco mais escura para o hover */
+}
+
+/* Estilos específicos para o modal de sucesso */
+
+/* Estilos específicos para o botão de fechar no modal de sucesso */
+.modal-sucesso .close-btn {
+    color: #2118CD; /* Cor azul para o botão de fechar no modal de sucesso */
+}
+
+.modal-sucesso .close-btn:hover,
+.modal-sucesso .close-btn:focus {
+    color: #1a14a6; /* Cor azul mais escura no hover e focus */
+}
+
+.modal-sucesso p {
+    color: #2118CD; /* Texto em azul para sucesso */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-sucesso .ok-btn-sucesso {
+    background-color: #2118CD; /* Botão azul para sucesso */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-sucesso .ok-btn-sucesso:hover {
+    background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+

@@ -22,7 +22,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 <body>
     <div id="conteudo-header">
         <header class="header-prc">
-           <a href="adm.php"><img class="logo" src="assets/Logo.svg"/> </a>
+           <a href="adm.php"><img class="logo" src="assets/logo_papirando_final.svg"/> </a>
             <div class="search-bar">
                 <div class="links">
                     <a id="sobre" href="#">Sobre</a>

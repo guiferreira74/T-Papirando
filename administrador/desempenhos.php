@@ -9,24 +9,28 @@
 <body>
 
 <div id="conteudo-header">
-        <header class="header-prc">
-           <a href="user.php"><img class="logo" src="assets/logo.svg" alt="topapirando"></a>
-            <div class="search-bar">
-                <input type="text" placeholder="Digite seu texto aqui">  
+    <header>
+        <div class="interface">
+            <div class="logo">
+                <a href="user.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
-            <div class="links">
+
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="user.php">Início</a></li>
+                    <li><a class="simulados" href="#">Simulados</a></li>
+                    <li><a href="bancas.php">Bancas</a></li>
+                    <li><a class="desempenho" href="#">Desempenho</a></li>
+                </ul>
+            </nav>
+
+            <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="login.php">Entrar</a>
+                <a href="sair.php">Sair</a>
             </div>
-        </header>
-        <div class="menu">
-            <a href="user.php">Inicio</a>
-            <a href="simulados.php">Simulados</a>
-            <a href="bancas.php">Bancas</a>
-            <a href="desempenhos.php">Desempenho</a>
-        </div>
-    
+        </div> <!--interface-->
+    </header>
     </div>
 
  </div>
