@@ -11,21 +11,21 @@
 <header>
     <div class="interface">
         <div class="logo">
-            <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+            <a href="index.php"><img class="logo" src="./administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
         </div><!--logo-->
 
         <nav class="menu-desktop">
             <ul>
                 <li><a href="index.php" class="simulados">Início</a></li>
                 <li><a href="simulados.php" class="simulados" id="link-simulados">Simulados</a></li>
-                <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                <li><a href="./estudante/bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
                 <li><a href="desempenhos.php" class="desempenho" id="link-desempenho">Desempenho</a></li>
             </ul>
         </nav>
 
         <div class="info"> 
-            <a href="sobre.php">Sobre</a>
-            <a href="ajuda.php">Ajuda</a>
+            <a href="./estudante/sobre.php">Sobre</a>
+            <a href="./estudante/ajuda.php">Ajuda</a>
             <a href="login.php">Entrar</a>
         </div>
     </div> <!--interface-->

@@ -1,10 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
-    header("Location: login.php");
+    header("Location: ../administrador/login.php");
     exit();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +20,7 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
 <header>
         <div class="interface">
             <div class="logo">
-                <a href="user.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+                <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
             </div><!--logo-->
 
             <nav class="menu-desktop">
@@ -33,7 +35,7 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
             <div class="info"> 
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="sair.php">Sair</a>
+                <a href="../index.php">Sair</a>
             </div>
         </div> <!--interface-->
     </header>
@@ -48,8 +50,8 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
             </div>
 
             <div class="enbaixo">
-                <img src="assets/imagem celular.svg" alt="">
-                <img src="assets/imagem noteboooke.svg" alt="">
+                <img src="../administrador/assets/imagem celular.svg " alt="">
+                <img src="../administrador/assets/imagem noteboooke.svg" alt="">
             </div>
 
         </div>

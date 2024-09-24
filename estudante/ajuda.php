@@ -12,12 +12,12 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a> 
+                <a href="../index.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
 
             <nav class="menu-desktop">
                 <ul>
-                    <li><a href="index.php">Início</a></li>
+                    <li><a href="../index.php">Início</a></li>
                     <li><a class="simulados" href="#">Simulados</a></li>
                     <li><a href="bancas.php">Bancas</a></li>
                     <li><a class="desempenho" href="#">Desempenho</a></li>
@@ -27,7 +27,7 @@
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="login.php">Entrar</a>
+                <a href="../login.php">Entrar</a>
             </div>
         </div> <!--interface-->
     </header>
@@ -39,14 +39,14 @@
                 <p class="topo-desc">Dúvidas frequentes</p>
             </div>
             <div class="img">
-                <img src="assets/faq2.svg" alt="">
+                <img src="../administrador/assets/faq2.svg" alt="">
             </div>
         </div>
         
         <div class="faq">
             <div class="faq-name">
                 <h1 class="faq-top"> Principais <br> Dúvidas</h1>
-                <img class="faq-img" src="assets/faq.svg" alt="">
+                <img class="faq-img" src="../administrador/assets/faq.svg" alt="">
             </div>
             <div class="faq-box">
                 <div class="faq-wrapper">

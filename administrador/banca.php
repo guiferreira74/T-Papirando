@@ -4,27 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Bancas</title>
-    <link rel="stylesheet" href="nivel.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="banca.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="conteudo-header">
-        <header class="header-prc">
-            <a href="adm.php"><img class="logo" src="assets/logo_papirando_final.svg"/> </a>
-            <div class="search-bar">
-                <div class="links">
-                    <a id="sobre" href="#">Sobre</a>
-                    <a href="#">Ajuda</a>
-                    <a href="#">Sair</a>
-                    <img id="user" src="assets/user.svg" alt="">
-                </div>
-            </div>
-        </header>
-    </div>
+    <header class="header-prc">
+        <a href="adm.php">
+            <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
+        </a>
+        <div class="links">
+            <a id="sobre" href="sobre.html">Sobre</a>
+            <a href="#">Ajuda</a>
+            <a href="#">Sair</a>
+            <img id="user" src="assets/user.svg" alt="">
+        </div>
+    </header>
 
-    <!-- Sidebar -->
     <div class="d-flex">
+        <!-- Sidebar -->
         <div id="sidebar" class="bg-light border-right">
             <div class="sidebar-header p-3">
                 <h4>Menu</h4>
@@ -32,7 +30,7 @@
             <ul class="list-unstyled components">
                 <li><a href="adm.php">Início</a></li>
                 <li><a href="#">Ajuda</a></li>
-                <li><a href="#">Parâmetros </a></li>
+                <li><a href="#">Parâmetros</a></li>
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
@@ -41,7 +39,6 @@
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
                 <li><a href="instituicao.php">Instituições</a></li>
-                <li><a href="simulado.php">Simulados</a></li>
                 <li><a href="prova.php">Provas</a></li>
                 <li><a href="concurso.php">Concursos</a></li>
                 <li><a href="questao.php">Questões</a></li>
@@ -69,7 +66,7 @@
                     $link = $_POST['link'];
                     $cod_banca = $_POST['cod_banca'] ?? null;
 
-                    // Verificar se o nome da banca já está registrado
+                    // Verificar se a banca já está registrada
                     $check_sql = "SELECT * FROM banca WHERE nome='$nome'";
                     if ($cod_banca) {
                         $check_sql .= " AND cod_banca != $cod_banca";
@@ -106,7 +103,7 @@
                     }
                 }
 
-                // Formulário para criar/atualizar registros
+                // Preencher os campos do modal para edição
                 $cod_banca = $_GET['edit'] ?? null;
                 $nome = '';
                 $link = '';
@@ -121,52 +118,57 @@
                 }
                 ?>
 
-                <form action="banca.php" method="POST">
-                    <input type="hidden" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
-                    <div id="input">
-                        <label for="nome">Nome da Banca:</label>
-                        <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" title="Preencha o nome da banca" required>
-                    </div>
-                    <div id="input">
-                        <label for="link">Link da Banca:</label>
-                        <input type="text" id="link" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" title="Preencha o link da banca" required>
-                    </div>
-                    <div class="button-container">
-                        <button type="submit" class="save-button">Salvar</button>
-                        <button type="reset" class="clear-button">Limpar</button>
-                    </div>
-                </form>
+                <div class="text-center mb-3">
+                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Banca</button>
+                </div>
 
                 <div class="table-container">
-                    <button id="toggle-table" style="background-color: blue; color: white; border: none; padding: 10px 15px; cursor: pointer;">Mostrar a Banca Cadastrada</button>
-                    <div id="table-content" style="display:none;">
-                        <?php
-                        $result = $conn->query("SELECT * FROM banca");
+                    <?php
+                    $result = $conn->query("SELECT * FROM banca");
 
-                        if ($result->num_rows > 0) {
-                            echo "<table class='table'>";
-                            echo "<tr><th>Nome</th><th>Link</th><th>Ações</th></tr>";
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['link']) . "</td>";
-                                echo "<td class='actions'>";
-                                echo "<a class='edit-button' href='banca.php?edit=" . $row['cod_banca'] . "' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                                echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                            echo "</table>";
-                        } else {
-                            echo "<p>Nenhum registro encontrado.</p>";
+                    if ($result->num_rows > 0) {
+                        echo "<table class='table'>";
+                        echo "<tr><th>Nome da Banca</th><th>Link</th><th>Ações</th></tr>";
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['link']) . "</td>";
+                            echo "<td class='actions'>";
+                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                            echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
+                            echo "</td>";
+                            echo "</tr>";
                         }
-
-                        $conn->close();
-                        ?>
-                    </div>
+                        echo "</table>";
+                    } else {
+                        echo "<p>Nenhum registro encontrado.</p>";
+                    }
+                    ?>
                 </div>
             </div>
         </main>
+
+        <!-- Modal de Adicionar/Editar Banca -->
+        <div id="add-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeAddModal()">&times;</span>
+                <form action="banca.php" method="POST">
+                    <input type="hidden" id="cod_banca" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
+                    <div id="input">
+                        <label for="nome_modal">Nome da Banca:</label>
+                        <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" required>
+                    </div>
+                    <div id="input">
+                        <label for="link_modal">Link da Banca:</label>
+                        <input type="text" id="link_modal" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" required>
+                    </div>
+                    <div class="button-container">
+                        <button type="submit" class="save-button">Salvar</button>
+                        <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Modal de confirmação -->
         <div id="confirm-modal" class="modal">
@@ -181,44 +183,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            // Referência ao modal e aos botões
-            var confirmModal = document.getElementById("confirm-modal");
-            var confirmButton = document.getElementById("confirm-delete");
-
-            // Função para abrir o modal
-            function openModal(deleteUrl) {
-                confirmModal.style.display = "block";
-                confirmButton.onclick = function() {
-                    window.location.href = deleteUrl;
-                };
-            }
-
-            // Função para fechar o modal
-            function closeModal() {
-                confirmModal.style.display = "none";
-            }
-
-            // Fechar o modal se o usuário clicar fora dele
-            window.onclick = function(event) {
-                if (event.target === confirmModal) {
-                    closeModal();
-                }
-            };
-
-            // Tabela toggle
-            document.getElementById('toggle-table').addEventListener('click', function() {
-                var tableContent = document.getElementById('table-content');
-                if (tableContent.style.display === 'none') {
-                    tableContent.style.display = 'block';
-                    this.textContent = 'Ocultar a Banca Cadastrada'; // Atualiza o texto do botão
-                } else {
-                    tableContent.style.display = 'none';
-                    this.textContent = 'Mostrar a Banca Cadastrada'; // Atualiza o texto do botão
-                }
-            });
-        </script>
 
         <!-- Modais de Sucesso e Erro -->
         <div id="modal-erro" class="modal modal-erro">
@@ -238,56 +202,116 @@
         </div>
 
         <script>
-            // Obter elementos dos modais e botões
+            // Função para criar um cookie
+            function setCookie(name, value, days) {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                const expires = "expires=" + d.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            }
+
+            // Função para obter um cookie
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // Referência aos modais
+            var confirmModal = document.getElementById("confirm-modal");
+            var addModal = document.getElementById("add-modal");
             var modalErro = document.getElementById("modal-erro");
             var modalSucesso = document.getElementById("modal-sucesso");
+            var confirmButton = document.getElementById("confirm-delete");
 
-            var okBtnErro = document.getElementById("ok-btn-erro");
-            var okBtnSucesso = document.getElementById("ok-btn-sucesso");
-
-            // Função para mostrar um modal específico
-            function showModal(type, message) {
-                var modal = type === 'erro' ? modalErro : modalSucesso;
-                var messageElem = modal.querySelector('p');
-                messageElem.textContent = message;
-                modal.style.display = "block";
+            // Função para abrir o modal de adicionar
+            function openAddModal() {
+                document.getElementById('nome_modal').value = getCookie('banca_nome') || '';
+                document.getElementById('link_modal').value = getCookie('banca_link') || '';
+                addModal.style.display = "block";
             }
 
-            // Função para esconder o modal
-            function closeModal(type) {
-                if (type) {
-                    var modal = type === 'erro' ? modalErro : modalSucesso;
-                    modal.style.display = "none";
-                } else {
-                    confirmModal.style.display = "none"; // Fecha o modal de confirmação
-                }
+            // Função para fechar o modal de adicionar
+            function closeAddModal() {
+                setCookie('banca_nome', document.getElementById('nome_modal').value, 1);
+                setCookie('banca_link', document.getElementById('link_modal').value, 1);
+                addModal.style.display = "none";
             }
-
-            // Adicionar eventos de clique para os botões OK
-            okBtnErro.onclick = function() {
-                closeModal('erro');
-            };
-            okBtnSucesso.onclick = function() {
-                closeModal('sucesso');
-            };
 
             // Fechar o modal se o usuário clicar fora dele
             window.onclick = function(event) {
-                if (event.target == modalErro || event.target == modalSucesso) {
-                    closeModal(event.target === modalErro ? 'erro' : 'sucesso');
+                if (event.target === confirmModal) {
+                    closeModal();
+                }
+                if (event.target === addModal) {
+                    closeAddModal();
+                }
+                if (event.target === modalErro) {
+                    closeModal('erro');
+                }
+                if (event.target === modalSucesso) {
+                    closeModal('sucesso');
                 }
             };
+
+            // Função para abrir o modal de confirmação
+            function openModal(deleteUrl) {
+                confirmModal.style.display = "block";
+                confirmButton.onclick = function() {
+                    window.location.href = deleteUrl;
+                };
+            }
+
+            // Limpar formulário
+            function clearForm() {
+                document.getElementById("nome_modal").value = '';
+                document.getElementById("link_modal").value = '';
+            }
 
             // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
             <?php if ($error_message): ?>
                 document.addEventListener('DOMContentLoaded', function() {
-                    showModal('erro', '<?php echo htmlspecialchars($error_message); ?>');
+                    document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
+                    modalErro.style.display = "block";
                 });
             <?php elseif ($success_message): ?>
                 document.addEventListener('DOMContentLoaded', function() {
-                    showModal('sucesso', '<?php echo htmlspecialchars($success_message); ?>');
+                    document.getElementById('sucesso-mensagem').textContent = '<?php echo htmlspecialchars($success_message); ?>';
+                    modalSucesso.style.display = "block";
                 });
             <?php endif; ?>
+
+            // Adicionando funcionalidade aos botões OK dos modais
+            document.getElementById("ok-btn-erro").onclick = function() {
+                closeModal('erro');
+            };
+            document.getElementById("ok-btn-sucesso").onclick = function() {
+                closeModal('sucesso');
+            };
+
+            // Função para abrir o modal de edição
+            function openEditModal(data) {
+                document.getElementById('cod_banca').value = data.cod_banca;
+                document.getElementById('nome_modal').value = data.nome;
+                document.getElementById('link_modal').value = data.link;
+                addModal.style.display = "block";
+            }
+
+            // Função para fechar modais
+            function closeModal(modalType) {
+                if (modalType === 'erro') {
+                    modalErro.style.display = "none";
+                } else if (modalType === 'sucesso') {
+                    modalSucesso.style.display = "none";
+                } else {
+                    confirmModal.style.display = "none";
+                }
+            }
         </script>
     </body>
 </html>

@@ -136,26 +136,38 @@ body {
 
 .table-container {
     margin-top: 30px;
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    max-width: 1200px; /* Aumenta a largura máxima da tabela */
+    display: flex; /* Para centralizar a tabela */
+    justify-content: center; /* Centraliza a tabela horizontalmente */
 }
 
 table {
-    width: 200%;
+    width: 100%; /* Use 100% para ocupar o espaço disponível */
+    min-width: 900px; /* Define uma largura mínima para a tabela */
     border-collapse: collapse;
 }
 
 th, td {
-    padding: 10px;
+    padding: 15px; /* Aumenta o espaçamento nas células */
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-th {
-    background-color: #f4f4f4;
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* Adicionando um estilo para centralizar a tabela no corpo */
+#corpo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo dentro do corpo */
 }
+
+
 
 a.edit-button, a.delete-button {
     display: inline-block;
@@ -269,28 +281,6 @@ a.delete-button:hover {
     color: red;
 }
 
-/* Estilos para a tabela */
-table {
-    width: 150%;
-    border-collapse: collapse;
-    transform: translateX(-130px);
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end; /* Alinha os ícones no lado direito */
-    gap: 10px; /* Espaçamento entre os ícones */
-}
 
 .edit-button, .delete-button {
     color: #333;

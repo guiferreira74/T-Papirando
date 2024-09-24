@@ -12,49 +12,49 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <img src="assets/logo_papirando_final.svg" alt="Logo">     
+                <img src="../administrador/assets/logo_papirando_final.svg" alt="Logo">     
             </div>
             <nav class="menu-desktop">
                 <ul>
-                    <li><a href="index.php">Início</a></li>
-                    <li><a href="simulados.php">Simulados</a></li>
+                    <li><a href="../index.php">Início</a></li>
+                    <li><a href="#" class="simulados-link">Simulados</a></li>
                     <li><a href="bancas.php">Bancas</a></li>
-                    <li><a href="desempenhos.php">Desempenho</a></li>
+                    <li><a href="#" class="desempenho-link">Desempenho</a></li>
+                  
                 </ul>
             </nav>
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="login.php">Entrar</a>
+                <a href="../login.php">Entrar</a>
             </div>
         </div>
     </header>
 
     <!-- Conteúdo Principal -->
     <main>
-        <div class="container">
-            <div class="encima">
-                <div class="dev">
-                    <h1>Desenvolvedores</h1>
-                    <ul>
-                        <li>Luca Kaly da Cunha</li>
-                        <li>Breno Soares Francisco</li>
-                        <li>Marcos Antonio</li>
-                        <li>Guilherme Ferreira</li>
-                    </ul>
-                </div>
-                <img class="grupo" src="assets/grupo.svg" alt="Grupo"> 
+        <div class="sobre-container">
+            <div class="desenvolvedores">
+                <h2>Desenvolvedores</h2>
+                <ul>
+                    <li>Breno Soares Francisco</li>
+                    <li>Luca Kalyl da Cunha Beckman</li>
+                    <li>Guilherme Ferreira Alves Biserra</li>
+                    <li>Marcos Antonio Pinheiro de Queiroz</li>
+                </ul>
             </div>
+            <div class="foto">
+                <img src="../administrador/assets/grupo.svg" alt="Foto dos Desenvolvedores">
+            </div>
+        </div>
 
-            <div class="embaixo">
-                <img id="faetec" src="assets/Faetec.svg" alt="FAETEC"> 
-                <div class="text">
-                    <h3>Créditos e Agradecimentos</h3>
-                    <p>Gostaríamos de agradecer primeiramente a Deus, por nos dar força e disposição para nos levantar todos os dias. Agradecemos também nosso professor orientador Gustavo Mendonça por toda ajuda e esforço dedicado a nós durante nosso percurso de aprendizado.
-                    Agradecemos à Professora Lidiana Silva por toda disponibilidade e atenção para tirar dúvidas e reforço dado a nós durante a realização do nosso trabalho de conclusão de curso.
-                    Agradecemos também à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio não só em nosso projeto, mas pela dedicação em estar todos os dias procurando o melhor para seus alunos.
-                    Agradecemos também a todos os profissionais da instituição que trabalham todos os dias para que nosso ambiente escolar fique o melhor possível.</p>
-                </div>
+        <div class="creditos-container">
+            <div class="foto">
+                <img src="../administrador/assets/Faetec.svg" alt="Foto de Créditos">
+            </div>
+            <div class="creditos">
+                <h2>Créditos e Agradecimentos</h2>
+                <p>Gostaríamos de agradecer primeiramente a Deus, por nos dar força e disposição para nos levantar todos os dias. Agradecemos também nosso professor orientador Gustavo Mendonça por toda ajuda e esforço dedicado a nós por todo o nosso percurso de aprendizado. Agradecemos a Professora, Lidiana Silva por toda disponibilidade e atenção para tirar dúvidas e reforço dado a nós durante a realização do nosso trabalho de conclusão de curso. Agradecemos também à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio não só em nosso projeto, mas pela dedicação em estar todos os dias procurando o melhor para seus alunos. Agradecemos também a todos os profissionais da instituição que trabalham todos os dias para que nosso ambiente escolar fique o melhor possível.</p>
             </div>
         </div>
     </main>
@@ -63,7 +63,7 @@
     <div id="modal-simulados" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor,faça o login para ver o simulado.</p>
+            <p>Por favor, faça o login para ver o simulado.</p>
             <button id="ok-btn-simulados" class="ok-btn">OK</button>
         </div>
     </div>
@@ -72,7 +72,7 @@
     <div id="modal-desempenho" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor,faça o login para ver o seu desempenho.</p>
+            <p>Por favor, faça o login para ver o seu desempenho.</p>
             <button id="ok-btn-desempenho" class="ok-btn">OK</button>
         </div>
     </div>
@@ -98,16 +98,14 @@
         }
 
         // Adicionar eventos de clique para os links Simulados e Desempenho
-        document.querySelectorAll('.menu-desktop a').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                if (this.textContent === "Simulados") {
-                    e.preventDefault(); // Previne a navegação padrão
-                    showModal(modalSimulados);
-                } else if (this.textContent === "Desempenho") {
-                    e.preventDefault(); // Previne a navegação padrão
-                    showModal(modalDesempenho);
-                }
-            });
+        document.querySelector('.simulados-link').addEventListener('click', function(e) {
+            e.preventDefault(); // Previne a navegação padrão
+            showModal(modalSimulados);
+        });
+
+        document.querySelector('.desempenho-link').addEventListener('click', function(e) {
+            e.preventDefault(); // Previne a navegação padrão
+            showModal(modalDesempenho);
         });
 
         // Adicionar eventos de clique para os botões de fechar e os botões OK

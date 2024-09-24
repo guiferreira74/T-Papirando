@@ -1,133 +1,203 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
-}
-
-.header-prc {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    height: 85px;
-    width: 100%;
-    background-color: #2118CD;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0;
     box-sizing: border-box;
-    justify-content: space-around;
 }
 
-.logo {
-    width: 250px;
-}
-
-.search-bar {
-    flex: 2;
-    text-align: center;
-}
-
-.search-bar input {
-    width: 300px;
-    height: 15px;
-    padding: 8px;
-    border-radius: 9.75px;
-    border: 1px solid #ccc;
-}
-
-.links {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-right: 250px;
-    margin-top: 15px;
-}
-
-.links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding-left: 30px;
-}
-
-.d-flex {
-    display: flex;
-}
-
-#sidebar {
+body {
+    font-family: "Poppins", system-ui;
+    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
-    height: 100vh;
-    width: 250px;
 }
 
-.sidebar-header h4 {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: none;
+.interface {
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
-.components {
-    padding-left: 0;
+.flex {
+    margin-top: 100px;
+    display: flex;
 }
 
-.components hr {
-    margin: 10px 0;
-    border-color: black;
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Espaçamento entre os itens */
 }
 
-#sidebar .components a {
-    color: #343a40;
+/* Ajuste no tamanho da fonte dos itens do menu */
+header nav ul li a {
+    font-size: 18px; /* Tamanho da fonte dos itens do menu */
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+    color: white;
+}
+
+/* Estilo do cabeçalho */
+.logo img {
+    width: 200px; /* Ajuste da largura da logo */
+    margin-left: -50px;
+    align-items: center;
+    padding-top: 10px;
+}
+
+header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
+    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    color: white;
     text-decoration: none;
-    padding: 8px 20px;
-    display: block;
-    font-weight: 500;
-    text-align: center;
+    display: inline-block;
+    transition: .2s;
 }
 
-#sidebar .components a:hover, 
-#sidebar .components a.active {
-    background-color: #2118CD;
-    color: #fff;
-    border-radius: 5px;
+header a:hover {
+    color: yellow;
+    transform: scale(1.05);
 }
 
-/* Conteúdo principal */
-.main-content {
+header nav ul {
+    list-style: none;
+    display: flex; /* Exibe os itens na horizontal */
+}
+
+header nav ul li {
+    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+}
+
+.btn-contato {
+    display: flex; /* Garante que o botão esteja na mesma linha */
+    align-items: center;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+
+header .info ul li a {
+    display: flex;
+    flex-direction: row;
+}
+
+#sidebar{
+    position: fixed;
+    display: flex;
+    background: #f0f0f0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    float: left;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+    width: 200px;
+    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    z-index: 10;
+    padding-top: 100px;
+    overflow-y: auto; /* Adiciona barra de rolagem vertical */
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+}
+
+#sidebar ul {
+    list-style: none; /* Remove os marcadores de lista */
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar ul li {
+    padding: 20px 20px; /* Espaçamento entre os itens */
+    margin-bottom: 10px; /* Espaçamento inferior entre os itens */
+}
+
+#sidebar ul li a {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+#sidebar ul li a:hover {
+    background-color: #dcdcdc; /* Cor de fundo ao passar o mouse */
+    color: #2118CD; /* Cor do texto e ícone ao passar o mouse */
+    border-radius: 8px;
+}
+
+#sidebar ul li a .icon i {
+    transition: color 0.3s; /* Transição suave ao mudar de cor */
+}
+
+#sidebar ul li a:hover .icon i {
+    color: #2118CD; /* Cor do ícone ao passar o mouse */
+}
+
+#sidebar ul li .txt {
     flex-grow: 1;
-    padding: 20px;
 }
+
+#sidebar ul li .icon {
+    margin-right: 20px; /* Aumenta o espaço entre o ícone e o texto */
+}
+
+h1{
+    text-align: center; /* Centraliza o texto */
+    margin: 20px auto; /* Espaçamento automático nas laterais e superior/inferior */
+    font-size: 18px; /* Ajuste o tamanho da fonte, se necessário */
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    flex-grow: 1;
+    padding: 60px;
+    margin-left: 100px; /* Ajuste este valor para mover para a direita */
+}
+
 
 .container {
-    width: 100%;
-    height: 100%;
+    text-align: center; /* Centraliza o texto dentro da container */
 }
 
 .encima {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    padding: 20px;
-    margin-top: 50px;
+    margin-bottom: 20px; /* Espaço entre a parte de cima e a parte de baixo */
 }
 
 .enbaixo {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    margin-top: 100px;
+    justify-content: center; /* Centraliza as imagens */
+    gap: 20px; /* Espaço entre as imagens */
 }
 
-.enbaixo img {
-    max-width: 45%;
-    height: auto;
-    width: 400px;
-}
 
 #pesquisa {
     margin-top: 50px;
@@ -157,10 +227,24 @@ hr {
 .header-prc .links span {
     color: white; /* Define a cor do texto como branco */
 }
-/* Centralizar o modal */
+.modal {
+    z-index: 1050; /* Z-index do modal deve ser maior que o cabeçalho */
+}
+
 .modal-dialog {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Altura mínima da tela */
+}
+
+.modal-header {
+    border-bottom: none; /* Remove a borda inferior do cabeçalho do modal */
+}
+
+.modal-footer {
+    border-top: none; /* Remove a borda superior do rodapé do modal */
+}
+.mensagem-boas-vindas {
+    color: white; /* Define a cor do texto como branco */
 }

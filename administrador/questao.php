@@ -39,7 +39,6 @@
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
                 <li><a href="instituicao.php">Instituições</a></li>
-                <li><a href="simulado.php">Simulados</a></li>
                 <li><a href="prova.php">Provas</a></li>
                 <li><a href="concurso.php">Concursos</a></li>
                 <li><a href="questao.php">Questões</a></li>
@@ -183,7 +182,7 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_disciplina']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ nova disciplina</option>
+                            
                         </select>
 
                         <label for="concurso_cod_concurso">Concurso:</label>
@@ -196,7 +195,7 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_concurso']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ novo concurso</option>
+                            
                         </select>
 
                         <label for="nivel_cod_nivel">Nível:</label>
@@ -209,7 +208,7 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_nivel']}' $selected>{$row['tipo_nivel']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ novo nível</option>
+                            
                         </select>
 
                         <label for="banca_cod_banca">Banca:</label>
@@ -222,7 +221,7 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_banca']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ nova banca</option>
+                            
                         </select>
 
                         <label for="prova_cod_prova">Prova:</label>
@@ -235,7 +234,7 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_prova']}' $selected>{$row['nome']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ nova prova</option>
+                           
                         </select>
 
                         <label for="grau_cod_grau">Grau:</label>
@@ -248,46 +247,10 @@ if ($cod_questao) {
                                 echo "<option value='{$row['cod_grau']}' $selected>{$row['tipo_grau']}</option>";
                             }
                             ?>
-                            <option value="add_new">+ novo grau</option>
+                           
                         </select>
 
-                        <script>
-                            document.getElementById('disciplina_cod_disciplina').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'disciplina.php'; // Mude para a página do seu formulário
-                                }
-                            });
-
-                            document.getElementById('concurso_cod_concurso').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'concurso.php'; // Mude para a página do seu formulário
-                                }
-                            });
-
-                            document.getElementById('nivel_cod_nivel').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'nivel.php'; // Mude para a página do seu formulário
-                                }
-                            });
-
-                            document.getElementById('banca_cod_banca').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'banca.php'; // Mude para a página do seu formulário
-                                }
-                            });
-
-                            document.getElementById('prova_cod_prova').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'prova.php'; // Mude para a página do seu formulário
-                                }
-                            });
-
-                            document.getElementById('grau_cod_grau').addEventListener('change', function() {
-                                if (this.value === 'add_new') {
-                                    window.location.href = 'grau.php'; // Mude para a página do seu formulário
-                                }
-                            });
-                        </script>
+                    
 
 
                     </div>
@@ -297,9 +260,7 @@ if ($cod_questao) {
                     </div>
                 </form>
                 <h2></h2>
-                <div class="table-container">
-    <button id="toggle-questoes" style="background-color: blue; color: white; border: none; padding: 10px 15px; cursor: pointer;">Mostrar Questões Cadastradas</button>
-    <div id="questoes-content" style="display:none;">
+    <div id="questoes-content"> <!-- Remova style="display:none;" -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -320,22 +281,19 @@ if ($cod_questao) {
             </thead>
             <tbody>
                 <?php
-                $result = $conn->query("
-                    SELECT q.cod_questao, q.pergunta, q.resposta1, q.resposta2, q.resposta3, q.resposta4, q.respostacorreta, 
-                           d.nome as disciplina, c.nome as concurso, n.tipo_nivel, b.nome as banca, p.nome as prova, 
-                           g.tipo_grau 
-                    FROM questao q 
-                    JOIN disciplina d ON q.disciplina_cod_disciplina = d.cod_disciplina 
-                    JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso 
-                    JOIN nivel n ON q.nivel_cod_nivel = n.cod_nivel 
-                    JOIN banca b ON q.banca_cod_banca = b.cod_banca 
-                    JOIN prova p ON q.prova_cod_prova = p.cod_prova 
-                    JOIN grau g ON q.grau_cod_grau = g.cod_grau
-                ");
+                $result = $conn->query("SELECT q.cod_questao, q.pergunta, q.resposta1, q.resposta2, q.resposta3, q.resposta4, q.respostacorreta, 
+                                           d.nome as disciplina, c.nome as concurso, n.tipo_nivel, b.nome as banca, p.nome as prova, 
+                                           g.tipo_grau 
+                                        FROM questao q 
+                                        JOIN disciplina d ON q.disciplina_cod_disciplina = d.cod_disciplina 
+                                        JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso 
+                                        JOIN nivel n ON q.nivel_cod_nivel = n.cod_nivel 
+                                        JOIN banca b ON q.banca_cod_banca = b.cod_banca 
+                                        JOIN prova p ON q.prova_cod_prova = p.cod_prova 
+                                        JOIN grau g ON q.grau_cod_grau = g.cod_grau");
 
                 while ($row = $result->fetch_assoc()) {
                     $resposta_correta = '';
-
                     switch ($row['respostacorreta']) {
                         case 'resposta1':
                             $resposta_correta = $row['resposta1'];
@@ -357,7 +315,7 @@ if ($cod_questao) {
                         <td>{$row['resposta2']}</td>
                         <td>{$row['resposta3']}</td>
                         <td>{$row['resposta4']}</td>
-                        <td>{$resposta_correta}</td>
+                        <td>{$row['respostacorreta']}</td>
                         <td>{$row['disciplina']}</td>
                         <td>{$row['concurso']}</td>
                         <td>{$row['tipo_nivel']}</td>
@@ -376,18 +334,7 @@ if ($cod_questao) {
     </div>
 </div>
 
-<script>
-    document.getElementById("toggle-questoes").addEventListener("click", function() {
-        var questoesContent = document.getElementById("questoes-content");
-        if (questoesContent.style.display === "none") {
-            questoesContent.style.display = "block";
-            this.textContent = "Ocultar Questões Cadastradas"; // Muda o texto do botão
-        } else {
-            questoesContent.style.display = "none";
-            this.textContent = "Mostrar Questões Cadastradas"; // Muda o texto do botão
-        }
-    });
-</script>
+</div>
 
 
  <!-- Modal de confirmação -->

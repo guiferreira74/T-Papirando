@@ -9,30 +9,31 @@
 <body>
 
 <div id="conteudo-header">
-<header>
+    <header>
         <div class="interface">
             <div class="logo">
-                <a href="user.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a> 
+                <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
 
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="user.php">Início</a></li>
-                    <li><a class="simulados" href="simulado.php">Simulados</a></li>
+                    <li><a href="simulados.php">Simulados</a></li>
                     <li><a href="bancas.php">Bancas</a></li>
-                    <li><a class="desempenho" href="desempenhos.php">Desempenho</a></li>
+                    <li><a class="desempenho" href="#">Desempenho</a></li>
                 </ul>
             </nav>
 
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="login.php">Sair</a>
+                <a href="sair.php">Sair</a>
             </div>
         </div> <!--interface-->
     </header>
-    
+    </div>
+
  </div>
-<center><h1>Simulados</h1></center>
+<center><h1>Desempenho</h1></center>
 </body>
 </html>

@@ -53,12 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (strpos($email, '@admin') !== false) {
                 // E-mail contém o domínio @admin, tratar como administrador
                 $_SESSION['tipo_acesso'] = 1;
-                header("Location: adm.php");
+                header("Location: ./administrador/adm.php");
                 exit();
             } else {
                 // E-mail não contém o domínio @admin, tratar como usuário normal
                 $_SESSION['tipo_acesso'] = 2;
-                header("Location: user.php");
+                header("Location: ./estudante/user.php");
                 exit();
             }
         } else {
@@ -85,21 +85,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <header>
         <div class="interface">
             <div class="logo">
-                <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a>   
+                <a href="index.php"><img class="logo" src="./administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
             </div><!--logo-->
 
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="index.php" class="simulados">Início</a></li>
                     <li><a href="simulados.php" class="simulados">Simulados</a></li>
-                    <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="./estudante/bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
                     <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
                 </ul>
             </nav>
 
             <div class="info"> 
-                <a href="">Sobre</a>
-                <a href="ajuda.php">Ajuda</a>
+                <a href="./estudante/sobre.php">Sobre</a>
+                <a href="./estudante/ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
         </div> <!--interface-->
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main>
         <div class="grid-duplo">
             <div class="esquerda">
-                <img id="login" src="assets/login azul.svg" alt="">
+                <img id="login" src="./administrador/assets/login azul.svg" alt="">
                 <h1>Já tem conta?</h1>
                 <p>Informe seus dados para acessá-la</p>
                 
@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
                 
             <div class="direita">
-                <img id="Log" src="assets/login verde.svg" alt="">
+                <img id="Log" src="./administrador/assets/login verde.svg" alt="">
                 <h1>Novo usuário</h1>
                 <p>Criar uma conta é fácil! Informe seus dados e uma senha para <br> aproveitar todos os benefícios de ter uma conta.</p>
                 <a href="cadastro.php"><button id="button-direita">Crie sua Conta</button></a>

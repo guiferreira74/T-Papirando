@@ -23,11 +23,6 @@ body {
     align-items: center;
 }
 
-.logo {
-    max-height: 237.85px;
-    max-width: 300px;
-    padding-top: 30px;
-}
 
 .search-bar {
     flex: 2;
@@ -403,7 +398,7 @@ hr {
 }
 
 .logo{
-    width: 400px;
+    width: 250px;
 }
 /* Modal */
 .modal {

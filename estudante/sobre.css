@@ -1,3 +1,4 @@
+/* Estilo geral */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
 * {
@@ -53,8 +54,14 @@ header nav ul li a {
 }
 
 header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
     padding: 20px 4%; /* Diminui o padding para reduzir a altura */
-    background-color: #2118CD;
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
 }
 
 header > .interface {
@@ -101,81 +108,69 @@ header .info ul li a {
 
 
 /* Conteúdo Principal */
-.container {
-    max-width: 1000px;
-    margin: 60px auto; /* Aumenta a margem entre as divs */
+.sobre-container, .creditos-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 100px;
+}
+
+.sobre-container .desenvolvedores, 
+.creditos-container .creditos {
+    flex: 1;
+    padding: 20px;
+}
+
+.sobre-container .foto, 
+.creditos-container .foto {
+    flex: 1;
     text-align: center;
 }
 
-.encima, .embaixo {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 40px; /* Aumenta o espaçamento entre os elementos internos */
-    margin-bottom: 60px; /* Aumenta a margem entre essas seções */
+.sobre-container .foto img, 
+.creditos-container .foto img {
+    max-width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
+    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dev h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
+.sobre-container .foto img:hover, 
+.creditos-container .foto img:hover {
+    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
 }
 
-.dev ul {
-    list-style: none;
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.dev ul li {
-    font-size: 1.2em;
-    margin: 10px 0;
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.grupo {
-    max-width: 400px;
-    width: 100%;
-    height: auto;
-    margin: 20px; /* Adiciona margem ao redor da imagem para espaçamento */
+ul li {
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
-#faetec {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-    margin: 20px; /* Adiciona margem ao redor da imagem para espaçamento */
-}
-
-.text {
-    max-width: 600px;
-    text-align: left;
-    margin: 20px; /* Adiciona margem ao redor do texto */
-}
-
-.text h3 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-}
-
-.text p {
-    font-size: 1em;
-    line-height: 1.6;
-}
-
-/* Responsividade */
+/* Ajustes responsivos */
 @media (max-width: 768px) {
-    .menu-desktop ul {
+    .sobre-container, .creditos-container {
         flex-direction: column;
-        gap: 10px;
     }
 
-    .info {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .encima, .embaixo {
-        flex-direction: column;
+    .sobre-container .foto img, 
+    .creditos-container .foto img {
+        max-width: 100%;
     }
 }
 .modal {

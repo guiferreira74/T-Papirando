@@ -11,12 +11,12 @@
 <header>
         <div class="interface">
             <div class="logo">
-                <a href="index.php"><img class="logo" src="assets/logo_papirando_final.svg" alt="Logo"/></a> 
+                <a href="../index.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
 
             <nav class="menu-desktop">
                 <ul>
-                    <li><a href="index.php">Início</a></li>
+                    <li><a href="../index.php">Início</a></li>
                     <li><a class="simulados" href="#">Simulados</a></li>
                     <li><a href="bancas.php">Bancas</a></li>
                     <li><a class="desempenho" href="#">Desempenho</a></li>
@@ -26,7 +26,7 @@
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="login.php">Entrar</a>
+                <a href="../login.php">Entrar</a>
             </div>
         </div> <!--interface-->
     </header>

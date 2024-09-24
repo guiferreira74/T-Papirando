@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
 }
 
 .header-prc {
@@ -9,7 +10,7 @@ body {
     padding: 10px;
     height: 85px;
     width: 100%;
-    background-color: #2118CD; /* Cor de fundo do cabeçalho */
+    background-color: #2118CD;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     justify-content: space-around;
@@ -49,7 +50,7 @@ body {
 }
 
 .links a {
-    color: white; /* Cor dos links no cabeçalho */
+    color: white;
     text-decoration: none;
     font-weight: bold;
     padding-left: 49px;
@@ -76,6 +77,7 @@ body {
     height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
     padding: 0 100px;
     margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    margin: auto;
 }
 
 #corpo {
@@ -170,15 +172,15 @@ a.edit-button, a.delete-button {
 }
 
 a.edit-button {
-    background-color: #2118CD; /* Cor do botão Editar */
+    background-color: #2118CD;
 }
 
 a.edit-button:hover {
-    background-color: #0b7dda;
+    background-color: #2118CD;
 }
 
 a.delete-button {
-    background-color: #f44336; /* Cor do botão Excluir */
+    background-color: #f44336; 
 }
 
 a.delete-button:hover {
@@ -204,7 +206,7 @@ a.delete-button:hover {
 
 .save-button,
 .clear-button {
-    background-color: #2118CD; /* Cor de fundo dos botões */
+    background-color: #2118CD;
     color: white;
     border: none;
     border-radius: 5px;
@@ -259,41 +261,142 @@ a.delete-button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
 .success-message {
-    color: #2118CD; /* Cor da mensagem de sucesso */
+    color: #2118CD;
 }
-
 .error-message {
     color: red;
 }
+/* Estilos para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-/* Define a cor para o botão "Salvar" */
-.save-button {
-    background-color: #2118CD; /* Cor azul-dodger */
-    color: white;
-    border: none;
-    padding: 15px;
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os ícones no lado direito */
+    gap: 10px; /* Espaçamento entre os ícones */
+}
+
+.edit-button, .delete-button {
+    color: #333;
+    text-decoration: none;
+}
+
+.edit-button:hover, .delete-button:hover {
+    color: #007BFF; /* Cor ao passar o mouse */
+}
+/* Sidebar e layout do conteúdo principal */
+.d-flex {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+    height: 100vh;
+    width: 250px;
+}
+
+.sidebar-header h4 {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: none;
+}
+
+.components {
+    padding-left: 0;
+}
+
+.components hr {
+    margin: 10px 0;
+    border-color: black;
+}
+
+#sidebar .components a {
+    color: #343a40;
+    text-decoration: none;
+    padding: 8px 20px;
+    display: block;
+    font-weight: 500;
+    text-align: center;
+}
+
+#sidebar .components a:hover, 
+#sidebar .components a.active {
+    background-color: #2118CD;
+    color: #fff;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-.save-button:hover {
-    background-color: #1817A1; /* Cor azul-céu profundo para hover */
+/* Conteúdo principal */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
 }
 
-/* Define a mesma cor para o botão "Consultar" */
-.consultar-button {
-    background-color: #2118CD; /* Cor azul-dodger */
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 5px;
-    cursor: pointer;
+.container {
+    width: 100%;
+    height: 100%;
 }
 
-.consultar-button:hover {
-    background-color: #1817A1; /* Cor azul-céu profundo para hover */
+.encima {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.enbaixo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.enbaixo img {
+    max-width: 45%;
+    height: auto;
+    width: 400px;
+}
+
+#pesquisa {
+    margin-top: 50px;
+    width: 900px;
+    height: 40px;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+#titulo {
+    font-size: 40px;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+}
+
+hr {
+    color: black;
 }
 /* Modal */
 .modal {
@@ -447,4 +550,64 @@ a.delete-button:hover {
 /* Estilo do botão OK quando hover */
 .modal-sucesso .ok-btn-sucesso:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+/* Custom Modal */
+.custom-modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed; /* Mantém o modal fixo na tela */
+    z-index: 1000; /* Coloca o modal acima de outros conteúdos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total da tela */
+    height: 100%; /* Altura total da tela */
+    background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo com transparência */
+}
+
+/* Conteúdo do Custom Modal */
+.custom-modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Largura do modal */
+    max-width: 500px; /* Largura máxima do modal */
+    position: fixed; /* Muda para fixed para centralização correta */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta a posição para o centro */
+    overflow: hidden; /* Remove a barra de rolagem */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+#input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Espaçamento entre os grupos de input */
+}
+
+#input label {
+    margin-bottom: 5px; /* Espaçamento abaixo do label */
+}
+
+#input input,
+#input select {
+    padding: 8px; /* Padding para inputs e selects */
+    border-radius: 5px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Borda do input/select */
+    width: 100%; /* Largura total */
 }
