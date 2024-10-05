@@ -18,7 +18,7 @@
             <ul>
                 <li><a href="index.php" class="simulados">Início</a></li>
                 <li><a href="simulados.php" class="simulados" id="link-simulados">Simulados</a></li>
-                <li><a href="./estudante/bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
                 <li><a href="desempenhos.php" class="desempenho" id="link-desempenho">Desempenho</a></li>
             </ul>
         </nav>
@@ -33,33 +33,65 @@
 
 <main id="main-conteiner">
     <div id="corpo">
-        <img id="img-main" src="assets/login verde.svg" alt="">
+        <img id="img-main" src="./administrador/assets/login verde.svg" alt="">
 
         <h1>Criar minha conta!</h1>
         <h2>Informe seus dados abaixo para criar sua conta</h2>
 
-        <!-- Formulário adicionado -->
-        <form action="cadastro.php" method="post">
-            <div id="input">
-                <div class="grid-duplo">
-                    <input class="esquerda" id="nome" name="nome" type="text" placeholder="Nome" required>
-                    <input class="direita" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" required>
-                </div>    
+      <!-- Formulário adicionado -->
+<form action="cadastro.php" method="post" onsubmit="return validarSenhas()">
+    <div id="input">
+        <div class="grid-duplo">
+            <input class="esquerda" id="nome" name="nome" type="text" placeholder="Nome" required title="Preencha o seu Nome">
+            <input class="direita" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" required title="Preencha seu Sobrenome">
+        </div>    
 
-                <input id="e-mail" name="email" type="email" placeholder="E-mail" required>
-                <input id="senha" name="senha" type="password" placeholder="Senha" required>
-            </div>
-
-            <button type="submit" id="button">Criar Conta</button>
-        </form>
+        <input id="e-mail" name="email" type="email" placeholder="E-mail" required title="Preencha seu email">
+        <input id="senha" name="senha" type="password" placeholder="Senha" required title="Preencha a sua Senha">
+        <input id="confirmar-senha" name="confirmar-senha" type="password" placeholder="Confirmar Senha" required title="Confirme a sua Senha">
     </div>
+
+    <button type="submit" id="button">Criar Conta</button>
+</form>
+</div>
 </main>
+
+<!-- Modal de erro -->
+<div id="modal-erro" class="modal modal-erro" style="display:none;">
+    <div class="modal-content">
+        <span class="close-erro">&times;</span>
+        <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
+        <p>Erro: As senhas não coincidem.</p>
+        <button class="ok-button" id="ok-erro">OK</button>
+    </div>
+</div>
+
+<script>
+    function validarSenhas() {
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+        if (senha !== confirmarSenha) {
+            document.getElementById('modal-erro').style.display = 'block'; // Mostra o modal de erro
+            return false; // Impede o envio do formulário
+        }
+        return true; // Permite o envio do formulário
+    }
+
+    // Fechar o modal ao clicar no botão "OK" ou no "X"
+    document.getElementById('ok-erro').onclick = function() {
+        document.getElementById('modal-erro').style.display = 'none';
+    };
+    document.querySelector('.close-erro').onclick = function() {
+        document.getElementById('modal-erro').style.display = 'none';
+    };
+</script>
 
 <!-- Modal de Sucesso -->
 <div id="modal-sucesso" class="modal modal-sucesso" style="display:none;">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <img src="assets/ticken.svg" alt="Sucesso" class="tick-image">
+        <img src="./administrador/assets/ticken.svg" alt="Sucesso" class="tick-image">
         <p>Conta criada com sucesso!</p>
         <button class="ok-button" id="ok-sucesso">OK</button>
     </div>
@@ -69,7 +101,7 @@
 <div id="modal-erro" class="modal modal-erro" style="display:none;">
     <div class="modal-content">
         <span class="close-erro">&times;</span>
-        <img src="assets/erro.svg" alt="Erro" class="error-image">
+        <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
         <p>Erro: O email já está registrado.</p>
         <button class="ok-button" id="ok-erro">OK</button>
     </div>

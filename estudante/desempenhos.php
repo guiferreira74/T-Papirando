@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>topapirando</title>
+    <title>Desempenho</title>
     <link rel="stylesheet" href="simulados.css">
 </head>
 <body>
@@ -19,15 +19,15 @@
                 <ul>
                     <li><a href="user.php">Início</a></li>
                     <li><a href="simulados.php">Simulados</a></li>
-                    <li><a href="bancas.php">Bancas</a></li>
-                    <li><a class="desempenho" href="#">Desempenho</a></li>
+                    <li><a href="bancas_user.php">Bancas</a></li>
+                    <li><a class="desempenho" href="desempenhos.php">Desempenho</a></li>
                 </ul>
             </nav>
 
             <div class="info">
-                <a href="sobre.php">Sobre</a>
-                <a href="ajuda.php">Ajuda</a>
-                <a href="sair.php">Sair</a>
+                <a href="sobre_user.php">Sobre</a>
+                <a href="ajuda_user.php">Ajuda</a>
+                <a href="../administrador/sair.php">Sair</a>
             </div>
         </div> <!--interface-->
     </header>

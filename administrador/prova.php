@@ -14,9 +14,9 @@
             <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
         </a>
         <div class="links">
-            <a id="sobre" href="sobre.html">Sobre</a>
-            <a href="#">Ajuda</a>
-            <a href="#">Sair</a>
+            <a id="sobre" href="sobre_adm.php">Sobre</a>
+            <a href="ajuda_adm.php">Ajuda</a>
+            <a href="sair.php">Sair</a>
             <img id="user" src="assets/user.svg" alt="">
         </div>
     </header>
@@ -29,8 +29,8 @@
             </div>
             <ul class="list-unstyled components">
                 <li><a href="adm.php">Início</a></li>
-                <li><a href="#">Ajuda</a></li>
-                <li><a href="#">Parâmetros</a></li>
+                <li><a href="ajuda_adm.php">Ajuda</a></li>
+                <li><a href="parametros.php">Parâmetros</a></li>
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
@@ -64,6 +64,7 @@
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nome = $_POST['nome'];
                     $tempo = $_POST['tempo'];
+                    $qtd_provas = $_POST['qtd_provas'];
                     $banca_cod_banca = $_POST['banca_cod_banca'];
                     $cod_prova = $_POST['cod_prova'] ?? null;
 
@@ -79,10 +80,10 @@
                     } else {
                         if ($cod_prova) {
                             // Atualizar registro
-                            $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', banca_cod_banca=$banca_cod_banca WHERE cod_prova=$cod_prova";
+                            $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', qtd_provas='$qtd_provas', banca_cod_banca=$banca_cod_banca WHERE cod_prova=$cod_prova";
                         } else {
                             // Inserir novo registro
-                            $sql = "INSERT INTO prova (nome, tempo, banca_cod_banca) VALUES ('$nome', '$tempo', $banca_cod_banca)";
+                            $sql = "INSERT INTO prova (nome, tempo, qtd_provas, banca_cod_banca) VALUES ('$nome', '$tempo', '$qtd_provas', $banca_cod_banca)";
                         }
 
                         if ($conn->query($sql) === TRUE) {
@@ -108,6 +109,7 @@
                 $cod_prova = $_GET['edit'] ?? null;
                 $nome = '';
                 $tempo = '';
+                $qtd_provas = '';
                 $banca_cod_banca = '';
 
                 if ($cod_prova) {
@@ -116,6 +118,7 @@
                         $row = $result->fetch_assoc();
                         $nome = $row['nome'];
                         $tempo = $row['tempo'];
+                        $qtd_provas = $row['qtd_provas'];
                         $banca_cod_banca = $row['banca_cod_banca'];
                     }
                 }
@@ -134,13 +137,14 @@
 
                     if ($result->num_rows > 0) {
                         echo "<table class='table'>";
-                        echo "<tr><th>Nome da Prova</th><th>Tempo</th><th>Banca</th><th>Ações</th></tr>";
+                        echo "<tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd Provas</th><th>Banca</th><th>Ações</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             // Obter o nome da banca
                             $banca = $conn->query("SELECT nome FROM banca WHERE cod_banca=" . $row['banca_cod_banca'])->fetch_assoc();
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['qtd_provas']) . "</td>";
                             echo "<td>" . htmlspecialchars($banca['nome']) . "</td>";
                             echo "<td class='actions'>";
                             echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
@@ -157,43 +161,45 @@
             </div>
         </main>
 
-<!-- Modal de Adicionar/Editar Prova -->
-<div id="add-modal" class="custom-modal">
-    <div class="custom-modal-content">
-        <span class="close-btn" onclick="closeAddModal()">&times;</span>
-        <form action="prova.php" method="POST">
-            <input type="hidden" id="cod_prova" name="cod_prova" value="<?php echo htmlspecialchars($cod_prova); ?>">
-            <div id="input">
-                <label for="nome_modal">Nome da Prova:</label>
-                <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da prova" required>
-            </div>
-            <div id="input">
-                <label for="tempo_modal">Tempo (HH:MM:SS):</label>
-                <input type="text" id="tempo_modal" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" placeholder="HH:MM:SS" required>
-            </div>
-            <div id="input">
-                <label for="banca_cod_banca">Banca:</label>
-                <select id="banca_cod_banca" name="banca_cod_banca" required>
-                    <option value="" disabled selected>Selecionar Banca</option>
-                    <?php while ($banca = $bancas_result->fetch_assoc()): ?>
-                        <option value="<?php echo $banca['cod_banca']; ?>" <?php echo ($banca['cod_banca'] == $banca_cod_banca) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($banca['nome']); ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="button-container">
+        <!-- Modal de Adicionar/Editar Prova -->
+        <div id="add-modal" class="custom-modal">
+            <div class="custom-modal-content">
+                <span class="close-btn" onclick="closeAddModal()">&times;</span>
+                <form action="prova.php" method="POST">
+                    <input type="hidden" id="cod_prova" name="cod_prova" value="<?php echo htmlspecialchars($cod_prova); ?>">
+                    <div id="input">
+                        <label for="nome_modal">Nome da Prova:</label>
+                        <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da prova" required>
+                    </div>
+                    <div id="input">
+                        <label for="tempo_modal">Tempo (HH:MM:SS):</label>
+                        <input type="text" id="tempo_modal" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" placeholder="HH:MM:SS" required>
+                    </div>
+                    <div id="input">
+                        <label for="qtd_provas_modal">Quantidade de Provas:</label>
+                        <input type="text" id="qtd_provas_modal" name="qtd_provas" value="<?php echo htmlspecialchars($qtd_provas); ?>" required>
+                    </div>
+                    <div id="input">
+                        <label for="banca_cod_banca_modal">Selecione a Banca:</label>
+                        <select id="banca_cod_banca_modal" name="banca_cod_banca" required>
+                            <option value="" disabled selected>Selecione uma Banca</option>
+                            <?php while ($banca = $bancas_result->fetch_assoc()): ?>
+                                <option value="<?php echo $banca['cod_banca']; ?>" <?php echo ($banca['cod_banca'] == $banca_cod_banca) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($banca['nome']); ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="button-container">
                 <button type="submit" class="save-button">Salvar</button>
                 <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
             </div>
-        </form>
-    </div>
-</div>
+                </form>
+            </div>
+        </div>
 
-
-
-        <!-- Modal de confirmação -->
-        <div id="confirm-modal" class="modal">
+       <!-- Modal de confirmação -->
+       <div id="confirm-modal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <div class="modal-body">
@@ -205,9 +211,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modais de Sucesso e Erro -->
-        <div id="modal-erro" class="modal modal-erro">
+         <!-- Modais de Sucesso e Erro -->
+         <div id="modal-erro" class="modal modal-erro">
             <div class="modal-content modal-content-erro">
                 <span class="close-btn" onclick="closeModal('erro')">&times;</span>
                 <p id="erro-mensagem">Erro!</p>
@@ -222,118 +227,138 @@
                 <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
             </div>
         </div>
-
         <script>
-            // Função para criar um cookie
-            function setCookie(name, value, days) {
-                const d = new Date();
-                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-                const expires = "expires=" + d.toUTCString();
-                document.cookie = name + "=" + value + ";" + expires + ";path=/";
-            }
+    // Referência aos modais e botões
+    var confirmModal = document.getElementById("confirm-modal");
+    var addModal = document.getElementById("add-modal");
+    var modalErro = document.getElementById("modal-erro");
+    var modalSucesso = document.getElementById("modal-sucesso");
+    var confirmButton = document.getElementById("confirm-delete");
 
-            // Função para obter um cookie
-            function getCookie(name) {
-                const nameEQ = name + "=";
-                const ca = document.cookie.split(';');
-                for (let i = 0; i < ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
+    // Função para abrir o modal de adicionar
+    function openAddModal() {
+        clearForm();
+        loadCookies();
+        addModal.style.display = "block";
+    }
 
-            // Referência aos modais
-            var confirmModal = document.getElementById("confirm-modal");
-            var addModal = document.getElementById("add-modal");
-            var modalErro = document.getElementById("modal-erro");
-            var modalSucesso = document.getElementById("modal-sucesso");
-            var confirmButton = document.getElementById("confirm-delete");
+    // Função para abrir o modal de edição
+    function openEditModal(data) {
+        document.getElementById("cod_prova").value = data.cod_prova;
+        document.getElementById("nome_modal").value = data.nome;
+        document.getElementById("tempo_modal").value = data.tempo;
+        document.getElementById("qtd_provas_modal").value = data.qtd_provas;
+        document.getElementById("banca_cod_banca_modal").value = data.banca_cod_banca;
+        addModal.style.display = "block";
+    }
 
-            // Função para abrir o modal de adicionar
-            function openAddModal() {
-                document.getElementById('nome_modal').value = getCookie('prova_nome') || '';
-                addModal.style.display = "block";
-            }
+    // Função para abrir o modal de confirmação
+    function openModal(deleteUrl) {
+        confirmModal.style.display = "block";
+        confirmButton.onclick = function() {
+            window.location.href = deleteUrl;
+        };
+    }
 
-            // Função para fechar o modal de adicionar
-            function closeAddModal() {
-                setCookie('prova_nome', document.getElementById('nome_modal').value, 1);
-                addModal.style.display = "none";
-            }
+    // Função para fechar os modais
+    function closeModal(type) {
+        if (type === 'erro') {
+            modalErro.style.display = "none";
+        } else if (type === 'sucesso') {
+            modalSucesso.style.display = "none";
+        } else {
+            confirmModal.style.display = "none"; // Fecha o modal de confirmação
+        }
+    }
 
-            // Fechar o modal se o usuário clicar fora dele
-            window.onclick = function(event) {
-                if (event.target === confirmModal) {
-                    closeModal();
-                }
-                if (event.target === addModal) {
-                    closeAddModal();
-                }
-                if (event.target === modalErro) {
-                    closeModal('erro');
-                }
-                if (event.target === modalSucesso) {
-                    closeModal('sucesso');
-                }
-            };
+    function closeAddModal() {
+        saveCookies();
+        addModal.style.display = "none";
+    }
 
-            // Função para abrir o modal de confirmação
-            function openModal(deleteUrl) {
-                confirmModal.style.display = "block";
-                confirmButton.onclick = function() {
-                    window.location.href = deleteUrl;
-                };
-            }
+    // Limpar formulário
+function clearForm() {
+    document.getElementById("cod_prova").value = '';
+    document.getElementById("nome_modal").value = '';
+    document.getElementById("tempo_modal").value = '';
+    document.getElementById("qtd_provas_modal").value = '';
+    document.getElementById("banca_cod_banca_modal").value = '';
+}
 
-            // Limpar formulário
-            function clearForm() {
-                document.getElementById("nome_modal").value = '';
-                document.getElementById("tempo_modal").value = '';
-                document.getElementById("banca_cod_banca").selectedIndex = 0;
-            }
+// Função para salvar os valores dos inputs em cookies
+function saveCookies() {
+    var cod_prova = document.getElementById("cod_prova").value;
+    var nome = document.getElementById("nome_modal").value;
+    var tempo = document.getElementById("tempo_modal").value;
+    var qtd_provas = document.getElementById("qtd_provas_modal").value;
+    var banca_cod_banca = document.getElementById("banca_cod_banca_modal").value;
 
-            // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
-            <?php if ($error_message): ?>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
-                    modalErro.style.display = "block";
-                });
-            <?php elseif ($success_message): ?>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('sucesso-mensagem').textContent = '<?php echo htmlspecialchars($success_message); ?>';
-                    modalSucesso.style.display = "block";
-                });
-            <?php endif; ?>
+    document.cookie = "cod_prova=" + encodeURIComponent(cod_prova) + "; path=/";
+    document.cookie = "nome=" + encodeURIComponent(nome) + "; path=/";
+    document.cookie = "tempo=" + encodeURIComponent(tempo) + "; path=/";
+    document.cookie = "qtd_provas=" + encodeURIComponent(qtd_provas) + "; path=/";
+    document.cookie = "banca_cod_banca=" + encodeURIComponent(banca_cod_banca) + "; path=/";
+}
 
-            // Adicionando funcionalidade aos botões OK dos modais
-            document.getElementById("ok-btn-erro").onclick = function() {
-                closeModal('erro');
-            };
-            document.getElementById("ok-btn-sucesso").onclick = function() {
-                closeModal('sucesso');
-            };
+// Função para carregar os valores dos cookies nos inputs
+function loadCookies() {
+    var cookies = document.cookie.split(';');
+    cookies.forEach(function(cookie) {
+        var parts = cookie.split('=');
+        var name = parts[0].trim();
+        var value = parts[1] ? decodeURIComponent(parts[1].trim()) : '';
 
-            // Função para abrir o modal de edição
-            function openEditModal(data) {
-                document.getElementById('cod_prova').value = data.cod_prova;
-                document.getElementById('nome_modal').value = data.nome;
-                document.getElementById('tempo_modal').value = data.tempo;
-                document.getElementById('banca_cod_banca').value = data.banca_cod_banca;
-                addModal.style.display = "block";
-            }
+        if (name === 'cod_prova') {
+            document.getElementById("cod_prova").value = value;
+        } else if (name === 'nome') {
+            document.getElementById("nome_modal").value = value;
+        } else if (name === 'tempo') {
+            document.getElementById("tempo_modal").value = value;
+        } else if (name === 'qtd_provas') {
+            document.getElementById("qtd_provas_modal").value = value;
+        } else if (name === 'banca_cod_banca') {
+            document.getElementById("banca_cod_banca_modal").value = value;
+        }
+    });
+}
 
-            // Função para fechar modais
-            function closeModal(modalType) {
-                if (modalType === 'erro') {
-                    modalErro.style.display = "none";
-                } else if (modalType === 'sucesso') {
-                    modalSucesso.style.display = "none";
-                } else {
-                    confirmModal.style.display = "none";
-                }
-            }
-        </script>
+    // Fechar o modal se o usuário clicar fora dele
+    window.onclick = function(event) {
+        if (event.target === confirmModal) {
+            closeModal();
+        }
+        if (event.target === addModal) {
+            closeAddModal();
+        }
+        if (event.target === modalErro) {
+            closeModal('erro');
+        }
+        if (event.target === modalSucesso) {
+            closeModal('sucesso');
+        }
+    };
+
+    // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
+    <?php if ($error_message): ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
+            modalErro.style.display = "block";
+        });
+    <?php elseif ($success_message): ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('sucesso-mensagem').textContent = '<?php echo htmlspecialchars($success_message); ?>';
+            modalSucesso.style.display = "block";
+        });
+    <?php endif; ?>
+
+    // Adicionando funcionalidade aos botões OK dos modais
+    document.getElementById("ok-btn-erro").onclick = function() {
+        closeModal('erro');
+    };
+    document.getElementById("ok-btn-sucesso").onclick = function() {
+        closeModal('sucesso');
+    };
+</script>
+
     </body>
 </html>

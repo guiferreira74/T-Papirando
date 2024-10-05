@@ -14,9 +14,9 @@
             <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
         </a>
         <div class="links">
-            <a id="sobre" href="sobre.html">Sobre</a>
-            <a href="#">Ajuda</a>
-            <a href="#">Sair</a>
+            <a id="sobre" href="sobre_adm.php">Sobre</a>
+            <a href="ajuda_adm.php">Ajuda</a>
+            <a href="sair.php">Sair</a>
             <img id="user" src="assets/user.svg" alt="">
         </div>
     </header>
@@ -29,8 +29,8 @@
             </div>
             <ul class="list-unstyled components">
                 <li><a href="adm.php">Início</a></li>
-                <li><a href="#">Ajuda</a></li>
-                <li><a href="#">Parâmetros</a></li>
+                <li><a href="ajuda_adm.php">Ajuda</a></li>
+                <li><a href="parametros.php">Parâmetros</a></li>
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>

@@ -16,8 +16,8 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="adm.css">
-    <title>Administrador</title>
+    <link rel="stylesheet" href="ajuda_adm.css">
+    <title>Ajuda</title>
     <!-- Link para Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -40,7 +40,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </div><!-- logo -->
             </div><!-- controle-navegacao -->
 
-            
+    
             <div class="informacoes">
                 <a href="sobre_adm.php">Sobre</a>
                 <a href="ajuda_adm.php">Ajuda</a>
@@ -165,22 +165,52 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
         });
     </script>
-    
 
-
-    <!-- Conteúdo Principal -->
-    <div class="main-content">
-        <div class="container">
-            <div class="encima">
-                <h1 id="titulo">O que você está procurando?</h1>
-                <input id="pesquisa" type="text" placeholder="Digite seu texto aqui">
+    <main>
+        <div class="topo">
+            <div class="topo-content">
+                <h1 class="topo-title">FAQ</h1>
+                <p class="topo-desc">Dúvidas frequentes</p>
             </div>
-
+            <div class="img">
+                <img src="assets/faq2.svg" alt="">
+            </div>
         </div>
-    </div>
+        
+        <div class="faq">
+            <div class="faq-name"> <!-- Corrigido para "faq-name" -->
+                <h1 class="faq-top"> Principais <br> Dúvidas</h1>
+                <img class="faq-img" src="assets/faq.svg" alt="">
+            </div>
+            <div class="faq-box">
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-1">
+                    <label class="faq-title" for="faq-trigger-1">O que é o TÔPAPIRANDO?</label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>O TÔPAPIRANDO é uma plataforma para concurseiros que oferece simulados, acesso direto aos sites das bancas organizadoras e ferramentas para acompanhar seu desempenho após a realização dos simulados.</p>
+                    </div>
+                </div>
 
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-2">
+                    <label class="faq-title" for="faq-trigger-2">Como faço para me cadastrar no site?</label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Basta clicar no botão "Cadastrar", preencher suas informações pessoais e criar uma senha. Após o cadastro, você terá acesso a todas as funcionalidades do site.</p>
+                    </div>
+                </div>
+
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-3">
+                    <label class="faq-title" for="faq-trigger-3">Como funcionam os simulados?</label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Os simulados são compostos por questões de provas anteriores e atualizadas. Você pode escolher a área de interesse, o nível de dificuldade e a quantidade de questões. Após a conclusão, você receberá um relatório de desempenho.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

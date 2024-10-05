@@ -12,22 +12,22 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <a href="../index.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
+                <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
 
             <nav class="menu-desktop">
                 <ul>
-                    <li><a href="../index.php">Início</a></li>
-                    <li><a class="simulados" href="#">Simulados</a></li>
-                    <li><a href="../bancas.php">Bancas</a></li>
-                    <li><a class="desempenho" href="#">Desempenho</a></li>
+                    <li><a href="user.php">Início</a></li>
+                    <li><a class="simulados" href="simulados.php">Simulados</a></li>
+                    <li><a href="bancas_user.php">Bancas</a></li>
+                    <li><a class="desempenho" href="desempenhos.php">Desempenho</a></li>
                 </ul>
             </nav>
 
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="../login.php">Entrar</a>
+                <a href="../administrador/sair.php">Sair</a>
             </div>
         </div> <!--interface-->
     </header>
@@ -76,70 +76,6 @@
         </div>
     </main>
 
-    <!-- Modal Simulados -->
-    <div id="modal-simulados" class="modal modal-custom">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p>Por favor, faça o login para ver o simulado.</p>
-            <button id="ok-btn-simulados" class="btn-custom">OK</button>
-        </div>
-    </div>
-
-    <!-- Modal Desempenho -->
-    <div id="modal-desempenho" class="modal modal-custom">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p>Por favor, faça o login para ver o seu desempenho.</p>
-            <button id="ok-btn-desempenho" class="btn-custom">OK</button>
-        </div>
-    </div>
-
-    <script>
-        // Obter elementos dos modais e botões
-        var modalSimulados = document.getElementById("modal-simulados");
-        var modalDesempenho = document.getElementById("modal-desempenho");
-
-        var closeBtns = document.getElementsByClassName("close-btn");
-        var okBtnSimulados = document.getElementById("ok-btn-simulados");
-        var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
-
-        // Função para mostrar um modal específico
-        function showModal(modal) {
-            modal.style.display = "block";
-        }
-
-        // Função para esconder o modal
-        function closeModal() {
-            modalSimulados.style.display = "none";
-            modalDesempenho.style.display = "none";
-        }
-
-        // Adicionar eventos de clique para os links Simulados e Desempenho
-        document.querySelectorAll('.menu-desktop a').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                if (this.classList.contains("simulados")) {
-                    e.preventDefault(); 
-                    showModal(modalSimulados);
-                } else if (this.classList.contains("desempenho")) {
-                    e.preventDefault(); 
-                    showModal(modalDesempenho);
-                }
-            });
-        });
-
-        // Adicionar eventos de clique para os botões de fechar e os botões OK
-        Array.from(closeBtns).forEach(function(btn) {
-            btn.onclick = closeModal;
-        });
-        okBtnSimulados.onclick = closeModal;
-        okBtnDesempenho.onclick = closeModal;
-
-        // Fechar o modal se o usuário clicar fora dele
-        window.onclick = function(event) {
-            if (event.target == modalSimulados || event.target == modalDesempenho) {
-                closeModal();
-            }
-        }
-    </script>
+    
 </body>
 </html>

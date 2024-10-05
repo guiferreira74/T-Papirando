@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Topapirando</title>
+    <link rel="icon" href="./administrador/assets/Pré - Projeto  TôPapirando! 1.svg" type="image/x-icon">
     <link rel="stylesheet" href="inicio.css">
 </head>
 <body>
@@ -11,13 +12,14 @@
         <div class="interface">
             <div class="logo">
                 <a href="index.php"><img class="logo" src="administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
+               
             </div><!--logo-->
 
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="index.php" class="inicio">Início</a></li>
                     <li><a href="estudante/simulados.php" class="simulados">Simulados</a></li>
-                    <li><a href="estudante/bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
                     <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
                 </ul>
             </nav>

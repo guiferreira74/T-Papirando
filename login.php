@@ -24,20 +24,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST['senha'];
 
     // Verificar se o e-mail existe
-    $sql = "SELECT senha FROM usuarios WHERE email = ?";
+    $sql = "SELECT nome, sobrenome, senha FROM usuarios WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($hashed_senha);
+        $stmt->bind_result($nome_usuario, $sobrenome_usuario, $hashed_senha);
         $stmt->fetch();
 
         // Verificar a senha
         if (password_verify($senha, $hashed_senha)) {
-            // Definir sessão e redirecionar com base no domínio do e-mail
+            // Definir sessão e redirecionar
             $_SESSION['email'] = $email;
+            $_SESSION['nome'] = $nome_usuario; // Armazena o nome na sessão
+            $_SESSION['sobrenome'] = $sobrenome_usuario; // Armazena o sobrenome na sessão
 
             // Verificar se a opção "Lembrar meus dados" foi selecionada
             if (isset($_POST['lembrar_dados'])) {
@@ -73,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -82,17 +85,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-        <header>
+    <header>
         <div class="interface">
             <div class="logo">
                 <a href="index.php"><img class="logo" src="./administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
-            </div><!--logo-->
+            </div>
 
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="index.php" class="simulados">Início</a></li>
                     <li><a href="simulados.php" class="simulados">Simulados</a></li>
-                    <li><a href="./estudante/bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="bancas.php" class="bancas">Bancas</a></li>
                     <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
                 </ul>
             </nav>
@@ -102,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="./estudante/ajuda.php">Ajuda</a>
                 <a href="login.php">Entrar</a>
             </div>
-        </div> <!--interface-->
-        </header>
+        </div>
+    </header>
 
     <main>
         <div class="grid-duplo">
@@ -113,17 +116,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>Informe seus dados para acessá-la</p>
                 
                 <form action="login.php" method="post">
-                 <input id="input-email" name="email" type="text" placeholder="E-mail" value="<?php echo isset($_COOKIE['email']) ? $_COOKIE['email'] : ''; ?>" required>
-                 <input id="input-senha" name="senha" type="password" placeholder="Senha" value="<?php echo isset($_COOKIE['senha']) ? $_COOKIE['senha'] : ''; ?>" required>
+                    <input id="input-email" name="email" type="text" placeholder="E-mail" value="<?php echo isset($_COOKIE['email']) ? $_COOKIE['email'] : ''; ?>" required>
+                    <input id="input-senha" name="senha" type="password" placeholder="Senha" value="<?php echo isset($_COOKIE['senha']) ? $_COOKIE['senha'] : ''; ?>" required>
 
-                 <div id="checa">  
-                 <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
-                <label for="checar">Lembrar meus dados</label>
-                </div>
+                    <div id="checa">  
+                        <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
+                        <label for="checar">Lembrar meus dados</label>
+                    </div>
+                  
 
-                <div class="button-container">
-                <button id="button-esquerda" type="submit">Acessar Conta</button>
-                </div>
+
+                    <div class="button-container">
+                        <button id="button-esquerda" type="submit">Acessar Conta</button>
+                    </div>
                 </form>
             </div>
                 
@@ -140,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="modal-simulados" class="modal modal-custom">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor,faça o login para ver o simulado.</p>
+            <p>Por favor, faça o login para ver o simulado.</p>
             <button id="ok-btn-simulados" class="btn-custom">OK</button>
         </div>
     </div>
@@ -149,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="modal-desempenho" class="modal modal-custom">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Por favor,faça o login para ver o seu desempenho.</p>
+            <p>Por favor, faça o login para ver o seu desempenho.</p>
             <button id="ok-btn-desempenho" class="btn-custom">OK</button>
         </div>
     </div>

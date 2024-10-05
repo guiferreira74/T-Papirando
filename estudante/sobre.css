@@ -13,6 +13,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .interface {
@@ -108,22 +109,34 @@ header .info ul li a {
 
 
 /* Conteúdo Principal */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+    margin-top: 60px; /* Para compensar a altura do header */
+    overflow-y: auto; /* Para evitar overflow de conteúdo */
+}
+
 .sobre-container, .creditos-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px;
-    margin: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    margin-bottom: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin-top: 100px;
 }
 
 .sobre-container .desenvolvedores, 
 .creditos-container .creditos {
     flex: 1;
-    padding: 20px;
+    padding: 10px;
 }
 
 .sobre-container .foto, 
@@ -136,19 +149,19 @@ header .info ul li a {
 .creditos-container .foto img {
     max-width: 80%;
     border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
-    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transform: rotateY(-5deg) perspective(500px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sobre-container .foto img:hover, 
 .creditos-container .foto img:hover {
-    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
+    transform: rotateY(0deg) perspective(500px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 10px;
 }
 
@@ -158,19 +171,28 @@ ul {
 }
 
 ul li {
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 /* Ajustes responsivos */
 @media (max-width: 768px) {
     .sobre-container, .creditos-container {
         flex-direction: column;
+        padding: 10px;
     }
 
     .sobre-container .foto img, 
     .creditos-container .foto img {
         max-width: 100%;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    ul li {
+        font-size: 14px;
     }
 }
 .modal {

@@ -16,8 +16,8 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="adm.css">
-    <title>Administrador</title>
+    <link rel="stylesheet" href="sobre_adm.css">
+    <title>Sobre</title>
     <!-- Link para Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -40,7 +40,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </div><!-- logo -->
             </div><!-- controle-navegacao -->
 
-            
+            <
             <div class="informacoes">
                 <a href="sobre_adm.php">Sobre</a>
                 <a href="ajuda_adm.php">Ajuda</a>
@@ -165,38 +165,37 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
         });
     </script>
-    
 
 
-    <!-- Conteúdo Principal -->
-    <div class="main-content">
-        <div class="container">
-            <div class="encima">
-                <h1 id="titulo">O que você está procurando?</h1>
-                <input id="pesquisa" type="text" placeholder="Digite seu texto aqui">
+   <!-- Conteúdo Principal -->
+   <main>
+        <div class="sobre-container">
+            <div class="desenvolvedores">
+                <h2>Desenvolvedores</h2>
+                <ul>
+                    <li>Breno Soares Francisco</li>
+                    <li>Luca Kalyl da Cunha Beckman</li>
+                    <li>Guilherme Ferreira Alves Biserra</li>
+                    <li>Marcos Antonio Pinheiro de Queiroz</li>
+                </ul>
             </div>
-
-        </div>
-    </div>
-
-    <!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmLogoutModalLabel">Sair</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Tem certeza que deseja sair?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmLogout" href="sair.php" class="btn btn-primary">Sair</a>
+            <div class="foto">
+                <img src="../administrador/assets/grupo.svg" alt="Foto dos Desenvolvedores">
             </div>
         </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <div class="creditos-container">
+            <div class="foto">
+                <img src="../administrador/assets/Faetec.svg" alt="Foto de Créditos">
+            </div>
+            <div class="creditos">
+                <h2>Créditos e Agradecimentos</h2>
+                <p>Gostaríamos de agradecer primeiramente a Deus, por nos dar força e disposição para nos levantar todos os dias. Agradecemos também nosso professor orientador Gustavo Mendonça por toda ajuda e esforço dedicado a nós por todo o nosso percurso de aprendizado. Agradecemos a Professora, Lidiana Silva por toda disponibilidade e atenção para tirar dúvidas e reforço dado a nós durante a realização do nosso trabalho de conclusão de curso. Agradecemos também à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio não só em nosso projeto, mas pela dedicação em estar todos os dias procurando o melhor para seus alunos. Agradecemos também a todos os profissionais da instituição que trabalham todos os dias para que nosso ambiente escolar fique o melhor possível.</p>
+            </div>
+        </div>
+    </main>
+
+
+   
 </body>
 </html>

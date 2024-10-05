@@ -292,6 +292,139 @@ hr {
 .header-prc .links span {
     color: white; /* Define a cor do texto como branco */
 }
+
+h1{
+    text-align: center; /* Centraliza o texto */
+    margin: 20px auto; /* Espaçamento automático nas laterais e superior/inferior */
+    font-size: 18px; /* Ajuste o tamanho da fonte, se necessário */
+}
+
+.topo {
+    background-color: #2118CD;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex; /* Usa flexbox para os elementos filhos */
+    align-items: center; /* Alinha os elementos verticalmente */
+    justify-content: center; /* Centraliza os elementos horizontalmente */
+    padding: 5% 3%;
+    border-radius: 30px;
+    max-height: 280px;
+    color: white;
+    margin-top: 150px;
+    margin-left: 250px;
+    margin-right: 100px;
+    margin: 150px auto 0 auto; /* Centraliza horizontalmente */
+    text-align: center;
+    padding-left: 50px;
+    max-width: 800px;
+}
+
+.topo-content {
+    text-align: right; /* Alinha o texto à direita */
+    margin-right: 20px; /* Espaçamento entre o texto e a imagem */
+}
+
+.topo-title {
+    font-size: 60px;
+    letter-spacing: 1.5;
+}
+
+.topo-desc {
+    font-size: 14px;
+    letter-spacing: 1;
+}
+
+.img {
+    max-width: 300px; /* Ajuste o tamanho da imagem conforme necessário */
+    margin-left: 50px;
+}
+
+.img img {
+    width: 100%;
+    height: auto;
+}
+
+.faq{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 3%;
+}
+
+.faq-name{
+    flex: 0.5;
+    padding: 2% 2% 0 0;
+}
+
+.faq-top{
+    padding: 5% 0 0 0;
+    font-size: 40px;
+    letter-spacing: 2;
+}
+.faq-img{
+    width: 100%;
+    max-width: 300px ;
+}
+
+.faq-box{
+    flex: 1;
+    min-width: 320px;
+    padding: 2% 0 4% 4%;
+    border-left: 2px solid #2118CD;
+}
+
+.faq-wrapper{
+    width: 100%;
+    padding: 1.5rem;
+    border-bottom: 1px solid black;
+}
+
+.faq-title{
+    display: block;
+    position: relative;
+    width: 100%;
+    letter-spacing: 1.2;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2118CD;
+}
+
+.faq-title:after{
+    width: 10px;
+    height: 10px;
+    content: "";
+    float: right;
+    border-style: solid;
+    border-width: 2px 2px 0 0 ;
+    transform: rotate(135deg) ;
+    transition: 0.4s ease-in-out;
+}
+
+.faq-detail{
+    line-height: 1.5;
+    letter-spacing: 1;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+.faq-trigger{
+    display: none;
+}
+
+.faq-trigger:checked + .faq-title + .faq-detail{
+    max-height: 300px ;
+
+}
+
+.faq-trigger:checked + .faq-title::after{
+    transform: rotate(45deg);
+    transition: 0.4s ease-in-out;
+
+}
 .modal {
     z-index: 1050; /* Z-index do modal deve ser maior que o cabeçalho */
 }

@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Verifique se o administrador está logado e tem acesso apropriado
+if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 1) {
+    header("Location: login.php");
+    exit();
+}
+
+// Recupera o nome do administrador da sessão
+$admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,44 +20,153 @@
     <link rel="stylesheet" href="banca.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <header class="header-prc">
-        <a href="adm.php">
-            <img class="logo" src="assets/logo_papirando_final.svg" alt="topapirando">
-        </a>
-        <div class="links">
-            <a id="sobre" href="sobre.html">Sobre</a>
-            <a href="#">Ajuda</a>
-            <a href="#">Sair</a>
-            <img id="user" src="assets/user.svg" alt="">
-        </div>
-    </header>
+<header>
+        <div class="interface">
+            <!-- Botão para abrir a barra lateral -->
+            <div class="controle-navegacao">
+                
+                <div class="button">
+                    <button id="toggle-sidebar" class="toggle-sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+               
 
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <div id="sidebar" class="bg-light border-right">
-            <div class="sidebar-header p-3">
-                <h4>Menu</h4>
+                <div class="logo">
+                    <img src="assets/logo_papirando_final.svg" alt="Logo">     
+                </div><!-- logo -->
+            </div><!-- controle-navegacao -->
+
+
+
+            <div class="informacoes">
+                <a href="sobre_adm.php">Sobre</a>
+                <a href="ajuda_adm.php">Ajuda</a>
+                <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
             </div>
-            <ul class="list-unstyled components">
-                <li><a href="adm.php">Início</a></li>
-                <li><a href="#">Ajuda</a></li>
-                <li><a href="#">Parâmetros</a></li>
+        </div><!-- interface -->
+    </header>  
+     
+    
+    <nav>
+        <div id="sidebar">
+            <ul>
+            <li class="item-menu">
+    <a href="#">
+        <span class="icon"><i class="fas fa-home"></i></span>
+        <span class="txt">Início</span>
+    </a>
+</li>
+
+
+                <li class="item-menu">
+                    <a href="ajuda.html">
+                        <span class="icon"><i class="fas fa-question-circle"></i></span> <!-- Ícone de livro -->
+                        <span class="txt">Ajuda</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-trophy"></i></span> <!-- Ícone de troféu -->
+                        <span class="txt">Parametros</span>
+                    </a>
+                </li>
+
                 <hr>
-                <p>Gerenciar Conteúdo</p>
-                <li><a href="banca.php">Bancas</a></li>
-                <li><a href="nivel.php">Níveis</a></li>
-                <li><a href="grau.php">Graus</a></li>
-                <li><a href="disciplina.php">Disciplinas</a></li>
-                <li><a href="duracao.php">Durações</a></li>
-                <li><a href="instituicao.php">Instituições</a></li>
-                <li><a href="prova.php">Provas</a></li>
-                <li><a href="concurso.php">Concursos</a></li>
-                <li><a href="questao.php">Questões</a></li>
+
+                <h1 id="gr">Gerenciamento</h1>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
+                        <span class="txt">Bancas</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
+                        <span class="txt">Niveis</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
+                        <span class="txt">Concurso</span> 
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-book"></i></span> <!-- Ícone de pergunta -->
+                        <span class="txt">Questões</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
+                        <span class="txt">Grau de dificuldade</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-book-reader"></i></span> <!-- Ícone de leitura -->
+                        <span class="txt">Disciplina</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-clock"></i></span> <!-- Ícone de relógio -->
+                        <span class="txt">Duração</span>
+                    </a>
+                </li>
+
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-school"></i></span> <!-- Ícone de instituição -->
+                        <span class="txt">Instituições</span>
+                    </a>
+                </li>
             </ul>
         </div>
+    </nav>
+        <!-- MANTENDO A SIDE BAR ATIVA -->
+    <script>
+        var menuitem = document.querySelectorAll('.item-menu'); // Corrigido para selecionar pela classe
+    
+        function selectlink() {
+            menuitem.forEach((item) =>
+                item.classList.remove('ativo') // Remove a classe 'ativo' de todos os itens
+            );
+            this.classList.add('ativo'); // Adiciona a classe 'ativo' ao item clicado
+        }
+    
+        menuitem.forEach((item) =>
+            item.addEventListener('click', selectlink) // Adiciona o evento de clique para cada item do menu
+        );
+    </script>
 
+        <!-- SCRIPT PARA ABRIR E FECHAR A SIDE BAR -->
+    <script>
+        const toggleSidebarButton = document.getElementById('toggle-sidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content'); // Caso tenha um container principal
+    
+        toggleSidebarButton.addEventListener('click', () => {
+            sidebar.classList.toggle('closed'); // Alterna a classe 'closed' na sidebar
+            mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
+        });
+    </script>
+    
         <main id="main-container">
             <div id="corpo">
                 <h1>Gerenciar Bancas</h1>
@@ -60,11 +182,19 @@
                 $error_message = '';
                 $success_message = '';
 
+                // Diretório para upload
+                $uploadPath = 'uploads/';
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+
                 // Inserir ou atualizar registro
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nome = $_POST['nome'];
                     $link = $_POST['link'];
                     $cod_banca = $_POST['cod_banca'] ?? null;
+                    $upload = $_FILES['upload'] ?? null;
+                    $uploadFile = null;
 
                     // Verificar se a banca já está registrada
                     $check_sql = "SELECT * FROM banca WHERE nome='$nome'";
@@ -76,12 +206,24 @@
                     if ($check_result->num_rows > 0) {
                         $error_message = "Erro: banca já registrada";
                     } else {
+                        if ($upload && $upload['error'] === UPLOAD_ERR_OK) {
+                            // Mover arquivo para o diretório de uploads
+                            $uploadFile = $uploadPath . basename($upload['name']);
+                            if (!move_uploaded_file($upload['tmp_name'], $uploadFile)) {
+                                $error_message = "Erro ao mover o arquivo.";
+                            }
+                        }
+
                         if ($cod_banca) {
                             // Atualizar registro
-                            $sql = "UPDATE banca SET nome='$nome', link='$link' WHERE cod_banca=$cod_banca";
+                            $sql = "UPDATE banca SET nome='$nome', link='$link'";
+                            if ($uploadFile) {
+                                $sql .= ", upload='$uploadFile'";
+                            }
+                            $sql .= " WHERE cod_banca=$cod_banca";
                         } else {
                             // Inserir novo registro
-                            $sql = "INSERT INTO banca (nome, link) VALUES ('$nome', '$link')";
+                            $sql = "INSERT INTO banca (nome, link, upload) VALUES ('$nome', '$link', " . ($uploadFile ? "'$uploadFile'" : "NULL") . ")";
                         }
 
                         if ($conn->query($sql) === TRUE) {
@@ -128,11 +270,12 @@
 
                     if ($result->num_rows > 0) {
                         echo "<table class='table'>";
-                        echo "<tr><th>Nome da Banca</th><th>Link</th><th>Ações</th></tr>";
+                        echo "<tr><th>Nome da Banca</th><th>Link</th><th>Imagem</th><th>Ações</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['link']) . "</td>";
+                            echo "<td><img src='" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width:50px;'></td>";
                             echo "<td class='actions'>";
                             echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
                             echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
@@ -148,11 +291,11 @@
             </div>
         </main>
 
-        <!-- Modal de Adicionar/Editar Banca -->
-        <div id="add-modal" class="modal">
+                <!-- Modal de Adicionar/Editar Banca -->
+        <div id="add-modal" class="modal" style="overflow: hidden;">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeAddModal()">&times;</span>
-                <form action="banca.php" method="POST">
+                <form action="banca.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="cod_banca" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
                     <div id="input">
                         <label for="nome_modal">Nome da Banca:</label>
@@ -162,6 +305,10 @@
                         <label for="link_modal">Link da Banca:</label>
                         <input type="text" id="link_modal" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" required>
                     </div>
+                    <div id="input">
+                        <label for="upload_modal">Imagem da Banca:</label>
+                        <input type="file" id="upload_modal" name="upload" accept="image/*">
+                    </div>
                     <div class="button-container">
                         <button type="submit" class="save-button">Salvar</button>
                         <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
@@ -169,6 +316,7 @@
                 </form>
             </div>
         </div>
+
 
         <!-- Modal de confirmação -->
         <div id="confirm-modal" class="modal">
@@ -271,6 +419,7 @@
             function clearForm() {
                 document.getElementById("nome_modal").value = '';
                 document.getElementById("link_modal").value = '';
+                document.getElementById("upload_modal").value = '';
             }
 
             // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
@@ -313,5 +462,24 @@
                 }
             }
         </script>
-    </body>
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmLogoutModalLabel">Sair</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja sair?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmLogout" href="sair.php" class="btn btn-primary">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

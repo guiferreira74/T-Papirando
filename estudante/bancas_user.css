@@ -315,25 +315,36 @@ header .info ul li a {
 /* .reveal-txt, .reveal-img {
     visibility: hidden;
 } */
+
+
 .content-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 100px; /* Ajuste conforme necessário */
+    display: flex; /* Usar flexbox para as seções */
+    justify-content: space-around; /* Espaço entre as seções */
+    align-items: center; /* Alinha verticalmente os itens no centro */
+    margin: 20px; /* Margem ao redor do contêiner principal */
 }
 
-#enem {
-    flex: 1; /* Faz com que os elementos se ajustem igualmente */
+#enem, #correios {
+    flex: 1; /* Faz com que as seções se ajustem igualmente */
     text-align: center; /* Centraliza o texto internamente */
-    margin: 0 20px; /* Espaçamento horizontal entre os dois elementos */
+    margin: 0 20px; /* Espaçamento horizontal entre as seções */
 }
-#esa {
-    flex: 1; /* Faz com que os elementos se ajustem igualmente */
-    text-align: center; /* Centraliza o texto internamente */
-    margin: 0 20px; /* Espaçamento horizontal entre os dois elementos */
+
+.imagem-enem {
+    width: 200px; /* Limita a largura da imagem do Enem */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 20px; /* Aumenta o espaço entre a imagem e o texto */
 }
-#link {
-    padding: 0px;
+
+.imagem-correios {
+    width: 400px; /* Limita a largura da imagem dos Correios */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom:70px; /* Espaço entre a imagem e o texto */
+    margin-top: 20px; /* Adiciona espaço acima da imagem para alinhar */
 }
+
+
+
 /* Estilos para o modal */
 .modal {
     display: none; /* Esconde o modal por padrão */
@@ -394,5 +405,119 @@ header .info ul li a {
 
 .modal button:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+
+
+/* Basic modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+.modal-content p {
+    color: black; /* Set text color to black */
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+  /* Estilos básicos do modal */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1; /* Fica acima */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    overflow: auto; /* Habilita scroll se necessário */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com opacidade */
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% do topo e centralizado */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Pode ser mais ou menos, dependendo do tamanho da tela */
+    text-align: center;
+}
+.modal-content p {
+    color: black; /* Define a cor do texto como preto */
+}
+.close {
+    color: #aaa;              /* Cor padrão */
+    float: right;             /* Alinha à direita */
+    font-size: 28px;          /* Tamanho da fonte */
+    font-weight: bold;        /* Deixa em negrito */
+    margin-top: -5px;        /* Ajuste esse valor para subir ou descer o botão */
+    margin-right: -10px;      /* Ajuste a posição horizontal */
+}
+.close:hover,
+.close:focus {
+    color: black;             /* Muda a cor ao passar o mouse */
+    text-decoration: none;    /* Remove sublinhado */
+    cursor: pointer;          /* Muda o cursor para ponteiro */
+}
+/* Estilos dos botões */
+.button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: none; /* Sem transição ao passar o mouse */
+}
+.button.ok {
+    background-color: #2118CD; /* Cor azul para o botão OK */
+}
+.button.cancel {
+    background-color: red; /* Cor vermelha para o botão Cancelar */
+}
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Espaço entre os botões */
+}
+/* Desabilitar efeito de hover */
+.button.ok:hover,
+.button.cancel:hover {
+    background-color: #2118CD; /* Mantém azul no hover para OK */
+}
+.button.cancel:hover {
+    background-color: red; /* Mantém vermelho no hover para Cancelar */
+}
+.button.ok {
+    background-color: #2118CD; /* Cor azul para o botão OK */
+    color: white; /* Cor do texto, se necessário */
+    border: none; /* Remover bordas, se desejado */
+    padding: 10px 20px; /* Ajustar o espaçamento do botão */
+    cursor: pointer; /* Mudar o cursor para indicar que é clicável */
+    border-radius: 5px; /* Adicionar bordas arredondadas */
+    transition: background-color 0.3s; /* Transição suave para a cor ao passar o mouse */
+}
+
+.button.ok:hover {
+    background-color: #1a0f9a; /* Cor ao passar o mouse, se desejado */
 }
 

@@ -1,3 +1,4 @@
+/* Estilo geral */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
 * {
@@ -8,11 +9,10 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background:  #E6E6E6;
+    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 .interface {
@@ -50,10 +50,7 @@ header nav ul li a {
 
 /* Estilo do cabeçalho */
 .logo img {
-    width: 200px; /* Ajuste da largura da logo */
-    margin-left: -20px;
-    align-items: center;
-    padding-top: 10px;
+    width: 250px; /* Ajuste da largura da logo */
 }
 
 header {
@@ -109,115 +106,70 @@ header .info ul li a {
     flex-direction: row;
 }
 
-.informacoes a {
-    margin-right: 20px;
-}
-/* Conteudo */
-.container {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 30px;
-}
 
-.encima {
+/* Conteúdo Principal */
+.sobre-container, .creditos-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    padding: 50px;
+    padding: 40px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     margin-top: 100px;
-    gap: 20px;
 }
 
-.enbaixo  {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.sobre-container .desenvolvedores, 
+.creditos-container .creditos {
+    flex: 1;
     padding: 20px;
-    margin-top: 20px;
 }
 
-.enbaixo a img {
-    height: auto;
-    width: 350px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 80px;
-}
-
-.enbaixo a img:hover {
-    transform: scale(1.05) rotate(3deg); /* Aumenta e rotaciona levemente */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-
-#pesquisa {
-    margin-top: 50px;
-    width: 900px;
-    height: 40px;
-    border-radius: 30px;
-    padding: 10px;
-}
-
-#titulo {
-    font-size: 40px;
-}
-
-p {
-    display: flex;
-    justify-content: center;
-}
-
-hr {
-    color: black;
-}
-
-.logo{
-    width: 400px;
-}
-.direira{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.enbaixo .esquerda h1, .enbaixo .direita h1 {
+.sobre-container .foto, 
+.creditos-container .foto {
+    flex: 1;
     text-align: center;
-    margin-bottom: 30px; /* Adiciona espaço entre o h1 e a imagem */
 }
 
-#pesquisa {
-    margin-top: 50px;
-    width: 900px;
-    height: 40px;
-    border-radius: 30px;
-    padding: 10px;
+.sobre-container .foto img, 
+.creditos-container .foto img {
+    max-width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
+    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#titulo {
-    font-size: 40px;
+.sobre-container .foto img:hover, 
+.creditos-container .foto img:hover {
+    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
 }
 
-p {
-    display: flex;
-    justify-content: center;
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-hr {
-    color: black;
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.logo{
-    width: 400px;
-}
-.direira{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+ul li {
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
-.mensagem-boas-vindas{
-    color: white;
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .sobre-container, .creditos-container {
+        flex-direction: column;
+    }
+
+    .sobre-container .foto img, 
+    .creditos-container .foto img {
+        max-width: 100%;
+    }
 }
