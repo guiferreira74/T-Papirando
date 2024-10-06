@@ -1,0 +1,554 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
+}
+
+.header-prc {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 85px;
+    width: 100%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 250px;
+}
+
+
+.search-bar {
+    flex: 2;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    height: 15px;
+    padding: 8px;
+    border-radius: 9.75px;
+    border: 1px solid #ccc;
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    height: 500px; /* Remove a altura fixa para que o conteúdo se ajuste */
+    padding: 0 100px;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    margin: auto;
+}
+
+#corpo {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+#input {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#nome-sobrenome {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding-top: 30px;
+    border: none;
+}
+
+#email-senha {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 375px;
+    padding-top: 30px;
+    border: none;
+}
+
+#button {
+    background-color: #00DB09;
+    width: 300px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#button:hover {
+    background-color: #00b300;
+}
+
+.table-container {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+a.edit-button, a.delete-button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+a.edit-button {
+    background-color: #2118CD;
+}
+
+a.edit-button:hover {
+    background-color: #2118CD;
+}
+
+a.delete-button {
+    background-color: #f44336;
+}
+
+a.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.grid-duplo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+}
+
+.esquerda { grid-area: 1 / 1 / 2 / 2; }
+.direita { grid-area: 1 / 2 / 2 / 3; }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.save-button,
+.clear-button {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.clear-button {
+    background-color: #f44336; /* Cor vermelha para o botão Limpar */
+}
+
+.save-button:hover {
+    background-color: #0036A6; /* Cor azul mais escura para o botão Salvar */
+}
+
+.clear-button:hover {
+    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Limpar */
+}
+
+/* Modal */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.success-message {
+    color: #2118CD;
+}
+
+.error-message {
+    color: red;
+}
+
+/* Estilos para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os ícones no lado direito */
+    gap: 10px; /* Espaçamento entre os ícones */
+}
+
+.edit-button, .delete-button {
+    color: #333;
+    text-decoration: none;
+}
+
+.edit-button:hover, .delete-button:hover {
+    color: #007BFF; /* Cor ao passar o mouse */
+}
+.d-flex {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+    height: 100vh;
+    width: 250px;
+}
+
+.sidebar-header h4 {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: none;
+}
+
+.components {
+    padding-left: 0;
+}
+
+.components hr {
+    margin: 10px 0;
+    border-color: black;
+}
+
+#sidebar .components a {
+    color: #343a40;
+    text-decoration: none;
+    padding: 8px 20px;
+    display: block;
+    font-weight: 500;
+    text-align: center;
+}
+
+#sidebar .components a:hover, 
+#sidebar .components a.active {
+    background-color: #2118CD;
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Conteúdo principal */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.encima {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.enbaixo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.enbaixo img {
+    max-width: 45%;
+    height: auto;
+    width: 400px;
+}
+
+#pesquisa {
+    margin-top: 50px;
+    width: 900px;
+    height: 40px;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+#titulo {
+    font-size: 40px;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+}
+
+hr {
+    color: black;
+}
+/* Modal */
+.modal {
+    display: none; /* Ocultado por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.modal-body {
+    margin-top: 20px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn-delete,
+.btn-cancel {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.btn-cancel {
+    background-color: #e74c3c; /* Vermelho para Cancelar */
+}
+
+.btn-delete:hover,
+.btn-cancel:hover {
+    opacity: 0.8;
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+/* Estilos específicos para o botão de fechar no modal de erro */
+.modal-erro .close-btn {
+    color: #e74c3c; /* Cor vermelha para o botão de fechar no modal de erro */
+}
+
+.modal-erro .close-btn:hover,
+.modal-erro .close-btn:focus {
+    color: #c0392b; /* Cor vermelha mais escura no hover e focus */
+}
+
+/* Estilos específicos para o modal de erro */
+.modal-erro p {
+    color: #e74c3c; /* Texto em vermelho para erro */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-erro .ok-btn-erro {
+    background-color: #2118CD; /* Botão azul para erro */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-erro .ok-btn-erro:hover {
+    background-color: #2980b9; /* Cor um pouco mais escura para o hover */
+}
+
+/* Estilos específicos para o modal de sucesso */
+
+/* Estilos específicos para o botão de fechar no modal de sucesso */
+.modal-sucesso .close-btn {
+    color: #2118CD; /* Cor azul para o botão de fechar no modal de sucesso */
+}
+
+.modal-sucesso .close-btn:hover,
+.modal-sucesso .close-btn:focus {
+    color: #1a14a6; /* Cor azul mais escura no hover e focus */
+}
+
+.modal-sucesso p {
+    color: #2118CD; /* Texto em azul para sucesso */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-sucesso .ok-btn-sucesso {
+    background-color: #2118CD; /* Botão azul para sucesso */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-sucesso .ok-btn-sucesso:hover {
+    background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}

@@ -1,0 +1,692 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", system-ui;
+    background: #E6E6E6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.interface {
+    max-width: 1280px;
+    margin: auto;
+    align-items: center; /* Centraliza os itens do header verticalmente */
+    justify-content: space-between; /* Espaça os elementos igualmente */
+}
+
+.flex {
+    margin-top: 100px;
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+/* Ajuste no tamanho da fonte dos itens do menu */
+header nav ul li a {
+    font-size: 18px; /* Tamanho da fonte dos itens do menu */
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+    color: white;
+}
+
+/* Estilo do cabeçalho */
+.logo img {
+    width: 200px; /* Ajuste da largura da logo */
+    margin-left: -20px;
+    align-items: center;
+    padding-top: 10px;
+    gap: 15px; /* Ajusta a distância entre o botão e a logo */
+    padding-top: 10px; 
+    display: flex;
+    margin-left: 100px;
+}
+
+header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
+    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
+  
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: .2s;
+}
+
+header a:hover {
+    color: yellow;
+    transform: scale(1.05);
+}
+
+header nav ul {
+    list-style: none;
+    display: flex; /* Exibe os itens na horizontal */
+}
+
+header nav ul li {
+    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+}
+
+.btn-contato {
+    display: flex; /* Garante que o botão esteja na mesma linha */
+    align-items: center;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+
+header .info ul li a {
+    display: flex;
+    flex-direction: row;
+}
+
+.informacoes a {
+    margin-right: 20px;
+}
+
+#sidebar{
+    position: fixed;
+    display: flex;
+    background: #f0f0f0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    float: left;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+    width: 200px;
+    transition: width 0.3s ease, left 0.3s ease; /* Animação suave */
+    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    z-index: 10;
+    padding-top: 100px;
+    overflow-y: auto; /* Adiciona barra de rolagem vertical */
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+}
+
+#sidebar ul {
+    list-style: none; /* Remove os marcadores de lista */
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar ul li {
+    padding: 10px 10px; /* Espaçamento entre os itens */
+    margin-bottom: 10px; /* Espaçamento inferior entre os itens */
+
+}
+
+#sidebar ul li a {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+         
+}
+
+#sidebar ul li a .icon i {
+    transition: color 0.3s; /* Transição suave ao mudar de cor */
+}
+
+
+#sidebar ul li .txt {
+    flex-grow: 1;
+}
+
+#sidebar ul li .icon {
+    margin-right: 20px; /* Aumenta o espaço entre o ícone e o texto */
+}
+
+#gr{
+    text-align: center; /* Centraliza o texto */
+    margin: 20px auto; /* Espaçamento automático nas laterais e superior/inferior */
+    font-size: 18px; /* Ajuste o tamanho da fonte, se necessário */
+}
+
+#sidebar ul li.item-menu{
+    transition: .2s;
+}
+
+#sidebar ul li.ativo{
+    background-color: #2118CD;
+}
+
+#sidebar ul li.ativo {
+    background-color: #2118CD; /* Cor de fundo do item ativo */
+    color: white; /* Cor do texto do item ativo */
+    border-radius: 8px; /* Aplica o mesmo border-radius do hover */
+}
+
+#sidebar ul li.ativo a {
+    color: white; /* Cor do link ativo */
+}
+
+#sidebar ul li.ativo .icon i {
+    color: white; /* Cor do ícone ativo */
+}
+
+/* Sidebar recolhida */
+#sidebar.closed {
+    width: 0; /* Largura da sidebar recolhida */
+    overflow: hidden; /* Remove o conteúdo ao recolher */
+}
+
+/* Ajuste no conteúdo da página quando a sidebar está recolhida */
+#main-content {
+    transition: margin-left 0.3s ease;
+    margin-left: 200px; /* Ajusta o conteúdo com a sidebar expandida */
+}
+
+#main-content.sidebar-closed {
+    margin-left: 0; /* Ajusta o conteúdo quando a sidebar está recolhida */
+}
+
+/* Botão de ativação da sidebar */
+.toggle-sidebar {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+     /* Mantém uma margem à direita para distanciar da logo */
+}
+
+.controle-navegacao {
+    display: flex;
+    align-items: center; /* Alinha verticalmente a logo e o botão */
+}
+
+.button{
+    justify-content: flex-start;
+}
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    height: auto; /* Remove a altura fixa para que o conteúdo se ajuste */
+    padding: 0 100px;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    margin: auto;
+}
+
+#corpo {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px; /* Reduz o espaço acima do conteúdo para aproximar do cabeçalho */
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+#input {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#nome-sobrenome {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding-top: 30px;
+    border: none;
+}
+
+#email-senha {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 375px;
+    padding-top: 30px;
+    border: none;
+}
+
+#button {
+    background-color: #00DB09;
+    width: 300px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#button:hover {
+    background-color: #00b300;
+}
+
+.table-container {
+    margin-top: 30px;
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    max-width: 1200px; /* Aumenta a largura máxima da tabela */
+    display: flex; /* Para centralizar a tabela */
+    justify-content: center; /* Centraliza a tabela horizontalmente */
+}
+
+table {
+    width: 100%; /* Use 100% para ocupar o espaço disponível */
+    min-width: 1000px; /* Define uma largura mínima para a tabela */
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px; /* Aumenta o espaçamento nas células */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Adicionando um estilo para centralizar a tabela no corpo */
+#corpo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo dentro do corpo */
+}
+
+
+
+a.edit-button, a.delete-button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+a.edit-button {
+    background-color: #2118CD;
+}
+
+a.edit-button:hover {
+    background-color: #2118CD;
+}
+
+a.delete-button {
+    background-color: #f44336;
+}
+
+a.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.grid-duplo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+}
+
+.esquerda { grid-area: 1 / 1 / 2 / 2; }
+.direita { grid-area: 1 / 2 / 2 / 3; }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.save-button,
+.clear-button {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.clear-button {
+    background-color: #f44336; /* Cor vermelha para o botão Limpar */
+}
+
+.save-button:hover {
+    background-color: #0036A6; /* Cor azul mais escura para o botão Salvar */
+}
+
+.clear-button:hover {
+    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Limpar */
+}
+
+/* Modal */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.success-message {
+    color: #2118CD;
+}
+
+.error-message {
+    color: red;
+}
+
+
+.edit-button, .delete-button {
+    color: #333;
+    text-decoration: none;
+}
+
+.edit-button:hover, .delete-button:hover {
+    color: #007BFF; /* Cor ao passar o mouse */
+}
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o menu e o conteúdo no topo */
+    padding-top: 20px; /* Adiciona um pequeno espaçamento superior */
+    height: 100vh; /* Faz a sidebar ocupar a altura total da viewport */
+    width: 200PX;
+}
+
+.sidebar-header h4 {
+    text-align: center; /* Centraliza o título "Menu" */
+    padding-bottom: 10px; /* Reduz o espaçamento inferior */
+    border-bottom: none; /* Remove a linha abaixo do título */
+}
+
+.components {
+    padding-left: 0;
+}
+
+.components hr {
+    margin: 10px 0; /* Reduz o espaçamento ao redor da linha */
+    border-color: black;
+}
+
+#sidebar .components a {
+    color: #343a40;
+    text-decoration: none;
+    padding: 8px 20px; /* Reduz o padding para diminuir a altura dos itens */
+    display: block;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Estilizando o hover e o estado ativo para os links do menu */
+#sidebar .components a:hover, 
+#sidebar .components a.active {
+    background-color: #2118CD;
+    color: #fff;
+    border-radius: 5px;
+}
+
+hr{
+    color: black;
+}
+p{
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+/* Centralizar o modal */
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Altura mínima da tela */
+}
+    /* Estilo do modal */
+    .modal {
+        display: none; /* Escondido por padrão */
+        position: fixed; /* Fica fixo na tela */
+        z-index: 1; /* Fica acima de outros elementos */
+        left: 0;
+        top: 0;
+        width: 100%; /* Largura total da tela */
+        height: 100%; /* Altura total da tela */
+        overflow: auto; /* Adiciona rolagem se necessário */
+        background-color: rgba(0,0,0,0.4); /* Cor de fundo semitransparente */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* Centraliza o modal na tela */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 400px; /* Largura fixa do modal */
+        text-align: center; /* Centraliza o texto e botões */
+        position: relative; /* Para posicionar o botão de fechar */
+        border-radius: 8px; /* Bordas arredondadas */
+    }
+
+    .close-btn {
+        color: #aaa;
+        position: absolute; /* Posiciona o botão de fechar no canto superior direito */
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    .modal-body {
+        margin-top: 20px;
+    }
+
+    .button-container {
+        margin-top: 20px;
+    }
+
+    .btn-delete,
+    .btn-cancel {
+        background-color: #2118CD; /* Azul por padrão */
+        color: white; /* Texto branco */
+        border: none;
+        padding: 8px 12px; /* Menor que o original */
+        font-size: 14px; /* Menor que o original */
+        cursor: pointer;
+        border-radius: 4px; /* Bordas arredondadas */
+        margin: 5px; /* Espaçamento entre os botões */
+    }
+
+    .btn-cancel {
+        background-color: #e74c3c;; /* Vermelho para Cancelar */
+    }
+
+    .btn-delete:hover,
+    .btn-cancel:hover {
+        opacity: 0.8; /* Leve efeito de hover */
+    }
+
+    .modal-body p {
+        margin: 0;
+    }
+/* Estilos específicos para o botão de fechar no modal de erro */
+.modal-erro .close-btn {
+    color: #e74c3c; /* Cor vermelha para o botão de fechar no modal de erro */
+}
+
+.modal-erro .close-btn:hover,
+.modal-erro .close-btn:focus {
+    color: #c0392b; /* Cor vermelha mais escura no hover e focus */
+}
+
+/* Estilos específicos para o modal de erro */
+.modal-erro p {
+    color: #e74c3c; /* Texto em vermelho para erro */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-erro .ok-btn-erro {
+    background-color: #2118CD; /* Botão azul para erro */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-erro .ok-btn-erro:hover {
+    background-color: #2980b9; /* Cor um pouco mais escura para o hover */
+}
+
+/* Estilos específicos para o modal de sucesso */
+
+/* Estilos específicos para o botão de fechar no modal de sucesso */
+.modal-sucesso .close-btn {
+    color: #2118CD; /* Cor azul para o botão de fechar no modal de sucesso */
+}
+
+.modal-sucesso .close-btn:hover,
+.modal-sucesso .close-btn:focus {
+    color: #1a14a6; /* Cor azul mais escura no hover e focus */
+}
+
+.modal-sucesso p {
+    color: #2118CD; /* Texto em azul para sucesso */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-sucesso .ok-btn-sucesso {
+    background-color: #2118CD; /* Botão azul para sucesso */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-sucesso .ok-btn-sucesso:hover {
+    background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+.modal {
+    z-index: 1050; /* Z-index do modal deve ser maior que o cabeçalho */
+}
+
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Altura mínima da tela */
+}
+
+.modal-header {
+    border-bottom: none; /* Remove a borda inferior do cabeçalho do modal */
+}
+
+.modal-footer {
+    border-top: none; /* Remove a borda superior do rodapé do modal */
+}
+.mensagem-boas-vindas {
+    color: white; /* Define a cor do texto como branco */
+}

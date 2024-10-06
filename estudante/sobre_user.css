@@ -1,0 +1,175 @@
+/* Estilo geral */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", system-ui;
+    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.interface {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.flex {
+    margin-top: 100px;
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+/* Ajuste no tamanho da fonte dos itens do menu */
+header nav ul li a {
+    font-size: 18px; /* Tamanho da fonte dos itens do menu */
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+    color: white;
+}
+
+/* Estilo do cabeçalho */
+.logo img {
+    width: 250px; /* Ajuste da largura da logo */
+}
+
+header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
+    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: .2s;
+}
+
+header a:hover {
+    color: yellow;
+    transform: scale(1.05);
+}
+
+header nav ul {
+    list-style: none;
+    display: flex; /* Exibe os itens na horizontal */
+}
+
+header nav ul li {
+    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+}
+
+.btn-contato {
+    display: flex; /* Garante que o botão esteja na mesma linha */
+    align-items: center;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+
+header .info ul li a {
+    display: flex;
+    flex-direction: row;
+}
+
+
+/* Conteúdo Principal */
+.sobre-container, .creditos-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 100px;
+}
+
+.sobre-container .desenvolvedores, 
+.creditos-container .creditos {
+    flex: 1;
+    padding: 20px;
+}
+
+.sobre-container .foto, 
+.creditos-container .foto {
+    flex: 1;
+    text-align: center;
+}
+
+.sobre-container .foto img, 
+.creditos-container .foto img {
+    max-width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
+    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-container .foto img:hover, 
+.creditos-container .foto img:hover {
+    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .sobre-container, .creditos-container {
+        flex-direction: column;
+    }
+
+    .sobre-container .foto img, 
+    .creditos-container .foto img {
+        max-width: 100%;
+    }
+}

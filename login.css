@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", system-ui;
+    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.interface {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.flex {
+    margin-top: 100px;
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+/* Ajuste no tamanho da fonte dos itens do menu */
+header nav ul li a {
+    font-size: 18px; /* Tamanho da fonte dos itens do menu */
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+    color: white;
+}
+
+/* Estilo do cabeçalho */
+.logo img {
+    width: 250px; /* Ajuste da largura da logo */
+}
+
+header {
+    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    background-color: #2118CD;
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: .2s;
+}
+
+header a:hover {
+    color: yellow;
+    transform: scale(1.05);
+}
+
+header nav ul {
+    list-style: none;
+    display: flex; /* Exibe os itens na horizontal */
+}
+
+header nav ul li {
+    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+}
+
+.btn-contato {
+    display: flex; /* Garante que o botão esteja na mesma linha */
+    align-items: center;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+
+header .info ul li a {
+    display: flex;
+    flex-direction: row;
+}
+
+#img {
+    width: 550px;
+}
+
+@keyframes flutuar{
+    0%{
+        top: 0;
+    }
+    100%{
+        top: 30px;
+    }
+}
+
+.links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Alinha os links no canto direito */
+    gap: 15px; /* Espaçamento entre os links */
+    margin-right: 250px;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 49px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu */
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s, background-color 0.3s;  /* Transição suave */
+}
+/* Estilo para links restritos */
+.menu a.restricted {
+color: gray; /* Cor cinza para links restritos */
+pointer-events: none; /* Desabilita eventos de clique */
+cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitida */
+}
+ 
+/* Efeito de hover no menu */
+.menu a:hover {
+    color: #2118CD;  /* Cor do texto ao passar o mouse */
+    border-radius: 5px;  /* Cantos arredondados */
+}
+
+.grid-duplo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+}
+    
+.esquerda { grid-area: 1 / 1 / 2 / 2; }
+.direita { grid-area: 1 / 2 / 2 / 3; }
+
+.esquerda{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.direita {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Para dar espaçamento superior */
+}
+
+.direita h1 {
+    margin-bottom: 10px; /* Espaço entre título e parágrafo */
+}
+
+.direita p {
+    margin-bottom: 20px; /* Espaço entre parágrafo e botão */
+}
+
+#button-direita {
+    margin-top: 20px; /* Espaço acima do botão, se necessário */
+}
+
+
+#button-esquerda{
+    width: 350px;
+    height: 50px;
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.button-container {
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+    margin-top: -20px;  /* Ajusta a margem superior para mover o botão para cima */
+}
+
+#button-direita{
+    width: 350px;
+    height: 50px;
+    background-color: #00DB09;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#checar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#checa {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 15px;
+}
+
+#input-email {
+    display: block;
+    margin: 25px auto 0;
+    width: 400px;
+    height: 35px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+    border-radius: 3px;
+}
+
+#input-senha {
+    display: block;
+    margin: 25px auto 0;
+    width: 400px;
+    height: 35px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+    border-radius: 3px;
+}
+
+#cadastro, #login {
+    width: 100px;
+}
+
+.modal {
+    display: none; /* Esconde o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo semitransparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 450px; /* Define uma largura máxima para o modal */
+    text-align: center; /* Centraliza o conteúdo do modal */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 2px solid #333; /* Exemplo de estilo adicional */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Exemplo de sombra adicional */
+}
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal button {
+    background-color:#2118CD;
+
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #2118CD;
+}
+/* Estilos gerais para todos os modais */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 550px; /* Define uma largura máxima para o modal */
+    text-align: center; /* Centraliza o conteúdo do modal */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 2px solid #333; /* Exemplo de estilo adicional */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Exemplo de sombra adicional */
+}
+
+/* Estilos personalizados para modais */
+.modal-custom .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 2px solid #333; /* Exemplo de estilo adicional */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Exemplo de sombra adicional */
+}
+
+.modal p {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Estilos para o botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos personalizados para botões */
+.btn-custom {
+    background-color: #2118CD;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-custom:hover {
+    background-color: #1817A4; /* Alterar a cor de fundo ao passar o mouse */
+}
