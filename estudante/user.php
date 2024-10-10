@@ -17,38 +17,32 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuário</title>
+    <title>Estudante</title>
     <link rel="stylesheet" href="user.css">
     <link   rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
 </head>
 <body>
-    <header>
+<header>
         <div class="interface">
-            <!-- Botão para abrir a barra lateral -->
-            <div class="controle-navegacao">
-                <div class="logo">
-                    <img src="../administrador/assets/logo_papirando_final.svg" alt="Logo">     
-                </div><!-- logo -->
-            </div><!-- controle-navegacao -->
-
+            <div class="logo">
+            <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
+            </div>
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="user.php">Início</a></li>
-                    <li><a href="simulados.php">Simulados</a></li>
+                    <li><a href="simulados.php" class="simulados-link">Simulados</a></li>
                     <li><a href="bancas_user.php">Bancas</a></li>
-                    <li><a href="desempenhos.php">Desempenho</a></li>
+                    <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
+                  
                 </ul>
             </nav>
-
-            <div class="informacoes">
-            <a href="sobre_user.php">Sobre</a>
-            <a href="ajuda_user.php">Ajuda</a>
-            <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($usuario_nome); ?>!</span>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
+            <div class="info">
+                <a href="sobre_user.php">Sobre</a>
+                <a href="ajuda_user.php">Ajuda</a>
+                <a href="../administrador/sair.php">Sair</a>
             </div>
-            </div>
-        </div><!-- interface -->
-    </header>  
+        </div>
+    </header>
      <main>
   <!-- Modal de Confirmação -->
   <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">

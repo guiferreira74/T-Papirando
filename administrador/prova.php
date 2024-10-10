@@ -34,8 +34,8 @@
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
-                <li><a href="nivel.php">Níveis</a></li>
-                <li><a href="grau.php">Graus</a></li>
+                <li><a href="escolaridade.php">Escolaridade</a></li>
+                <li><a href="dificuldade.php">Dificuldade</a></li>
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
                 <li><a href="instituicao.php">Instituições</a></li>
@@ -64,12 +64,13 @@
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nome = $_POST['nome'];
                     $tempo = $_POST['tempo'];
-                    $qtd_provas = $_POST['qtd_provas'];
+                    $qtd_questoes = $_POST['qtd_questoes'];
                     $banca_cod_banca = $_POST['banca_cod_banca'];
+                    $disciplina_cod_disciplina = $_POST['disciplina_cod_disciplina'];
                     $cod_prova = $_POST['cod_prova'] ?? null;
 
                     // Verificar se a prova já está registrada
-                    $check_sql = "SELECT * FROM prova WHERE nome='$nome'";
+                    $check_sql = "SELECT * FROM prova WHERE nome='$nome' AND banca_cod_banca=$banca_cod_banca AND disciplina_cod_disciplina=$disciplina_cod_disciplina";
                     if ($cod_prova) {
                         $check_sql .= " AND cod_prova != $cod_prova";
                     }
@@ -80,10 +81,10 @@
                     } else {
                         if ($cod_prova) {
                             // Atualizar registro
-                            $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', qtd_provas='$qtd_provas', banca_cod_banca=$banca_cod_banca WHERE cod_prova=$cod_prova";
+                            $sql = "UPDATE prova SET nome='$nome', tempo='$tempo', qtd_questoes='$qtd_questoes', banca_cod_banca=$banca_cod_banca, disciplina_cod_disciplina=$disciplina_cod_disciplina WHERE cod_prova=$cod_prova";
                         } else {
                             // Inserir novo registro
-                            $sql = "INSERT INTO prova (nome, tempo, qtd_provas, banca_cod_banca) VALUES ('$nome', '$tempo', '$qtd_provas', $banca_cod_banca)";
+                            $sql = "INSERT INTO prova (nome, tempo, qtd_questoes, banca_cod_banca, disciplina_cod_disciplina) VALUES ('$nome', '$tempo', '$qtd_questoes', $banca_cod_banca, $disciplina_cod_disciplina)";
                         }
 
                         if ($conn->query($sql) === TRUE) {
@@ -109,8 +110,9 @@
                 $cod_prova = $_GET['edit'] ?? null;
                 $nome = '';
                 $tempo = '';
-                $qtd_provas = '';
+                $qtd_questoes = '';
                 $banca_cod_banca = '';
+                $disciplina_cod_disciplina = '';
 
                 if ($cod_prova) {
                     $result = $conn->query("SELECT * FROM prova WHERE cod_prova=$cod_prova");
@@ -118,13 +120,17 @@
                         $row = $result->fetch_assoc();
                         $nome = $row['nome'];
                         $tempo = $row['tempo'];
-                        $qtd_provas = $row['qtd_provas'];
+                        $qtd_questoes = $row['qtd_questoes'];
                         $banca_cod_banca = $row['banca_cod_banca'];
+                        $disciplina_cod_disciplina = $row['disciplina_cod_disciplina'];
                     }
                 }
 
                 // Obter as bancas
                 $bancas_result = $conn->query("SELECT * FROM banca");
+
+                // Obter as disciplinas
+                $disciplinas_result = $conn->query("SELECT * FROM disciplina");
                 ?>
 
                 <div class="text-center mb-3">
@@ -137,15 +143,17 @@
 
                     if ($result->num_rows > 0) {
                         echo "<table class='table'>";
-                        echo "<tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd Provas</th><th>Banca</th><th>Ações</th></tr>";
+                        echo "<tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd Questões</th><th>Banca</th><th>Disciplina</th><th>Ações</th></tr>";
                         while ($row = $result->fetch_assoc()) {
-                            // Obter o nome da banca
+                            // Obter o nome da banca e disciplina
                             $banca = $conn->query("SELECT nome FROM banca WHERE cod_banca=" . $row['banca_cod_banca'])->fetch_assoc();
+                            $disciplina = $conn->query("SELECT nome FROM disciplina WHERE cod_disciplina=" . $row['disciplina_cod_disciplina'])->fetch_assoc();
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['qtd_provas']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
                             echo "<td>" . htmlspecialchars($banca['nome']) . "</td>";
+                            echo "<td>" . htmlspecialchars($disciplina['nome']) . "</td>";
                             echo "<td class='actions'>";
                             echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
                             echo "<a class='delete-button' href='#' onclick='openModal(\"prova.php?delete=" . $row['cod_prova'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
@@ -169,25 +177,39 @@
                     <input type="hidden" id="cod_prova" name="cod_prova" value="<?php echo htmlspecialchars($cod_prova); ?>">
                     <div id="input">
                         <label for="nome_modal">Nome da Prova:</label>
-                        <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da prova" required>
+                        <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" required>
                     </div>
                     <div id="input">
-                        <label for="tempo_modal">Tempo (HH:MM:SS):</label>
-                        <input type="text" id="tempo_modal" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" placeholder="HH:MM:SS" required>
+                    <label for="tempo_modal">Tempo (HH:MM:SS):</label>
+                    <input type="text" id="tempo_modal" name="tempo" value="<?php echo htmlspecialchars($tempo); ?>" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" placeholder="HH:MM:SS" required>
+                </div>
+
+                    <div id="input">
+                        <label for="qtd_questoes_modal">Quantidade de Questões:</label>
+                        <input type="number" id="qtd_questoes_modal" name="qtd_questoes" value="<?php echo htmlspecialchars($qtd_questoes); ?>" required>
                     </div>
                     <div id="input">
-                        <label for="qtd_provas_modal">Quantidade de Provas:</label>
-                        <input type="text" id="qtd_provas_modal" name="qtd_provas" value="<?php echo htmlspecialchars($qtd_provas); ?>" required>
+                        <label for="banca_cod_banca">Banca:</label>
+                        <select name="banca_cod_banca" id="banca_cod_banca" required>
+                            <option value="">Selecione uma banca</option>
+                            <?php
+                            while ($banca = $bancas_result->fetch_assoc()) {
+                                $selected = ($banca['cod_banca'] == $banca_cod_banca) ? 'selected' : '';
+                                echo "<option value='" . $banca['cod_banca'] . "' $selected>" . htmlspecialchars($banca['nome']) . "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div id="input">
-                        <label for="banca_cod_banca_modal">Selecione a Banca:</label>
-                        <select id="banca_cod_banca_modal" name="banca_cod_banca" required>
-                            <option value="" disabled selected>Selecione uma Banca</option>
-                            <?php while ($banca = $bancas_result->fetch_assoc()): ?>
-                                <option value="<?php echo $banca['cod_banca']; ?>" <?php echo ($banca['cod_banca'] == $banca_cod_banca) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($banca['nome']); ?>
-                                </option>
-                            <?php endwhile; ?>
+                        <label for="disciplina_cod_disciplina">Disciplina:</label>
+                        <select name="disciplina_cod_disciplina" id="disciplina_cod_disciplina" required>
+                            <option value="">Selecione uma disciplina</option>
+                            <?php
+                            while ($disciplina = $disciplinas_result->fetch_assoc()) {
+                                $selected = ($disciplina['cod_disciplina'] == $disciplina_cod_disciplina) ? 'selected' : '';
+                                echo "<option value='" . $disciplina['cod_disciplina'] . "' $selected>" . htmlspecialchars($disciplina['nome']) . "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="button-container">
@@ -242,16 +264,32 @@
         addModal.style.display = "block";
     }
 
-    // Função para abrir o modal de edição
-    function openEditModal(data) {
-        document.getElementById("cod_prova").value = data.cod_prova;
-        document.getElementById("nome_modal").value = data.nome;
-        document.getElementById("tempo_modal").value = data.tempo;
-        document.getElementById("qtd_provas_modal").value = data.qtd_provas;
-        document.getElementById("banca_cod_banca_modal").value = data.banca_cod_banca;
-        addModal.style.display = "block";
-    }
+    function openAddModal() {
+            document.getElementById('cod_prova').value = '';
+            document.getElementById('nome_modal').value = '';
+            document.getElementById('tempo_modal').value = '';
+            document.getElementById('qtd_questoes_modal').value = '';
+            document.getElementById('banca_cod_banca').value = '';
+            document.getElementById('disciplina_cod_disciplina').value = '';
+            document.getElementById('add-modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
 
+        function closeAddModal() {
+            document.getElementById('add-modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function openEditModal(data) {
+            document.getElementById('cod_prova').value = data.cod_prova;
+            document.getElementById('nome_modal').value = data.nome;
+            document.getElementById('tempo_modal').value = data.tempo;
+            document.getElementById('qtd_questoes_modal').value = data.qtd_questoes;
+            document.getElementById('banca_cod_banca').value = data.banca_cod_banca;
+            document.getElementById('disciplina_cod_disciplina').value = data.disciplina_cod_disciplina;
+            document.getElementById('add-modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
     // Função para abrir o modal de confirmação
     function openModal(deleteUrl) {
         confirmModal.style.display = "block";
@@ -281,7 +319,8 @@ function clearForm() {
     document.getElementById("cod_prova").value = '';
     document.getElementById("nome_modal").value = '';
     document.getElementById("tempo_modal").value = '';
-    document.getElementById("qtd_provas_modal").value = '';
+    document.getElementById('qtd_questoes_modal').value = '';
+    document.getElementById('disciplina_cod_disciplina').value ='';
     document.getElementById("banca_cod_banca_modal").value = '';
 }
 
@@ -290,13 +329,15 @@ function saveCookies() {
     var cod_prova = document.getElementById("cod_prova").value;
     var nome = document.getElementById("nome_modal").value;
     var tempo = document.getElementById("tempo_modal").value;
-    var qtd_provas = document.getElementById("qtd_provas_modal").value;
+    var qtd_questoes = document.getElementById('qtd_questoes_modal').value; 
+    var disciplina_cod_disciplina =document.getElementById('disciplina_cod_disciplina').value;
     var banca_cod_banca = document.getElementById("banca_cod_banca_modal").value;
 
     document.cookie = "cod_prova=" + encodeURIComponent(cod_prova) + "; path=/";
     document.cookie = "nome=" + encodeURIComponent(nome) + "; path=/";
     document.cookie = "tempo=" + encodeURIComponent(tempo) + "; path=/";
-    document.cookie = "qtd_provas=" + encodeURIComponent(qtd_provas) + "; path=/";
+    document.cookie = "qtd_questoes=" + encodeURIComponent(qtd_provas) + "; path=/";
+    document.cookie = "disciplina_cod_disciplina=" + encodeURIComponent(disciplina_cod_disciplina) + "; path=/";
     document.cookie = "banca_cod_banca=" + encodeURIComponent(banca_cod_banca) + "; path=/";
 }
 
@@ -315,10 +356,13 @@ function loadCookies() {
         } else if (name === 'tempo') {
             document.getElementById("tempo_modal").value = value;
         } else if (name === 'qtd_provas') {
-            document.getElementById("qtd_provas_modal").value = value;
+            document.getElementById("qtd_questoes_modal").value = value;
         } else if (name === 'banca_cod_banca') {
             document.getElementById("banca_cod_banca_modal").value = value;
         }
+        else if (name === 'disciplina_cod_disciplina') {
+            document.getElementById("disiciplina_cod_disciplina_modal").value = value;
+        }    
     });
 }
 
@@ -337,6 +381,10 @@ function loadCookies() {
             closeModal('sucesso');
         }
     };
+    function closeAddModal() {
+    addModal.style.display = "none";
+}
+
 
     // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
     <?php if ($error_message): ?>

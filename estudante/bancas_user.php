@@ -6,7 +6,6 @@
     <title>Banca</title>
     <link rel="stylesheet" href="bancas_user.css">
     <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
-    
 </head>
 <body>
     <header>
@@ -21,97 +20,112 @@
                 <ul>
                     <li><a href="user.php">Início</a></li>
                     <li><a href="simulados.php">Simulados</a></li>
-                    <li><a href="bancas.php">Bancas</a></li>
+                    <li><a href="bancas_user.php">Bancas</a></li>
                     <li><a href="desempenhos.php">Desempenho</a></li>
                 </ul>
             </nav>
 
             <div class="info">
-                <a href="sobre.php">Sobre</a>
-                <a href="ajuda.php">Ajuda</a>
+                <a href="sobre_user.php">Sobre</a>
+                <a href="ajuda_user.php">Ajuda</a>
                 <a href="../administrador/sair.php">Sair</a>
             </div>
         </div> <!-- interface -->
     </header>
 
-    <main class="content-container">
-    <?php
-// Conexão com o banco de dados
-$conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+    <h1 class="centered-title">Banca de Prova</h1>
+    <div class="banca-container">
+        <?php
+        // Conexão com o banco de dados
+        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-// Buscar as bancas cadastradas
-$result = $conn->query("SELECT * FROM banca");
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='banca'>";
-        echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
-        echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width: 100px;'>";
-        
-        // Botão que chama o modal com a classe 'ok'
-        echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
-        
-        echo "</div>";
-    }
-} else {
-    echo "<p>Nenhuma banca cadastrada.</p>";
-}
-?>
-
-
-<!-- Modal -->
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Tôpapirando informa: Você está sendo direcionado para outra página.</p>
-        <div class="button-container">
-            <button id="confirmRedirect" class="button ok">OK</button>
-            <button class="button cancel" id="cancelRedirect">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Seleciona todos os botões que abrem o modal
-    document.querySelectorAll('.open-modal').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const link = event.target.getAttribute('data-link');
-            event.preventDefault(); // Impede o clique padrão
-
-            // Exibe o modal
-            const modal = document.getElementById('myModal');
-            modal.style.display = 'block';
-
-            // Confirm button event
-            document.getElementById('confirmRedirect').onclick = function() {
-                window.open(link, '_blank');
-                modal.style.display = 'none'; // Fecha o modal
-            }
-
-            // Cancel button event
-            document.getElementById('cancelRedirect').onclick = function() {
-                modal.style.display = 'none'; // Fecha o modal
-            }
-        });
-    });
-
-    // Fechar modal ao clicar no "x"
-    document.querySelector('.close').onclick = function() {
-        document.getElementById('myModal').style.display = 'none';
-    }
-
-    // Fechar modal ao clicar fora do modal
-    window.onclick = function(event) {
-        const modal = document.getElementById('myModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
         }
-    }
-</script>
 
+        // Buscar as bancas cadastradas
+        $result = $conn->query("SELECT * FROM banca");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='banca'>";
+                echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
+                echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width: 100px;'>";
+                
+                // Botão que chama o modal com a classe 'ok'
+                echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
+                
+                echo "</div>";
+            }
+        } else {
+            echo "<p>.</p>";
+        }
+        ?>
+  </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Tôpapirando informa: Você está sendo direcionado para outra página.</p>
+                <div class="button-container">
+                    <button id="confirmRedirect" class="button ok">OK</button>
+                    <button class="button cancel" id="cancelRedirect">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Seleciona todos os botões que abrem o modal
+            document.querySelectorAll('.open-modal').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const link = event.target.getAttribute('data-link');
+                    event.preventDefault(); // Impede o clique padrão
+
+                    // Exibe o modal
+                    const modal = document.getElementById('myModal');
+                    modal.style.display = 'block';
+
+                    // Confirm button event
+                    document.getElementById('confirmRedirect').onclick = function() {
+                        window.open(link, '_blank');
+                        modal.style.display = 'none'; // Fecha o modal
+                    }
+
+                    // Cancel button event
+                    document.getElementById('cancelRedirect').onclick = function() {
+                        modal.style.display = 'none'; // Fecha o modal
+                    }
+                });
+            });
+
+            // Fechar modal ao clicar no "x"
+            document.querySelector('.close').onclick = function() {
+                document.getElementById('myModal').style.display = 'none';
+            }
+
+            // Fechar modal ao clicar fora do modal
+            window.onclick = function(event) {
+                const modal = document.getElementById('myModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Save scroll position
+            window.onbeforeunload = function() {
+                localStorage.setItem('scrollPosition', window.scrollY);
+            };
+
+            // Restore scroll position
+            window.onload = function() {
+                const scrollPosition = localStorage.getItem('scrollPosition');
+                if (scrollPosition) {
+                    window.scrollTo(0, scrollPosition);
+                    localStorage.removeItem('scrollPosition'); // Clear it after using
+                }
+            };
+        </script>
+
+    </main>
 </body>
-</htmml>
+</html>

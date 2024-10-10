@@ -318,11 +318,35 @@ header .info ul li a {
 
 
 .content-container {
-    display: flex; /* Usar flexbox para as seções */
-    justify-content: space-around; /* Espaço entre as seções */
-    align-items: center; /* Alinha verticalmente os itens no centro */
-    margin: 20px; /* Margem ao redor do contêiner principal */
+    max-height: 80vh; /* Example height */
+    overflow-y: auto; /* Enables scrolling */
+    padding: 20px; /* Adjust for better aesthetics */
+    display: flex; /* Enable flexbox */
+    flex-wrap: wrap; /* Allow items to wrap */
+    gap: 20px; /* Space between items */
 }
+
+
+.banca-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as bancas se movam para a próxima linha */
+    justify-content: center; /* Centraliza as bancas na linha */
+}
+
+.banca {
+    width: calc(50% - 20px); /* Duas bancas por linha, ajustando para o espaçamento */
+    box-sizing: border-box; /* Inclui padding na largura */
+    text-align: center; /* Centraliza o texto */
+    margin: 10px; /* Espaçamento entre as bancas */
+    border: 1px solid #ccc; /* Borda ao redor das bancas */
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+.centered-title {
+    text-align: center;
+    margin: 20px 0; /* Ajuste o espaço acima e abaixo do título */
+}
+
 
 #enem, #correios {
     flex: 1; /* Faz com que as seções se ajustem igualmente */

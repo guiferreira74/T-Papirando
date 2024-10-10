@@ -2,7 +2,7 @@
 session_start();
 
 // Verifique se o administrador está logado e tem acesso apropriado
-if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 1) {
+if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 3) {
     header("Location: login.php");
     exit();
 }
@@ -40,7 +40,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </div><!-- logo -->
             </div><!-- controle-navegacao -->
 
-            <
             <div class="informacoes">
                 <a href="sobre_adm.php">Sobre</a>
                 <a href="ajuda_adm.php">Ajuda</a>
@@ -88,9 +87,9 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </li>
 
                 <li class="item-menu">
-                    <a href="nivel.php">
+                    <a href="escolaridade.php">
                         <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
-                        <span class="txt">Niveis</span>
+                        <span class="txt">Escolaridade</span>
                     </a>
                 </li>
 
@@ -109,9 +108,9 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </li>
 
                 <li class="item-menu">
-                    <a href="grau.php">
+                    <a href="dificuldade.php">
                         <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
-                        <span class="txt">Grau de dificuldade</span>
+                        <span class="txt">Dificuldade</span>
                     </a>
                 </li>
 

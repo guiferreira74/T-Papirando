@@ -18,7 +18,7 @@
             <ul>
                 <li><a href="index.php" class="simulados">Início</a></li>
                 <li><a href="simulados.php" class="simulados" id="link-simulados">Simulados</a></li>
-                <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                <li><a href="bancas.php" class="bancas">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho" id="link-desempenho">Desempenho</a></li>
             </ul>
         </nav>
@@ -38,54 +38,54 @@
         <h1>Criar minha conta!</h1>
         <h2>Informe seus dados abaixo para criar sua conta</h2>
 
-      <!-- Formulário adicionado -->
-<form action="cadastro.php" method="post" onsubmit="return validarSenhas()">
-    <div id="input">
-        <div class="grid-duplo">
-            <input class="esquerda" id="nome" name="nome" type="text" placeholder="Nome" required title="Preencha o seu Nome">
-            <input class="direita" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" required title="Preencha seu Sobrenome">
-        </div>    
+        <!-- Formulário -->
+        <form id="form-cadastro" action="cadastro.php" method="post">
+            <div id="input">
+                <div class="grid-duplo">
+                    <input class="esquerda" id="nome" name="nome" type="text" placeholder="Nome" required title="Preencha o seu Nome">
+                    <input class="direita" id="sobrenome" name="sobrenome" type="text" placeholder="Sobrenome" required title="Preencha seu Sobrenome">
+                </div>    
 
-        <input id="e-mail" name="email" type="email" placeholder="E-mail" required title="Preencha seu email">
-        <input id="senha" name="senha" type="password" placeholder="Senha" required title="Preencha a sua Senha">
-        <input id="confirmar-senha" name="confirmar-senha" type="password" placeholder="Confirmar Senha" required title="Confirme a sua Senha">
+                <input id="e-mail" name="email" type="email" placeholder="E-mail" required title="Preencha seu email">
+                <input id="senha" name="senha" type="password" placeholder="Senha" required title="Preencha a sua Senha">
+                <input id="confirmar-senha" name="confirmar-senha" type="password" placeholder="Confirmar Senha" required title="Confirme a sua Senha">
+            </div>
+
+            <button type="submit" id="button">Criar Conta</button>
+        </form>
     </div>
-
-    <button type="submit" id="button">Criar Conta</button>
-</form>
-</div>
 </main>
 
-<!-- Modal de erro -->
-<div id="modal-erro" class="modal modal-erro" style="display:none;">
+<!-- Modal de erro para senhas -->
+<div id="modal-senha-erro" class="modal senha-erro" style="display:none;">
+    <div class="modal-content">
+        <span class="close-senha-erro">&times;</span>
+        <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
+        <p>Erro: As senhas devem ser iguais</p>
+        <button class="ok-button" id="ok-senha-erro">OK</button>
+    </div>
+</div>
+
+<!-- Modal de erro para email já registrado -->
+<div id="modal-email-erro" class="modal modal-erro" style="display:none;">
     <div class="modal-content">
         <span class="close-erro">&times;</span>
         <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
-        <p>Erro: As senhas não coincidem.</p>
-        <button class="ok-button" id="ok-erro">OK</button>
+        <p>Erro: O email já está registrado.</p>
+        <button class="ok-button" id="ok-email-erro">OK</button>
     </div>
 </div>
 
-<script>
-    function validarSenhas() {
-        const senha = document.getElementById('senha').value;
-        const confirmarSenha = document.getElementById('confirmar-senha').value;
+<!-- Modal de erro para domínio @admin -->
+<div id="modal-admin-erro" class="modal modal-admin-erro" style="display:none;">
+    <div class="modal-content">
+        <span class="close-admin-erro">&times;</span> <!-- O X aqui -->
+        <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
+        <p>Erro: O domínio @admin não é permitido.</p>
+        <button class="ok-button" id="ok-admin-erro">OK</button>
+    </div>
+</div>
 
-        if (senha !== confirmarSenha) {
-            document.getElementById('modal-erro').style.display = 'block'; // Mostra o modal de erro
-            return false; // Impede o envio do formulário
-        }
-        return true; // Permite o envio do formulário
-    }
-
-    // Fechar o modal ao clicar no botão "OK" ou no "X"
-    document.getElementById('ok-erro').onclick = function() {
-        document.getElementById('modal-erro').style.display = 'none';
-    };
-    document.querySelector('.close-erro').onclick = function() {
-        document.getElementById('modal-erro').style.display = 'none';
-    };
-</script>
 
 <!-- Modal de Sucesso -->
 <div id="modal-sucesso" class="modal modal-sucesso" style="display:none;">
@@ -94,16 +94,6 @@
         <img src="./administrador/assets/ticken.svg" alt="Sucesso" class="tick-image">
         <p>Conta criada com sucesso!</p>
         <button class="ok-button" id="ok-sucesso">OK</button>
-    </div>
-</div>
-
-<!-- Modal de Erro -->
-<div id="modal-erro" class="modal modal-erro" style="display:none;">
-    <div class="modal-content">
-        <span class="close-erro">&times;</span>
-        <img src="./administrador/assets/erro.svg" alt="Erro" class="error-image">
-        <p>Erro: O email já está registrado.</p>
-        <button class="ok-button" id="ok-erro">OK</button>
     </div>
 </div>
 
@@ -125,52 +115,67 @@
     </div>
 </div>
 
+
 <?php
 $success = false;
 $error = false;
+$adminError = false; // Variável para controle de erro do domínio @admin
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Conectar ao banco de dados
     $servername = "localhost";
     $username = "root";
     $password = "admin";
     $dbname = "topapirando";
 
-    // Criar conexão
+    // Conexão com o banco de dados
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Verificar conexão
     if ($conn->connect_error) {
         die("Falha na conexão: " . $conn->connect_error);
     }
 
-    // Obter os dados do formulário e validar
+    // Sanitizar e capturar os dados do formulário
     $nome = $conn->real_escape_string($_POST['nome']);
     $sobrenome = $conn->real_escape_string($_POST['sobrenome']);
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    $senha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
+    $senha = $_POST['senha']; // Senha em texto claro para validação
+    $confirmar_senha = $_POST['confirmar-senha']; // Senha de confirmação
 
+    // Verificar se o e-mail é válido
     if ($email === false) {
-        echo "<script>document.getElementById('modal-erro').style.display = 'block';</script>";
+        echo "<script>document.getElementById('modal-email-erro').style.display = 'block';</script>";
+    } elseif (strpos($email, '@admin') !== false) {
+        // Se o e-mail contém @admin (domínio proibido)
+        $adminError = true;
     } else {
         // Verificar se o e-mail já está cadastrado
-        $checkEmailSql = "SELECT email FROM usuarios WHERE email = ?";
+        $checkEmailSql = "SELECT email FROM estudante WHERE email = ?";
         $stmt = $conn->prepare($checkEmailSql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $error = true;
+            // Se o e-mail já estiver registrado, exibe a mensagem de erro
+            echo "<script>document.getElementById('modal-email-erro').style.display = 'block';</script>";
+        } elseif ($senha !== $confirmar_senha) {
+            // Se as senhas não coincidirem, exibe a mensagem de erro
+            echo "<script>document.getElementById('modal-senha-erro').style.display = 'block';</script>";
         } else {
-            // Inserir os dados no banco de dados
-            $sql = "INSERT INTO usuarios (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
+            // Hash da senha para segurança
+            $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
+
+            // Inserir o novo estudante na tabela estudante
+            $sql = "INSERT INTO estudante (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssss", $nome, $sobrenome, $email, $senha);
+            $stmt->bind_param("ssss", $nome, $sobrenome, $email, $senha_hash);
 
             if ($stmt->execute()) {
+                // Se a inserção for bem-sucedida, exibe o modal de sucesso
+                echo "<script>document.getElementById('modal-sucesso').style.display = 'block';</script>";
                 $success = true;
             } else {
+                // Caso ocorra algum erro ao inserir no banco
                 echo "<script>alert('Erro: " . $stmt->error . "');</script>";
             }
         }
@@ -178,70 +183,103 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 
+    // Fechar a conexão com o banco de dados
     $conn->close();
 }
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var modalSucesso = document.getElementById("modal-sucesso");
-    var modalErro = document.getElementById("modal-erro");
-    var closeSucesso = document.getElementsByClassName("close")[0];
-    var closeErro = document.getElementsByClassName("close-erro")[0];
-    var okSucesso = document.getElementById("ok-sucesso");
-    var okErro = document.getElementById("ok-erro");
+   document.addEventListener("DOMContentLoaded", function() {
+    // Função para validar senhas
+    document.getElementById('form-cadastro').onsubmit = function(event) {
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
 
-    // Mostrar o modal adequado com base na resposta do PHP
+        if (senha !== confirmarSenha) {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById('modal-senha-erro').style.display = 'block'; // Mostra o modal de erro
+        }
+    };
+
+    // Fechar os modais de erro
+    document.getElementById('ok-senha-erro').onclick = function() {
+        document.getElementById('modal-senha-erro').style.display = 'none';
+    };
+    document.querySelector('.close-senha-erro').onclick = function() {
+        document.getElementById('modal-senha-erro').style.display = 'none';
+    };
+
+    document.getElementById('ok-email-erro').onclick = function() {
+        document.getElementById('modal-email-erro').style.display = 'none';
+    };
+    document.querySelector('.close-erro').onclick = function() {
+        document.getElementById('modal-email-erro').style.display = 'none';
+    };
+
+    // Fechar o modal de erro para domínio @admin
+    document.getElementById('ok-admin-erro').onclick = function() {
+        document.getElementById('modal-admin-erro').style.display = 'none';
+    };
+    document.querySelector('.close-admin-erro').onclick = function() {
+        document.getElementById('modal-admin-erro').style.display = 'none';
+    };
+
+    // Mostrar o modal de sucesso ou erro com base na resposta do PHP
+    var modalSucesso = document.getElementById("modal-sucesso");
+    var modalEmailErro = document.getElementById("modal-email-erro");
+    var modalAdminErro = document.getElementById("modal-admin-erro");  // Modal de erro para @admin
+    var closeSucesso = document.getElementsByClassName("close")[0];
+    
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
         <?php if ($success): ?>
             modalSucesso.style.display = "block";
         <?php elseif ($error): ?>
-            modalErro.style.display = "block";
+            modalEmailErro.style.display = "block";
+        <?php elseif ($adminError): ?>
+            modalAdminErro.style.display = "block"; // Exibe o modal para erro de @admin
         <?php endif; ?>
     <?php endif; ?>
 
     // Fechar os modais
     closeSucesso.onclick = function() {
         modalSucesso.style.display = "none";
-    }
+    };
 
-    closeErro.onclick = function() {
-        modalErro.style.display = "none";
-    }
-
-    okSucesso.onclick = function() {
+    // Fechar o modal de sucesso ao clicar no botão "OK"
+    document.getElementById('ok-sucesso').onclick = function() {
         modalSucesso.style.display = "none";
-    }
-
-    okErro.onclick = function() {
-        modalErro.style.display = "none";
-    }
+    };
 
     // Fechar os modais quando o usuário clicar fora da área do modal
     window.onclick = function(event) {
         if (event.target == modalSucesso) {
             modalSucesso.style.display = "none";
         }
-        if (event.target == modalErro) {
-            modalErro.style.display = "none";
+        if (event.target == modalEmailErro) {
+            modalEmailErro.style.display = "none";
         }
-    }
+        if (event.target == modalAdminErro) {
+            modalAdminErro.style.display = "none";
+        }
+        if (event.target == document.getElementById('modal-senha-erro')) {
+            document.getElementById('modal-senha-erro').style.display = 'none';
+        }
+    };
 
     // Funções para os modais de Simulados e Desempenho
     var modalSimulados = document.getElementById("modal-simulados");
     var modalDesempenho = document.getElementById("modal-desempenho");
 
-    // Mostrar modais ao clicar nos links
     document.getElementById("link-simulados").onclick = function(event) {
-        event.preventDefault(); // Evitar o comportamento padrão do link
+        event.preventDefault();
         modalSimulados.style.display = "block";
     };
 
     document.getElementById("link-desempenho").onclick = function(event) {
-        event.preventDefault(); // Evitar o comportamento padrão do link
+        event.preventDefault();
         modalDesempenho.style.display = "block";
     };
-    
+
     // Fechar os modais de Simulados e Desempenho
     var closeBtns = document.getElementsByClassName("close-btn");
     var okBtnSimulados = document.getElementById("ok-btn-simulados");
@@ -262,7 +300,9 @@ document.addEventListener("DOMContentLoaded", function() {
         modalDesempenho.style.display = "none";
     };
 });
+
 </script>
+
 
 </body>
 </html>

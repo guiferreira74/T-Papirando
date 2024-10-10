@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Níveis</title>
-    <link rel="stylesheet" href="nivel.css">
+    <title>Gerenciar Dificuldades</title>
+    <link rel="stylesheet" href="dificuldade.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -34,8 +34,8 @@
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
-                <li><a href="nivel.php">Níveis</a></li>
-                <li><a href="grau.php">Graus</a></li>
+                <li><a href="escolaridade.php">Escolaridade</a></li>
+                <li><a href="dificuldade.php">Dificuldade</a></li>
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
                 <li><a href="instituicao.php">Instituições</a></li>
@@ -47,7 +47,7 @@
 
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Níveis</h1>
+                <h1>Gerenciar Dificuldades</h1>
 
                 <?php
                 // Conexão com o banco de dados
@@ -62,25 +62,25 @@
 
                 // Inserir ou atualizar registro
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $tipo_nivel = $_POST['tipo_nivel'];
-                    $cod_nivel = $_POST['cod_nivel'] ?? null;
+                    $tipo_dificuldade = $_POST['tipo_dificuldade'];
+                    $cod_dificuldade = $_POST['cod_dificuldade'] ?? null;
 
-                    // Verificar se o nível já está registrado
-                    $check_sql = "SELECT * FROM nivel WHERE tipo_nivel='$tipo_nivel'";
-                    if ($cod_nivel) {
-                        $check_sql .= " AND cod_nivel != $cod_nivel";
+                    // Verificar se a dificuldade já está registrada
+                    $check_sql = "SELECT * FROM dificuldade WHERE tipo_dificuldade='$tipo_dificuldade'";
+                    if ($cod_dificuldade) {
+                        $check_sql .= " AND cod_dificuldade != $cod_dificuldade";
                     }
                     $check_result = $conn->query($check_sql);
 
                     if ($check_result->num_rows > 0) {
-                        $error_message = "Erro: nível já registrado";
+                        $error_message = "Erro: dificuldade já registrada";
                     } else {
-                        if ($cod_nivel) {
+                        if ($cod_dificuldade) {
                             // Atualizar registro
-                            $sql = "UPDATE nivel SET tipo_nivel='$tipo_nivel' WHERE cod_nivel=$cod_nivel";
+                            $sql = "UPDATE dificuldade SET tipo_dificuldade='$tipo_dificuldade' WHERE cod_dificuldade=$cod_dificuldade";
                         } else {
                             // Inserir novo registro
-                            $sql = "INSERT INTO nivel (tipo_nivel) VALUES ('$tipo_nivel')";
+                            $sql = "INSERT INTO dificuldade (tipo_dificuldade) VALUES ('$tipo_dificuldade')";
                         }
 
                         if ($conn->query($sql) === TRUE) {
@@ -93,8 +93,8 @@
 
                 // Excluir registro
                 if (isset($_GET['delete'])) {
-                    $cod_nivel = $_GET['delete'];
-                    $sql = "DELETE FROM nivel WHERE cod_nivel=$cod_nivel";
+                    $cod_dificuldade = $_GET['delete'];
+                    $sql = "DELETE FROM dificuldade WHERE cod_dificuldade=$cod_dificuldade";
                     if ($conn->query($sql) === TRUE) {
                         $success_message = "Registro excluído com sucesso!";
                     } else {
@@ -103,35 +103,35 @@
                 }
 
                 // Preencher os campos do modal para edição
-                $cod_nivel = $_GET['edit'] ?? null;
-                $tipo_nivel = '';
+                $cod_dificuldade = $_GET['edit'] ?? null;
+                $tipo_dificuldade = '';
 
-                if ($cod_nivel) {
-                    $result = $conn->query("SELECT * FROM nivel WHERE cod_nivel=$cod_nivel");
+                if ($cod_dificuldade) {
+                    $result = $conn->query("SELECT * FROM dificuldade WHERE cod_dificuldade=$cod_dificuldade");
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        $tipo_nivel = $row['tipo_nivel'];
+                        $tipo_dificuldade = $row['tipo_dificuldade'];
                     }
                 }
                 ?>
 
                 <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Novo Nível</button>
+                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Dificuldade</button>
                 </div>
 
                 <div class="table-container">
                     <?php
-                    $result = $conn->query("SELECT * FROM nivel");
+                    $result = $conn->query("SELECT * FROM dificuldade");
 
                     if ($result->num_rows > 0) {
                         echo "<table class='table'>";
-                        echo "<tr><th>Tipo de Nível</th><th>Ações</th></tr>";
+                        echo "<tr><th>Tipo de Dificuldade</th><th>Ações</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['tipo_nivel']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
                             echo "<td class='actions'>";
                             echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"nivel.php?delete=" . $row['cod_nivel'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
+                            echo "<a class='delete-button' href='#' onclick='openModal(\"dificuldade.php?delete=" . $row['cod_dificuldade'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -144,15 +144,15 @@
             </div>
         </main>
 
-        <!-- Modal de Adicionar/Editar Nível -->
+        <!-- Modal de Adicionar/Editar Dificuldade -->
         <div id="add-modal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeAddModal()">&times;</span>
-                <form action="nivel.php" method="POST">
-                    <input type="hidden" id="cod_nivel" name="cod_nivel" value="<?php echo htmlspecialchars($cod_nivel); ?>">
+                <form action="dificuldade.php" method="POST">
+                    <input type="hidden" id="cod_dificuldade" name="cod_dificuldade" value="<?php echo htmlspecialchars($cod_dificuldade); ?>">
                     <div id="input">
-                        <label for="tipo_nivel_modal">Tipo de Nível:</label>
-                        <input type="text" id="tipo_nivel_modal" name="tipo_nivel" value="<?php echo htmlspecialchars($tipo_nivel); ?>" placeholder="Preencha o tipo de nível" required>
+                        <label for="tipo_dificuldade_modal">Tipo de Dificuldade:</label>
+                        <input type="text" id="tipo_dificuldade_modal" name="tipo_dificuldade" value="<?php echo htmlspecialchars($tipo_dificuldade); ?>" placeholder="Preencha o tipo de dificuldade" required>
                     </div>
                     <div class="button-container">
                         <button type="submit" class="save-button">Salvar</button>
@@ -223,13 +223,13 @@
 
             // Função para abrir o modal de adicionar
             function openAddModal() {
-                document.getElementById('tipo_nivel_modal').value = getCookie('nivel_tipo_nivel') || '';
+                document.getElementById('tipo_dificuldade_modal').value = getCookie('dificuldade_tipo') || '';
                 addModal.style.display = "block";
             }
 
             // Função para fechar o modal de adicionar
             function closeAddModal() {
-                setCookie('nivel_tipo_nivel', document.getElementById('tipo_nivel_modal').value, 1);
+                setCookie('dificuldade_tipo', document.getElementById('tipo_dificuldade_modal').value, 1);
                 addModal.style.display = "none";
             }
 
@@ -259,7 +259,7 @@
 
             // Limpar formulário
             function clearForm() {
-                document.getElementById("tipo_nivel_modal").value = '';
+                document.getElementById("tipo_dificuldade_modal").value = '';
             }
 
             // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
@@ -285,8 +285,8 @@
 
             // Função para abrir o modal de edição
             function openEditModal(data) {
-                document.getElementById('cod_nivel').value = data.cod_nivel;
-                document.getElementById('tipo_nivel_modal').value = data.tipo_nivel;
+                document.getElementById('cod_dificuldade').value = data.cod_dificuldade;
+                document.getElementById('tipo_dificuldade_modal').value = data.tipo_dificuldade;
                 addModal.style.display = "block";
             }
 

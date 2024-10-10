@@ -2,7 +2,7 @@
 session_start();
 
 // Verifique se o administrador está logado e tem acesso apropriado
-if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 1) {
+if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 3) {
     header("Location: login.php");
     exit();
 }
@@ -82,56 +82,56 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 <h1 id="gr">Gerenciamento</h1>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="banca.php">
                         <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
                         <span class="txt">Bancas</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="escolaridade.php">
                         <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
-                        <span class="txt">Niveis</span>
+                        <span class="txt">Escolaridade</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="concurso.php">
                         <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
                         <span class="txt">Concurso</span> 
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="questao.php">
                         <span class="icon"><i class="fas fa-book"></i></span> <!-- Ícone de pergunta -->
                         <span class="txt">Questões</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="dificuldade.php">
                         <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
-                        <span class="txt">Grau de dificuldade</span>
+                        <span class="txt">Dificuldade</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="disciplina.php">
                         <span class="icon"><i class="fas fa-book-reader"></i></span> <!-- Ícone de leitura -->
                         <span class="txt">Disciplina</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="duracao.php">
                         <span class="icon"><i class="fas fa-clock"></i></span> <!-- Ícone de relógio -->
                         <span class="txt">Duração</span>
                     </a>
                 </li>
 
                 <li class="item-menu">
-                    <a href="#">
+                    <a href="instituicao.php">
                         <span class="icon"><i class="fas fa-school"></i></span> <!-- Ícone de instituição -->
                         <span class="txt">Instituições</span>
                     </a>

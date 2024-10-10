@@ -408,3 +408,6 @@ h1{
     margin: 20px auto; /* Espaçamento automático nas laterais e superior/inferior */
     font-size: 18px; /* Ajuste o tamanho da fonte, se necessário */
 }
+.mensagem-boas-vindas {
+    color: white; /* Define a cor do texto como branco */
+}

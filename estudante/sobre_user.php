@@ -12,14 +12,14 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <img src="../administrador/assets/logo_papirando_final.svg" alt="Logo">     
+            <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="user.php">Início</a></li>
-                    <li><a href="#" class="simulados-link">Simulados</a></li>
+                    <li><a href="simulados.php" class="simulados-link">Simulados</a></li>
                     <li><a href="bancas_user.php">Bancas</a></li>
-                    <li><a href="#" class="desempenho-link">Desempenho</a></li>
+                    <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
                   
                 </ul>
             </nav>

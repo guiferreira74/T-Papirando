@@ -257,6 +257,28 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
 #cadastro, #login {
     width: 100px;
 }
+.button-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-top: 20px; /* Espaço acima do botão */
+}
+
+#enter {
+    width: 350px;
+    height: 50px;
+    background-color: white; /* Fundo branco */
+    color: black; /* Cor do texto preto */
+    border: 2px solid #000; /* Borda preta */
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Transição suave para o hover */
+}
+
+#enter:hover {
+    background-color: #2118CD; /* Altere a cor de fundo no hover (ex: azul escuro) */
+    color: white; /* Cor do texto branco no hover */
+}
 
 .modal {
     display: none; /* Esconde o modal por padrão */
@@ -393,4 +415,88 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
 
 .btn-custom:hover {
     background-color: #1817A4; /* Alterar a cor de fundo ao passar o mouse */
+}
+/* Modal */
+.modal {
+    display: none; /* Ocultado por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Estilos específicos para o botão de fechar no modal de erro */
+.modal-erro .close-btn {
+    color: #e74c3c; /* Cor vermelha para o botão de fechar no modal de erro */
+}
+
+.modal-erro .close-btn:hover,
+.modal-erro .close-btn:focus {
+    color: #c0392b; /* Cor vermelha mais escura no hover e focus */
+}
+
+/* Estilos específicos para o modal de erro */
+.modal-erro p {
+    color: #e74c3c; /* Texto em vermelho para erro */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Estilos específicos para o modal de sucesso */
+.modal-sucesso p {
+    color: #2118CD; /* Texto em azul para sucesso */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
 }

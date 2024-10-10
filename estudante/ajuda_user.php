@@ -25,8 +25,8 @@
             </nav>
 
             <div class="info">
-                <a href="sobre.php">Sobre</a>
-                <a href="ajuda.php">Ajuda</a>
+                <a href="sobre_user.php">Sobre</a>
+                <a href="ajuda_user.php">Ajuda</a>
                 <a href="../administrador/sair.php">Sair</a>
             </div>
         </div> <!--interface-->

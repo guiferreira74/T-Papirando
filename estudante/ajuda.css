@@ -53,8 +53,14 @@ header nav ul li a {
 }
 
 header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
     padding: 20px 4%; /* Diminui o padding para reduzir a altura */
-    background-color: #2118CD;
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
 }
 
 header > .interface {
@@ -100,7 +106,6 @@ header .info ul li a {
 }
 
 /* CONTEUDO PRINCIPAL */
-
 .topo {
     background-color: #2118CD;
     background-position: top center;
@@ -111,13 +116,12 @@ header .info ul li a {
     justify-content: center; /* Centraliza os elementos horizontalmente */
     padding: 5% 3%;
     border-radius: 30px;
-    max-height: 380px;
+    height: 280px; /* Define uma altura fixa */
     color: white;
-    margin-top: 100px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin: 120px auto 0 auto; /* Centraliza horizontalmente e move para baixo */
     text-align: center;
     padding-left: 50px;
+    max-width: 800px;
 }
 
 .topo-content {
@@ -126,7 +130,7 @@ header .info ul li a {
 }
 
 .topo-title {
-    font-size: 60px;
+    font-size: 40px; /* Ajuste do tamanho da fonte para evitar que ultrapasse o layout */
     letter-spacing: 1.5;
 }
 
@@ -136,7 +140,7 @@ header .info ul li a {
 }
 
 .img {
-    max-width: 300px; /* Ajuste o tamanho da imagem conforme necessário */
+    max-width: 250px; /* Reduz o tamanho da imagem */
     margin-left: 50px;
 }
 
@@ -145,7 +149,8 @@ header .info ul li a {
     height: auto;
 }
 
-.faq{
+/* FAQ */
+.faq {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -153,56 +158,60 @@ header .info ul li a {
     padding: 3%;
 }
 
-.faq-name{
+.faq-name {
     flex: 0.5;
     padding: 2% 2% 0 0;
 }
 
-.faq-top{
+.faq-top {
     padding: 5% 0 0 0;
-    font-size: 40px;
+    font-size: 30px;
     letter-spacing: 2;
 }
-.faq-img{
+
+.faq-img {
     width: 100%;
-    max-width: 300px ;
+    max-width: 250px;
 }
 
-.faq-box{
+.faq-box {
     flex: 1;
     min-width: 320px;
     padding: 2% 0 4% 4%;
     border-left: 2px solid #2118CD;
+    max-height: 400px; /* Limita a altura visível inicialmente */
+    overflow-y: hidden; /* Esconde a rolagem inicialmente */
+    transition: max-height 0.4s ease; /* Animação para abertura */
 }
 
-.faq-wrapper{
+.faq-wrapper {
     width: 100%;
     padding: 1.5rem;
     border-bottom: 1px solid black;
 }
 
-.faq-title{
+.faq-title {
     display: block;
     position: relative;
     width: 100%;
     letter-spacing: 1.2;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     color: #2118CD;
 }
 
-.faq-title:after{
+.faq-title:after {
     width: 10px;
     height: 10px;
     content: "";
     float: right;
     border-style: solid;
-    border-width: 2px 2px 0 0 ;
-    transform: rotate(135deg) ;
+    border-width: 2px 2px 0 0;
+    transform: rotate(135deg);
     transition: 0.4s ease-in-out;
 }
 
-.faq-detail{
+.faq-detail {
     line-height: 1.5;
     letter-spacing: 1;
     max-height: 0;
@@ -211,19 +220,22 @@ header .info ul li a {
     font-size: 14px;
 }
 
-.faq-trigger{
+.faq-trigger {
     display: none;
 }
 
-.faq-trigger:checked + .faq-title + .faq-detail{
-    max-height: 300px ;
-
+.faq-trigger:checked + .faq-title + .faq-detail {
+    max-height: 300px; /* Altura máxima quando a pergunta estiver aberta */
 }
 
-.faq-trigger:checked + .faq-title::after{
+.faq-trigger:checked + .faq-title::after {
     transform: rotate(45deg);
     transition: 0.4s ease-in-out;
+}
 
+.faq-trigger:checked ~ .faq-box {
+    max-height: 800px; /* Aumenta a altura quando qualquer pergunta é aberta */
+    overflow-y: auto;  /* Adiciona rolagem somente após abrir uma pergunta */
 }
 .modal {
     display: none; /* Esconde o modal por padrão */

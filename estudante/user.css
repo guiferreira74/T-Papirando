@@ -48,13 +48,7 @@ header nav ul li a {
     color: white;
 }
 
-/* Estilo do cabeçalho */
-.logo img {
-    width: 200px; /* Ajuste da largura da logo */
-    margin-left: -20px;
-    align-items: center;
-    padding-top: 10px;
-}
+
 
 header {
     position: fixed; /* Torna o cabeçalho fixo */
@@ -175,7 +169,7 @@ hr {
 }
 
 .logo{
-    width: 400px;
+    width: 250px;
 }
 .direira{
     display: flex;
@@ -209,9 +203,6 @@ hr {
     color: black;
 }
 
-.logo{
-    width: 400px;
-}
 .direira{
     display: flex;
     flex-direction: column;

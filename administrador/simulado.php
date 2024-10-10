@@ -33,10 +33,10 @@
                     <a href="adm.php">Início</a>
                 </li>
                 <li>
-                    <a href="#">Ajuda</a>
+                    <a href="ajuda_adm.php">Ajuda</a>
                 </li>
                 <li>
-                    <a href="#">Parâmetros</a>
+                    <a href="parametros.php">Parâmetros</a>
                 </li>
                 <hr>
                 <p>Gerenciar Conteudo</p>
@@ -44,10 +44,10 @@
                     <a href="banca.php">Bancas</a>
                 </li>
                 <li>
-                    <a href="nivel.php">Niveis</a>
+                    <a href="escolaridade.php">Escolaridade</a>
                 </li>
                 <li>
-                    <a href="grau.php">Graus</a>
+                    <a href="dificuldade.php">Dificuldade</a>
                 </li>
                 <li>
                     <a href="disciplina.php">Disciplinas</a>

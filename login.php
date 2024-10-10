@@ -1,8 +1,8 @@
 <?php
-// Inicie a sessão no início do arquivo PHP
 session_start();
 
 $error_message = '';
+$success_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conectar ao banco de dados
@@ -23,54 +23,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($_POST['email']);
     $senha = $_POST['senha'];
 
-    // Verificar se o e-mail existe
-    $sql = "SELECT nome, sobrenome, senha FROM usuarios WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($nome_usuario, $sobrenome_usuario, $hashed_senha);
-        $stmt->fetch();
-
-        // Verificar a senha
-        if (password_verify($senha, $hashed_senha)) {
-            // Definir sessão e redirecionar
-            $_SESSION['email'] = $email;
-            $_SESSION['nome'] = $nome_usuario; // Armazena o nome na sessão
-            $_SESSION['sobrenome'] = $sobrenome_usuario; // Armazena o sobrenome na sessão
-
-            // Verificar se a opção "Lembrar meus dados" foi selecionada
-            if (isset($_POST['lembrar_dados'])) {
-                // Definir cookies por 30 dias
-                setcookie('email', $email, time() + (30 * 24 * 60 * 60), "/");
-                setcookie('senha', $senha, time() + (30 * 24 * 60 * 60), "/"); // NÃO RECOMENDADO: armazenar a senha em texto plano
-            } else {
-                // Remover cookies se a opção não foi marcada
-                setcookie('email', '', time() - 3600, "/");
-                setcookie('senha', '', time() - 3600, "/");
-            }
-
-            if (strpos($email, '@admin') !== false) {
-                // E-mail contém o domínio @admin, tratar como administrador
-                $_SESSION['tipo_acesso'] = 1;
-                header("Location: ./administrador/adm.php");
-                exit();
-            } else {
-                // E-mail não contém o domínio @admin, tratar como usuário normal
-                $_SESSION['tipo_acesso'] = 2;
-                header("Location: ./estudante/user.php");
-                exit();
-            }
-        } else {
-            $error_message = 'Senha incorreta.';
-        }
+    // Verificar se o e-mail tem o domínio @gmail.com
+    if (strpos($email, '@gmail.com') === false && strpos($email, '@admin') === false) {
+        $error_message = 'Por favor, use um e-mail do domínio @gmail.com ou @admin.';
     } else {
-        $error_message = 'E-mail não cadastrado, crie sua conta ao lado por favor.';
+        // Verificar se o e-mail contém o domínio @admin
+        if (strpos($email, '@admin') !== false) {
+            // Tipo de acesso: Administrador
+            $tipo_acesso = 3;
+
+            // Verificar se o e-mail existe na tabela de administradores
+            $sql_admin = "SELECT nome, sobrenome, senha FROM administrador WHERE email = ?";
+            $stmt_admin = $conn->prepare($sql_admin);
+            $stmt_admin->bind_param("s", $email);
+            $stmt_admin->execute();
+            $stmt_admin->store_result();
+
+            if ($stmt_admin->num_rows > 0) {
+                $stmt_admin->bind_result($nome_admin, $sobrenome_admin, $hashed_senha_admin);
+                $stmt_admin->fetch();
+
+                // Verificar a senha
+                if (password_verify($senha, $hashed_senha_admin)) {
+                    // Definir sessão e redirecionar
+                    $_SESSION['email'] = $email;
+                    $_SESSION['nome'] = $nome_admin;
+                    $_SESSION['sobrenome'] = $sobrenome_admin;
+                    $_SESSION['tipo_acesso'] = $tipo_acesso; // Administrador
+
+                    // Redirecionar para a página do administrador
+                    header("Location: ./administrador/adm.php");
+                    exit();
+                } else {
+                    $error_message = 'Senha incorreta.';
+                }
+            } else {
+                $error_message = 'E-mail não cadastrado, crie sua conta ao lado por favor.';
+            }
+
+            // Fecha a declaração
+            $stmt_admin->close();
+        } else {
+            // Tipo de acesso: Estudante
+            $tipo_acesso = 2;
+
+            // Verificar se o e-mail existe na tabela de estudantes
+            $sql_estudante = "SELECT nome, sobrenome, senha FROM estudante WHERE email = ?";
+            $stmt_estudante = $conn->prepare($sql_estudante);
+            $stmt_estudante->bind_param("s", $email);
+            $stmt_estudante->execute();
+            $stmt_estudante->store_result();
+
+            if ($stmt_estudante->num_rows > 0) {
+                $stmt_estudante->bind_result($nome_estudante, $sobrenome_estudante, $hashed_senha_estudante);
+                $stmt_estudante->fetch();
+
+                // Verificar a senha para estudante
+                if (password_verify($senha, $hashed_senha_estudante)) {
+                    // Definir sessão e redirecionar
+                    $_SESSION['email'] = $email;
+                    $_SESSION['nome'] = $nome_estudante;
+                    $_SESSION['sobrenome'] = $sobrenome_estudante;
+                    $_SESSION['tipo_acesso'] = $tipo_acesso; // Estudante
+
+                    // Redirecionar para a página do estudante
+                    header("Location: ./estudante/user.php");
+                    exit();
+                } else {
+                    $error_message = 'Senha incorreta.';
+                }
+            } else {
+                $error_message = 'E-mail não cadastrado, crie sua conta ao lado por favor.';
+            }
+
+            // Fecha a declaração
+            $stmt_estudante->close();
+        }
     }
 
-    $stmt->close();
+    // Fecha a conexão
     $conn->close();
 }
 ?>
@@ -130,6 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button id="button-esquerda" type="submit">Acessar Conta</button>
                     </div>
                 </form>
+                <a href="#"><button id="enter">Entre como Administrador</button></a>
             </div>
                 
             <div class="direita">
@@ -140,6 +172,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </main>
+    <!-- Modal Login Administrador -->
+<div id="modal-login-administrador" class="modal modal-custom">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Login Administrador</h2>
+        <form id="form-login-admin" action="login.php" method="post">
+            <input name="email" type="text" placeholder="E-mail" required>
+            <input name="senha" type="password" placeholder="Senha" required>
+            <button type="submit">Acessar</button>
+        </form>
+        <button onclick="closeModal()" class="btn-custom">Cancelar</button>
+    </div>
+</div>
+
 
     <!-- Modal Simulados -->
     <div id="modal-simulados" class="modal modal-custom">
@@ -223,6 +269,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         function showModalErro() {
             document.getElementById('errorModal').style.display = 'block';
         }
+// Obter elemento do modal de login do administrador
+var modalLoginAdministrador = document.getElementById("modal-login-administrador");
+
+// Função para mostrar o modal de login do administrador
+function showModalLoginAdministrador() {
+    modalLoginAdministrador.style.display = "block";
+}
+
+// Adicionar evento de clique para o botão "Entre como Administrador"
+document.getElementById("enter").onclick = function() {
+    showModalLoginAdministrador();
+};
 
         // Mostrar modal de erro com mensagens se houver
         <?php if (!empty($error_message)): ?>

@@ -44,7 +44,7 @@
         </div>
         
         <div class="faq">
-            <div class="faq-name">
+            <div class="faq-name"> <!-- Corrigido para "faq-name" -->
                 <h1 class="faq-top"> Principais <br> Dúvidas</h1>
                 <img class="faq-img" src="../administrador/assets/faq.svg" alt="">
             </div>
@@ -52,7 +52,7 @@
                 <div class="faq-wrapper">
                     <input type="checkbox" class="faq-trigger" id="faq-trigger-1">
                     <label class="faq-title" for="faq-trigger-1">O que é o TÔPAPIRANDO?</label>
-                    <div class="faq-detail">
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
                         <p>O TÔPAPIRANDO é uma plataforma para concurseiros que oferece simulados, acesso direto aos sites das bancas organizadoras e ferramentas para acompanhar seu desempenho após a realização dos simulados.</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="faq-wrapper">
                     <input type="checkbox" class="faq-trigger" id="faq-trigger-2">
                     <label class="faq-title" for="faq-trigger-2">Como faço para me cadastrar no site?</label>
-                    <div class="faq-detail">
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
                         <p>Basta clicar no botão "Cadastrar", preencher suas informações pessoais e criar uma senha. Após o cadastro, você terá acesso a todas as funcionalidades do site.</p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="faq-wrapper">
                     <input type="checkbox" class="faq-trigger" id="faq-trigger-3">
                     <label class="faq-title" for="faq-trigger-3">Como funcionam os simulados?</label>
-                    <div class="faq-detail">
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
                         <p>Os simulados são compostos por questões de provas anteriores e atualizadas. Você pode escolher a área de interesse, o nível de dificuldade e a quantidade de questões. Após a conclusão, você receberá um relatório de desempenho.</p>
                     </div>
                 </div>

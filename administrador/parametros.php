@@ -57,9 +57,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="nivel.php">
+                        <a href="escolaridade.php">
                             <span class="icon"><i class="fas fa-graduation-cap"></i></span>
-                            <span class="txt">Níveis</span>
+                            <span class="txt">Escolaridade</span>
                         </a>
                     </li>
                     <li>
@@ -75,9 +75,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="nivel.php">
+                        <a href="dificuldade.php">
                             <span class="icon"><i class="fas fa-chart-line"></i></span>
-                            <span class="txt">Grau de dificuldade</span>
+                            <span class="txt">Dificuldade</span>
                         </a>
                     </li>
                     <li>
