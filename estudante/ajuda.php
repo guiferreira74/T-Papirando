@@ -6,6 +6,7 @@
     <title>Ajuda</title>
     <link rel="stylesheet" href="ajuda.css">
     <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div id="conteudo-header">
@@ -27,8 +28,8 @@
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="../login.php">Entrar</a>
-            </div>
+                <a href="../login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+                </div>
         </div> <!--interface-->
     </header>
 

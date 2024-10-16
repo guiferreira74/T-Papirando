@@ -34,7 +34,6 @@
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
-                <li><a href="escolaridade.php">Escolaridade</a></li>
                 <li><a href="dificuldade.php">Dificuldade</a></li>
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
@@ -47,7 +46,7 @@
 
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Escolaridade</h1>
+                <h1></h1>
 
                 <?php
                 // Conexão com o banco de dados
@@ -115,54 +114,55 @@
                 }
                 ?>
 
-                <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Escolaridade</button>
-                </div>
+<div class="table-container container-principal">
+    <h2>Gerenciar Escolaridade</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Escolaridade</button>
 
-                <div class="table-container">
-                    <?php
-                    $result = $conn->query("SELECT * FROM escolaridade");
+    <?php
+    // Query para obter os registros de escolaridade
+    $result = $conn->query("SELECT * FROM escolaridade");
 
-                    if ($result->num_rows > 0) {
-                        echo "<table class='table'>";
-                        echo "<tr><th>Tipo de Escolaridade</th><th>Ações</th></tr>";
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>";
-                            echo "<td class='actions'>";
-                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"escolaridade.php?delete=" . $row['cod_escolaridade'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "<p>Nenhum registro encontrado.</p>";
-                    }
-                    ?>
-                </div>
+    if ($result->num_rows > 0) {
+        echo "<table id='escolaridadeTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Tipo de Escolaridade</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>";
+            echo "<td class='actions'>";
+            // Botões de editar e excluir com o novo layout
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"escolaridade.php?delete=" . $row['cod_escolaridade'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
+
+<!-- Modal de Adicionar/Editar Escolaridade -->
+<div id="add-modal" class="modal" style="overflow: hidden;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAddModal()">&times;</span>
+        <form action="escolaridade.php" method="POST">
+            <input type="hidden" id="cod_escolaridade" name="cod_escolaridade" value="<?php echo htmlspecialchars($cod_escolaridade); ?>">
+            <div id="input">
+                <label for="tipo_escolaridade_modal">Tipo de Escolaridade:</label>
+                <input type="text" id="tipo_escolaridade_modal" name="tipo_escolaridade" value="<?php echo htmlspecialchars($tipo_escolaridade); ?>" placeholder="Preencha o tipo de escolaridade" required>
             </div>
-        </main>
-
-        <!-- Modal de Adicionar/Editar Escolaridade -->
-        <div id="add-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeAddModal()">&times;</span>
-                <form action="escolaridade.php" method="POST">
-                    <input type="hidden" id="cod_escolaridade" name="cod_escolaridade" value="<?php echo htmlspecialchars($cod_escolaridade); ?>">
-                    <div id="input">
-                        <label for="tipo_escolaridade_modal">Tipo de Escolaridade:</label>
-                        <input type="text" id="tipo_escolaridade_modal" name="tipo_escolaridade" value="<?php echo htmlspecialchars($tipo_escolaridade); ?>" placeholder="Preencha o tipo de escolaridade" required>
-                    </div>
-                    <div class="button-container">
-                        <button type="submit" class="save-button">Salvar</button>
-                        <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
-                    </div>
-                </form>
+            <div class="button-container">
+                <button type="submit" class="save-button">Salvar</button>
+                <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
             </div>
-        </div>
+        </form>
+    </div>
+</div>
 
-    <!-- Modal de confirmação -->
+<!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -203,8 +203,7 @@
 
     // Função para abrir o modal de adicionar
     function openAddModal() {
-        document.getElementById('tipo_escolaridade_modal').value = ''; // Limpar campo
-        document.getElementById('cod_escolaridade').value = ''; // Limpar ID
+        document.getElementById('tipo_escolaridade_modal').value = '';
         addModal.style.display = "block";
     }
 
@@ -235,6 +234,11 @@
         confirmButton.onclick = function() {
             window.location.href = deleteUrl;
         };
+    }
+
+    // Limpar formulário
+    function clearForm() {
+        document.getElementById("tipo_escolaridade_modal").value = '';
     }
 
     // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
@@ -277,5 +281,25 @@
     }
 </script>
 
-    </body>
+<!-- Modal de Confirmação de Logout -->
+<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmLogoutModalLabel">Sair</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja sair?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmLogout" href="sair.php" class="btn btn-primary">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

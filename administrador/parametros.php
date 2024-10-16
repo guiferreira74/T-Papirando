@@ -56,12 +56,7 @@
                             <span class="txt">Bancas</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="escolaridade.php">
-                            <span class="icon"><i class="fas fa-graduation-cap"></i></span>
-                            <span class="txt">Escolaridade</span>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="concurso.php">
                             <span class="icon"><i class="fas fa-users"></i></span>

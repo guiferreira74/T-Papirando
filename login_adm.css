@@ -8,7 +8,7 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background-color: #2118CD;
+    background: #E6E6E6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -17,7 +17,6 @@ body {
 .interface {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 20px; /* Adiciona espaçamento lateral */
 }
 
 .flex {
@@ -37,7 +36,7 @@ header nav ul li a {
 }
 
 .btn-contato button {
-    padding: 15px 75px;
+    padding: 10px 70px;
     font-size: 18px;
     font-weight: 600;
     background-color: green;
@@ -46,22 +45,11 @@ header nav ul li a {
     cursor: pointer;
     transition: .2s;
     color: white;
-    margin-top: 15px;
-    margin-left: 10px;
 }
-
-.btn-contato button:hover {
-    background-color: white; 
-    color: black;
-    border-color: black;
-} 
 
 /* Estilo do cabeçalho */
 .logo img {
     width: 200px; /* Ajuste da largura da logo */
-    margin-left: -20px;
-    align-items: center;
-    padding-top: 10px;
 }
 
 header {
@@ -117,205 +105,175 @@ header .info ul li a {
     flex-direction: row;
 }
 
-
-/* topo do site */
-section .topo-do-site {
-    padding: 30px 4%;
-}
-
-section.topo-do-site.flex {
-    align-items: center;
-    justify-content: center;
-    gap: 90px;
-}
-
-.topo-do-site h1 {
+/* CONTEUDO PRINCIPAL */
+.topo {
+    background-color: #2118CD;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex; /* Usa flexbox para os elementos filhos */
+    align-items: center; /* Alinha os elementos verticalmente */
+    justify-content: center; /* Centraliza os elementos horizontalmente */
+    padding: 5% 3%;
+    border-radius: 30px;
+    height: 280px; /* Define uma altura fixa */
     color: white;
-    font-size: 50px;
-    line-height: 60px;
-    margin-bottom: 10px; /* Adiciona um espaçamento abaixo do título */
-    margin-top: 100px;
+    margin: 120px auto 0 auto; /* Centraliza horizontalmente e move para baixo */
+    text-align: center;
+    padding-left: 50px;
+    max-width: 800px;
 }
 
-.topo-do-site .txt-topo-site p {
-    color: white;
-    font-size: 25px; /* Tamanho da fonte para o parágrafo */
-    margin: 0; /* Remove margens padrão do parágrafo */
+.topo-content {
+    text-align: right; /* Alinha o texto à direita */
+    margin-right: 20px; /* Espaçamento entre o texto e a imagem */
 }
 
-/* Adicionando espaçamento considerável entre os itens da div txt-topo-site */
-.txt-topo-site {
-    display: flex;
-    flex-direction: column; /* Alinha os itens verticalmente */
-    align-items: flex-start; /* Alinha os itens ao início da coluna */
-    gap: 20px; /* Ajuste o valor conforme necessário para o espaçamento entre os itens */
+.topo-title {
+    font-size: 40px; /* Ajuste do tamanho da fonte para evitar que ultrapasse o layout */
+    letter-spacing: 1.5;
 }
 
-/* Adiciona espaçamento maior entre a imagem e a tag txt-topo-site */
-.flex > .txt-topo-site {
-    margin-right: 60px; /* Ajuste o valor conforme necessário para o espaçamento entre a imagem e a tag txt-topo-site */
+.topo-desc {
+    font-size: 14px;
+    letter-spacing: 1;
 }
 
-/* Alinhamento da imagem com os itens de texto */
-.img-topo-site {
-    display: flex;
-    align-items: center;
+.img {
+    max-width: 250px; /* Reduz o tamanho da imagem */
+    margin-left: 50px;
 }
 
-.topo-do-site .img-topo-site img{
-    position: relative;
-    animation: flutuar 2s ease-in-out infinite alternate;
-}
-
-#img {
-    width: 550px;
-}
-
-@keyframes flutuar{
-    0%{
-        top: 0;
-    }
-    100%{
-        top: 30px;
-    }
-}
-/* Comentários e regras adicionais */
-
-/* NAVEGAÇÃO */
-/* .header-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-}
-
-.header-nav .botao-nav {
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin-left: 20px;
-    color: var(--cor-secundaria);
-}
-
-.header-nav a {
-    display: inline-block;
-    position: relative;
-}
-
-.header-nav a:after {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 0;
-    background: var(--cor-secundaria);
-    margin-top: 4px;
-    transition: 0.3s;
-    position: absolute;
-}
-
-.header-nav a:hover:after {
+.img img {
     width: 100%;
-} */
-
-/* BOTÃO DE CONSULTA */
-/* .botao-consulta {
-    display: flex;
-    width: 340px;
-    justify-content: center;
-    background: var(--cor-secundaria);
-    color: var(--cor-primaria) !important;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 1.2rem;
-    transition: 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.10);
-    text-transform: uppercase;
-    align-items: center;
+    height: auto;
 }
 
-.botao-consulta i {
-    font-size: 1.4rem;
-    margin-right: 10px;
-}
-
-.botao-consulta span {
-    font-weight: 500;
-}
-
-.botao-consulta:hover {
-    background: #fff;
-}
-
-.botao-consulta-p {
-    margin-left: 40px;
+.login-container {
     display: flex;
     justify-content: center;
-    background: var(--cor-secundaria);
-    color: var(--cor-primaria) !important;
-    padding: 8px 15px;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.10);
-    text-transform: uppercase;
+    align-items: center;
+    gap: 40px; /* Espaçamento entre o formulário e a imagem */
+    padding: 20px;
+    max-width: 1200px; /* Limita a largura máxima da página */
+    margin: 0 auto;
+    background-color: #ffffff; /* Cor de fundo da área principal */
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 150px;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    outline: none;
+    background: transparent;
+}
+
+.input-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #aaa;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #2118CD;
+    font-size: 12px;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: #2118CD;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #000A7F;
+}
+
+.forgot-password {
+    margin-top: 15px;
+}
+
+.forgot-password a {
+    color: #2118CD;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para a imagem ao lado do formulário */
+.img_content {
+    display: flex;
     align-items: center;
 }
 
-.botao-consulta-p i {
-    font-size: 1rem;
+.img_content img {
+    width: 400px; /* Tamanho da imagem */
+    max-width: 100%; /* Responsivo */
+    border-radius: 10px; /* Bordas arredondadas */
 }
 
-.botao-consulta-p span {
-    font-weight: 400;
-}
-
-.botao-consulta-p:hover {
-    background: #fff;
-}
-
-.linha {
-    color: rgba(0, 0, 0, 0.50);
-    height: 2px;
-    margin-bottom: 20px;
-} */
-
-/* Introdução */
-/* .intro-bg {
-    display: flex;
-    align-items: start;
-    height: 100vh;
-    background-color: var(--cor-primaria);
-}
-
-.intro-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.intro-text {
-    width: 700px;
-}
-
-.intro-text h2 {
-    color: var(--dark-grey);
-}
-
-.intro-img img {
-    object-fit: cover;
-    height: 550px;
-    width: auto;
-}
-
-@media (max-width: 1400px) {
-    .intro-img img {
-        height: 400px;
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column; /* Empilha o conteúdo em telas menores */
+        gap: 20px;
     }
-} */
 
-/* .reveal-txt, .reveal-img {
-    visibility: hidden;
-} */
+    .img_content img {
+        width: 300px; /* Reduz o tamanho da imagem em telas menores */
+    }
+}
 
+#gear{
+    color: white;
+    font-size: 25px;
+    align-items: center;
+    margin-left: 40px;
+    cursor: pointer;
+}
 .modal {
     display: none; /* Esconde o modal por padrão */
     position: fixed;
@@ -440,3 +398,4 @@ section.topo-do-site.flex {
     text-decoration: none;
     cursor: pointer;
 }
+

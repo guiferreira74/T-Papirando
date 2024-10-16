@@ -37,33 +37,13 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
                 </ul>
             </nav>
             <div class="info">
-                <a href="sobre_user.php">Sobre</a>
-                <a href="ajuda_user.php">Ajuda</a>
-                <a href="../administrador/sair.php">Sair</a>
-            </div>
+            <a href="sobre_user.php">Sobre</a>
+            <a href="ajuda_user.php">Ajuda</a>
+            <span class="saudacao">Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>!</span>
+            <a href="../administrador/sair.php">Sair</a>
         </div>
     </header>
      <main>
-  <!-- Modal de Confirmação -->
-  <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmLogoutModalLabel">Sair</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Tem certeza que deseja sair?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmLogout" href="sair.php" class="btn btn-primary">Sair</a>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <div class="container">
 
             <div class="encima" >
                 <h1> O que você está procurando?</h1>

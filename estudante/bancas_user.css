@@ -8,7 +8,7 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    background: #E6E6E6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -545,3 +545,6 @@ header .info ul li a {
     background-color: #1a0f9a; /* Cor ao passar o mouse, se desejado */
 }
 
+.saudacao {
+    color: white;
+}

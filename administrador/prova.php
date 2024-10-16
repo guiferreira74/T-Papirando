@@ -34,7 +34,6 @@
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
-                <li><a href="escolaridade.php">Escolaridade</a></li>
                 <li><a href="dificuldade.php">Dificuldade</a></li>
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>

@@ -279,6 +279,13 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
     background-color: #2118CD; /* Altere a cor de fundo no hover (ex: azul escuro) */
     color: white; /* Cor do texto branco no hover */
 }
+#gear{
+    color: white;
+    font-size: 25px;
+    align-items: center;
+    margin-left: 40px;
+    cursor: pointer;
+}
 
 .modal {
     display: none; /* Esconde o modal por padrão */

@@ -134,59 +134,6 @@ body {
     background-color: #00b300;
 }
 
-.table-container {
-    margin-top: 30px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-a.edit-button, a.delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-a.edit-button {
-    background-color: #2118CD;
-}
-
-a.edit-button:hover {
-    background-color: #2118CD;
-}
-
-a.delete-button {
-    background-color: #f44336; 
-}
-
-a.delete-button:hover {
-    background-color: #d32f2f;
-}
-
 .grid-duplo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -268,21 +215,219 @@ a.delete-button:hover {
     color: red;
 }
 /* Estilos para a tabela */
-table {
+/* Container principal ao lado da sidebar - formato retangular */
+.container-principal {
+    margin-left: 300px; /* Espaço para a sidebar */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    margin-top: 120px; /* Espaço abaixo do header */
+    min-height: 400px;
+    margin-right: 40px;
+    border-radius: 20px; /* Removido o arredondamento */
+}
+
+/* Título dentro do container principal */
+.container-principal h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Botão de adicionar banca */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    padding: 0 100px;
+    margin-top: 10px; /* Move the table closer to the header */
+}
+
+#corpo {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px; 
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* Adjust the table container for wider display */
+.container-principal {
+    margin-left: 0; /* Remove the margin left since we want it centered */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    margin-top: 10px; /* Smaller space under header */
+    width: 100%; /* Full width for the table */
+    max-width: 1200px; /* Optional: Cap the width if needed */
+    border-radius: 20px;
+}
+
+/* Full width table */
+.tabela-registros {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto; /* Auto layout for flexible column widths */
 }
 
-th, td {
+.tabela-registros th {
+    background-color: #2118CD;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tabela-registros td {
     padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: middle;
 }
 
-th {
-    background-color: #f4f4f4;
+/* Align actions (icons) in a row */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjusts the space between the icons */
 }
 
+.btn-editar, .btn-excluir {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-editar i, .btn-excluir i {
+    font-size: 16px;
+}
+
+/* Modal styles (unchanged from your initial setup) */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Efeito de hover */
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Ajustes para sidebar recolhida */
+#main-content.sidebar-closed {
+    margin-left: 60px; /* Reduz a margem quando a sidebar estiver fechada */
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+    margin-right: 0;
+}
+
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
 .actions {
     display: flex;
     justify-content: flex-end; /* Alinha os ícones no lado direito */

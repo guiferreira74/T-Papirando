@@ -134,55 +134,155 @@ body {
     background-color: #00b300;
 }
 
-.table-container {
-    margin-top: 30px;
+/* Ajuste no container principal para aumentar a largura e manter centralizado */
+#container-principal {
+    margin: 0 auto; /* Centraliza o container horizontalmente */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    width: 80%; /* Aumenta a largura para 80% da tela */
+    max-width: 1400px; /* Limita a largura máxima para 1400px */
+    border-radius: 20px;
 }
 
-table {
+/* Full width table */
+.tabela-registros {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-a.edit-button, a.delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    text-decoration: none;
+.tabela-registros th {
+    background-color: #2118CD;
     color: white;
+    padding: 12px 15px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tabela-registros td {
+    padding: 10px;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Alinha as ações (ícones) em uma linha */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Ajusta o espaço entre os ícones */
+}
+
+/* Estilos dos botões de editar e excluir */
+.btn-editar, .btn-excluir {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-editar i, .btn-excluir i {
+    font-size: 16px;
+}
+
+/* Botão de adicionar */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+/* Estilos do modal */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
     font-weight: bold;
 }
 
-a.edit-button {
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.btn-editar {
     background-color: #2118CD;
+    color: white;
 }
 
-a.edit-button:hover {
-    background-color: #2118CD;
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+    margin-right: 0;
 }
 
-a.delete-button {
-    background-color: #f44336;
+.btn-editar:hover {
+    background-color: #1a139d;
 }
 
-a.delete-button:hover {
-    background-color: #d32f2f;
+.btn-excluir:hover {
+    background-color: #c82333;
 }
 
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Ajustes para sidebar recolhida */
+#main-content.sidebar-closed {
+    margin-left: 60px; /* Reduz a margem quando a sidebar estiver fechada */
+}
 .grid-duplo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

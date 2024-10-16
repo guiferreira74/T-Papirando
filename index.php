@@ -6,6 +6,9 @@
     <title>Topapirando</title>
     <link rel="icon" href="./administrador/assets/Pré - Projeto  TôPapirando! 1.svg" type="image/x-icon">
     <link rel="stylesheet" href="inicio.css">
+<!-- awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <header>
@@ -13,13 +16,13 @@
             <div class="logo">
                 <a href="index.php"><img class="logo" src="administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
                
-            </div><!--logo-->
+            </div>
 
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="index.php" class="inicio">Início</a></li>
                     <li><a href="estudante/simulados.php" class="simulados">Simulados</a></li>
-                    <li><a href="bancas.php" class="bancas">Bancas</a></li> <!-- Link de Bancas sem modal -->
+                    <li><a href="bancas.php" class="bancas">Bancas</a></li> 
                     <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
                 </ul>
             </nav>
@@ -27,10 +30,10 @@
             <div class="info"> 
             <a href="estudante/sobre.php">Sobre</a>
             <a href="estudante/ajuda.php">Ajuda</a>
-            <a href="login.php">Entrar</a>
+            <a href="login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
             </div>
 
-        </div> <!--interface-->
+        </div> 
     </header>
 
     <main>
@@ -38,25 +41,31 @@
             <div class="interface"> 
                 <div class="flex">
                     <div class="txt-topo-site">
-                        <h1>Teste Seu conhecimento e passe no seu desejado concurso</h1>
+                        <h1>Teste seu conhecimento e passe no seu desejado concurso</h1>
                         <p>Crie sua conta para aproveitar todos os benefícios de ter uma conta</p>
 
                         <div class="btn-contato">
                             <a href="cadastro.php">
                                <button>Crie sua conta</button> 
                             </a>
+                                <p class="ou">Ou</p>
+                                <div class="entrar">
+                                    <a href="login.php">
+                                    <button>Entrar</button> 
+                                    </a>
+                                </div>
                         </div>
-                    </div> <!--txt topo site-->
+                    </div>
 
                     <div class="img-topo-site">
                         <img id="img" src="administrador/assets/imagem mulher sentada.svg" alt="">
-                    </div> <!--img topo site-->
-                </div> <!--flex-->
-            </div> <!--interface-->
-        </section>  <!--topo do site-->
+                    </div>
+                </div>
+            </div> 
+        </section> 
     </main> 
 
-    <!-- Modal Simulados -->
+  
     <div id="modal-simulados" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>

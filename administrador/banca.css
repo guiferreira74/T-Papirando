@@ -12,6 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
 }
 
 .interface {
@@ -70,14 +71,12 @@ header {
     padding: 20px 4%; /* Diminui o padding para reduzir a altura */
     background-color: #2118CD; /* Fundo sólido */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
-  
 }
 
 header > .interface {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
 }
 
 header a {
@@ -120,116 +119,171 @@ header .info ul li a {
     margin-right: 20px;
 }
 
-#sidebar{
+/* Sidebar */
+#sidebar {
     position: fixed;
-    display: flex;
-    background: #f0f0f0;
-    top: 0;
+    top: 70px; /* Começa logo abaixo do cabeçalho */
     left: 0;
-    bottom: 0;
-    float: left;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100%;
     width: 200px;
-    transition: width 0.3s ease, left 0.3s ease; /* Animação suave */
-    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10);
-    z-index: 10;
-    padding-top: 100px;
+    height: calc(100% - 70px); /* Preenche a tela abaixo do cabeçalho */
+    background-color: #F0F0F0; /* Cor de fundo cinza claro */
+    color: black; /* Texto em preto */
+    padding-top: 20px;
     overflow-y: auto; /* Adiciona barra de rolagem vertical */
     scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+    z-index: 999;
 }
+   
+
 
 #sidebar ul {
-    list-style: none; /* Remove os marcadores de lista */
+    list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 #sidebar ul li {
-    padding: 10px 10px; /* Espaçamento entre os itens */
-    margin-bottom: 10px; /* Espaçamento inferior entre os itens */
-
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
 }
 
 #sidebar ul li a {
-    color: black;
+    color: black; /* Texto preto para contraste */
     text-decoration: none;
     display: flex;
     align-items: center;
+    padding: 10px;
     font-size: 18px;
-         
 }
 
-#sidebar ul li a .icon i {
-    transition: color 0.3s; /* Transição suave ao mudar de cor */
+#sidebar ul li a .icon {
+    margin-right: 15px;
+    font-size: 18px;
 }
 
-
-#sidebar ul li .txt {
-    flex-grow: 1;
-}
-
-#sidebar ul li .icon {
-    margin-right: 20px; /* Aumenta o espaço entre o ícone e o texto */
-}
-
-#gr{
-    text-align: center; /* Centraliza o texto */
-    margin: 20px auto; /* Espaçamento automático nas laterais e superior/inferior */
-    font-size: 18px; /* Ajuste o tamanho da fonte, se necessário */
-}
-
-#sidebar ul li.item-menu{
-    transition: .2s;
-}
-
-#sidebar ul li.ativo{
-    background-color: #2118CD;
+#sidebar ul li:hover {
+    background-color: #d1d1d1; /* Cor de hover mais escura */
 }
 
 #sidebar ul li.ativo {
-    background-color: #2118CD; /* Cor de fundo do item ativo */
-    color: white; /* Cor do texto do item ativo */
-    border-radius: 8px; /* Aplica o mesmo border-radius do hover */
+    background-color: #00b4d8; /* Azul ativo */
+    color: white;
 }
 
 #sidebar ul li.ativo a {
-    color: white; /* Cor do link ativo */
+    color: white; /* Garante que o texto ativo fique branco */
 }
 
-#sidebar ul li.ativo .icon i {
-    color: white; /* Cor do ícone ativo */
-}
-
-/* Sidebar recolhida */
+/* Sidebar fechada */
 #sidebar.closed {
-    width: 0; /* Largura da sidebar recolhida */
-    overflow: hidden; /* Remove o conteúdo ao recolher */
+    width: 0;
+    overflow: hidden;
 }
 
-/* Ajuste no conteúdo da página quando a sidebar está recolhida */
 #main-content {
+    margin-left: 200px;
     transition: margin-left 0.3s ease;
-    margin-left: 200px; /* Ajusta o conteúdo com a sidebar expandida */
 }
 
 #main-content.sidebar-closed {
-    margin-left: 0; /* Ajusta o conteúdo quando a sidebar está recolhida */
+    margin-left: 0;
 }
 
-/* Botão de ativação da sidebar */
+/* Transição suave ao abrir/fechar a sidebar */
+#sidebar, #main-content {
+    transition: all 0.3s ease;
+}
+
+#gr {
+    text-align: center;
+    color: black !important; /* Força a cor preta */
+    margin: 10px 0;
+    font-size: 18px;
+}
+
 .toggle-sidebar {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
     background: none;
     border: none;
-    cursor: pointer;
     font-size: 24px;
     color: white;
-     /* Mantém uma margem à direita para distanciar da logo */
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+#main-content {
+    margin-left: 200px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+/* Ajuste de responsividade */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 80px;
+    }
+
+    #main-content {
+        margin-left: 80px;
+    }
+
+    #sidebar ul li a .txt {
+        display: none;
+    }
+}
+
+/* Sidebar fechada */
+#sidebar.closed {
+    width: 0;
+    overflow: hidden;
+}
+
+#main-content {
+    margin-left: 200px;
+    transition: margin-left 0.3s ease;
+}
+
+#main-content.sidebar-closed {
+    margin-left: 0;
+}
+
+/* Transição suave ao abrir/fechar a sidebar */
+#sidebar, #main-content {
+    transition: all 0.3s ease;
+}
+#gr {
+    text-align: center;
+    color: white;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.toggle-sidebar {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+#main-content {
+    margin-left: 200px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+/* Ajuste de responsividade */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 80px;
+    }
+
+    #main-content {
+        margin-left: 80px;
+    }
+
+    #sidebar ul li a .txt {
+        display: none;
+    }
 }
 
 .controle-navegacao {
@@ -304,31 +358,180 @@ header .info ul li a {
     background-color: #00b300;
 }
 
-.table-container {
-    margin-top: 30px;
-    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
-    max-width: 1200px; /* Aumenta a largura máxima da tabela */
-    display: flex; /* Para centralizar a tabela */
-    justify-content: center; /* Centraliza a tabela horizontalmente */
+/* Container principal ao lado da sidebar - formato retangular */
+.container-principal {
+    margin-left: 300px; /* Espaço para a sidebar */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    margin-top: -200px; /* Espaço abaixo do header */
+    min-height: 400px;
+    margin-right: 40px;
+    border-radius: 20px; /* Removido o arredondamento */
 }
 
-table {
-    width: 100%; /* Use 100% para ocupar o espaço disponível */
-    min-width: 1000px; /* Define uma largura mínima para a tabela */
+/* Título dentro do container principal */
+.container-principal h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Botão de adicionar banca */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+/* Estilo da tabela de registros */
+.tabela-registros {
+    width: 100%; /* Faz a tabela ocupar 100% da largura disponível */
     border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: auto; /* Define layout automático para que as colunas se ajustem ao conteúdo */
 }
 
-th, td {
-    padding: 15px; /* Aumenta o espaçamento nas células */
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+/* Ajuste para os títulos (th) da tabela */
+.tabela-registros th {
+    background-color: #2118CD;
+    font-weight: bold;
+    color: white;
+    padding: 8px 10px; /* Reduzido o padding para diminuir a altura */
+    text-align: center; /* Centraliza o texto dos títulos */
+    white-space: nowrap; /* Evita quebra de linha nos títulos */
+    vertical-align: middle; /* Garante que o texto esteja centralizado verticalmente */
 }
 
+/* Ajuste para o corpo da tabela */
+.tabela-registros td {
+    padding: 10px 12px; /* Ajusta o padding para ter uma altura confortável */
+    background-color: #fafafa;
+    vertical-align: middle; /* Centraliza o conteúdo verticalmente */
+}
+
+/* Evitar quebra de linha no nome da banca */
+.tabela-registros td:first-child {
+    white-space: nowrap; /* Evita a quebra de linha no nome da banca */
+}
+
+/* Centralizar o link na célula */
+.tabela-registros td:nth-child(2) {
+    text-align: center; /* Centraliza o link na tabela */
+}
+
+/* Estilo específico para garantir que os links não quebrem */
+.tabela-registros td a {
+    white-space: nowrap; /* Evita que o link seja quebrado em várias linhas */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Se o link for muito longo, ele será truncado com "..." */
+    display: inline-block;
+    max-width: 100%; /* Garante que o link ocupe todo o espaço disponível */
+}
+
+
+/* Estilos dos botões de ação (editar, excluir) */
 .actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    justify-content: center; /* Centraliza os botões na célula */
+    gap: 10px; /* Espaçamento entre os botões */
 }
+
+.btn-editar, .btn-excluir {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Efeito de hover */
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Ajustes para sidebar recolhida */
+#main-content.sidebar-closed {
+    margin-left: 60px; /* Reduz a margem quando a sidebar estiver fechada */
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+    margin-right: 0;
+}
+
+.btn-editar:hover {
+    background-color: #1a139d;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Ajuste do ícone dentro dos botões */
+.btn-editar i, .btn-excluir i {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Ajustes para sidebar recolhida */
+#main-content.sidebar-closed {
+    margin-left: 60px; /* Reduz a margem quando a sidebar estiver fechada */
+}
+
 
 /* Adicionando um estilo para centralizar a tabela no corpo */
 #corpo {
@@ -339,7 +542,7 @@ th, td {
 
 
 
-a.edit-button, a.delete-button {
+a.edit-button, a.delete-button, a.add-button {
     display: inline-block;
     padding: 8px 12px;
     margin: 5px;
@@ -354,7 +557,7 @@ a.edit-button {
 }
 
 a.edit-button:hover {
-    background-color: #2118CD;
+    background-color: #1a0faf;
 }
 
 a.delete-button {
@@ -364,6 +567,16 @@ a.delete-button {
 a.delete-button:hover {
     background-color: #d32f2f;
 }
+
+/* Estilo para o botão "+" (verde) */
+a.add-button {
+    background-color: #4CAF50; /* Cor verde */
+}
+
+a.add-button:hover {
+    background-color: #45a049; /* Cor verde mais escura no hover */
+}
+
 
 .grid-duplo {
     display: grid;

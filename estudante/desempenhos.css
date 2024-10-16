@@ -203,3 +203,118 @@ header .info ul li a {
     
     .esquerda { grid-area: 1 / 1 / 2 / 2; }
     .direita { grid-area: 1 / 2 / 2 / 3; }
+
+    .saudacao {
+        color: white;
+    }
+
+
+/* Div container com bordas arredondadas */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+/* Estilização do container que envolve o gráfico e o botão */
+.chart-container {
+    display: flex; /* Alinha o gráfico e o botão lado a lado */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Alinha os itens ao centro */
+    gap: 20px; /* Espaçamento entre o gráfico e o botão */
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Div do gráfico */
+#donutchart {
+    width: 600px;
+    height: 400px;
+}
+
+/* Estilização do botão "Mais Detalhes" */
+.mais_detalhes button {
+    padding: 10px 20px; /* Ajuste do tamanho do botão */
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.mais_detalhes button:hover {
+    background-color: #1a1489;
+    transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
+
+/* Responsividade para garantir que o layout se ajuste em telas menores */
+@media (max-width: 768px) {
+    .chart-container {
+        flex-direction: column; /* Empilha o gráfico e o botão verticalmente em telas menores */
+    }
+
+    #donutchart {
+        width: 100%; /* Garante que o gráfico ocupe a largura total em telas pequenas */
+        height: auto;
+    }
+}
+
+/* Seção de informações */
+.info-section {
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.info-item {
+    text-align: center;
+    font-size: 16px;
+}
+
+.info-item h3 {
+    font-size: 24px;
+    color: #4CAF50;
+    margin-bottom: 5px;
+}
+
+#donutchart {
+    width: 600px;
+    height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.details-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+    background-color: #45a049;
+}
+    .saudacao {
+        color: white;
+    }
+    

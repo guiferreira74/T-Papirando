@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// Verifique se o administrador está logado e tem acesso apropriado
-if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 3) {
-    header("Location: login.php");
+// Verifique se o administrador está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../administrador/login.php");
     exit();
 }
 
@@ -43,12 +43,12 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 
             
             <div class="informacoes">
-                <a href="sobre_adm.php">Sobre</a>
-                <a href="ajuda_adm.php">Ajuda</a>
-                <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
-              
+            <a href="sobre_adm.php">Sobre</a>
+            <a href="ajuda_adm.php">Ajuda</a>
+            <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
             </div>
+
         </div><!-- interface -->
     </header>  
      
@@ -85,13 +85,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                     <a href="banca.php">
                         <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
                         <span class="txt">Bancas</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="escolaridade.php">
-                        <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
-                        <span class="txt">Escolaridade</span>
                     </a>
                 </li>
 

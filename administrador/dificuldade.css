@@ -134,53 +134,140 @@ body {
     background-color: #00b300;
 }
 
-.table-container {
-    margin-top: 30px;
+/* Adjust the height to make sure the table is placed right below the header */
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    padding: 0 100px;
+    margin-top: 10px; /* Move the table closer to the header */
 }
 
-table {
+#corpo {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px; 
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* Adjust the table container for wider display */
+.container-principal {
+    margin-left: 0; /* Remove the margin left since we want it centered */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    margin-top: 10px; /* Smaller space under header */
+    width: 100%; /* Full width for the table */
+    max-width: 1200px; /* Optional: Cap the width if needed */
+    border-radius: 20px;
+}
+
+/* Full width table */
+.tabela-registros {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto; /* Auto layout for flexible column widths */
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-a.edit-button, a.delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    text-decoration: none;
+.tabela-registros th {
+    background-color: #2118CD;
     color: white;
+    padding: 12px 15px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tabela-registros td {
+    padding: 10px;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Align actions (icons) in a row */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjusts the space between the icons */
+}
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+.btn-editar, .btn-excluir {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-editar i, .btn-excluir i {
+    font-size: 16px;
+}
+
+/* Modal styles (unchanged from your initial setup) */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
     font-weight: bold;
 }
 
-a.edit-button {
-    background-color: #2118CD;
-}
-
-a.edit-button:hover {
-    background-color: #2118CD;
-}
-
-a.delete-button {
-    background-color: #f44336;
-}
-
-a.delete-button:hover {
-    background-color: #d32f2f;
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .grid-duplo {
@@ -267,28 +354,6 @@ a.delete-button:hover {
 
 .error-message {
     color: red;
-}
-
-/* Estilos para a tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end; /* Alinha os ícones no lado direito */
-    gap: 10px; /* Espaçamento entre os ícones */
 }
 
 .edit-button, .delete-button {

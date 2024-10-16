@@ -6,6 +6,8 @@
     <title>Banca</title> 
     <link rel="stylesheet" href="bancas.css">
     <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
 <header>
@@ -26,8 +28,8 @@
         <div class="info">
             <a href="./estudante/sobre.php">Sobre</a>
             <a href="./estudante/ajuda.php">Ajuda</a>
-            <a href="./login.php">Entrar</a>
-        </div>
+            <a href="login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+            </div>
     </div> <!--interface-->
 </header>
 
@@ -50,28 +52,102 @@
 </div>
 
 
-<main class="content-container">
-    <section id="enem">
-        <h1>Enem</h1>
-        <img src="./administrador/uploads/enemlogo.jpg" alt="Imagem do Enem" class="imagem-enem" />
-        <p>
-            Para mais informações, acesse o 
-            <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos" target="_blank" class="external-link">
-                site oficial do Enem
-            </a>.
-        </p>
-    </section>
-    <section id="correios"> 
-        <h1>Correios</h1>
-        <img src="./administrador/uploads/correios.svg" alt="Imagem dos correios" class="imagem-correios" />
-        <p>
-            Para mais informações, acesse o 
-            <a href="https://prosel.correios.com.br/concursos/detalharconcurso/1211#:~:text=Leia%20o%20edital%20para%20saber%20mais%20sobre%20os%20munic%C3%ADpios%20integrantes" target="_blank" class="external-link">
-                site oficial dos correios
-            </a>.
-        </p>
-    </section>
-</main>
+<h1 class="centered-title">Banca de Prova</h1>
+    <div class="banca-container">
+        <?php
+        // Conexão com o banco de dados
+        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
+        }
+
+        // Buscar as bancas cadastradas
+        $result = $conn->query("SELECT * FROM banca");
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='banca'>";
+                echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
+                echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width: 100px;'>";
+                
+                // Botão que chama o modal com a classe 'ok'
+                echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
+                
+                echo "</div>";
+            }
+        } else {
+            echo "<p>.</p>";
+        }
+        ?>
+  </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p style="color: black;">Tôpapirando informa: Você está sendo direcionado para outra página.</p>
+                <div class="button-container">
+                    <button id="confirmRedirect" class="button ok">OK</button>
+                    <button class="button cancel" id="cancelRedirect">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Seleciona todos os botões que abrem o modal
+            document.querySelectorAll('.open-modal').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const link = event.target.getAttribute('data-link');
+                    event.preventDefault(); // Impede o clique padrão
+
+                    // Exibe o modal
+                    const modal = document.getElementById('myModal');
+                    modal.style.display = 'block';
+
+                    // Confirm button event
+                    document.getElementById('confirmRedirect').onclick = function() {
+                        window.open(link, '_blank');
+                        modal.style.display = 'none'; // Fecha o modal
+                    }
+
+                    // Cancel button event
+                    document.getElementById('cancelRedirect').onclick = function() {
+                        modal.style.display = 'none'; // Fecha o modal
+                    }
+                });
+            });
+
+            // Fechar modal ao clicar no "x"
+            document.querySelector('.close').onclick = function() {
+                document.getElementById('myModal').style.display = 'none';
+            }
+
+            // Fechar modal ao clicar fora do modal
+            window.onclick = function(event) {
+                const modal = document.getElementById('myModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Save scroll position
+            window.onbeforeunload = function() {
+                localStorage.setItem('scrollPosition', window.scrollY);
+            };
+
+            // Restore scroll position
+            window.onload = function() {
+                const scrollPosition = localStorage.getItem('scrollPosition');
+                if (scrollPosition) {
+                    window.scrollTo(0, scrollPosition);
+                    localStorage.removeItem('scrollPosition'); // Clear it after using
+                }
+            };
+        </script>
+
+    </main>
+</body>
+</html>
 
 <!-- Modal de confirmação -->
 <div id="myModal" class="modal">

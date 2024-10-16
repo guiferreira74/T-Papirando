@@ -87,13 +87,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </li>
 
                 <li class="item-menu">
-                    <a href="escolaridade.php">
-                        <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
-                        <span class="txt">Escolaridade</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
                     <a href="concurso.php">
                         <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
                         <span class="txt">Concurso</span> 

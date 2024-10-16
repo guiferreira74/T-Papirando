@@ -202,3 +202,8 @@ header .info ul li a {
     
     .esquerda { grid-area: 1 / 1 / 2 / 2; }
     .direita { grid-area: 1 / 2 / 2 / 3; }
+    
+    .saudacao {
+        color: white;
+    }
+    

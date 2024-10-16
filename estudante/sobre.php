@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="sobre.css">
     <script src="scripts.js"></script>
     <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Cabeçalho -->
@@ -26,8 +27,8 @@
             <div class="info">
                 <a href="sobre.php">Sobre</a>
                 <a href="ajuda.php">Ajuda</a>
-                <a href="../login.php">Entrar</a>
-            </div>
+                <a href="../login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+                </div>
         </div>
     </header>
 
@@ -69,8 +70,9 @@
 </body>
 </html>
 
-    <!-- Modal Simulados -->
-    <div id="modal-simulados" class="modal">
+
+    </main>
+    <div id="modal-simulados" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <p>Por favor, faça o login para ver o simulado.</p>
@@ -79,7 +81,7 @@
     </div>
 
     <!-- Modal Desempenho -->
-    <div id="modal-desempenho" class="modal">
+    <div id="modal-desempenho" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <p>Por favor, faça o login para ver o seu desempenho.</p>
@@ -88,49 +90,53 @@
     </div>
 
     <script>
-        // Obter elementos dos modais e botões
-        var modalSimulados = document.getElementById("modal-simulados");
-        var modalDesempenho = document.getElementById("modal-desempenho");
+   document.addEventListener('DOMContentLoaded', function() {
+    var modalSimulados = document.getElementById("modal-simulados");
+    var modalDesempenho = document.getElementById("modal-desempenho");
 
-        var closeBtns = document.getElementsByClassName("close-btn");
-        var okBtnSimulados = document.getElementById("ok-btn-simulados");
-        var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+    var closeBtns = document.getElementsByClassName("close-btn");
+    var okBtnSimulados = document.getElementById("ok-btn-simulados");
+    var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
 
-        // Função para mostrar um modal específico
-        function showModal(modal) {
-            modal.style.display = "block";
-        }
+    // Show modal function
+    function showModal(modal) {
+        modal.style.display = "block";
+    }
 
-        // Função para esconder o modal
-        function closeModal() {
-            modalSimulados.style.display = "none";
-            modalDesempenho.style.display = "none";
-        }
+    // Hide modal function
+    function closeModal() {
+        modalSimulados.style.display = "none";
+        modalDesempenho.style.display = "none";
+    }
 
-        // Adicionar eventos de clique para os links Simulados e Desempenho
-        document.querySelector('.simulados-link').addEventListener('click', function(e) {
-            e.preventDefault(); // Previne a navegação padrão
-            showModal(modalSimulados);
-        });
-
-        document.querySelector('.desempenho-link').addEventListener('click', function(e) {
-            e.preventDefault(); // Previne a navegação padrão
-            showModal(modalDesempenho);
-        });
-
-        // Adicionar eventos de clique para os botões de fechar e os botões OK
-        Array.from(closeBtns).forEach(function(btn) {
-            btn.onclick = closeModal;
-        });
-        okBtnSimulados.onclick = closeModal;
-        okBtnDesempenho.onclick = closeModal;
-
-        // Fechar o modal se o usuário clicar fora dele
-        window.onclick = function(event) {
-            if (event.target == modalSimulados || event.target == modalDesempenho) {
-                closeModal();
+    // Add event listeners for menu links
+    document.querySelectorAll('.menu-desktop a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            if (this.classList.contains("simulados")) {
+                e.preventDefault(); 
+                showModal(modalSimulados);
+            } else if (this.classList.contains("desempenho")) {
+                e.preventDefault(); 
+                showModal(modalDesempenho);
             }
+        });
+    });
+
+    // Add click events for close buttons and OK buttons
+    Array.from(closeBtns).forEach(function(btn) {
+        btn.onclick = closeModal;
+    });
+    okBtnSimulados.onclick = closeModal;
+    okBtnDesempenho.onclick = closeModal;
+
+    // Close modal if clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modalSimulados || event.target == modalDesempenho) {
+            closeModal();
         }
+    };
+});
+
     </script>
 </body>
 </html>

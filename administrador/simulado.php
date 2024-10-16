@@ -44,9 +44,6 @@
                     <a href="banca.php">Bancas</a>
                 </li>
                 <li>
-                    <a href="escolaridade.php">Escolaridade</a>
-                </li>
-                <li>
                     <a href="dificuldade.php">Dificuldade</a>
                 </li>
                 <li>

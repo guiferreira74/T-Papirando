@@ -33,8 +33,7 @@
                 <hr>
                 <p>Gerenciar Conteúdo</p>
                 <li><a href="banca.php">Bancas</a></li>
-                <li><a href="nivel.php">Níveis</a></li>
-                <li><a href="grau.php">Graus</a></li>
+                <li><a href="dificuldade.php">Dificuldade</a></li>
                 <li><a href="disciplina.php">Disciplinas</a></li>
                 <li><a href="duracao.php">Durações</a></li>
                 <li><a href="instituicao.php">Instituições</a></li>
@@ -66,7 +65,7 @@
                     $qtd_questoes = mysqli_real_escape_string($conn, $_POST['qtd_questoes']);
                     $data = mysqli_real_escape_string($conn, $_POST['data']);
                     $vagas = mysqli_real_escape_string($conn, $_POST['vagas']);
-                    $nivel_cod_nivel = (int)$_POST['nivel_cod_nivel'];
+                    $escolaridade_cod_escolaridade = (int)$_POST['escolaridade_cod_escolaridade'];
                     $instituicao_cod_instituicao = (int)$_POST['instituicao_cod_instituicao'];
                     $banca_cod_banca = (int)$_POST['banca_cod_banca'];
                     $cod_concurso = $_POST['cod_concurso'] ?? null;
@@ -83,10 +82,10 @@
                     } else {
                         if ($cod_concurso) {
                             // Atualizar registro
-                            $sql = "UPDATE concurso SET nome='$nome', descricao='$descricao', qtd_questoes='$qtd_questoes', data='$data', vagas='$vagas', nivel_cod_nivel='$nivel_cod_nivel', instituicao_cod_instituicao='$instituicao_cod_instituicao', banca_cod_banca='$banca_cod_banca' WHERE cod_concurso=$cod_concurso";
+                            $sql = "UPDATE concurso SET nome='$nome', descricao='$descricao', qtd_questoes='$qtd_questoes', data='$data', vagas='$vagas', escolaridade_cod_escolaridade='$escolaridade_cod_escolaridade', instituicao_cod_instituicao='$instituicao_cod_instituicao', banca_cod_banca='$banca_cod_banca' WHERE cod_concurso=$cod_concurso";
                         } else {
                             // Inserir novo registro
-                            $sql = "INSERT INTO concurso (nome, descricao, qtd_questoes, data, vagas, nivel_cod_nivel, instituicao_cod_instituicao, banca_cod_banca) VALUES ('$nome', '$descricao', '$qtd_questoes', '$data', '$vagas', '$nivel_cod_nivel', '$instituicao_cod_instituicao', '$banca_cod_banca')";
+                            $sql = "INSERT INTO concurso (nome, descricao, qtd_questoes, data, vagas, escolaridade_cod_escolaridade, instituicao_cod_instituicao, banca_cod_banca) VALUES ('$nome', '$descricao', '$qtd_questoes', '$data', '$vagas', '$escolaridade_cod_escolaridade', '$instituicao_cod_instituicao', '$banca_cod_banca')";
                         }
 
                         if ($conn->query($sql) === TRUE) {
@@ -115,7 +114,7 @@
                 $qtd_questoes = '';
                 $data = '';
                 $vagas = '';
-                $nivel_cod_nivel = '';
+                $escolaridade_cod_escolaridade = '';
                 $instituicao_cod_instituicao = '';
                 $banca_cod_banca = '';
 
@@ -128,11 +127,12 @@
                         $qtd_questoes = $row['qtd_questoes'];
                         $data = $row['data'];
                         $vagas = $row['vagas'];
-                        $nivel_cod_nivel = $row['nivel_cod_nivel'];
+                        $escolaridade_cod_escolaridade = $row['escolaridade_cod_escolaridade'];
                         $instituicao_cod_instituicao = $row['instituicao_cod_instituicao'];
                         $banca_cod_banca = $row['banca_cod_banca'];
                     }
                 }
+                
                 ?>
 
                 <div class="text-center mb-3">
@@ -141,34 +141,35 @@
 
                 <div class="table-container">
                     <?php
-                    $result = $conn->query("SELECT c.*, n.tipo_nivel, i.nome AS nome_instituicao, b.nome AS nome_banca FROM concurso c
-                                            JOIN nivel n ON c.nivel_cod_nivel = n.cod_nivel
-                                            JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
-                                            JOIN banca b ON c.banca_cod_banca = b.cod_banca");
-
-                    if ($result->num_rows > 0) {
-                        echo "<table class='table'>";
-                        echo "<tr><th>Nome do Concurso</th><th>Descrição</th><th>Qtd Questões</th><th>Data</th><th>Vagas</th><th>Nível</th><th>Instituição</th><th>Banca</th><th>Ações</th></tr>";
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['data']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['tipo_nivel']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['nome_banca']) . "</td>";
-                            echo "<td class='actions'>";
-                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "<p>Nenhum registro encontrado.</p>";
+                $result = $conn->query("SELECT c.*, e.tipo_escolaridade, i.nome AS nome_instituicao, b.nome AS nome_banca FROM concurso c
+                JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
+                JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
+                JOIN banca b ON c.banca_cod_banca = b.cod_banca");
+                
+                if ($result && $result->num_rows > 0) {
+                    echo "<table class='table'>";
+                    echo "<tr><th>Nome do Concurso</th><th>Descrição</th><th>Qtd Questões</th><th>Data</th><th>Vagas</th><th>Escolaridade</th><th>Instituição</th><th>Banca</th><th>Ações</th></tr>";
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['data']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['nome_banca']) . "</td>";
+                        echo "<td class='actions'>";
+                        echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
+                        echo "<a class='delete-button' href='#' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
+                        echo "</td>";
+                        echo "</tr>";
                     }
+                    echo "</table>";
+                } else {
+                    echo "<p>Nenhum registro encontrado.</p>";
+                }
+                
                     ?>
                 </div>
             </div>
@@ -206,14 +207,14 @@
                     <input type="text" id="vagas_modal" name="vagas" value="<?php echo htmlspecialchars($vagas); ?>" placeholder="Preencha a quantidade de vagas" required>
                 </div>
                 <div class="grid-item">
-                    <label for="nivel_cod_nivel">Nível:</label>
-                    <select id="nivel_cod_nivel" name="nivel_cod_nivel" required>
-                        <option value="">Selecione um nível</option>
+                    <label for="escolaridade_cod_escolaridade">Escolaridade:</label>
+                    <select id="escolaridade_cod_escolaridade" name="escolaridade_cod_escolaridade" required>
+                        <option value="">Selecione uma Escolaridade</option>
                         <?php
-                        $nivels = $conn->query("SELECT * FROM nivel");
-                        while ($nivel = $nivels->fetch_assoc()) {
-                            $selected = (isset($nivel_cod_nivel) && $nivel['cod_nivel'] == $nivel_cod_nivel) ? ' selected' : '';
-                            echo "<option value='" . $nivel['cod_nivel'] . "'" . $selected . ">" . htmlspecialchars($nivel['tipo_nivel']) . "</option>";
+                        $escolaridades = $conn->query("SELECT * FROM escolaridade");
+                        while ($escolaridade = $escolaridades->fetch_assoc()) {
+                            $selected = (isset($escolaridade_cod_escolaridade) && $escolaridade['cod_escolaridade'] == $escolaridade_cod_escolaridade) ? ' selected' : '';
+                            echo "<option value='" . $escolaridade['cod_escolaridade'] . "'" . $selected . ">" . htmlspecialchars($escolaridade['tipo_escolaridade']) . "</option>";
                         }
                         ?>
                     </select>
@@ -370,7 +371,7 @@
         setCookie("qtd_questoes", document.getElementById("qtd_questoes_modal").value, 7);
         setCookie("data", document.getElementById("data_modal").value, 7);
         setCookie("vagas", document.getElementById("vagas_modal").value, 7);
-        setCookie("nivel_cod_nivel", document.getElementById("nivel_cod_nivel").value, 7);
+        setCookie("escolaridade_cod_escolaridade", document.getElementById("escolaridade_cod_escolaridade").value, 7);
         setCookie("instituicao_cod_instituicao", document.getElementById("instituicao_cod_instituicao").value, 7);
         setCookie("banca_cod_banca", document.getElementById("banca_cod_banca").value, 7);
     }
@@ -383,7 +384,7 @@
         document.getElementById("qtd_questoes_modal").value = getCookie("qtd_questoes") || '';
         document.getElementById("data_modal").value = getCookie("data") || '';
         document.getElementById("vagas_modal").value = getCookie("vagas") || '';
-        document.getElementById("nivel_cod_nivel").value = getCookie("nivel_cod_nivel") || '';
+        document.getElementById("escolaridade_cod_escolaridade").value = getCookie("escolaridade_cod_escolaridade") || '';
         document.getElementById("instituicao_cod_instituicao").value = getCookie("instituicao_cod_instituicao") || '';
         document.getElementById("banca_cod_banca").value = getCookie("banca_cod_banca") || '';
         console.log('Cookies carregados:', document.cookie); // Log para verificar cookies
@@ -434,7 +435,7 @@
         document.getElementById('qtd_questoes_modal').value = '';
         document.getElementById('data_modal').value = '';
         document.getElementById('vagas_modal').value = '';
-        document.getElementById('nivel_cod_nivel').selectedIndex = 0;
+        document.getElementById('escolaridade_cod_escolaridade').selectedIndex = 0;
         document.getElementById('instituicao_cod_instituicao').selectedIndex = 0;
         document.getElementById('banca_cod_banca').selectedIndex = 0;
     }
@@ -447,7 +448,7 @@
         document.getElementById('qtd_questoes_modal').value = data.qtd_questoes;
         document.getElementById('data_modal').value = data.data;
         document.getElementById('vagas_modal').value = data.vagas;
-        document.getElementById('nivel_cod_nivel').value = data.nivel_cod_nivel;
+        document.getElementById('escolaridade_cod_escolaridade').value = data.escolaridade_cod_escolaridade;
         document.getElementById('instituicao_cod_instituicao').value = data.instituicao_cod_instituicao;
         document.getElementById('banca_cod_banca').value = data.banca_cod_banca;
         openAddModal();

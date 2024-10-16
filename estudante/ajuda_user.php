@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado e se tem o tipo de acesso correto
+if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
+    header("Location: ../administrador/login.php");
+    exit();
+}
+
+// Capturando o nome e sobrenome do usuário da sessão
+$usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário'; // Nome padrão
+$sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''; // Sobrenome padrão
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +41,7 @@
             <div class="info">
                 <a href="sobre_user.php">Sobre</a>
                 <a href="ajuda_user.php">Ajuda</a>
+                <span class="saudacao">Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>!</span>
                 <a href="../administrador/sair.php">Sair</a>
             </div>
         </div> <!--interface-->

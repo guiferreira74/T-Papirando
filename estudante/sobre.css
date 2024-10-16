@@ -9,11 +9,10 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    background: #E6E6E6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 .interface {
@@ -255,4 +254,13 @@ ul li {
 .modal button:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
 }
-
+.saudacao {
+    color: white;
+}
+#gear{
+    color: white;
+    font-size: 25px;
+    align-items: center;
+    margin-left: 40px;
+    cursor: pointer;
+}

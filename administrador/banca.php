@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// Verifique se o administrador está logado e tem acesso apropriado
-if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 3) {
-    header("Location: login.php");
+// Verifique se o administrador está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../administrador/login.php");
     exit();
 }
 
@@ -24,152 +24,130 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 </head>
 <body>
 <header>
-        <div class="interface">
-            <!-- Botão para abrir a barra lateral -->
-            <div class="controle-navegacao">
-                
-                <div class="button">
-                    <button id="toggle-sidebar" class="toggle-sidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-               
-
-                <div class="logo">
-                    <img src="assets/logo_papirando_final.svg" alt="Logo">     
-                </div><!-- logo -->
-            </div><!-- controle-navegacao -->
-
-
-
-            <div class="informacoes">
-                <a href="sobre_adm.php">Sobre</a>
-                <a href="ajuda_adm.php">Ajuda</a>
-                <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
+    <div class="interface">
+        <!-- Botão para abrir a barra lateral -->
+        <div class="controle-navegacao">
+            <div class="button">
+                <button id="toggle-sidebar" class="toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-        </div><!-- interface -->
-    </header>  
-     
-    
-    <nav>
-        <div id="sidebar">
-            <ul>
-            <li class="item-menu">
-    <a href="#">
-        <span class="icon"><i class="fas fa-home"></i></span>
-        <span class="txt">Início</span>
-    </a>
-</li>
 
-
-                <li class="item-menu">
-                    <a href="ajuda.html">
-                        <span class="icon"><i class="fas fa-question-circle"></i></span> <!-- Ícone de livro -->
-                        <span class="txt">Ajuda</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-trophy"></i></span> <!-- Ícone de troféu -->
-                        <span class="txt">Parametros</span>
-                    </a>
-                </li>
-
-                <hr>
-
-                <h1 id="gr">Gerenciamento</h1>
-
-                <li class="item-menu">
-                    <a href="banca.php">
-                        <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
-                        <span class="txt">Bancas</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="escolaridade.php">
-                        <span class="icon"><i class="fas fa-graduation-cap"></i></span> <!-- Ícone de graduação -->
-                        <span class="txt">Escolaridade</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="concurso.php">
-                        <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
-                        <span class="txt">Concurso</span> 
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="questao.php">
-                        <span class="icon"><i class="fas fa-book"></i></span> <!-- Ícone de pergunta -->
-                        <span class="txt">Questões</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="dificuldade.php">
-                        <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
-                        <span class="txt">Dificuldade</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="disciplina.php">
-                        <span class="icon"><i class="fas fa-book-reader"></i></span> <!-- Ícone de leitura -->
-                        <span class="txt">Disciplina</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="duracao.php">
-                        <span class="icon"><i class="fas fa-clock"></i></span> <!-- Ícone de relógio -->
-                        <span class="txt">Duração</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="instituicao.php">
-                        <span class="icon"><i class="fas fa-school"></i></span> <!-- Ícone de instituição -->
-                        <span class="txt">Instituições</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="logo">
+                <img src="assets/logo_papirando_final.svg" alt="Logo">
+            </div>
         </div>
-    </nav>
-        <!-- MANTENDO A SIDE BAR ATIVA -->
-    <script>
-        var menuitem = document.querySelectorAll('.item-menu'); // Corrigido para selecionar pela classe
-    
-        function selectlink() {
-            menuitem.forEach((item) =>
-                item.classList.remove('ativo') // Remove a classe 'ativo' de todos os itens
-            );
-            this.classList.add('ativo'); // Adiciona a classe 'ativo' ao item clicado
-        }
-    
-        menuitem.forEach((item) =>
-            item.addEventListener('click', selectlink) // Adiciona o evento de clique para cada item do menu
-        );
-    </script>
 
-        <!-- SCRIPT PARA ABRIR E FECHAR A SIDE BAR -->
-    <script>
-        const toggleSidebarButton = document.getElementById('toggle-sidebar');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content'); // Caso tenha um container principal
-    
-        toggleSidebarButton.addEventListener('click', () => {
-            sidebar.classList.toggle('closed'); // Alterna a classe 'closed' na sidebar
-            mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
-        });
-    </script>
+        <div class="informacoes">
+            <a href="sobre_adm.php">Sobre</a>
+            <a href="ajuda_adm.php">Ajuda</a>
+            <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <div id="sidebar">
+        <ul>
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="txt">Início</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="ajuda_adm.php">
+                    <span class="icon"><i class="fas fa-question-circle"></i></span>
+                    <span class="txt">Ajuda</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="fas fa-trophy"></i></span>
+                    <span class="txt">Parametros</span>
+                </a>
+            </li>
+
+            <hr>
+
+            <h1 id="gr">Gerenciamento</h1>
+
+            <li class="item-menu">
+                <a href="banca.php">
+                    <span class="icon"><i class="fas fa-university"></i></span>
+                    <span class="txt">Bancas</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="concurso.php">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <span class="txt">Concurso</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="questao.php">
+                    <span class="icon"><i class="fas fa-book"></i></span>
+                    <span class="txt">Questões</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="dificuldade.php">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="txt">Dificuldade</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="disciplina.php">
+                    <span class="icon"><i class="fas fa-book-reader"></i></span>
+                    <span class="txt">Disciplina</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="duracao.php">
+                    <span class="icon"><i class="fas fa-clock"></i></span>
+                    <span class="txt">Duração</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="instituicao.php">
+                    <span class="icon"><i class="fas fa-school"></i></span>
+                    <span class="txt">Instituições</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleSidebarButton = document.getElementById('toggle-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+
+    // Alterna a visibilidade da sidebar ao clicar no botão de toggle
+    toggleSidebarButton.addEventListener('click', function() {
+        sidebar.classList.toggle('closed');
+        mainContent.classList.toggle('sidebar-closed');
+    });
+});
+
+
+</script>
+
     
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Bancas</h1>
+               
 
                 <?php
                 // Conexão com o banco de dados
@@ -260,38 +238,42 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 }
                 ?>
 
-                <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Banca</button>
-                </div>
+<div class="text-center mb-3">
+    <!-- Removido o botão 'Adicionar Nova Banca' -->
+</div>
 
-                <div class="table-container">
-                    <?php
-                    $result = $conn->query("SELECT * FROM banca");
+<div class="table-container container-principal">
+    <h2>Gerenciar Bancas</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Banca</button>
 
-                    if ($result->num_rows > 0) {
-                        echo "<table class='table'>";
-                        echo "<tr><th>Nome da Banca</th><th>Link</th><th>Imagem</th><th>Ações</th></tr>";
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['link']) . "</td>";
-                            echo "<td><img src='" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width:50px;'></td>";
-                            echo "<td class='actions'>";
-                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "<p>Nenhum registro encontrado.</p>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </main>
+    <?php
+    $result = $conn->query("SELECT * FROM banca");
 
-                <!-- Modal de Adicionar/Editar Banca -->
+    if ($result->num_rows > 0) {
+        echo "<table id='bancaTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Nome da Banca</th><th>Link</th><th>Imagem</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+            echo "<td><a href='" . htmlspecialchars($row['link']) . "' target='_blank'>" . htmlspecialchars($row['link']) . "</a></td>";
+            echo "<td><img src='" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width:50px;'></td>";
+            echo "<td class='actions'>";
+            // Botão de adicionar, editar e excluir com o novo layout
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
+
+         <!-- Modal de Adicionar/Editar Banca -->
         <div id="add-modal" class="modal" style="overflow: hidden;">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeAddModal()">&times;</span>

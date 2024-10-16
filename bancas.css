@@ -8,7 +8,7 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    background: #E6E6E6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -467,4 +467,51 @@ header .info ul li a {
 
 .modal button:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+
+#gear{
+    color: white;
+    font-size: 25px;
+    align-items: center;
+    margin-left: 40px;
+    cursor: pointer;
+}
+.banca-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as bancas se movam para a próxima linha */
+    justify-content: center; /* Centraliza as bancas na linha */
+}
+
+.banca {
+    width: calc(50% - 20px); /* Duas bancas por linha, ajustando para o espaçamento */
+    box-sizing: border-box; /* Inclui padding na largura */
+    text-align: center; /* Centraliza o texto */
+    margin: 10px; /* Espaçamento entre as bancas */
+    border: 1px solid #ccc; /* Borda ao redor das bancas */
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+.centered-title {
+    text-align: center;
+    margin: 20px 0; /* Ajuste o espaço acima e abaixo do título */
+}
+
+
+#enem, #correios {
+    flex: 1; /* Faz com que as seções se ajustem igualmente */
+    text-align: center; /* Centraliza o texto internamente */
+    margin: 0 20px; /* Espaçamento horizontal entre as seções */
+}
+
+.imagem-enem {
+    width: 200px; /* Limita a largura da imagem do Enem */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 20px; /* Aumenta o espaço entre a imagem e o texto */
+}
+
+.imagem-correios {
+    width: 400px; /* Limita a largura da imagem dos Correios */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom:70px; /* Espaço entre a imagem e o texto */
+    margin-top: 20px; /* Adiciona espaço acima da imagem para alinhar */
 }
