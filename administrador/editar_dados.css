@@ -1,0 +1,494 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", system-ui;
+    background: #E6E6E6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.interface {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px; /* Adiciona espaçamento lateral */
+}
+
+.flex {
+    margin-top: 100px;
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+/* Ajuste no tamanho da fonte dos itens do menu */
+header nav ul li a {
+    font-size: 18px; /* Tamanho da fonte dos itens do menu */
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+    color: white;
+}
+
+/* Estilo do cabeçalho */
+.logo img {
+    width: 200px; /* Ajuste da largura da logo */
+    margin-left: -20px;
+    align-items: center;
+    padding-top: 10px;
+}
+
+header {
+    position: fixed; /* Torna o cabeçalho fixo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Largura total */
+    z-index: 1000; /* Garante que fique acima do conteúdo */
+    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    background-color: #2118CD; /* Fundo sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: .2s;
+}
+
+header a:hover {
+    color: yellow;
+    transform: scale(1.05);
+}
+
+header nav ul {
+    list-style: none;
+    display: flex; /* Exibe os itens na horizontal */
+}
+
+header nav ul li {
+    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+}
+
+.btn-contato {
+    display: flex; /* Garante que o botão esteja na mesma linha */
+    align-items: center;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+
+header .info ul li a {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-geral {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 120px auto 0;
+    max-width: 1100px;
+    padding: 20px;
+    gap: 40px;
+    margin-top: 220px;
+}
+
+.formulario-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #2118CD;
+    outline: none;
+}
+
+.btn-save {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-save:hover {
+    background-color: #1a159a;
+}
+
+.imagem-container {
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.imagem-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-geral {
+        flex-direction: column; /* Torna a disposição vertical em telas menores */
+        gap: 20px;
+    }
+
+    .formulario-container {
+        width: 100%; /* Faz o formulário ocupar toda a largura */
+    }
+
+    .imagem-container {
+        width: 100%; /* Ajusta a imagem para 100% */
+        justify-content: center;
+    }
+
+    header nav ul {
+        flex-direction: column;
+    }
+
+    header nav ul li {
+        padding: 10px 0;
+    }
+
+    .btn-contato button {
+        padding: 10px 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px; /* Reduz o tamanho da fonte para telas muito pequenas */
+    }
+
+    input {
+        font-size: 14px; /* Reduz o tamanho do texto dos inputs */
+    }
+
+    .btn-save {
+        font-size: 14px;
+    }
+
+    .btn-contato button {
+        padding: 10px 30px;
+    }
+}
+
+/* Responsividade do Header */
+@media (max-width: 768px){
+    header nav ul {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: -100%; /* Esconde o menu inicialmente */
+        width: 100%;
+        background-color: #2118CD;
+        transition: left 0.3s;
+    }
+
+    header nav ul.show {
+        left: 0; /* Mostra o menu quando clicado */
+    }
+
+    header nav ul li {
+        padding: 10px 0;
+        text-align: center;
+    }
+}
+    /* Estilo do ícone de Menu Hamburguer */
+.hamburger {
+    display: none; /* Ícone não aparece por padrão */
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger span {
+    height: 3px;
+    width: 25px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s; /* Transição suave nas animações */
+}
+/* Modal */
+.modal {
+    display: none; /* Ocultado por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.modal-body {
+    margin-top: 20px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn-delete,
+.btn-cancel {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.btn-cancel {
+    background-color: #e74c3c; /* Vermelho para Cancelar */
+}
+
+.btn-delete:hover,
+.btn-cancel:hover {
+    opacity: 0.8;
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+/* Estilos específicos para o botão de fechar no modal de erro */
+.modal-erro .close-btn {
+    color: #e74c3c; /* Cor vermelha para o botão de fechar no modal de erro */
+}
+
+.modal-erro .close-btn:hover,
+.modal-erro .close-btn:focus {
+    color: #c0392b; /* Cor vermelha mais escura no hover e focus */
+}
+
+/* Estilos específicos para o modal de erro */
+.modal-erro p {
+    color: #e74c3c; /* Texto em vermelho para erro */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de erro e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-erro .ok-btn-erro {
+    background-color: #2118CD; /* Botão azul para erro */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-erro .ok-btn-erro:hover {
+    background-color: #2980b9; /* Cor um pouco mais escura para o hover */
+}
+
+/* Estilos específicos para o modal de sucesso */
+
+/* Estilos específicos para o botão de fechar no modal de sucesso */
+.modal-sucesso .close-btn {
+    color: #2118CD; /* Cor azul para o botão de fechar no modal de sucesso */
+}
+
+.modal-sucesso .close-btn:hover,
+.modal-sucesso .close-btn:focus {
+    color: #1a14a6; /* Cor azul mais escura no hover e focus */
+}
+
+.modal-sucesso p {
+    color: #2118CD; /* Texto em azul para sucesso */
+    font-weight: bold;
+    margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+/* Botão de OK com estilo quadrado */
+.modal-sucesso .ok-btn-sucesso {
+    background-color: #2118CD; /* Botão azul para sucesso */
+    color: white;
+    width: 60px; /* Largura fixa para tornar o botão quadrado */
+    height: 40px; /* Altura fixa para tornar o botão quadrado */
+    padding: 0; /* Remove o padding para garantir que o botão seja quadrado */
+    border-radius: 5px; /* Arredonda as bordas do botão */
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilo do botão OK quando hover */
+.modal-sucesso .ok-btn-sucesso:hover {
+    background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
+}
+/* Custom Modal */
+.custom-modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed; /* Mantém o modal fixo na tela */
+    z-index: 1000; /* Coloca o modal acima de outros conteúdos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total da tela */
+    height: 100%; /* Altura total da tela */
+    background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo com transparência */
+}
+
+/* Conteúdo do Custom Modal */
+.custom-modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Largura do modal */
+    max-width: 500px; /* Largura máxima do modal */
+    position: fixed; /* Muda para fixed para centralização correta */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta a posição para o centro */
+    overflow: hidden; /* Remove a barra de rolagem */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+#input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Espaçamento entre os grupos de input */
+}
+
+#input label {
+    margin-bottom: 5px; /* Espaçamento abaixo do label */
+}
+
+#input input,
+#input select {
+    padding: 8px; /* Padding para inputs e selects */
+    border-radius: 5px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Borda do input/select */
+    width: 100%; /* Largura total */
+}
+.modal-content button {
+    padding: 10px 20px;
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -41,7 +41,7 @@
             <div class="interface"> 
                 <div class="flex">
                     <div class="txt-topo-site">
-                        <h1>Teste seu conhecimento e passe no seu desejado concurso</h1>
+                        <h1>Teste seu conhecimento e prepare-se melhor para o seu concurso</h1>
                         <p>Crie sua conta para aproveitar todos os benefícios de ter uma conta</p>
 
                         <div class="btn-contato">

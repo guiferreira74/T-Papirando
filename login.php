@@ -82,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Estudante</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -102,6 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="info"> 
                 <a href="./estudante/sobre.php">Sobre</a>
                 <a href="./estudante/ajuda.php">Ajuda</a>
+                <a href="login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+                </div>
             </div>
         </div>
     </header>

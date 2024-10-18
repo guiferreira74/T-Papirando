@@ -46,7 +46,7 @@
 
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Durações</h1>
+                <h1></h1>
 
                 <?php
                 // Conexão com o banco de dados
@@ -117,35 +117,38 @@
                 }
                 ?>
 
-                <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Duração</button>
-                </div>
+<div class="table-container container-principal">
+    <h2>Gerenciar Durações</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Duração</button>
 
-                <div class="table-container">
-                    <?php
-                    $result = $conn->query("SELECT * FROM duracao");
+    <?php
+    // Consultar todas as durações
+    $result = $conn->query("SELECT * FROM duracao");
 
-                    if ($result->num_rows > 0) {
-                        echo "<table class='table'>";
-                        echo "<tr><th>Tempo</th><th>Descrição</th><th>Ações</th></tr>";
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
-                            echo "<td class='actions'>";
-                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"duracao.php?delete=" . $row['cod_duracao'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "<p>Nenhum registro encontrado.</p>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </main>
+    if ($result->num_rows > 0) {
+        echo "<table id='duracaoTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Tempo</th><th>Descrição</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            // Exibir o campo 'tempo' e 'descricao'
+            echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
+            echo "<td class='actions'>";
+            // Botões de editar e excluir com o novo layout
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"duracao.php?delete=" . $row['cod_duracao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
+
 
         <!-- Modal de Adicionar/Editar Duração -->
         <div id="add-modal" class="modal">

@@ -46,7 +46,7 @@
 
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Provas</h1>
+                <h1></h1>
 
                 <?php
                 // Conexão com o banco de dados
@@ -132,41 +132,54 @@
                 $disciplinas_result = $conn->query("SELECT * FROM disciplina");
                 ?>
 
-                <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Nova Prova</button>
-                </div>
+<div class="table-container container-principal">
+    <h2>Gerenciar Provas</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Prova</button>
 
-                <div class="table-container">
-                    <?php
-                    $result = $conn->query("SELECT * FROM prova");
+    <?php
+    // Consultar todas as provas com as chaves estrangeiras para exibir a banca e disciplina associada
+    $result = $conn->query("
+        SELECT 
+            prova.cod_prova, 
+            prova.nome AS prova_nome, 
+            prova.tempo, 
+            prova.qtd_questoes, 
+            banca.cod_banca, 
+            banca.nome AS banca_nome, 
+            disciplina.cod_disciplina,
+            disciplina.nome AS disciplina_nome
+        FROM prova
+        INNER JOIN banca ON prova.banca_cod_banca = banca.cod_banca
+        INNER JOIN disciplina ON prova.disciplina_cod_disciplina = disciplina.cod_disciplina
+    ");
 
-                    if ($result->num_rows > 0) {
-                        echo "<table class='table'>";
-                        echo "<tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd Questões</th><th>Banca</th><th>Disciplina</th><th>Ações</th></tr>";
-                        while ($row = $result->fetch_assoc()) {
-                            // Obter o nome da banca e disciplina
-                            $banca = $conn->query("SELECT nome FROM banca WHERE cod_banca=" . $row['banca_cod_banca'])->fetch_assoc();
-                            $disciplina = $conn->query("SELECT nome FROM disciplina WHERE cod_disciplina=" . $row['disciplina_cod_disciplina'])->fetch_assoc();
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
-                            echo "<td>" . htmlspecialchars($banca['nome']) . "</td>";
-                            echo "<td>" . htmlspecialchars($disciplina['nome']) . "</td>";
-                            echo "<td class='actions'>";
-                            echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                            echo "<a class='delete-button' href='#' onclick='openModal(\"prova.php?delete=" . $row['cod_prova'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "<p>Nenhum registro encontrado.</p>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </main>
+    if ($result->num_rows > 0) {
+        echo "<table id='provaTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd. de Questões</th><th>Banca</th><th>Disciplina</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            // Exibir os campos da tabela prova e as informações da banca e disciplina
+            echo "<td>" . htmlspecialchars($row['prova_nome']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['tempo']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['banca_nome']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['disciplina_nome']) . "</td>";
+            echo "<td class='actions'>";
+            // Botões de editar e excluir com o novo layout
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"prova.php?delete=" . $row['cod_prova'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
+
 
         <!-- Modal de Adicionar/Editar Prova -->
         <div id="add-modal" class="custom-modal">
@@ -263,33 +276,31 @@
         addModal.style.display = "block";
     }
 
-    function openAddModal() {
-            document.getElementById('cod_prova').value = '';
-            document.getElementById('nome_modal').value = '';
-            document.getElementById('tempo_modal').value = '';
-            document.getElementById('qtd_questoes_modal').value = '';
-            document.getElementById('banca_cod_banca').value = '';
-            document.getElementById('disciplina_cod_disciplina').value = '';
-            document.getElementById('add-modal').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
+    // Função para fechar o modal de adicionar
+    function closeAddModal() {
+        saveCookies();
+        addModal.style.display = "none";
+    }
 
-        function closeAddModal() {
-            document.getElementById('add-modal').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
+    function openEditModal(data) {
+        // Preencher os campos do modal com os dados recebidos
+        document.getElementById('cod_prova').value = data.cod_prova || '';
+        document.getElementById('nome_modal').value = data.prova_nome || '';  // Preenche o campo de nome
+        document.getElementById('tempo_modal').value = data.tempo || '';
+        document.getElementById('qtd_questoes_modal').value = data.qtd_questoes || '';
 
-        function openEditModal(data) {
-            document.getElementById('cod_prova').value = data.cod_prova;
-            document.getElementById('nome_modal').value = data.nome;
-            document.getElementById('tempo_modal').value = data.tempo;
-            document.getElementById('qtd_questoes_modal').value = data.qtd_questoes;
-            document.getElementById('banca_cod_banca').value = data.banca_cod_banca;
-            document.getElementById('disciplina_cod_disciplina').value = data.disciplina_cod_disciplina;
-            document.getElementById('add-modal').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-    // Função para abrir o modal de confirmação
+        // Selecionar a opção correta no select de Banca
+        const bancaSelect = document.getElementById('banca_cod_banca');
+        bancaSelect.value = data.cod_banca || '';  // Define o valor correto da banca
+    
+        // Selecionar a opção correta no select de Disciplina
+        const disciplinaSelect = document.getElementById('disciplina_cod_disciplina');
+        disciplinaSelect.value = data.cod_disciplina || '';  // Define o valor correto da disciplina
+
+        addModal.style.display = 'block';  // Exibe o modal de edição
+    }
+
+    // Função para abrir o modal de confirmação para deletar
     function openModal(deleteUrl) {
         confirmModal.style.display = "block";
         confirmButton.onclick = function() {
@@ -308,62 +319,56 @@
         }
     }
 
-    function closeAddModal() {
-        saveCookies();
-        addModal.style.display = "none";
+    // Limpar formulário
+    function clearForm() {
+        document.getElementById("cod_prova").value = '';
+        document.getElementById("nome_modal").value = '';
+        document.getElementById("tempo_modal").value = '';
+        document.getElementById('qtd_questoes_modal').value = '';
+        document.getElementById('disciplina_cod_disciplina').value = '';
+        document.getElementById("banca_cod_banca").value = '';
     }
 
-    // Limpar formulário
-function clearForm() {
-    document.getElementById("cod_prova").value = '';
-    document.getElementById("nome_modal").value = '';
-    document.getElementById("tempo_modal").value = '';
-    document.getElementById('qtd_questoes_modal').value = '';
-    document.getElementById('disciplina_cod_disciplina').value ='';
-    document.getElementById("banca_cod_banca_modal").value = '';
-}
+    // Função para salvar os valores dos inputs em cookies
+    function saveCookies() {
+        var cod_prova = document.getElementById("cod_prova").value;
+        var nome = document.getElementById("nome_modal").value;
+        var tempo = document.getElementById("tempo_modal").value;
+        var qtd_questoes = document.getElementById('qtd_questoes_modal').value; 
+        var disciplina_cod_disciplina = document.getElementById('disciplina_cod_disciplina').value;
+        var banca_cod_banca = document.getElementById("banca_cod_banca").value;
 
-// Função para salvar os valores dos inputs em cookies
-function saveCookies() {
-    var cod_prova = document.getElementById("cod_prova").value;
-    var nome = document.getElementById("nome_modal").value;
-    var tempo = document.getElementById("tempo_modal").value;
-    var qtd_questoes = document.getElementById('qtd_questoes_modal').value; 
-    var disciplina_cod_disciplina =document.getElementById('disciplina_cod_disciplina').value;
-    var banca_cod_banca = document.getElementById("banca_cod_banca_modal").value;
+        document.cookie = "cod_prova=" + encodeURIComponent(cod_prova) + "; path=/";
+        document.cookie = "nome=" + encodeURIComponent(nome) + "; path=/";
+        document.cookie = "tempo=" + encodeURIComponent(tempo) + "; path=/";
+        document.cookie = "qtd_questoes=" + encodeURIComponent(qtd_questoes) + "; path=/";
+        document.cookie = "disciplina_cod_disciplina=" + encodeURIComponent(disciplina_cod_disciplina) + "; path=/";
+        document.cookie = "banca_cod_banca=" + encodeURIComponent(banca_cod_banca) + "; path=/";
+    }
 
-    document.cookie = "cod_prova=" + encodeURIComponent(cod_prova) + "; path=/";
-    document.cookie = "nome=" + encodeURIComponent(nome) + "; path=/";
-    document.cookie = "tempo=" + encodeURIComponent(tempo) + "; path=/";
-    document.cookie = "qtd_questoes=" + encodeURIComponent(qtd_provas) + "; path=/";
-    document.cookie = "disciplina_cod_disciplina=" + encodeURIComponent(disciplina_cod_disciplina) + "; path=/";
-    document.cookie = "banca_cod_banca=" + encodeURIComponent(banca_cod_banca) + "; path=/";
-}
+    // Função para carregar os valores dos cookies nos inputs
+    function loadCookies() {
+        var cookies = document.cookie.split(';');
+        cookies.forEach(function(cookie) {
+            var parts = cookie.split('=');
+            var name = parts[0].trim();
+            var value = parts[1] ? decodeURIComponent(parts[1].trim()) : '';
 
-// Função para carregar os valores dos cookies nos inputs
-function loadCookies() {
-    var cookies = document.cookie.split(';');
-    cookies.forEach(function(cookie) {
-        var parts = cookie.split('=');
-        var name = parts[0].trim();
-        var value = parts[1] ? decodeURIComponent(parts[1].trim()) : '';
-
-        if (name === 'cod_prova') {
-            document.getElementById("cod_prova").value = value;
-        } else if (name === 'nome') {
-            document.getElementById("nome_modal").value = value;
-        } else if (name === 'tempo') {
-            document.getElementById("tempo_modal").value = value;
-        } else if (name === 'qtd_provas') {
-            document.getElementById("qtd_questoes_modal").value = value;
-        } else if (name === 'banca_cod_banca') {
-            document.getElementById("banca_cod_banca_modal").value = value;
-        }
-        else if (name === 'disciplina_cod_disciplina') {
-            document.getElementById("disiciplina_cod_disciplina_modal").value = value;
-        }    
-    });
-}
+            if (name === 'cod_prova') {
+                document.getElementById("cod_prova").value = value;
+            } else if (name === 'nome') {
+                document.getElementById("nome_modal").value = value;
+            } else if (name === 'tempo') {
+                document.getElementById("tempo_modal").value = value;
+            } else if (name === 'qtd_questoes') {
+                document.getElementById("qtd_questoes_modal").value = value;
+            } else if (name === 'banca_cod_banca') {
+                document.getElementById("banca_cod_banca").value = value;
+            } else if (name === 'disciplina_cod_disciplina') {
+                document.getElementById("disciplina_cod_disciplina").value = value;
+            }
+        });
+    }
 
     // Fechar o modal se o usuário clicar fora dele
     window.onclick = function(event) {
@@ -380,10 +385,6 @@ function loadCookies() {
             closeModal('sucesso');
         }
     };
-    function closeAddModal() {
-    addModal.style.display = "none";
-}
-
 
     // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
     <?php if ($error_message): ?>
@@ -405,7 +406,19 @@ function loadCookies() {
     document.getElementById("ok-btn-sucesso").onclick = function() {
         closeModal('sucesso');
     };
+
+    // Salvar automaticamente os dados quando a página for recarregada ou fechada
+    window.addEventListener('beforeunload', function (event) {
+        saveCookies();
+    });
+
+    // Salvar os dados sempre que houver mudança nos campos
+    document.querySelectorAll('#add-modal input, #add-modal select').forEach(function (element) {
+        element.addEventListener('input', function () {
+            saveCookies();
+        });
+    });
 </script>
 
-    </body>
+</body>
 </html>

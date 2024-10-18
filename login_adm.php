@@ -98,8 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <header>
         <div class="interface">
-            <div class="logo">
-                <img src="administrador/assets/logo_papirando_final.svg" alt="Logo">     
+        <div class="logo">
+        <a href="index.php"><img class="logo" src="administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>    
             </div><!--logo-->
 
             <nav class="menu-desktop">
@@ -120,12 +120,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <main class="login-container">
-        <div class="login-box">
-            <h2>Login administrador</h2>
-            <?php if (!empty($error_message)): ?>
-                <div class="error-message"><?php echo htmlspecialchars($error_message); ?></div>
-            <?php endif; ?>
-            <form action="" method="POST">
+    <div class="login-box">
+        <h2>Login administrador</h2>
+        
+        <!-- Exibição de mensagem de erro, se houver -->
+        <?php if (!empty($error_message)): ?>
+            <div class="error-message"><?php echo htmlspecialchars($error_message); ?></div>
+        <?php endif; ?>
+        
+        <!-- Formulário de login -->
+        <form action="" method="POST">
             <div class="input-box">
                 <input type="email" name="email" required title="Preencha o seu email">
                 <label>Email</label>
@@ -134,14 +138,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" name="senha" required title="Preencha a sua senha">
                 <label>Senha</label>
             </div>
-            </form>
 
-                <button type="submit" class="login-btn">Entrar</button>
-                <div class="forgot-password">
-                    <a href="#">Esqueceu sua senha?</a>
-                </div>
-            </form>
+            <!-- Botão de login -->
+            <button type="submit" class="login-btn">Entrar</button>
+        </form>
+
+        <!-- Link de senha esquecida -->
+        <div class="forgot-password">
+            <a href="#">Esqueceu sua senha?</a>
         </div>
+    </div>
 
         <div class="img_content">
             <img src="/administrador/assets/Login_Adm.svg" alt="">

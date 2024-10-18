@@ -45,7 +45,7 @@
 
         <main id="main-container">
             <div id="corpo">
-                <h1>Gerenciar Concursos</h1>
+                <h1></h1>
 
                 <?php
                 // Conexão com o banco de dados
@@ -135,43 +135,40 @@
                 
                 ?>
 
-                <div class="text-center mb-3">
-                    <button class="btn btn-primary" onclick="openAddModal()">Adicionar Novo Concurso</button>
-                </div>
+<div class="table-container container-principal">
+    <h2>Gerenciar Concursos</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Novo Concurso</button>
 
-                <div class="table-container">
-                    <?php
-                $result = $conn->query("SELECT c.*, e.tipo_escolaridade, i.nome AS nome_instituicao, b.nome AS nome_banca FROM concurso c
-                JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
-                JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
-                JOIN banca b ON c.banca_cod_banca = b.cod_banca");
-                
-                if ($result && $result->num_rows > 0) {
-                    echo "<table class='table'>";
-                    echo "<tr><th>Nome do Concurso</th><th>Descrição</th><th>Qtd Questões</th><th>Data</th><th>Vagas</th><th>Escolaridade</th><th>Instituição</th><th>Banca</th><th>Ações</th></tr>";
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['data']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['nome_banca']) . "</td>";
-                        echo "<td class='actions'>";
-                        echo "<a class='edit-button' href='#' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . "); return false;' title='Editar'><i class='fas fa-pencil-alt'></i></a>";
-                        echo "<a class='delete-button' href='#' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\"); return false;' title='Excluir'><i class='fas fa-trash'></i></a>";
-                        echo "</td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
-                } else {
-                    echo "<p>Nenhum registro encontrado.</p>";
-                }
-                
-                    ?>
-                </div>
+    <?php
+    // Consultar todos os concursos
+    $result = $conn->query("SELECT * FROM concurso");
+
+    if ($result->num_rows > 0) {
+        echo "<table id='concursoTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Nome do Concurso</th><th>Descrição</th><th>Quantidade de Questões</th><th>Data</th><th>Vagas</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['data']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
+            echo "<td class='actions'>";
+            // Botão de editar e excluir com o novo layout
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
+
             </div>
         </main>
 
@@ -346,7 +343,7 @@
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/"; // path=/ para acessibilidade em todas as páginas
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
         console.log(`Cookie definido: ${name}=${value}`); // Log para verificar cookies
     }
 
@@ -363,8 +360,6 @@
 
     // Função para salvar cookies
     function saveCookies() {
-        if (!validateForm()) return;
-
         setCookie("cod_concurso", document.getElementById("cod_concurso").value, 7);
         setCookie("nome", document.getElementById("nome_modal").value, 7);
         setCookie("descricao", document.getElementById("descricao_modal").value, 7);
@@ -471,6 +466,18 @@
     function closeAddModal() {
         document.getElementById('add-modal').style.display = 'none';
     }
+
+    // Salvar automaticamente os dados quando a página for recarregada ou fechada
+    window.addEventListener('beforeunload', function (event) {
+        saveCookies();
+    });
+
+    // Salvar os dados sempre que houver mudança nos campos
+    document.querySelectorAll('#add-modal input, #add-modal select').forEach(function (element) {
+        element.addEventListener('input', function () {
+            saveCookies();
+        });
+    });
 </script>
 
 

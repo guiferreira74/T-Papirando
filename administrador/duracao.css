@@ -130,55 +130,77 @@ body {
     background-color: #00b300;
 }
 
-.table-container {
-    margin-top: 30px;
-}
-
-table {
+/* Full width table */
+.tabela-registros {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-a.edit-button, a.delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-a.edit-button {
+.tabela-registros th {
     background-color: #2118CD;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    white-space: nowrap;
 }
 
-a.edit-button:hover {
-    background-color: #0036A6; /* Cor azul mais escura para o botão Editar */
+.tabela-registros td {
+    padding: 10px;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: middle;
 }
 
-a.delete-button {
-    background-color: #f44336;
+/* Alinha as ações (ícones) em uma linha */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Ajusta o espaço entre os ícones */
 }
 
-a.delete-button:hover {
-    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Excluir */
+/* Estilos dos botões de editar e excluir */
+.btn-editar, .btn-excluir {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.btn-editar {
+    background-color: #2118CD;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-editar i, .btn-excluir i {
+    font-size: 16px;
+}
+
+/* Botão de adicionar */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
 .grid-duplo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -265,21 +287,6 @@ a.delete-button:hover {
     color: red;
 }
 
-/* Estilos para a tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
 
 .actions {
     display: flex;

@@ -134,60 +134,125 @@ body {
     background-color: #00b300;
 }
 
+.title-container {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Alinha o botão e o título no centro verticalmente */
+    flex-direction: column; /* Faz com que o botão fique abaixo do título */
+    margin-bottom: 20px; /* Espaçamento entre o título/botão e a tabela */
+}
+
+.title-container h2 {
+    margin-bottom: 10px; /* Espaço entre o título e o botão */
+    text-align: center;
+}
+
 .table-container {
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column; /* Faz com que os itens sejam dispostos em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
 }
 
-table {
-    width: 120%;
-    max-width: 1200px;
-    border-collapse: collapse;
-    margin: 0 auto;
+.table-container h2 {
+    margin-bottom: 10px; /* Espaço entre o título e o botão */
+    text-align: center;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-a.edit-button, a.delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    text-decoration: none;
+.btn-adicionar {
+    background-color: #2118CD;
     color: white;
-    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Espaço entre o botão e a tabela */
 }
 
-a.edit-button {
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+.tabela-registros {
+    width: auto; /* Mantém a largura da tabela de acordo com o conteúdo */
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+
+.tabela-registros th {
     background-color: #2118CD;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    white-space: nowrap;
 }
 
-a.edit-button:hover {
+.tabela-registros td {
+    padding: 10px;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent text or icons from wrapping */
+}
+
+
+.actions {
+    display: flex;
+    justify-content: center; /* Center the icons horizontally */
+    align-items: center; /* Align them vertically */
+    gap: 10px; /* Space between the icons */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.btn-editar, .btn-excluir {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Make sure icons are the same size */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Set a fixed width if necessary */
+    height: 40px; /* Set a fixed height if necessary */
+}
+
+
+.btn-editar {
     background-color: #2118CD;
+    color: white;
 }
 
-a.delete-button {
-    background-color: #f44336; 
+.btn-excluir {
+    background-color: #dc3545;
+    color: white;
 }
 
-a.delete-button:hover {
-    background-color: #d32f2f;
+.btn-editar i, .btn-excluir i {
+    font-size: 16px;
 }
 
+/* Botão de adicionar */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
 .grid-duplo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -267,25 +332,6 @@ a.delete-button:hover {
 }
 .error-message {
     color: red;
-}
-/* Estilos para a tabela */
-table {
-    width: 200%; /* Ajusta a largura da tabela se necessário */
-    border-collapse: collapse;
-    margin: 0 auto; /* Centraliza a tabela horizontalmente */
-    transform: translateX(-100px); /* Move a tabela 20px para a esquerda */
-}
-
-
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
 }
 
 .actions {

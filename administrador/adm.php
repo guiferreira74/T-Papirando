@@ -24,6 +24,42 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+     <style>
+        /* Estilos para o dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
 <header>
         <div class="interface">
             <!-- Botão para abrir a barra lateral -->
@@ -45,11 +81,16 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             <div class="informacoes">
             <a href="sobre_adm.php">Sobre</a>
             <a href="ajuda_adm.php">Ajuda</a>
-            <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
+                <!-- Dropdown para Olá, Administrador -->
+            <div class="dropdown">
+                <span class="mensagem-boas-vindas dropbtn">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
+                <div class="dropdown-content">
+                    <a href="editar_dados.php">Editar Dados</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
+                </div>
             </div>
-
-        </div><!-- interface -->
+        </div>
+    </div><!-- interface -->
     </header>  
      
     

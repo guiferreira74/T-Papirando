@@ -191,6 +191,8 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                     </div>
                 </div>
 
+                
+
                 <div class="faq-wrapper">
                     <input type="checkbox" class="faq-trigger" id="faq-trigger-3">
                     <label class="faq-title" for="faq-trigger-3">Como funcionam os simulados?</label>
@@ -198,8 +200,19 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                         <p>Os simulados são compostos por questões de provas anteriores e atualizadas. Você pode escolher a área de interesse, o nível de dificuldade e a quantidade de questões. Após a conclusão, você receberá um relatório de desempenho.</p>
                     </div>
                 </div>
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-4">
+                    <label class="faq-title" for="faq-trigger-4">Posso fazer os simulados quantas vezes quiser?</label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Sim, você pode refazer os simulados quantas vezes quiser. A cada nova tentativa, as questões são embaralhadas, permitindo que você tenha uma experiência diferente e continue aprimorando seus conhecimentos.</p>
             </div>
         </div>
+        <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-5">
+                    <label class="faq-title" for="faq-trigger-5">Como o site pode me ajudar a me preparar melhor para o concurso?</label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Os simulados ajudam a identificar suas dificuldades e lacunas no conhecimento, oferecendo uma forma prática de estudar. Além disso, ao realizar os simulados com regularidade, você se familiariza com o formato das provas, desenvolve agilidade e aumenta sua confiança.</p>
+            </div>
     </main>
     <!-- Modal de Confirmação -->
     <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">

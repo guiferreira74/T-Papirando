@@ -195,7 +195,7 @@
 </div>
 
 <script>
-    // Referência aos modais
+    // Referência aos modais e botões
     var confirmModal = document.getElementById("confirm-modal");
     var addModal = document.getElementById("add-modal");
     var modalErro = document.getElementById("modal-erro");
@@ -204,12 +204,14 @@
 
     // Função para abrir o modal de adicionar
     function openAddModal() {
-        document.getElementById('tipo_dificuldade_modal').value = '';
+        clearForm(); // Limpa o formulário ao abrir
+        loadCookies(); // Carrega os cookies ao abrir
         addModal.style.display = "block";
     }
 
     // Função para fechar o modal de adicionar
     function closeAddModal() {
+        saveCookies(); // Salva os cookies ao fechar
         addModal.style.display = "none";
     }
 
@@ -240,6 +242,26 @@
     // Limpar formulário
     function clearForm() {
         document.getElementById("tipo_dificuldade_modal").value = '';
+    }
+
+    // Função para salvar os valores dos inputs em cookies
+    function saveCookies() {
+        var tipo_dificuldade = document.getElementById("tipo_dificuldade_modal").value;
+        document.cookie = "tipo_dificuldade=" + encodeURIComponent(tipo_dificuldade) + "; path=/";
+    }
+
+    // Função para carregar os valores dos cookies nos inputs
+    function loadCookies() {
+        var cookies = document.cookie.split(';');
+        cookies.forEach(function(cookie) {
+            var parts = cookie.split('=');
+            var name = parts[0].trim();
+            var value = parts[1] ? decodeURIComponent(parts[1].trim()) : '';
+
+            if (name === 'tipo_dificuldade') {
+                document.getElementById("tipo_dificuldade_modal").value = value;
+            }
+        });
     }
 
     // Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
@@ -280,7 +302,13 @@
             confirmModal.style.display = "none";
         }
     }
+
+    // Função para limpar o formulário ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCookies(); // Carregar cookies ao carregar a página
+    });
 </script>
+
 
 <!-- Modal de Confirmação de Logout -->
 <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">

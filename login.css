@@ -507,3 +507,10 @@ button:hover {
     margin-bottom: 20px; /* Espaçamento entre a mensagem de sucesso e o botão */
     font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
 }
+#gear{
+    color: white;
+    font-size: 25px;
+    align-items: center;
+    margin-left: 40px;
+    cursor: pointer;
+}

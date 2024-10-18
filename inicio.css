@@ -134,7 +134,7 @@ section.topo-do-site.flex {
     font-size: 50px;
     line-height: 60px;
     margin-bottom: 10px; /* Adiciona um espaçamento abaixo do título */
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .topo-do-site .txt-topo-site p {
@@ -169,6 +169,7 @@ section.topo-do-site.flex {
 
 #img {
     width: 550px;
+    margin-top: 80px;
 }
 
 @keyframes flutuar{

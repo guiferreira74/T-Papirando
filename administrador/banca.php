@@ -51,7 +51,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     <div id="sidebar">
         <ul>
             <li class="item-menu">
-                <a href="#">
+                <a href="adm.php">
                     <span class="icon"><i class="fas fa-home"></i></span>
                     <span class="txt">Início</span>
                 </a>
@@ -65,7 +65,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             </li>
 
             <li class="item-menu">
-                <a href="#">
+                <a href="parametros.php">
                     <span class="icon"><i class="fas fa-trophy"></i></span>
                     <span class="txt">Parametros</span>
                 </a>
