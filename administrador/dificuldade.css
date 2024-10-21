@@ -154,23 +154,23 @@ body {
     color: rgba(0, 0, 0, 0.6);
 }
 
-/* Adjust the table container for wider display */
+
 .container-principal {
-    margin-left: 0; /* Remove the margin left since we want it centered */
+    margin-left: 0; 
     padding: 20px;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    margin-top: 10px; /* Smaller space under header */
-    width: 100%; /* Full width for the table */
-    max-width: 1200px; /* Optional: Cap the width if needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    width: 100%; 
+    max-width: 1200px; 
     border-radius: 20px;
 }
 
-/* Full width table */
+
 .tabela-registros {
     width: 100%;
     border-collapse: collapse;
-    table-layout: auto; /* Auto layout for flexible column widths */
+    table-layout: auto;
 }
 
 .tabela-registros th {
@@ -188,11 +188,11 @@ body {
     vertical-align: middle;
 }
 
-/* Align actions (icons) in a row */
+
 .actions {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Adjusts the space between the icons */
+    gap: 10px; 
 }
 .btn-adicionar {
     background-color: #2118CD;
@@ -235,9 +235,9 @@ body {
     font-size: 16px;
 }
 
-/* Modal styles (unchanged from your initial setup) */
+
 .modal {
-    display: none; /* Oculta o modal por padrão */
+    display: none; 
     position: fixed;
     z-index: 1;
     left: 0;
@@ -298,20 +298,20 @@ body {
 }
 
 .clear-button {
-    background-color: #f44336; /* Cor vermelha para o botão Limpar */
+    background-color: #f44336; 
 }
 
 .save-button:hover {
-    background-color: #0036A6; /* Cor azul mais escura para o botão Salvar */
+    background-color: #0036A6;
 }
 
 .clear-button:hover {
-    background-color: #d32f2f; /* Cor vermelha mais escura para o botão Limpar */
+    background-color: #d32f2f; 
 }
 
-/* Modal */
+
 .modal {
-    display: none; /* Oculta o modal por padrão */
+    display: none; 
     position: fixed;
     z-index: 1;
     left: 0;
@@ -320,10 +320,10 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
+    background-color: rgba(0,0,0,0.4); 
 }
 
-/* Conteúdo do modal */
+
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -333,7 +333,6 @@ body {
     max-width: 500px;
 }
 
-/* Botão de fechar */
 .close-btn {
     color: #aaa;
     float: right;
@@ -362,7 +361,7 @@ body {
 }
 
 .edit-button:hover, .delete-button:hover {
-    color: #007BFF; /* Cor ao passar o mouse */
+    color: #007BFF; 
 }
 #sidebar {
     display: flex;

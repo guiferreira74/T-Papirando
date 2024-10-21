@@ -1,14 +1,16 @@
+
 <?php
 session_start();
 
-// Verifique se o administrador está logado e tem acesso apropriado
-if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 3) {
-    header("Location: login.php");
+// Verificar se o administrador está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login_adm.php");
     exit();
 }
 
-// Recupera o nome do administrador da sessão
+// Recuperar o nome do administrador da sessão
 $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
+
 ?>
 
 <!DOCTYPE html>
@@ -21,144 +23,104 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     <!-- Link para Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="adm.css">
 </head>
 <body>
-<header>
-        <div class="interface">
-            <!-- Botão para abrir a barra lateral -->
-            <div class="controle-navegacao">
-                
-                <div class="button">
-                    <button id="toggle-sidebar" class="toggle-sidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-               
 
-                <div class="logo">
-                    <img src="assets/logo_papirando_final.svg" alt="Logo">     
-                </div><!-- logo -->
-            </div><!-- controle-navegacao -->
+<style>
+        .trending-up {
+            color: green;
+        }
+        .trending-neutral {
+            color: gray;
+        }
 
-            <div class="informacoes">
-                <a href="sobre_adm.php">Sobre</a>
-                <a href="ajuda_adm.php">Ajuda</a>
-                <span class="mensagem-boas-vindas">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
-              
-            </div>
-        </div><!-- interface -->
-    </header>  
-     
-    
-    <nav>
-        <div id="sidebar">
-            <ul>
-                <li class="item-menu ">
-                    <a href="adm.php">
-                        <span class="icon"><i class="fas fa-home"></i></span> <!-- Ícone de casa -->
-                        <span class="txt">Início</span>
-                    </a>
-                </li>
+        /* Estilo para o dropdown do perfil */
+        .profile-link {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            list-style-type: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-link.show {
+            display: block;
+        }
+        .profile-link li {
+            padding: 5px 0;
+        }
+        .profile-link li a {
+            text-decoration: none;
+            color: black;
+            white-space: nowrap; /* Evita que o texto quebre a linha */
+            display: flex;
+            align-items: center;
+        }
+        .profile-link li a i {
+            margin-right: 8px; /* Espaço entre o ícone e o texto */
+        }
+        .profile {
+            position: relative;
+            display: inline-block;
+        }
+        .adm-link {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+	
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+	    <a href="adm.php" class="brand"><i class='bx bxs-smile icon'></i> TÔPAPIRANDO</a>
+	    <ul class="side-menu">
+	        <li><a href="adm.php" class="active"><i class='bx bxs-dashboard icon'></i> Início</a></li>
+	        <li><a href="ajuda_adm.php"><i class='bx bx-help-circle icon'></i> Ajuda</a></li>
+	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
+	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
+	        <li class="dropdown">
+	            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+	            <ul class="side-dropdown">
+                <li><a href="concurso.php">Concurso</a></li>
+	                <li><a href="prova.php">Prova</a></li>
+	                <li><a href="disciplina.php">Disciplina</a></li>
+	                <li><a href="questao.php">Questão</a></li>
+	            </ul>
+	        </li>
+	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
+	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
+	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
+	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+	    </ul>
+	</section>
 
-                <li class="item-menu">
-                    <a href="ajuda_adm.php">
-                        <span class="icon"><i class="fas fa-question-circle"></i></span> <!-- Ícone de livro -->
-                        <span class="txt">Ajuda</span>
-                    </a>
-                </li>
+	<section id="content">
+	<nav>
+    <i class='bx bx-menu toggle-sidebar' id="hg"></i> <!-- Ícone do menu primeiro -->
+    <a href="adm.php" class="brand">
+        <img src="assets/logo_papirando_final.svg" alt="Logo" class="logo"> <!-- Logo após o menu -->
+    </a>
+    <form action="#"></form>
+    <a href="sobre_adm.php" class="sobre">Sobre</a>
+    <a href="#" class="nav-link">
+        <i class='bx bxs-bell icon'></i>
+    </a>
 
-                <li class="item-menu">
-                    <a href="parametros.php">
-                        <span class="icon"><i class="fas fa-trophy"></i></span> <!-- Ícone de troféu -->
-                        <span class="txt">Parametros</span>
-                    </a>
-                </li>
-
-                <hr>
-
-                <h1 id="gr">Gerenciamento</h1>
-
-                <li class="item-menu">
-                    <a href="banca.php">
-                        <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
-                        <span class="txt">Bancas</span>
-                    </a>
-                </li>
-
-
-                <li class="item-menu">
-                    <a href="concurso.php">
-                        <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
-                        <span class="txt">Concurso</span> 
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="questao.php">
-                        <span class="icon"><i class="fas fa-book"></i></span> <!-- Ícone de pergunta -->
-                        <span class="txt">Questões</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="dificuldade.php">
-                        <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
-                        <span class="txt">Dificuldade</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="disciplina.php">
-                        <span class="icon"><i class="fas fa-book-reader"></i></span> <!-- Ícone de leitura -->
-                        <span class="txt">Disciplina</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="duracao.php">
-                        <span class="icon"><i class="fas fa-clock"></i></span> <!-- Ícone de relógio -->
-                        <span class="txt">Duração</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="instituicao.php">
-                        <span class="icon"><i class="fas fa-school"></i></span> <!-- Ícone de instituição -->
-                        <span class="txt">Instituições</span>
-                    </a>
-                </li>
+        <span class="divider"></span>
+        <div class="profile">
+            <!-- Usando o ID profile-toggle -->
+            <a href="#" class="adm-link" id="profile-toggle">Olá, <?php echo htmlspecialchars($admin_nome); ?> <i class='bx bx-chevron-down'></i></a>
+            <ul class="profile-link" id="profile-dropdown">
+                <li><a href="editar_dados.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
+                <li><a href="adicionar_adm.php"><i class='bx bxs-cog'></i> Adicionar Adm</a></li>
+                <li><a href="sair.php"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
             </ul>
         </div>
     </nav>
-        <!-- MANTENDO A SIDE BAR ATIVA -->
-    <script>
-        var menuitem = document.querySelectorAll('.item-menu'); // Corrigido para selecionar pela classe
-    
-        function selectlink() {
-            menuitem.forEach((item) =>
-                item.classList.remove('ativo') // Remove a classe 'ativo' de todos os itens
-            );
-            this.classList.add('ativo'); // Adiciona a classe 'ativo' ao item clicado
-        }
-    
-        menuitem.forEach((item) =>
-            item.addEventListener('click', selectlink) // Adiciona o evento de clique para cada item do menu
-        );
-    </script>
-
-        <!-- SCRIPT PARA ABRIR E FECHAR A SIDE BAR -->
-    <script>
-        const toggleSidebarButton = document.getElementById('toggle-sidebar');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content'); // Caso tenha um container principal
-    
-        toggleSidebarButton.addEventListener('click', () => {
-            sidebar.classList.toggle('closed'); // Alterna a classe 'closed' na sidebar
-            mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
-        });
-    </script>
-
+</section>
 
    <!-- Conteúdo Principal -->
    <main>
@@ -188,7 +150,144 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
         </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // SIDEBAR DROPDOWN
+        const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
+        const sidebar = document.getElementById('sidebar');
 
+        allDropdown.forEach(item=> {
+            const a = item.parentElement.querySelector('a:first-child');
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                if(!this.classList.contains('active')) {
+                    allDropdown.forEach(i=> {
+                        const aLink = i.parentElement.querySelector('a:first-child');
+                        aLink.classList.remove('active');
+                        i.classList.remove('show');
+                    });
+                }
+
+                this.classList.toggle('active');
+                item.classList.toggle('show');
+            });
+        });
+
+        // SIDEBAR COLLAPSE
+        const toggleSidebar = document.querySelector('nav .toggle-sidebar');
+        const allSideDivider = document.querySelectorAll('#sidebar .divider');
+
+        if(sidebar.classList.contains('hide')) {
+            allSideDivider.forEach(item=> {
+                item.textContent = '-';
+            });
+            allDropdown.forEach(item=> {
+                const a = item.parentElement.querySelector('a:first-child');
+                a.classList.remove('active');
+                item.classList.remove('show');
+            });
+        } else {
+            allSideDivider.forEach(item=> {
+                item.textContent = item.dataset.text;
+            });
+        }
+
+        toggleSidebar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            if(sidebar.classList.contains('hide')) {
+                allSideDivider.forEach(item=> {
+                    item.textContent = '-';
+                });
+
+                allDropdown.forEach(item=> {
+                    const a = item.parentElement.querySelector('a:first-child');
+                    a.classList.remove('active');
+                    item.classList.remove('show');
+                });
+            } else {
+                allSideDivider.forEach(item=> {
+                    item.textContent = item.dataset.text;
+                });
+            }
+        });
+
+        sidebar.addEventListener('mouseleave', function () {
+            if(this.classList.contains('hide')) {
+                allDropdown.forEach(item=> {
+                    const a = item.parentElement.querySelector('a:first-child');
+                    a.classList.remove('active');
+                    item.classList.remove('show');
+                });
+                allSideDivider.forEach(item=> {
+                    item.textContent = '-';
+                });
+            }
+        });
+
+        sidebar.addEventListener('mouseenter', function () {
+            if(this.classList.contains('hide')) {
+                allDropdown.forEach(item=> {
+                    const a = item.parentElement.querySelector('a:first-child');
+                    a.classList.remove('active');
+                    item.classList.remove('show');
+                });
+                allSideDivider.forEach(item=> {
+                    item.textContent = item.dataset.text;
+                });
+            }
+        });
+
+        // PROFILE DROPDOWN
+        const profileToggle = document.getElementById('profile-toggle');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        profileToggle.addEventListener('click', function (e) {
+            e.preventDefault();  // Evita o comportamento padrão do link
+            profileDropdown.classList.toggle('show');  // Alterna o dropdown
+        });
+
+        // Fechar dropdown ao clicar fora
+        window.addEventListener('click', function (e) {
+            if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('show');  // Fecha o dropdown ao clicar fora
+            }
+        });
+
+        // APEXCHARTS EXEMPLO
+        var options = {
+            series: [{
+                name: 'series1',
+                data: [31, 40, 28, 51, 42, 109, 100]
+            }, {
+                name: 'series2',
+                data: [11, 32, 45, 32, 34, 52, 41]
+            }],
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
    
 </body>
 </html>

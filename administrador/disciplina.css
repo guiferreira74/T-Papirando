@@ -28,47 +28,7 @@ body {
 }
 
 
-.search-bar {
-    flex: 2;
-    text-align: center;
-}
 
-.search-bar input {
-    width: 300px;
-    height: 15px;
-    padding: 8px;
-    border-radius: 9.75px;
-    border: 1px solid #ccc;
-}
-
-.links {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-right: 250px;
-}
-
-.links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding-left: 49px;
-}
-
-.menu {
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.menu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
 
 #main-container {
     display: flex;
@@ -100,59 +60,49 @@ body {
     margin-right: auto;
 }
 
-#nome-sobrenome {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    padding-top: 30px;
-    border: none;
-}
 
-#email-senha {
+/* Centraliza a área do título, botão e tabela */
+.table-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    width: 375px;
-    padding-top: 30px;
-    border: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px; /* Define o afastamento da header */
+    width: 100%;
+    height: auto; /* Permite que a altura da tabela se ajuste ao conteúdo */
+    margin-left: 100px;
 }
 
-#button {
-    background-color: #00DB09;
-    width: 300px;
+.table-container h2 {
+    margin-bottom: 20px; /* Espaço entre o título e o botão */
+    text-align: center; /* Centraliza o título */
+}
+
+/* Botão de adicionar centralizado */
+.btn-adicionar {
+    background-color: #2118CD;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-top: 25px;
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px; /* Espaçamento entre o botão e a tabela */
+    text-align: center;
 }
 
-#button:hover {
-    background-color: #00b300;
+.btn-adicionar:hover {
+    background-color: #1a139d;
 }
 
-/* Ajuste no container principal para aumentar a largura e manter centralizado */
-#container-principal {
-    margin: 0 auto; /* Centraliza o container horizontalmente */
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    width: 80%; /* Aumenta a largura para 80% da tela */
-    max-width: 1400px; /* Limita a largura máxima para 1400px */
-    border-radius: 20px;
-}
-
-/* Full width table */
 .tabela-registros {
-    width: 100%;
+    width: 100%; /* Mantém a largura da tabela de acordo com o conteúdo */
     border-collapse: collapse;
     table-layout: auto;
+    margin-left: 10px;
 }
-
+/* Estilos da tabela */
 .tabela-registros th {
     background-color: #2118CD;
     color: white;
@@ -166,13 +116,15 @@ body {
     background-color: #fafafa;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap; /* Prevent text or icons from wrapping */
 }
 
-/* Alinha as ações (ícones) em uma linha */
+
+/* Estilos das ações */
 .actions {
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Ajusta o espaço entre os ícones */
+    justify-content: center; /* Centraliza os ícones */
+    gap: 10px; /* Espaço entre os ícones */
 }
 
 /* Estilos dos botões de editar e excluir */
@@ -181,10 +133,12 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
 }
 
 .btn-editar {
@@ -201,22 +155,12 @@ body {
     font-size: 16px;
 }
 
-/* Botão de adicionar */
-.btn-adicionar {
-    background-color: #2118CD;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+/* Estilo para garantir que o conteúdo não gere rolagem */
+html, body {
+    height: 100%;
+    overflow-x: hidden; /* Remove rolagem horizontal */
 }
 
-.btn-adicionar:hover {
-    background-color: #1a139d;
-}
 
 /* Estilos do modal */
 .modal {
@@ -283,16 +227,7 @@ body {
 #main-content.sidebar-closed {
     margin-left: 60px; /* Reduz a margem quando a sidebar estiver fechada */
 }
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-}
 
-.esquerda { grid-area: 1 / 1 / 2 / 2; }
-.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .button-container {
     display: flex;
@@ -369,22 +304,6 @@ body {
     color: red;
 }
 
-/* Estilos para a tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
 .actions {
     display: flex;
     justify-content: flex-end; /* Alinha os ícones no lado direito */
@@ -403,46 +322,6 @@ th {
     display: flex;
 }
 
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
-    height: 100vh;
-    width: 250px;
-}
-
-.sidebar-header h4 {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: none;
-}
-
-.components {
-    padding-left: 0;
-}
-
-.components hr {
-    margin: 10px 0;
-    border-color: black;
-}
-
-#sidebar .components a {
-    color: #343a40;
-    text-decoration: none;
-    padding: 8px 20px;
-    display: block;
-    font-weight: 500;
-    text-align: center;
-}
-
-#sidebar .components a:hover, 
-#sidebar .components a.active {
-    background-color: #2118CD;
-    color: #fff;
-    border-radius: 5px;
-}
-
 /* Conteúdo principal */
 .main-content {
     flex-grow: 1;
@@ -454,51 +333,6 @@ th {
     height: 100%;
 }
 
-.encima {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    padding: 20px;
-    margin-top: 50px;
-}
-
-.enbaixo {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    margin-top: 100px;
-}
-
-.enbaixo img {
-    max-width: 45%;
-    height: auto;
-    width: 400px;
-}
-
-#pesquisa {
-    margin-top: 50px;
-    width: 900px;
-    height: 40px;
-    border-radius: 30px;
-    padding: 10px;
-}
-
-#titulo {
-    font-size: 40px;
-}
-
-p {
-    display: flex;
-    justify-content: center;
-}
-
-hr {
-    color: black;
-}
 /* Modal */
 .modal {
     display: none; /* Ocultado por padrão */

@@ -16,55 +16,6 @@ body {
     justify-content: space-around;
 }
 
-.logo-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.search-bar {
-    flex: 2;
-    text-align: center;
-}
-
-.search-bar input {
-    width: 300px;
-    height: 15px;
-    padding: 8px;
-    border-radius: 9.75px;
-    border: 1px solid #ccc;
-}
-
-.links {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-right: 250px;
-}
-
-.links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding-left: 49px;
-}
-
-.menu {
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.menu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
 
 #main-container {
     display: flex;
@@ -96,45 +47,48 @@ body {
     margin-right: auto;
 }
 
-#nome-sobrenome {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    padding-top: 30px;
-    border: none;
-}
 
-#email-senha {
+/* Container principal para centralizar e ajustar a posição */
+.container-principal {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    width: 375px;
-    padding-top: 30px;
-    border: none;
+    align-items: center; /* Centraliza os elementos horizontalmente */
+    justify-content: center;
+    margin-top: 80px; /* Espaçamento para descer o conteúdo da header */
+    width: 100%;
+    margin-left: 100px;
 }
 
-#button {
-    background-color: #00DB09;
-    width: 300px;
+/* Título do gerenciador */
+h2 {
+    text-align: center;
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+}
+
+/* Botão de adicionar centralizado */
+.btn-adicionar {
+    background-color: #2118CD;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-top: 25px;
+    padding: 10px 24px; /* Tamanho maior do botão */
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px; /* Espaçamento abaixo do botão */
+    text-align: center;
 }
 
-#button:hover {
-    background-color: #00b300;
+.btn-adicionar:hover {
+    background-color: #1a139d;
 }
 
-/* Full width table */
+/* Tabela */
 .tabela-registros {
-    width: 100%;
+    width: 100%; /* Define a largura da tabela como 80% da tela */
     border-collapse: collapse;
     table-layout: auto;
+    margin-bottom: 50px; /* Espaço abaixo da tabela */
 }
 
 .tabela-registros th {
@@ -152,11 +106,11 @@ body {
     vertical-align: middle;
 }
 
-/* Alinha as ações (ícones) em uma linha */
+/* Centralizar os ícones de ação */
 .actions {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Ajusta o espaço entre os ícones */
+    gap: 10px; /* Espaço entre os ícones */
 }
 
 /* Estilos dos botões de editar e excluir */
@@ -184,33 +138,6 @@ body {
 .btn-editar i, .btn-excluir i {
     font-size: 16px;
 }
-
-/* Botão de adicionar */
-.btn-adicionar {
-    background-color: #2118CD;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.btn-adicionar:hover {
-    background-color: #1a139d;
-}
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-}
-
-.esquerda { grid-area: 1 / 1 / 2 / 2; }
-.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .button-container {
     display: flex;
@@ -307,46 +234,6 @@ body {
     display: flex;
 }
 
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
-    height: 100vh;
-    width: 250px;
-}
-
-.sidebar-header h4 {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: none;
-}
-
-.components {
-    padding-left: 0;
-}
-
-.components hr {
-    margin: 10px 0;
-    border-color: black;
-}
-
-#sidebar .components a {
-    color: #343a40;
-    text-decoration: none;
-    padding: 8px 20px;
-    display: block;
-    font-weight: 500;
-    text-align: center;
-}
-
-#sidebar .components a:hover, 
-#sidebar .components a.active {
-    background-color: #2118CD;
-    color: #fff;
-    border-radius: 5px;
-}
-
 /* Conteúdo principal */
 .main-content {
     flex-grow: 1;
@@ -358,55 +245,6 @@ body {
     height: 100%;
 }
 
-.encima {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    padding: 20px;
-    margin-top: 50px;
-}
-
-.enbaixo {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    margin-top: 100px;
-}
-
-.enbaixo img {
-    max-width: 45%;
-    height: auto;
-    width: 400px;
-}
-
-#pesquisa {
-    margin-top: 50px;
-    width: 900px;
-    height: 40px;
-    border-radius: 30px;
-    padding: 10px;
-}
-
-#titulo {
-    font-size: 40px;
-}
-
-p {
-    display: flex;
-    justify-content: center;
-}
-
-hr {
-    color: black;
-}
-
-.logo{
-    width: 250px;
-}
 /* Modal */
 .modal {
     display: none; /* Ocultado por padrão */

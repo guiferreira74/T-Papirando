@@ -134,12 +134,58 @@ body {
     background-color: #00b300;
 }
 
-/* Full width table */
-.tabela-registros {
+.title-container {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Alinha o botão e o título no centro verticalmente */
+    flex-direction: column; /* Faz com que o botão fique abaixo do título */
+    margin-bottom: 20px; /* Espaçamento entre o título/botão e a tabela */
+}
+
+.title-container h2 {
+    margin-bottom: 10px; /* Espaço entre o título e o botão */
+    text-align: center;
+}
+
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Espaço entre o botão e a tabela */
+    margin-left: 200px;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+.table-container {
+    display: flex;
+    flex-direction: column; /* Faz com que os itens sejam dispostos em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center;
     width: 100%;
+    margin-top: 80px; /* Espaço acima para dar distância do header */
+    padding-left: 20px;
+}
+
+.table-container h2 {
+    margin-bottom: 10px; /* Espaço entre o título e o botão */
+    text-align: center;
+}
+
+
+.tabela-registros {
+    width: auto; /* Mantém a largura da tabela de acordo com o conteúdo */
     border-collapse: collapse;
     table-layout: auto;
+    margin-left: 250px;
 }
+
 
 .tabela-registros th {
     background-color: #2118CD;
@@ -154,26 +200,31 @@ body {
     background-color: #fafafa;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap; /* Prevent text or icons from wrapping */
 }
 
-/* Alinha as ações (ícones) em uma linha */
+
 .actions {
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Ajusta o espaço entre os ícones */
+    justify-content: center; /* Center the icons horizontally */
+    align-items: center; /* Align them vertically */
+    gap: 10px; /* Space between the icons */
+    white-space: nowrap; /* Prevent wrapping */
 }
 
-/* Estilos dos botões de editar e excluir */
 .btn-editar, .btn-excluir {
     padding: 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px; /* Make sure icons are the same size */
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 40px; /* Set a fixed width if necessary */
+    height: 40px; /* Set a fixed height if necessary */
 }
+
 
 .btn-editar {
     background-color: #2118CD;
@@ -188,34 +239,6 @@ body {
 .btn-editar i, .btn-excluir i {
     font-size: 16px;
 }
-
-/* Botão de adicionar */
-.btn-adicionar {
-    background-color: #2118CD;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.btn-adicionar:hover {
-    background-color: #1a139d;
-}
-
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-}
-
-.esquerda { grid-area: 1 / 1 / 2 / 2; }
-.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .button-container {
     display: flex;
@@ -304,15 +327,6 @@ body {
 /* Sidebar e layout do conteúdo principal */
 .d-flex {
     display: flex;
-}
-
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
-    height: 100vh;
-    width: 250px;
 }
 
 .sidebar-header h4 {

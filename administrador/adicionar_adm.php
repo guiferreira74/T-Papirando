@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Verificar se o administrador está logado
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login_adm.php");
@@ -8,78 +9,70 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Recuperar o nome do administrador da sessão
 $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
-// Conexão com o banco de dados
-$conn = new mysqli('localhost', 'root', 'admin', 'Topapirando');
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-// Variáveis para armazenar mensagens de erro ou sucesso
+// Variáveis de mensagem de erro e sucesso
 $error_message = '';
 $success_message = '';
 
-// Inicializando variáveis de formulário para manter os valores inseridos
-$nome = '';
-$sobrenome = '';
-$current_password = '';
-$new_password = '';
-$confirm_password = '';
+// Inicializar as variáveis de campos para manter os dados preenchidos
+$nome = $sobrenome = $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Receber dados do formulário
-    $nome = $_POST['nome'];
-    $sobrenome = $_POST['sobrenome'];
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    // Conectar ao banco de dados
+    $conn = new mysqli('localhost', 'root', 'admin', 'Topapirando');
+    if ($conn->connect_error) {
+        die("Falha na conexão: " . $conn->connect_error);
+    }
 
-    // Verifica o administrador logado pela sessão (supondo que o ID seja armazenado na sessão)
-    $cod_administrador = $_SESSION['cod_administrador'];
+    // Receber os dados do formulário e evitar a remoção em caso de erro
+    $nome = $conn->real_escape_string($_POST['nome']);
+    $sobrenome = $conn->real_escape_string($_POST['sobrenome']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-    // Busca a senha atual do administrador no banco de dados
-    $sql = "SELECT senha FROM administrador WHERE cod_administrador = $cod_administrador";
-    $result = $conn->query($sql);
+    // Verificar se as senhas coincidem
+    if ($_POST['senha'] !== $_POST['confirmar_senha']) {
+        $error_message = "As senhas não coincidem. Por favor, tente novamente.";
+    } else {
+        // Verificar se o e-mail já existe
+        $check_email_sql = "SELECT email FROM administrador WHERE email = ?";
+        $stmt = $conn->prepare($check_email_sql);
+        
+        if ($stmt) {
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $stmt->store_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $senha_atual_hash = $row['senha'];
-
-        // Verificar se a senha atual está correta
-        if (password_verify($current_password, $senha_atual_hash)) {
-            // Verificar se a nova senha é a mesma que a senha atual
-            if (password_verify($new_password, $senha_atual_hash)) {
-                $error_message = "A nova senha não pode ser igual à senha atual.";
+            if ($stmt->num_rows > 0) {
+                $error_message = "Este e-mail já está cadastrado.";
             } else {
-                // Verificar se as novas senhas coincidem
-                if ($new_password === $confirm_password) {
-                    // Atualizar nome, sobrenome e senha
-                    $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                // Inserir o novo administrador
+                $insert_sql = "INSERT INTO administrador (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
+                $stmt_insert = $conn->prepare($insert_sql);
+                
+                if ($stmt_insert) {
+                    $stmt_insert->bind_param('ssss', $nome, $sobrenome, $email, $senha);
 
-                    $update_sql = "
-                        UPDATE administrador 
-                        SET nome = ?, sobrenome = ?, senha = ?
-                        WHERE cod_administrador = ?
-                    ";
-
-                    $stmt = $conn->prepare($update_sql);
-                    $stmt->bind_param('sssi', $nome, $sobrenome, $new_password_hash, $cod_administrador);
-
-                    if ($stmt->execute()) {
-                        $success_message = "Senha atualizada com sucesso,<br>por favor registre-se novamente";
+                    if ($stmt_insert->execute()) {
+                        $success_message = "Administrador adicionado com sucesso!";
+                        // Limpar os campos após o sucesso
+                        $nome = $sobrenome = $email = '';
                     } else {
-                        $error_message = "Erro ao atualizar os dados. Por favor, tente novamente.";
+                        $error_message = "Erro ao adicionar administrador. Por favor, tente novamente.";
                     }
+
+                    $stmt_insert->close(); // Fechar o $stmt de inserção
                 } else {
-                    $error_message = "As novas senhas não são iguais.";
+                    $error_message = "Erro na preparação da inserção do administrador.";
                 }
             }
+            $stmt->close(); // Fechar o $stmt de verificação de e-mail
         } else {
-            $error_message = "A senha atual está incorreta.";
+            $error_message = "Erro na preparação da consulta de e-mail.";
         }
-    } else {
-        $error_message = "Administrador não encontrado.";
     }
+    
+    $conn->close(); // Fechar a conexão com o banco de dados
 }
 ?>
 
@@ -88,13 +81,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Dados de Login</title>
-    <link rel="stylesheet" href="editar_dados.css">
+    <title>Adicionar Administrador</title>
+    <link rel="stylesheet" href="adicionar_adm.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="adm.css">
 </head>
 <body>
 
+<!-- SIDEBAR -->
 <section id="sidebar">
     <a href="adm.php" class="brand"><i class='bx bxs-smile icon'></i> TÔPAPIRANDO</a>
     <ul class="side-menu">
@@ -141,45 +135,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 </section>
 
+<!-- Formulário de adição -->
 <div class="container-geral">
     <div class="formulario-container">
-        <h1>Editar Dados de Login</h1>
-
-        <!-- Formulário de edição de dados -->
-        <form action="editar_dados.php" method="POST">
+        <h1>Adicionar Novo Administrador</h1>
+        
+        <!-- Formulário de adição -->
+        <form action="adicionar_adm.php" method="POST">
             <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+                <input type="text" id="nome" name="nome" placeholder="Digite o nome" value="<?php echo htmlspecialchars($nome); ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
+                <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite o sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="current_password">Senha atual</label>
-                <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="new_password">Nova senha</label>
-                <input type="password" id="new_password" name="new_password" placeholder="Digite a nova senha" required>
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
             </div>
 
             <div class="form-group">
-                <label for="confirm_password">Confirme a nova senha</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirme a nova senha" required>
+                <label for="confirmar_senha">Confirmar Senha</label>
+                <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme a senha" required>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn-save">Salvar Alterações</button>
+                <button type="submit" class="btn-save">Adicionar Administrador</button>
             </div>
         </form>
-    </div>
-
-    <div class="imagem-container">
-        <img src="assets/editar.svg" alt="Editar Dados">
     </div>
 </div>
 
@@ -206,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <script>
-// Modal script
+// Script para exibir os modais
 document.addEventListener('DOMContentLoaded', function () {
     // Modal de sucesso
     const successModal = document.getElementById('successModal');
@@ -215,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (successModal) {
         successModal.style.display = 'block';
         okBtnSucesso.addEventListener('click', function () {
-            window.location.href = '../index.php';
+            successModal.style.display = 'none';
         });
     }
 
@@ -234,6 +225,18 @@ document.addEventListener('DOMContentLoaded', function () {
             errorModal.style.display = 'none';
         });
     }
+
+    // Validação de senha e confirmação
+    const form = document.querySelector('form');
+    const senha = document.getElementById('senha');
+    const confirmarSenha = document.getElementById('confirmar_senha');
+
+    form.addEventListener('submit', function (e) {
+        if (senha.value !== confirmarSenha.value) {
+            e.preventDefault(); // Evita o envio do formulário
+            alert('As senhas não coincidem. Por favor, verifique e tente novamente.');
+        }
+    });
 });
 </script>
 
@@ -375,6 +378,5 @@ document.addEventListener('DOMContentLoaded', function () {
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
     </script>
-
 </body>
 </html>

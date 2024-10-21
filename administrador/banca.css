@@ -8,11 +8,10 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background: #E6E6E6;
+    background: #F0F0F0;;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom left, #e0f7ff, #ffffff);
 }
 
 .interface {
@@ -62,234 +61,8 @@ header nav ul li a {
     margin-left: 100px;
 }
 
-header {
-    position: fixed; /* Torna o cabeçalho fixo */
-    top: 0; /* Posiciona o cabeçalho no topo */
-    left: 0; /* Alinha à esquerda */
-    width: 100%; /* Largura total */
-    z-index: 1000; /* Garante que fique acima do conteúdo */
-    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
-    background-color: #2118CD; /* Fundo sólido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
-}
-
-header > .interface {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    transition: .2s;
-}
-
-header a:hover {
-    color: yellow;
-    transform: scale(1.05);
-}
-
-header nav ul {
-    list-style: none;
-    display: flex; /* Exibe os itens na horizontal */
-}
-
-header nav ul li {
-    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
-}
-
-.btn-contato {
-    display: flex; /* Garante que o botão esteja na mesma linha */
-    align-items: center;
-}
-
-.btn-contato button:hover {
-    box-shadow: 0px 0px 8px #00ff08;
-    transform: scale(1.05);
-}
-
-header .info ul li a {
-    display: flex;
-    flex-direction: row;
-}
-
-.informacoes a {
-    margin-right: 20px;
-}
-
-/* Sidebar */
-#sidebar {
-    position: fixed;
-    top: 70px; /* Começa logo abaixo do cabeçalho */
-    left: 0;
-    width: 200px;
-    height: calc(100% - 70px); /* Preenche a tela abaixo do cabeçalho */
-    background-color: #F0F0F0; /* Cor de fundo cinza claro */
-    color: black; /* Texto em preto */
-    padding-top: 20px;
-    overflow-y: auto; /* Adiciona barra de rolagem vertical */
-    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
-    z-index: 999;
-}
-   
 
 
-#sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-#sidebar ul li {
-    margin-bottom: 20px;
-    transition: background-color 0.3s;
-}
-
-#sidebar ul li a {
-    color: black; /* Texto preto para contraste */
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-size: 18px;
-}
-
-#sidebar ul li a .icon {
-    margin-right: 15px;
-    font-size: 18px;
-}
-
-#sidebar ul li:hover {
-    background-color: #d1d1d1; /* Cor de hover mais escura */
-}
-
-#sidebar ul li.ativo {
-    background-color: #00b4d8; /* Azul ativo */
-    color: white;
-}
-
-#sidebar ul li.ativo a {
-    color: white; /* Garante que o texto ativo fique branco */
-}
-
-/* Sidebar fechada */
-#sidebar.closed {
-    width: 0;
-    overflow: hidden;
-}
-
-#main-content {
-    margin-left: 200px;
-    transition: margin-left 0.3s ease;
-}
-
-#main-content.sidebar-closed {
-    margin-left: 0;
-}
-
-/* Transição suave ao abrir/fechar a sidebar */
-#sidebar, #main-content {
-    transition: all 0.3s ease;
-}
-
-#gr {
-    text-align: center;
-    color: black !important; /* Força a cor preta */
-    margin: 10px 0;
-    font-size: 18px;
-}
-
-.toggle-sidebar {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-#main-content {
-    margin-left: 200px;
-    padding: 20px;
-    transition: margin-left 0.3s;
-}
-
-/* Ajuste de responsividade */
-@media (max-width: 768px) {
-    #sidebar {
-        width: 80px;
-    }
-
-    #main-content {
-        margin-left: 80px;
-    }
-
-    #sidebar ul li a .txt {
-        display: none;
-    }
-}
-
-/* Sidebar fechada */
-#sidebar.closed {
-    width: 0;
-    overflow: hidden;
-}
-
-#main-content {
-    margin-left: 200px;
-    transition: margin-left 0.3s ease;
-}
-
-#main-content.sidebar-closed {
-    margin-left: 0;
-}
-
-/* Transição suave ao abrir/fechar a sidebar */
-#sidebar, #main-content {
-    transition: all 0.3s ease;
-}
-#gr {
-    text-align: center;
-    color: white;
-    margin: 10px 0;
-    font-size: 18px;
-}
-
-.toggle-sidebar {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-#main-content {
-    margin-left: 200px;
-    padding: 20px;
-    transition: margin-left 0.3s;
-}
-
-/* Ajuste de responsividade */
-@media (max-width: 768px) {
-    #sidebar {
-        width: 80px;
-    }
-
-    #main-content {
-        margin-left: 80px;
-    }
-
-    #sidebar ul li a .txt {
-        display: none;
-    }
-}
-
-.controle-navegacao {
-    display: flex;
-    align-items: center; /* Alinha verticalmente a logo e o botão */
-}
 
 .button{
     justify-content: flex-start;
@@ -324,56 +97,21 @@ header .info ul li a {
     margin-right: auto;
 }
 
-#nome-sobrenome {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    padding-top: 30px;
-    border: none;
-}
-
-#email-senha {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 375px;
-    padding-top: 30px;
-    border: none;
-}
-
-#button {
-    background-color: #00DB09;
-    width: 300px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-top: 25px;
-    cursor: pointer;
-}
-
-#button:hover {
-    background-color: #00b300;
-}
 
 /* Container principal ao lado da sidebar - formato retangular */
 .container-principal {
     margin-left: 300px; /* Espaço para a sidebar */
     padding: 20px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    margin-top: -200px; /* Espaço abaixo do header */
-    min-height: 400px;
+    min-height: 800px;
     margin-right: 40px;
-    border-radius: 20px; /* Removido o arredondamento */
+    margin-top: 40px; /* Ajuste para descer o conteúdo abaixo do header */
+    border-radius: 20px;
 }
 
-/* Título dentro do container principal */
-.container-principal h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+
+.title-container h2 {
+    margin-bottom: 10px; /* Espaço entre o título e o botão */
+    text-align: center;
 }
 
 /* Botão de adicionar banca */
@@ -381,12 +119,13 @@ header .info ul li a {
     background-color: #2118CD;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Aumenta um pouco o padding para destacar o botão */
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Espaçamento entre o botão e a tabela */
+    text-align: center; /* Centraliza o texto no botão */
 }
 
 .btn-adicionar:hover {
@@ -397,7 +136,7 @@ header .info ul li a {
 .tabela-registros {
     width: 100%; /* Faz a tabela ocupar 100% da largura disponível */
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 0px; /* Espaçamento entre a tabela e o botão de adicionar */
     table-layout: auto; /* Define layout automático para que as colunas se ajustem ao conteúdo */
 }
 
@@ -406,7 +145,7 @@ header .info ul li a {
     background-color: #2118CD;
     font-weight: bold;
     color: white;
-    padding: 8px 10px; /* Reduzido o padding para diminuir a altura */
+    padding: 10px 15px; /* Ajusta o padding para uma altura confortável */
     text-align: center; /* Centraliza o texto dos títulos */
     white-space: nowrap; /* Evita quebra de linha nos títulos */
     vertical-align: middle; /* Garante que o texto esteja centralizado verticalmente */
@@ -414,7 +153,7 @@ header .info ul li a {
 
 /* Ajuste para o corpo da tabela */
 .tabela-registros td {
-    padding: 10px 12px; /* Ajusta o padding para ter uma altura confortável */
+    padding: 12px 15px; /* Ajusta o padding para ter uma altura confortável */
     background-color: #fafafa;
     vertical-align: middle; /* Centraliza o conteúdo verticalmente */
 }
@@ -438,13 +177,13 @@ header .info ul li a {
     max-width: 100%; /* Garante que o link ocupe todo o espaço disponível */
 }
 
-
 /* Estilos dos botões de ação (editar, excluir) */
 .actions {
     display: flex;
     justify-content: center; /* Centraliza os botões na célula */
     gap: 10px; /* Espaçamento entre os botões */
 }
+
 
 .btn-editar, .btn-excluir {
     padding: 8px 12px;
@@ -578,16 +317,6 @@ a.add-button:hover {
 }
 
 
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-}
-
-.esquerda { grid-area: 1 / 1 / 2 / 2; }
-.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .button-container {
     display: flex;
@@ -672,55 +401,6 @@ a.add-button:hover {
 
 .edit-button:hover, .delete-button:hover {
     color: #007BFF; /* Cor ao passar o mouse */
-}
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Alinha o menu e o conteúdo no topo */
-    padding-top: 20px; /* Adiciona um pequeno espaçamento superior */
-    height: 100vh; /* Faz a sidebar ocupar a altura total da viewport */
-    width: 200PX;
-}
-
-.sidebar-header h4 {
-    text-align: center; /* Centraliza o título "Menu" */
-    padding-bottom: 10px; /* Reduz o espaçamento inferior */
-    border-bottom: none; /* Remove a linha abaixo do título */
-}
-
-.components {
-    padding-left: 0;
-}
-
-.components hr {
-    margin: 10px 0; /* Reduz o espaçamento ao redor da linha */
-    border-color: black;
-}
-
-#sidebar .components a {
-    color: #343a40;
-    text-decoration: none;
-    padding: 8px 20px; /* Reduz o padding para diminuir a altura dos itens */
-    display: block;
-    font-weight: 500;
-    text-align: center;
-}
-
-/* Estilizando o hover e o estado ativo para os links do menu */
-#sidebar .components a:hover, 
-#sidebar .components a.active {
-    background-color: #2118CD;
-    color: #fff;
-    border-radius: 5px;
-}
-
-hr{
-    color: black;
-}
-p{
-    color: black;
-    display: flex;
-    justify-content: center;
 }
 
 /* Centralizar o modal */
@@ -900,6 +580,4 @@ p{
 .modal-footer {
     border-top: none; /* Remove a borda superior do rodapé do modal */
 }
-.mensagem-boas-vindas {
-    color: white; /* Define a cor do texto como branco */
-}
+

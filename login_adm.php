@@ -24,14 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST['senha'];
 
     // Verificar se o e-mail existe na tabela de administradores
-    $sql_administrador = "SELECT cod_administrador, senha FROM administrador WHERE email = ?";
+    $sql_administrador = "SELECT cod_administrador, nome, sobrenome, senha FROM administrador WHERE email = ?";
     $stmt_administrador = $conn->prepare($sql_administrador);
     $stmt_administrador->bind_param("s", $email);
     $stmt_administrador->execute();
     $stmt_administrador->store_result();
 
     if ($stmt_administrador->num_rows > 0) {
-        $stmt_administrador->bind_result($cod_administrador, $hashed_senha_administrador);
+        $stmt_administrador->bind_result($cod_administrador, $nome, $sobrenome, $hashed_senha_administrador);
         $stmt_administrador->fetch();
 
         // Verificar se a senha está criptografada
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Definir sessão e redirecionar
                 $_SESSION['loggedin'] = true;
                 $_SESSION['cod_administrador'] = $cod_administrador;
-                $_SESSION['email'] = $email;
+                $_SESSION['nome'] = $nome . ' ' . $sobrenome; // Armazenar o nome completo
                 $_SESSION['tipo_acesso'] = 3;
 
                 header("Location: ./administrador/adm.php");
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Definir sessão e redirecionar
                 $_SESSION['loggedin'] = true;
                 $_SESSION['cod_administrador'] = $cod_administrador;
-                $_SESSION['email'] = $email;
+                $_SESSION['nome'] = $nome . ' ' . $sobrenome; // Armazenar o nome completo
                 $_SESSION['tipo_acesso'] = 3;
 
                 header("Location: ./administrador/adm.php");
@@ -81,10 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Fecha a conexão
     $conn->close();
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="info">
                 <a href="./estudante/sobre.php">Sobre</a>
                 <a href="./estudante/ajuda.php">Ajuda</a>
-                <a href="login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+                <a href=""><i class="fa-solid fa-gear" id="gear" title="Acesso restrito"></i></a>
             </div>
         </div> <!--interface-->
     </header>
@@ -123,9 +120,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-box">
         <h2>Login administrador</h2>
         
-        <!-- Exibição de mensagem de erro, se houver -->
+        <!-- Exibição de mensagem de erro no modal, se houver -->
         <?php if (!empty($error_message)): ?>
-            <div class="error-message"><?php echo htmlspecialchars($error_message); ?></div>
+        <div id="errorModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p class="error-text"><?php echo htmlspecialchars($error_message); ?></p>
+                <button id="okBtnErro" class="ok-btn">OK</button>
+            </div>
+        </div>
         <?php endif; ?>
         
         <!-- Formulário de login -->
@@ -143,16 +146,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="login-btn">Entrar</button>
         </form>
 
-        <!-- Link de senha esquecida -->
-        <div class="forgot-password">
-            <a href="#">Esqueceu sua senha?</a>
-        </div>
+     <!-- Link de senha esquecida -->
+<div class="forgot-password">
+    <a href="esqueci_senha.php">Esqueceu sua senha?</a>
+</div>
+
     </div>
 
-        <div class="img_content">
-            <img src="/administrador/assets/Login_Adm.svg" alt="">
-        </div>
+    <div class="img_content">
+        <img src="/administrador/assets/Login_Adm.svg" alt="Login Admin Image">
+    </div>
     </main>
+
     <div id="modal-simulados" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -216,8 +221,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             closeModal();
         }
     };
+
+    // Modal de erro
+    const errorModal = document.getElementById('errorModal');
+    const okBtnErro = document.getElementById('okBtnErro');
+    const closeBtnErro = document.querySelector('.close-btn');
+
+    if (errorModal) {
+        errorModal.style.display = 'block';
+        okBtnErro.addEventListener('click', function () {
+            errorModal.style.display = 'none';
+        });
+        closeBtnErro.addEventListener('click', function () {
+            errorModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = 'none';
+            }
+        });
+    }
 });
 
     </script>
+
+<!-- Modal Acesso Restrito -->
+<div id="modal-acesso" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span> <!-- Certifique-se que a classe é "close-btn" -->
+        <p class="modal-text">Acesso restrito, deseja continuar?</p>
+        <div class="modal-buttons">
+            <button id="ok-btn-acesso" class="btn-ok">OK</button>
+            <button id="cancel-btn-acesso" class="btn-cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Obter o modal e os botões
+    var modalAcesso = document.getElementById("modal-acesso");
+    var btnGear = document.getElementById("gear");
+    var okBtnAcesso = document.getElementById("ok-btn-acesso");
+    var cancelBtnAcesso = document.getElementById("cancel-btn-acesso");
+    var closeBtn = document.querySelector("#modal-acesso .close-btn"); // Certifique-se de selecionar o botão X corretamente
+
+    // Quando o ícone da engrenagem for clicado, exibir o modal
+    btnGear.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevenir a navegação imediata
+        modalAcesso.style.display = "block";
+    });
+
+    // Se o usuário clicar em "OK", fechar o modal e continuar com o redirecionamento
+    okBtnAcesso.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+        window.location.href = "/login_adm.php"; // Redirecionar para a página de login
+    });
+
+    // Se o usuário clicar em "Cancelar", apenas fechar o modal
+    cancelBtnAcesso.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+    });
+
+    // Fechar o modal se o usuário clicar no X
+    closeBtn.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+    });
+
+    // Fechar o modal se o usuário clicar fora dele
+    window.onclick = function(event) {
+        if (event.target == modalAcesso) {
+            modalAcesso.style.display = "none";
+        }
+    };
+</script>
+
 </body>
 </html>

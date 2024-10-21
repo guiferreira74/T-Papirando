@@ -1,237 +1,386 @@
 <?php
 session_start();
 
-// Verifique se o administrador está logado
+// Verificar se o administrador está logado
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: ../administrador/login.php");
+    header("Location: login_adm.php");
     exit();
 }
 
-// Recupera o nome do administrador da sessão
+// Recuperar o nome do administrador da sessão
 $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
-?>
 
+// Configuração da conexão com o banco de dados
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$dbname = "topapirando";  // Coloque o nome correto do seu banco de dados
+
+// Criação da conexão
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar conexão
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+// Consultas SQL para os dados
+$sql_bancas = "SELECT COUNT(*) as total FROM banca";
+$result_bancas = $conn->query($sql_bancas);
+$row_bancas = $result_bancas->fetch_assoc();
+$total_bancas = $row_bancas['total'];
+
+$sql_disciplinas = "SELECT COUNT(*) as total FROM disciplina";
+$result_disciplinas = $conn->query($sql_disciplinas);
+$row_disciplinas = $result_disciplinas->fetch_assoc();
+$total_disciplinas = $row_disciplinas['total'];
+
+$sql_concursos = "SELECT COUNT(*) as total FROM concurso";
+$result_concursos = $conn->query($sql_concursos);
+$row_concursos = $result_concursos->fetch_assoc();
+$total_concursos = $row_concursos['total'];
+
+$sql_questoes = "SELECT COUNT(*) as total FROM questao";
+$result_questoes = $conn->query($sql_questoes);
+$row_questoes = $result_questoes->fetch_assoc();
+$total_questoes = $row_questoes['total'];
+
+$sql_dificuldades = "SELECT COUNT(*) as total FROM dificuldade";
+$result_dificuldades = $conn->query($sql_dificuldades);
+$row_dificuldades = $result_dificuldades->fetch_assoc();
+$total_dificuldades = $row_dificuldades['total'];
+
+$sql_instituicoes = "SELECT COUNT(*) as total FROM instituicao";
+$result_instituicoes = $conn->query($sql_instituicoes);
+$row_instituicoes = $result_instituicoes->fetch_assoc();
+$total_instituicoes = $row_instituicoes['total'];
+
+$sql_duracao = "SELECT COUNT(*) as total FROM duracao";
+$result_duracao = $conn->query($sql_duracao);
+$row_duracao = $result_duracao->fetch_assoc();
+$total_duracao = $row_duracao['total'];
+
+$sql_provas = "SELECT COUNT(*) as total FROM prova";
+$result_provas = $conn->query($sql_provas);
+$row_provas = $result_provas->fetch_assoc();
+$total_provas = $row_provas['total'];
+
+// Fechar a conexão com o banco de dados
+$conn->close();
+
+// Função para definir a classe de seta com base nos valores anteriores e atuais
+function getTrendingIconClass($current) {
+    if ($current == 0) {
+        return 'bx-minus trending-neutral'; // Mostra um traço para valores iguais a zero
+    } else {
+        return 'bx-trending-up trending-up'; // Mostra a seta para cima para valores maiores que zero
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="adm.css">
-    <title>Administrador</title>
-    <!-- Link para Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-     <style>
-        /* Estilos para o dropdown */
-        .dropdown {
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="adm.css">
+	<title>Administrador</title>
+    <style>
+        .trending-up {
+            color: green;
+        }
+        .trending-neutral {
+            color: gray;
+        }
+
+        /* Estilo para o dropdown do perfil */
+        .profile-link {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            list-style-type: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-link.show {
+            display: block;
+        }
+        .profile-link li {
+            padding: 5px 0;
+        }
+        .profile-link li a {
+            text-decoration: none;
+            color: black;
+            white-space: nowrap; /* Evita que o texto quebre a linha */
+            display: flex;
+            align-items: center;
+        }
+        .profile-link li a i {
+            margin-right: 8px; /* Espaço entre o ícone e o texto */
+        }
+        .profile {
             position: relative;
             display: inline-block;
         }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            right: 0;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
+        .adm-link {
+            cursor: pointer;
         }
     </style>
-<header>
-        <div class="interface">
-            <!-- Botão para abrir a barra lateral -->
-            <div class="controle-navegacao">
-                
-                <div class="button">
-                    <button id="toggle-sidebar" class="toggle-sidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-               
+</head>
+<body>
+	
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+	    <a href="adm.php" class="brand"><i class='bx bxs-smile icon'></i> TÔPAPIRANDO</a>
+	    <ul class="side-menu">
+	        <li><a href="adm.php" class="active"><i class='bx bxs-dashboard icon'></i> Início</a></li>
+	        <li><a href="ajuda_adm.php"><i class='bx bx-help-circle icon'></i> Ajuda</a></li>
+	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
+	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
+	        <li class="dropdown">
+	            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+	            <ul class="side-dropdown">
+                <li><a href="concurso.php">Concurso</a></li>
+	                <li><a href="prova.php">Prova</a></li>
+	                <li><a href="disciplina.php">Disciplina</a></li>
+	                <li><a href="questao.php">Questão</a></li>
+	            </ul>
+	        </li>
+	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
+	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
+	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
+	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+	    </ul>
+	</section>
 
-                <div class="logo">
-                    <img src="assets/logo_papirando_final.svg" alt="Logo">     
-                </div><!-- logo -->
-            </div><!-- controle-navegacao -->
-
-            
-            <div class="informacoes">
-            <a href="sobre_adm.php">Sobre</a>
-            <a href="ajuda_adm.php">Ajuda</a>
-                <!-- Dropdown para Olá, Administrador -->
-            <div class="dropdown">
-                <span class="mensagem-boas-vindas dropbtn">Olá, <?php echo htmlspecialchars($admin_nome); ?>!</span>
-                <div class="dropdown-content">
-                    <a href="editar_dados.php">Editar Dados</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">Sair</a>
-                </div>
-            </div>
-        </div>
-    </div><!-- interface -->
-    </header>  
-     
-    
-    <nav>
-        <div id="sidebar">
-            <ul>
-                <li class="item-menu ">
-                    <a href="adm.php">
-                        <span class="icon"><i class="fas fa-home"></i></span> <!-- Ícone de casa -->
-                        <span class="txt">Início</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="ajuda_adm.php">
-                        <span class="icon"><i class="fas fa-question-circle"></i></span> <!-- Ícone de livro -->
-                        <span class="txt">Ajuda</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="parametros.php">
-                        <span class="icon"><i class="fas fa-trophy"></i></span> <!-- Ícone de troféu -->
-                        <span class="txt">Parametros</span>
-                    </a>
-                </li>
-
-                <hr>
-
-                <h1 id="gr">Gerenciamento</h1>
-
-                <li class="item-menu">
-                    <a href="banca.php">
-                        <span class="icon"><i class="fas fa-university"></i></span> <!-- Ícone de universidade -->
-                        <span class="txt">Bancas</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="concurso.php">
-                        <span class="icon"><i class="fas fa-users"></i></span> <!-- Ícone de pessoas -->
-                        <span class="txt">Concurso</span> 
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="questao.php">
-                        <span class="icon"><i class="fas fa-book"></i></span> <!-- Ícone de pergunta -->
-                        <span class="txt">Questões</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="dificuldade.php">
-                        <span class="icon"><i class="fas fa-chart-line"></i></span> <!-- Ícone de gráfico -->
-                        <span class="txt">Dificuldade</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="disciplina.php">
-                        <span class="icon"><i class="fas fa-book-reader"></i></span> <!-- Ícone de leitura -->
-                        <span class="txt">Disciplina</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="duracao.php">
-                        <span class="icon"><i class="fas fa-clock"></i></span> <!-- Ícone de relógio -->
-                        <span class="txt">Duração</span>
-                    </a>
-                </li>
-
-                <li class="item-menu">
-                    <a href="instituicao.php">
-                        <span class="icon"><i class="fas fa-school"></i></span> <!-- Ícone de instituição -->
-                        <span class="txt">Instituições</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-        <!-- MANTENDO A SIDE BAR ATIVA -->
-    <script>
-        var menuitem = document.querySelectorAll('.item-menu'); // Corrigido para selecionar pela classe
-    
-        function selectlink() {
-            menuitem.forEach((item) =>
-                item.classList.remove('ativo') // Remove a classe 'ativo' de todos os itens
-            );
-            this.classList.add('ativo'); // Adiciona a classe 'ativo' ao item clicado
-        }
-    
-        menuitem.forEach((item) =>
-            item.addEventListener('click', selectlink) // Adiciona o evento de clique para cada item do menu
-        );
-    </script>
-
-        <!-- SCRIPT PARA ABRIR E FECHAR A SIDE BAR -->
-    <script>
-        const toggleSidebarButton = document.getElementById('toggle-sidebar');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content'); // Caso tenha um container principal
-    
-        toggleSidebarButton.addEventListener('click', () => {
-            sidebar.classList.toggle('closed'); // Alterna a classe 'closed' na sidebar
-            mainContent.classList.toggle('sidebar-closed'); // Ajusta o layout do conteúdo principal, se aplicável
-        });
-    </script>
-    
-
-
-    <!-- Conteúdo Principal -->
-    <div class="main-content">
-        <div class="container">
-            <div class="encima">
-                <h1 id="titulo">O que você está procurando?</h1>
-                <input id="pesquisa" type="text" placeholder="Digite seu texto aqui">
-            </div>
-
-        </div>
+	<!-- NAVBAR -->
+	<section id="content">
+	<nav>
+    <i class='bx bx-menu toggle-sidebar' id="hg"></i> <!-- Ícone do menu primeiro -->
+    <a href="adm.php" class="brand">
+        <img src="assets/logo_papirando_final.svg" alt="Logo" class="logo"> <!-- Logo após o menu -->
+    </a>
+    <form action="#"></form>
+    <a href="sobre_adm.php" class="sobre">Sobre</a>
+    <a href="#" class="nav-link">
+        <i class='bx bxs-bell icon'></i>
+    </a>
+    <span class="divider"></span>
+    <div class="profile">
+        <a href="#" class="adm-link" id="profile-toggle">Olá, <?php echo htmlspecialchars($admin_nome); ?> <i class='bx bx-chevron-down'></i></a>
+        <ul class="profile-link" id="profile-dropdown">
+            <li><a href="editar_dados.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
+            <li><a href="adicionar_adm.php"><i class='bx bxs-cog'></i> Adicionar Adm</a></li>
+            <li><a href="sair.php"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
+        </ul>
     </div>
+</nav>
 
-    <!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmLogoutModalLabel">Sair</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+		<!-- MAIN -->
+		<main>
+			<h1 class="title">Inicio</h1>
+			<ul class="breadcrumbs">
+				<li><a href="#">Inicio</a></li>
+				<li class="divider">/</li>
+				<li><a href="#" class="active">Administrador</a></li>
+			</ul>
+			
+            <div class="info-data">
+    <!-- Primeira linha de cards -->
+    
+    <!-- Card 1: Bancas -->
+    <a href="banca.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_bancas; ?></h2>
+                    <p>Bancas cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_bancas); ?> icon'></i>
             </div>
-            <div class="modal-body">
-                Tem certeza que deseja sair?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a id="confirmLogout" href="sair.php" class="btn btn-primary">Sair</a>
-            </div>
+            <span class="progress" data-value="100%"></span>
         </div>
-    </div>
+    </a>
+
+    <!-- Card 2: Dificuldades -->
+    <a href="dificuldade.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_dificuldades; ?></h2>
+                    <p>Dificuldades cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_dificuldades); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Card 3: Instituições -->
+    <a href="instituicao.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_instituicoes; ?></h2>
+                    <p>Instituições cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_instituicoes); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Card 4: Durações -->
+    <a href="duracao.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_duracao; ?></h2>
+                    <p>Durações cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_duracao); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Segunda linha de cards -->
+
+    <!-- Card 5: Concursos -->
+    <a href="concurso.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_concursos; ?></h2>
+                    <p>Concursos cadastrados</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_concursos); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Card 6: Provas -->
+    <a href="prova.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_provas; ?></h2>
+                    <p>Provas cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_provas); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Card 7: Disciplinas -->
+    <a href="disciplina.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_disciplinas; ?></h2>
+                    <p>Disciplinas cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_disciplinas); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
+
+    <!-- Card 8: Questões -->
+    <a href="questao.php" class="card-link">
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2><?php echo $total_questoes; ?></h2>
+                    <p>Questões cadastradas</p>
+                </div>
+                <i class='bx <?php echo getTrendingIconClass($total_questoes); ?> icon'></i>
+            </div>
+            <span class="progress" data-value="100%"></span>
+        </div>
+    </a>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+			<!-- Gráfico -->
+			<div id="chart"></div>
+		</main>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+	<script>
+	// Gráfico ApexCharts com dados dinâmicos
+	var options = {
+	  series: [{
+	    name: 'Cadastrados',
+	    data: [
+	      <?php echo $total_bancas; ?>, 
+	      <?php echo $total_disciplinas; ?>, 
+	      <?php echo $total_provas; ?>,
+	      <?php echo $total_concursos; ?>, 
+	      <?php echo $total_questoes; ?>, 
+	      <?php echo $total_dificuldades; ?>, 
+	      <?php echo $total_instituicoes; ?>, 
+	      <?php echo $total_duracao; ?>
+	    ]
+	  }],
+	  chart: {
+	    height: 350,
+	    type: 'bar'
+	  },
+	  plotOptions: {
+	    bar: {
+	      horizontal: false,
+	    },
+	  },
+	  dataLabels: {
+	    enabled: false
+	  },
+	  xaxis: {
+	    categories: ['Bancas', 'Disciplinas', 'Provas', 'Concursos', 'Questões', 'Dificuldades', 'Instituições', 'Durações'],
+	  }
+	};
+
+	var chart = new ApexCharts(document.querySelector("#chart"), options);
+	chart.render();
+
+	// Script para o dropdown do Concurso
+	document.querySelectorAll('.dropdown > a').forEach(dropdownLink => {
+	    dropdownLink.addEventListener('click', function(event) {
+	        event.preventDefault();
+	        this.parentElement.classList.toggle('active');
+	        this.nextElementSibling.classList.toggle('show');
+	    });
+	});
+
+	const toggleSidebar = document.querySelector('nav .toggle-sidebar');
+const sidebar = document.getElementById('sidebar');
+
+toggleSidebar.addEventListener('click', function () {
+    sidebar.classList.toggle('hide');
+});
+
+
+	// PROFILE DROPDOWN
+	const profileToggle = document.getElementById('profile-toggle');
+	const profileDropdown = document.getElementById('profile-dropdown');
+	profileToggle.addEventListener('click', function(e) {
+	    e.preventDefault();
+	    profileDropdown.classList.toggle('show');
+	});
+
+	// Fechar o dropdown se clicar fora
+	window.addEventListener('click', function(event) {
+	    if (!profileToggle.contains(event.target) && !profileDropdown.contains(event.target)) {
+	        profileDropdown.classList.remove('show');
+	    }
+	});
+	</script>
 </body>
 </html>

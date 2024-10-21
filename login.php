@@ -28,46 +28,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tipo de acesso: Estudante
     $tipo_acesso = 2;
 
-    // Verificar se o e-mail existe na tabela de estudantes
-    $sql_estudante = "SELECT nome, sobrenome, senha FROM estudante WHERE email = ?";
-    $stmt_estudante = $conn->prepare($sql_estudante);
-    $stmt_estudante->bind_param("s", $email);
-    $stmt_estudante->execute();
-    $stmt_estudante->store_result();
+   // Verificar se o e-mail existe na tabela de estudantes
+$sql_estudante = "SELECT cod_estudante, nome, sobrenome, senha FROM estudante WHERE email = ?";
+$stmt_estudante = $conn->prepare($sql_estudante);
+$stmt_estudante->bind_param("s", $email);
+$stmt_estudante->execute();
+$stmt_estudante->store_result();
 
-    if ($stmt_estudante->num_rows > 0) {
-        $stmt_estudante->bind_result($nome_estudante, $sobrenome_estudante, $hashed_senha_estudante);
-        $stmt_estudante->fetch();
+if ($stmt_estudante->num_rows > 0) {
+    $stmt_estudante->bind_result($cod_estudante, $nome_estudante, $sobrenome_estudante, $hashed_senha_estudante);
+    $stmt_estudante->fetch();
 
-        // Verificar a senha
-        if (password_verify($senha, $hashed_senha_estudante)) {
-            // Definir sessão e redirecionar
-            $_SESSION['email'] = $email;
-            $_SESSION['nome'] = $nome_estudante;
-            $_SESSION['sobrenome'] = $sobrenome_estudante;
-            $_SESSION['tipo_acesso'] = $tipo_acesso; // Estudante
+    // Verificar a senha
+    if (password_verify($senha, $hashed_senha_estudante)) {
+        // Definir sessão e redirecionar
+        $_SESSION['email'] = $email;
+        $_SESSION['nome'] = $nome_estudante;
+        $_SESSION['sobrenome'] = $sobrenome_estudante;
+        $_SESSION['cod_estudante'] = $cod_estudante;  // Adiciona o cod_estudante à sessão
+        $_SESSION['tipo_acesso'] = $tipo_acesso; // Estudante
 
-            // Lembrar dados
-            if ($lembrar_dados) {
-                setcookie('email', $email, time() + (86400 * 30), "/"); // 30 dias
-                setcookie('senha', $senha, time() + (86400 * 30), "/"); // 30 dias
-            } else {
-                // Se não lembrar, eliminar cookies
-                setcookie('email', '', time() - 3600, "/");
-                setcookie('senha', '', time() - 3600, "/");
-            }
-
-            // Redirecionar para a página do estudante
-            header("Location: ./estudante/user.php");
-            exit();
+        // Lembrar dados
+        if ($lembrar_dados) {
+            setcookie('email', $email, time() + (86400 * 30), "/"); // 30 dias
+            setcookie('senha', $senha, time() + (86400 * 30), "/"); // 30 dias
         } else {
-            $error_message = 'Senha incorreta.';
+            // Se não lembrar, eliminar cookies
+            setcookie('email', '', time() - 3600, "/");
+            setcookie('senha', '', time() - 3600, "/");
         }
-    } else {
-        $error_message = 'E-mail não cadastrado, crie sua conta ao lado por favor.';
-    }
 
-    // Fecha a declaração
+        // Redirecionar para a página do estudante
+        header("Location: ./estudante/user.php");
+        exit();
+    } else {
+        $error_message = 'Senha incorreta.';
+    }
+} else {
+    $error_message = 'E-mail não cadastrado, crie sua conta ao lado por favor.';
+}
+
     $stmt_estudante->close();
 
     // Fecha a conexão

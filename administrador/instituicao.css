@@ -133,12 +133,46 @@ body {
 #button:hover {
     background-color: #00b300;
 }
+/* Container para centralizar e ajustar o posicionamento */
+.container-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os elementos horizontalmente */
+    justify-content: center;
+    margin-top: 80px; /* Espaçamento para descer a partir do topo */
+    margin-left: 200px;
+}
 
-/* Full width table */
+/* Título do gerenciador */
+h2 {
+    text-align: center;
+    margin-bottom: 20px; /* Ajusta o espaçamento abaixo do título */
+}
+
+/* Botão de adicionar centralizado */
+.btn-adicionar {
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px; /* Ajusta o espaçamento abaixo do botão */
+    text-align: center;
+}
+
+.btn-adicionar:hover {
+    background-color: #1a139d;
+}
+
+/* Tabela */
 .tabela-registros {
-    width: 100%;
+    width: 150%; /* Ajusta a largura da tabela para 80% da página */
     border-collapse: collapse;
     table-layout: auto;
+    margin-bottom: 50px; /* Espaço abaixo da tabela */
 }
 
 .tabela-registros th {
@@ -156,11 +190,11 @@ body {
     vertical-align: middle;
 }
 
-/* Alinha as ações (ícones) em uma linha */
+/* Centralizar os ícones de ação */
 .actions {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Ajusta o espaço entre os ícones */
+    gap: 10px;
 }
 
 /* Estilos dos botões de editar e excluir */
@@ -188,33 +222,6 @@ body {
 .btn-editar i, .btn-excluir i {
     font-size: 16px;
 }
-
-/* Botão de adicionar */
-.btn-adicionar {
-    background-color: #2118CD;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.btn-adicionar:hover {
-    background-color: #1a139d;
-}
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-}
-
-.esquerda { grid-area: 1 / 1 / 2 / 2; }
-.direita { grid-area: 1 / 2 / 2 / 3; }
 
 .button-container {
     display: flex;
@@ -288,27 +295,6 @@ body {
     color: red;
 }
 
-/* Estilos para a tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end; /* Alinha os ícones no lado direito */
-    gap: 10px; /* Espaçamento entre os ícones */
-}
 
 .edit-button, .delete-button {
     color: #333;
@@ -354,27 +340,7 @@ th {
     text-decoration: none;
     cursor: pointer;
 }
- /* Estilos para a tabela */
- table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end; /* Alinha os ícones no lado direito */
-    gap: 10px; /* Espaçamento entre os ícones */
-}
 
 .edit-button, .delete-button {
     color: #333;
@@ -425,102 +391,8 @@ th {
     display: flex;
 }
 
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
-    height: 100vh;
-    width: 250px;
-}
 
-.sidebar-header h4 {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: none;
-}
 
-.components {
-    padding-left: 0;
-}
-
-.components hr {
-    margin: 10px 0;
-    border-color: black;
-}
-
-#sidebar .components a {
-    color: #343a40;
-    text-decoration: none;
-    padding: 8px 20px;
-    display: block;
-    font-weight: 500;
-    text-align: center;
-}
-
-#sidebar .components a:hover, 
-#sidebar .components a.active {
-    background-color: #2118CD;
-    color: #fff;
-    border-radius: 5px;
-}
-
-/* Conteúdo principal */
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-}
-
-.container {
-    width: 100%;
-    height: 100%;
-}
-
-.encima {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    padding: 20px;
-    margin-top: 50px;
-}
-
-.enbaixo {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    margin-top: 100px;
-}
-
-.enbaixo img {
-    max-width: 45%;
-    height: auto;
-    width: 400px;
-}
-
-#pesquisa {
-    margin-top: 50px;
-    width: 900px;
-    height: 40px;
-    border-radius: 30px;
-    padding: 10px;
-}
-
-#titulo {
-    font-size: 40px;
-}
-
-p {
-    display: flex;
-    justify-content: center;
-}
-
-hr {
-    color: black;
-}
 /* Modal */
 .modal {
     display: none; /* Ocultado por padrão */
@@ -674,3 +546,4 @@ hr {
 .modal-sucesso .ok-btn-sucesso:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
 }
+
