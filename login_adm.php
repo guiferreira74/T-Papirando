@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
      <!-- Link de senha esquecida -->
 <div class="forgot-password">
-    <a href="esqueci_senha.php">Esqueceu sua senha?</a>
+    <a href="#">Esqueceu sua senha?</a>
 </div>
 
     </div>

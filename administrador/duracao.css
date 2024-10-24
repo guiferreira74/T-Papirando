@@ -398,3 +398,10 @@ h2 {
 .modal-sucesso .ok-btn-sucesso:hover {
     background-color: #1a14a6; /* Cor um pouco mais escura para o hover */
 }
+
+.custom-hr {
+    border: none;
+    height: 2px;
+    background-color: #000000; /* Preto absoluto */
+    margin: 5px 0;
+}

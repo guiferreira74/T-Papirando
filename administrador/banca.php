@@ -80,18 +80,21 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
 	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
 	        <li class="dropdown">
-	            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+	            <a href="#"><i class='bx bxs-folder-open icon'></i>Simulado<i class='bx bx-chevron-right icon-right'></i></a>
 	            <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
 	                <li><a href="prova.php">Prova</a></li>
-	                <li><a href="disciplina.php">Disciplina</a></li>
 	                <li><a href="questao.php">Questão</a></li>
 	            </ul>
+
+                <hr class="custom-hr">
+
 	        </li>
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -271,27 +274,49 @@ document.addEventListener('DOMContentLoaded', function() {
         <div id="add-modal" class="modal" style="overflow: hidden;">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeAddModal()">&times;</span>
-                <form action="banca.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" id="cod_banca" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
-                    <div id="input">
-                        <label for="nome_modal">Nome da Banca:</label>
-                        <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" required>
-                    </div>
-                    <div id="input">
-                        <label for="link_modal">Link da Banca:</label>
-                        <input type="text" id="link_modal" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" required>
-                    </div>
-                    <div id="input">
-                        <label for="upload_modal">Imagem da Banca:</label>
-                        <input type="file" id="upload_modal" name="upload" accept="image/*">
-                    </div>
-                    <div class="button-container">
-                        <button type="submit" class="save-button">Salvar</button>
-                        <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
-                    </div>
+                <form action="banca.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+                <input type="hidden" id="cod_banca" name="cod_banca" value="<?php echo htmlspecialchars($cod_banca); ?>">
+                <div id="input">
+                    <label for="nome_modal">Nome da Banca:</label>
+                    <input type="text" id="nome_modal" name="nome" value="<?php echo htmlspecialchars($nome); ?>" placeholder="Preencha o nome da banca" required>
+                </div>
+                <div id="input">
+                    <label for="link_modal">Link da Banca:</label>
+                    <input type="text" id="link_modal" name="link" value="<?php echo htmlspecialchars($link); ?>" placeholder="Preencha o link da banca" required>
+                </div>
+                <div id="input">
+                    <label for="upload_modal">Imagem da Banca:</label>
+                    <input type="file" id="upload_modal" name="upload" accept="image/*" required>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="save-button">Salvar</button>
+                    <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
+                </div>
                 </form>
+
             </div>
         </div>
+        <script>
+    // Função para validar o formulário
+    function validarFormulario() {
+        const nome = document.getElementById('nome_modal').value.trim();
+        const link = document.getElementById('link_modal').value.trim();
+        const upload = document.getElementById('upload_modal').value;
+
+        if (nome === '' || link === '') {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return false; // Impede o envio do formulário
+        }
+
+        // Verifica se uma imagem foi carregada no campo de upload
+        if (!upload) {
+            alert('Por favor, selecione uma imagem antes de salvar.');
+            return false; // Impede o envio do formulário
+        }
+
+        return true; // Permite o envio do formulário
+    }
+</script>
 
 
         <!-- Modal de confirmação -->

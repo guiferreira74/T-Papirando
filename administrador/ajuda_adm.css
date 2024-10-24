@@ -283,3 +283,9 @@ h1{
     display: block;
     margin-right: 20px; /* Espaçamento entre a logo e os outros itens */
 }
+.custom-hr {
+    border: none;
+    height: 2px;
+    background-color: #000000; /* Preto absoluto */
+    margin: 5px 0;
+}

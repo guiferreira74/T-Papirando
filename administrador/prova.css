@@ -629,3 +629,10 @@ hr {
     border: 1px solid #ccc; /* Borda do input/select */
     width: 100%; /* Largura total */
 }
+
+.custom-hr {
+    border: none;
+    height: 2px;
+    background-color: #000000; /* Preto absoluto */
+    margin: 5px 0;
+}

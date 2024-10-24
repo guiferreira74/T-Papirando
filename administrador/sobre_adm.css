@@ -297,3 +297,71 @@ header .info ul li a {
 .mensagem-boas-vindas {
     color: white; /* Define a cor do texto como branco */
 }
+
+* Conteúdo Principal */
+.sobre-container, .creditos-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 100px;
+    width: 40px;
+}
+
+.sobre-container .desenvolvedores, 
+.creditos-container .creditos {
+    flex: 1;
+    padding: 20px;
+}
+
+.sobre-container .foto, 
+.creditos-container .foto {
+    flex: 1;
+    text-align: center;
+}
+
+.sobre-container .foto img, 
+.creditos-container .foto img {
+    max-width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
+    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-container .foto img:hover, 
+.creditos-container .foto img:hover {
+    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .sobre-container, .creditos-container {
+        flex-direction: column;
+    }
+
+    .sobre-container .foto img, 
+    .creditos-container .foto img {
+        max-width: 100%;
+    }
+}

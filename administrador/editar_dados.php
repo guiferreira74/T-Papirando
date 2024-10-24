@@ -8,6 +8,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Recuperar o nome do administrador da sessão
 $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
+
 // Conexão com o banco de dados
 $conn = new mysqli('localhost', 'root', 'admin', 'Topapirando');
 
@@ -15,16 +16,28 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-// Variáveis para armazenar mensagens de erro ou sucesso
-$error_message = '';
-$success_message = '';
-
 // Inicializando variáveis de formulário para manter os valores inseridos
 $nome = '';
 $sobrenome = '';
-$current_password = '';
-$new_password = '';
-$confirm_password = '';
+
+// Verifica o administrador logado pela sessão
+$cod_administrador = $_SESSION['cod_administrador'];
+
+// Busca os dados do administrador no banco de dados
+$sql = "SELECT nome, sobrenome FROM administrador WHERE cod_administrador = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $cod_administrador);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $nome = $row['nome'];
+    $sobrenome = $row['sobrenome'];
+}
+
+$error_message = '';
+$success_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Receber dados do formulário
@@ -34,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Verifica o administrador logado pela sessão (supondo que o ID seja armazenado na sessão)
-    $cod_administrador = $_SESSION['cod_administrador'];
-
     // Busca a senha atual do administrador no banco de dados
-    $sql = "SELECT senha FROM administrador WHERE cod_administrador = $cod_administrador";
-    $result = $conn->query($sql);
+    $sql = "SELECT senha FROM administrador WHERE cod_administrador = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $cod_administrador);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -47,13 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verificar se a senha atual está correta
         if (password_verify($current_password, $senha_atual_hash)) {
-            // Verificar se a nova senha é a mesma que a senha atual
             if (password_verify($new_password, $senha_atual_hash)) {
                 $error_message = "A nova senha não pode ser igual à senha atual.";
             } else {
-                // Verificar se as novas senhas coincidem
                 if ($new_password === $confirm_password) {
-                    // Atualizar nome, sobrenome e senha
                     $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
 
                     $update_sql = "
@@ -83,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -103,18 +114,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
         <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
         <li class="dropdown">
-            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado <i class='bx bx-chevron-right icon-right'></i></a>
             <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
                 <li><a href="prova.php">Prova</a></li>
                 <li><a href="disciplina.php">Disciplina</a></li>
-                <li><a href="questao.php">Questão</a></li>
             </ul>
+            <hr>
         </li>
         <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
         <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
         <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
         <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+        <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
     </ul>
 </section>
 

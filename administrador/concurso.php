@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -81,18 +80,21 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
 	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
 	        <li class="dropdown">
-	            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+	            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado <i class='bx bx-chevron-right icon-right'></i></a>
 	            <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
 	                <li><a href="prova.php">Prova</a></li>
-	                <li><a href="disciplina.php">Disciplina</a></li>
 	                <li><a href="questao.php">Questão</a></li>
 	            </ul>
+
+                <hr class="custom-hr">
+
 	        </li>
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+            <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -120,159 +122,152 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
         </div>
     </nav>
 </section>
-        <main id="main-container">
-            <div id="corpo">
-                <h1></h1>
+<main id="main-container">
+    <div id="corpo">
+        <h1></h1>
 
-                <?php
-                // Conexão com o banco de dados
-                $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+        <?php
+        // Conexão com o banco de dados
+        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
 
-                if ($conn->connect_error) {
-                    die("Conexão falhou: " . $conn->connect_error);
-                }
-
-                $error_message = '';
-                $success_message = '';
-
-                // Inserir ou atualizar registro
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $nome = mysqli_real_escape_string($conn, $_POST['nome']);
-                    $descricao = mysqli_real_escape_string($conn, $_POST['descricao']);
-                    $qtd_questoes = mysqli_real_escape_string($conn, $_POST['qtd_questoes']);
-                    $data = mysqli_real_escape_string($conn, $_POST['data']);
-                    $vagas = mysqli_real_escape_string($conn, $_POST['vagas']);
-                    $escolaridade_cod_escolaridade = (int)$_POST['escolaridade_cod_escolaridade'];
-                    $instituicao_cod_instituicao = (int)$_POST['instituicao_cod_instituicao'];
-                    $banca_cod_banca = (int)$_POST['banca_cod_banca'];
-                    $cod_concurso = $_POST['cod_concurso'] ?? null;
-
-                    // Verificar se o concurso já está registrado
-                    $check_sql = "SELECT * FROM concurso WHERE nome='$nome'";
-                    if ($cod_concurso) {
-                        $check_sql .= " AND cod_concurso != $cod_concurso";
-                    }
-                    $check_result = $conn->query($check_sql);
-
-                    if ($check_result->num_rows > 0) {
-                        $error_message = "Erro: concurso já registrado";
-                    } else {
-                        if ($cod_concurso) {
-                            // Atualizar registro
-                            $sql = "UPDATE concurso SET nome='$nome', descricao='$descricao', qtd_questoes='$qtd_questoes', data='$data', vagas='$vagas', escolaridade_cod_escolaridade='$escolaridade_cod_escolaridade', instituicao_cod_instituicao='$instituicao_cod_instituicao', banca_cod_banca='$banca_cod_banca' WHERE cod_concurso=$cod_concurso";
-                        } else {
-                            // Inserir novo registro
-                            $sql = "INSERT INTO concurso (nome, descricao, qtd_questoes, data, vagas, escolaridade_cod_escolaridade, instituicao_cod_instituicao, banca_cod_banca) VALUES ('$nome', '$descricao', '$qtd_questoes', '$data', '$vagas', '$escolaridade_cod_escolaridade', '$instituicao_cod_instituicao', '$banca_cod_banca')";
-                        }
-
-                        if ($conn->query($sql) === TRUE) {
-                            $success_message = "Registro salvo com sucesso!";
-                        } else {
-                            $error_message = "Erro: " . $conn->error;
-                        }
-                    }
-                }
-
-                // Excluir registro
-                if (isset($_GET['delete'])) {
-                    $cod_concurso = (int)$_GET['delete'];
-                    $sql = "DELETE FROM concurso WHERE cod_concurso=$cod_concurso";
-                    if ($conn->query($sql) === TRUE) {
-                        $success_message = "Registro excluído com sucesso!";
-                    } else {
-                        $error_message = "Erro: " . $conn->error;
-                    }
-                }
-
-                // Preencher os campos do modal para edição
-                $cod_concurso = $_GET['edit'] ?? null;
-                $nome = '';
-                $descricao = '';
-                $qtd_questoes = '';
-                $data = '';
-                $vagas = '';
-                $escolaridade_cod_escolaridade = '';
-                $instituicao_cod_instituicao = '';
-                $banca_cod_banca = '';
-
-                if ($cod_concurso) {
-                    $result = $conn->query("SELECT * FROM concurso WHERE cod_concurso=$cod_concurso");
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $nome = $row['nome'];
-                        $descricao = $row['descricao'];
-                        $qtd_questoes = $row['qtd_questoes'];
-                        $data = $row['data'];
-                        $vagas = $row['vagas'];
-                        $escolaridade_cod_escolaridade = $row['escolaridade_cod_escolaridade'];
-                        $instituicao_cod_instituicao = $row['instituicao_cod_instituicao'];
-                        $banca_cod_banca = $row['banca_cod_banca'];
-                    }
-                }
-                
-                ?>
-
-<div class="table-container container-principal">
-<h2 style= margin-left:100px;>Gerenciar Concursos</h2>
-
-    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Novo Concurso</button>
-
-    <?php
-// Consultar todos os concursos com informações das chaves estrangeiras
-$sql = "
-    SELECT c.*, 
-           e.tipo_escolaridade, 
-           i.nome AS nome_instituicao, 
-           b.nome AS nome_banca
-    FROM concurso c
-    JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
-    JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
-    JOIN banca b ON c.banca_cod_banca = b.cod_banca
-";
-$result = $conn->query($sql);
-
-
-    if ($result->num_rows > 0) {
-        echo "<table id='concursoTable' class='tabela-registros'>";
-        echo "<thead><tr>
-                <th>Nome do Concurso</th>
-                <th>Descrição</th>
-                <th>Quantidade de Questões</th>
-                <th>Data</th>
-                <th>Vagas</th>
-                <th>Escolaridade</th>
-                <th>Instituição</th>
-                <th>Banca</th>
-                <th>Ações</th>
-            </tr></thead>";
-        echo "<tbody>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['data']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>"; // Mostra o nome da escolaridade
-            echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";  // Mostra o nome da instituição
-            echo "<td>" . htmlspecialchars($row['nome_banca']) . "</td>";        // Mostra o nome da banca
-            echo "<td class='actions'>";
-            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
-            echo "<button class='btn-excluir' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\")'><i class='fas fa-trash-alt'></i></button>";
-            echo "</td>";
-            echo "</tr>";
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
         }
-        echo "</tbody>";
-        echo "</table>";
-    } else {
-        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
-    }
-    
-    ?>
-</div>
 
-            </div>
-        </main>
+        $error_message = '';
+        $success_message = '';
+
+        // Inserir ou atualizar registro
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nome = mysqli_real_escape_string($conn, $_POST['nome']);
+            $descricao = mysqli_real_escape_string($conn, $_POST['descricao']);
+            $qtd_questoes = mysqli_real_escape_string($conn, $_POST['qtd_questoes']);
+            $data = mysqli_real_escape_string($conn, $_POST['data']);
+            $vagas = mysqli_real_escape_string($conn, $_POST['vagas']);
+            $escolaridade_cod_escolaridade = (int)$_POST['escolaridade_cod_escolaridade'];
+            $instituicao_cod_instituicao = (int)$_POST['instituicao_cod_instituicao'];
+
+            $cod_concurso = $_POST['cod_concurso'] ?? null;
+
+            // Verificar se o concurso já está registrado
+            $check_sql = "SELECT * FROM concurso WHERE nome='$nome'";
+            if ($cod_concurso) {
+                $check_sql .= " AND cod_concurso != $cod_concurso";
+            }
+            $check_result = $conn->query($check_sql);
+
+            if ($check_result && $check_result->num_rows > 0) {
+                $error_message = "Erro: concurso já registrado";
+            } else {
+                if ($cod_concurso) {
+                    // Atualizar registro
+                    $sql = "UPDATE concurso SET nome='$nome', descricao='$descricao', qtd_questoes='$qtd_questoes', data='$data', vagas='$vagas', escolaridade_cod_escolaridade='$escolaridade_cod_escolaridade', instituicao_cod_instituicao='$instituicao_cod_instituicao' WHERE cod_concurso=$cod_concurso";
+                } else {
+                    // Inserir novo registro
+                    $sql = "INSERT INTO concurso (nome, descricao, qtd_questoes, data, vagas, escolaridade_cod_escolaridade, instituicao_cod_instituicao) VALUES ('$nome', '$descricao', '$qtd_questoes', '$data', '$vagas', '$escolaridade_cod_escolaridade', '$instituicao_cod_instituicao')";
+                }
+
+                if ($conn->query($sql) === TRUE) {
+                    $success_message = "Registro salvo com sucesso!";
+                } else {
+                    $error_message = "Erro: " . $conn->error;
+                }
+            }
+        }
+
+        // Excluir registro
+        if (isset($_GET['delete'])) {
+            $cod_concurso = (int)$_GET['delete'];
+            $sql = "DELETE FROM concurso WHERE cod_concurso=$cod_concurso";
+            if ($conn->query($sql) === TRUE) {
+                $success_message = "Registro excluído com sucesso!";
+            } else {
+                $error_message = "Erro: " . $conn->error;
+            }
+        }
+
+        // Preencher os campos do modal para edição
+        $cod_concurso = $_GET['edit'] ?? null;
+        $nome = '';
+        $descricao = '';
+        $qtd_questoes = '';
+        $data = '';
+        $vagas = '';
+        $escolaridade_cod_escolaridade = '';
+        $instituicao_cod_instituicao = '';
+
+        if ($cod_concurso) {
+            $result = $conn->query("SELECT * FROM concurso WHERE cod_concurso=$cod_concurso");
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $nome = $row['nome'];
+                $descricao = $row['descricao'];
+                $qtd_questoes = $row['qtd_questoes'];
+                $data = $row['data'];
+                $vagas = $row['vagas'];
+                $escolaridade_cod_escolaridade = $row['escolaridade_cod_escolaridade'];
+                $instituicao_cod_instituicao = $row['instituicao_cod_instituicao'];
+            }
+        }
+
+        ?>
+
+        <div class="table-container container-principal">
+            <h2 style="margin-left:100px;">Gerenciar Concursos</h2>
+
+            <button class="btn-adicionar" onclick="openAddModal()">Adicionar Novo Concurso</button>
+
+            <?php
+            // Consultar todos os concursos com informações das chaves estrangeiras
+            $sql = "
+                SELECT c.*, 
+                       e.tipo_escolaridade, 
+                       i.nome AS nome_instituicao
+                FROM concurso c
+                JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
+                JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
+            ";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                echo "<table id='concursoTable' class='tabela-registros'>";
+                echo "<thead><tr>
+                        <th>Nome do Concurso</th>
+                        <th>Descrição</th>
+                        <th>Quantidade de Questões</th>
+                        <th>Realizado em:</th>
+                        <th>Vagas</th>
+                        <th>Escolaridade</th>
+                        <th>Instituição</th>
+                        <th>Ações</th>
+                    </tr></thead>";
+                echo "<tbody>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['data']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>"; // Mostra o nome da escolaridade
+                    echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";  // Mostra o nome da instituição
+                    echo "<td class='actions'>";
+                    echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+                    echo "<button class='btn-excluir' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+                echo "</tbody>";
+                echo "</table>";
+            } else {
+                echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+            }
+
+            ?>
+        </div>
+    </div>
+</main>
+
 
         <!-- Modal de Adicionar/Editar Concurso -->
         <div id="add-modal" class="modal">
@@ -298,7 +293,7 @@ $result = $conn->query($sql);
 
                 <!-- Segunda linha com 3 inputs -->
                 <div class="grid-item">
-                    <label for="data_modal">Data:</label>
+                    <label for="data_modal">Realizado em:</label>
                     <input type="date" id="data_modal" name="data" value="<?php echo htmlspecialchars($data); ?>" required>
                 </div>
                 <div class="grid-item">
@@ -329,19 +324,6 @@ $result = $conn->query($sql);
                         while ($instituicao = $instituicoes->fetch_assoc()) {
                             $selected = (isset($instituicao_cod_instituicao) && $instituicao['cod_instituicao'] == $instituicao_cod_instituicao) ? ' selected' : '';
                             echo "<option value='" . $instituicao['cod_instituicao'] . "'" . $selected . ">" . htmlspecialchars($instituicao['nome']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="grid-item">
-                    <label for="banca_cod_banca">Banca:</label>
-                    <select id="banca_cod_banca" name="banca_cod_banca" required>
-                        <option value="">Selecione uma banca</option>
-                        <?php
-                        $bancas = $conn->query("SELECT * FROM banca");
-                        while ($banca = $bancas->fetch_assoc()) {
-                            $selected = (isset($banca_cod_banca) && $banca['cod_banca'] == $banca_cod_banca) ? ' selected' : '';
-                            echo "<option value='" . $banca['cod_banca'] . "'" . $selected . ">" . htmlspecialchars($banca['nome']) . "</option>";
                         }
                         ?>
                     </select>
@@ -470,7 +452,6 @@ $result = $conn->query($sql);
         setCookie("vagas", document.getElementById("vagas_modal").value, 7);
         setCookie("escolaridade_cod_escolaridade", document.getElementById("escolaridade_cod_escolaridade").value, 7);
         setCookie("instituicao_cod_instituicao", document.getElementById("instituicao_cod_instituicao").value, 7);
-        setCookie("banca_cod_banca", document.getElementById("banca_cod_banca").value, 7);
     }
 
     // Função para carregar cookies nos campos do formulário
@@ -483,7 +464,6 @@ $result = $conn->query($sql);
         document.getElementById("vagas_modal").value = getCookie("vagas") || '';
         document.getElementById("escolaridade_cod_escolaridade").value = getCookie("escolaridade_cod_escolaridade") || '';
         document.getElementById("instituicao_cod_instituicao").value = getCookie("instituicao_cod_instituicao") || '';
-        document.getElementById("banca_cod_banca").value = getCookie("banca_cod_banca") || '';
         console.log('Cookies carregados:', document.cookie); // Log para verificar cookies
     }
 
@@ -534,7 +514,6 @@ $result = $conn->query($sql);
         document.getElementById('vagas_modal').value = '';
         document.getElementById('escolaridade_cod_escolaridade').selectedIndex = 0;
         document.getElementById('instituicao_cod_instituicao').selectedIndex = 0;
-        document.getElementById('banca_cod_banca').selectedIndex = 0;
     }
 
     // Função para abrir o modal de edição
@@ -547,7 +526,6 @@ $result = $conn->query($sql);
         document.getElementById('vagas_modal').value = data.vagas;
         document.getElementById('escolaridade_cod_escolaridade').value = data.escolaridade_cod_escolaridade;
         document.getElementById('instituicao_cod_instituicao').value = data.instituicao_cod_instituicao;
-        document.getElementById('banca_cod_banca').value = data.banca_cod_banca;
         openAddModal();
     }
 

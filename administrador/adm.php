@@ -140,18 +140,20 @@ function getTrendingIconClass($current) {
 	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
 	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
 	        <li class="dropdown">
-	            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+	            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado  <i class='bx bx-chevron-right icon-right'></i></a>
 	            <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
 	                <li><a href="prova.php">Prova</a></li>
-	                <li><a href="disciplina.php">Disciplina</a></li>
 	                <li><a href="questao.php">Questão</a></li>
 	            </ul>
+
+                <hr>
 	        </li>
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -173,7 +175,7 @@ function getTrendingIconClass($current) {
         <ul class="profile-link" id="profile-dropdown">
             <li><a href="editar_dados.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
             <li><a href="adicionar_adm.php"><i class='bx bxs-cog'></i> Adicionar Adm</a></li>
-            <li><a href="sair.php"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
+            <li><a href="#" id="openLogoutModal"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
         </ul>
     </div>
 </nav>
@@ -181,9 +183,9 @@ function getTrendingIconClass($current) {
 
 		<!-- MAIN -->
 		<main>
-			<h1 class="title">Inicio</h1>
+			<h1 class="title">Início</h1>
 			<ul class="breadcrumbs">
-				<li><a href="#">Inicio</a></li>
+				<li><a href="#">Início</a></li>
 				<li class="divider">/</li>
 				<li><a href="#" class="active">Administrador</a></li>
 			</ul>
@@ -382,5 +384,40 @@ toggleSidebar.addEventListener('click', function () {
 	    }
 	});
 	</script>
+<!-- Modal de Agradecimento -->
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Muito obrigado Por acessar nosso site Tôpapirando!</p>
+        <a href="sair.php" class="btn-site">Ok</a>
+    </div>
+</div>
+
+<script>
+    // Selecionar elementos
+    const logoutModal = document.getElementById('logoutModal');
+    const openLogoutModalBtn = document.getElementById('openLogoutModal');
+    const closeLogoutModalBtn = document.querySelector('.close-btn');
+
+    // Abrir o modal quando o botão "Sair" é clicado
+    openLogoutModalBtn.addEventListener('click', function(e) {
+        e.preventDefault(); // Previne o redirecionamento imediato
+        logoutModal.style.display = 'flex';
+    });
+
+    // Fechar o modal quando o botão de fechar é clicado
+    closeLogoutModalBtn.addEventListener('click', function() {
+        logoutModal.style.display = 'none';
+    });
+
+    // Fechar o modal ao clicar fora da área do modal
+    window.addEventListener('click', function(e) {
+        if (e.target === logoutModal) {
+            logoutModal.style.display = 'none';
+        }
+    });
+</script>
+
+
 </body>
 </html>

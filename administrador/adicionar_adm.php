@@ -97,13 +97,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
         <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
         <li class="dropdown">
-            <a href="#"><i class='bx bxs-folder-open icon'></i>  <i class='bx bx-chevron-right icon-right'></i></a>
+            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado <i class='bx bx-chevron-right icon-right'></i></a>
             <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
                 <li><a href="prova.php">Prova</a></li>
                 <li><a href="disciplina.php">Disciplina</a></li>
                 <li><a href="questao.php">Questão</a></li>
             </ul>
+            <hr>
         </li>
         <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
         <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
