@@ -169,5 +169,57 @@ if ($stmt_estudante->num_rows > 0) {
             document.getElementById('errorModal').style.display = 'block';
         <?php endif; ?>
     </script>
+
+<!-- Modal Acesso Restrito -->
+<div id="modal-acesso" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span> <!-- Certifique-se que a classe é "close-btn" -->
+        <p class="modal-text">Acesso restrito, deseja continuar?</p>
+        <div class="modal-buttons">
+            <button id="ok-btn-acesso" class="btn-ok">OK</button>
+            <button id="cancel-btn-acesso" class="btn-cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Obter o modal e os botões
+    var modalAcesso = document.getElementById("modal-acesso");
+    var btnGear = document.getElementById("gear");
+    var okBtnAcesso = document.getElementById("ok-btn-acesso");
+    var cancelBtnAcesso = document.getElementById("cancel-btn-acesso");
+    var closeBtn = document.querySelector("#modal-acesso .close-btn"); // Certifique-se de selecionar o botão X corretamente
+
+    // Quando o ícone da engrenagem for clicado, exibir o modal
+    btnGear.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevenir a navegação imediata
+        modalAcesso.style.display = "block";
+    });
+
+    // Se o usuário clicar em "OK", fechar o modal e continuar com o redirecionamento
+    okBtnAcesso.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+        window.location.href = "/login_adm.php"; // Redirecionar para a página de login
+    });
+
+    // Se o usuário clicar em "Cancelar", apenas fechar o modal
+    cancelBtnAcesso.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+    });
+
+    // Fechar o modal se o usuário clicar no X
+    closeBtn.addEventListener("click", function() {
+        modalAcesso.style.display = "none";
+    });
+
+    // Fechar o modal se o usuário clicar fora dele
+    window.onclick = function(event) {
+        if (event.target == modalAcesso) {
+            modalAcesso.style.display = "none";
+        }
+    };
+</script>
+
 </body>
 </html>

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar se as senhas coincidem
     if ($_POST['senha'] !== $_POST['confirmar_senha']) {
-        $error_message = "As senhas não coincidem. Por favor, tente novamente.";
+        $error_message = "As senhas não coincidem.<br>Por favor, tente novamente.";
     } else {
         // Verificar se o e-mail já existe
         $check_email_sql = "SELECT email FROM administrador WHERE email = ?";
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Limpar os campos após o sucesso
                         $nome = $sobrenome = $email = '';
                     } else {
-                        $error_message = "Erro ao adicionar administrador. Por favor, tente novamente.";
+                        $error_message = "Erro ao adicionar administrador.<br> Por favor, tente novamente.";
                     }
 
                     $stmt_insert->close(); // Fechar o $stmt de inserção
@@ -101,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
                 <li><a href="prova.php">Prova</a></li>
-                <li><a href="disciplina.php">Disciplina</a></li>
                 <li><a href="questao.php">Questão</a></li>
             </ul>
             <hr>
@@ -110,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
         <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
         <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+        <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i>Disciplina</a></li>
     </ul>
 </section>
 

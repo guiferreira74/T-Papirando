@@ -12,10 +12,11 @@
 <body>
   
     <header>
-        <div class="interface">
+    <div class="interface">
             <div class="logo">
-                <img src="../administrador/assets/logo_papirando_final.svg" alt="Logo">     
+                <a href="../index.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
             </div>
+
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="../index.php">Início</a></li>

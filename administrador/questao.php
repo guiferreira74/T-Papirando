@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -220,10 +219,11 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 }
 
                 if ($conn->query($sql) === TRUE) {
+                    echo "<script>var saveSuccessful = true;</script>";
                     $success_message = "Registro salvo com sucesso!";
                 } else {
                     $error_message = "Erro: " . $conn->error;
-                }
+                }                
             }
         }
 
@@ -316,138 +316,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </div>
 </main>
 
-
-              <!-- Modal de Adicionar/Editar Questão -->
-<div id="add-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeAddModal()">&times;</span>
-        <form action="questao.php" method="POST">
-            <input type="hidden" id="cod_questao" name="cod_questao" value="<?php echo htmlspecialchars($cod_questao); ?>">
-
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="pergunta_modal">Pergunta:</label>
-                    <input type="text" id="pergunta_modal" name="pergunta" value="<?php echo htmlspecialchars($pergunta); ?>" placeholder="Preencha a pergunta" required>
-                </div>
-                <div class="grid-item">
-                    <label for="resposta1_modal">Resposta 1:</label>
-                    <input type="text" id="resposta1_modal" name="resposta1" value="<?php echo htmlspecialchars($resposta1); ?>" placeholder="Preencha a resposta 1" required>
-                </div>
-                <div class="grid-item">
-                    <label for="resposta2_modal">Resposta 2:</label>
-                    <input type="text" id="resposta2_modal" name="resposta2" value="<?php echo htmlspecialchars($resposta2); ?>" placeholder="Preencha a resposta 2" required>
-                </div>
-                <div class="grid-item">
-                    <label for="resposta3_modal">Resposta 3:</label>
-                    <input type="text" id="resposta3_modal" name="resposta3" value="<?php echo htmlspecialchars($resposta3); ?>" placeholder="Preencha a resposta 3" required>
-                </div>
-                <div class="grid-item">
-                    <label for="resposta4_modal">Resposta 4:</label>
-                    <input type="text" id="resposta4_modal" name="resposta4" value="<?php echo htmlspecialchars($resposta4); ?>" placeholder="Preencha a resposta 4" required>
-                </div>
-                <div class="grid-item">
-                    <label for="respostacorreta_modal">Resposta Correta:</label>
-                    <input type="text" id="respostacorreta_modal" name="respostacorreta" value="<?php echo htmlspecialchars($respostacorreta); ?>" placeholder="Preencha a resposta correta" required>
-                </div>
-                <div class="grid-item">
-                    <label for="dificuldade_cod_dificuldade">Dificuldade:</label>
-                    <select id="dificuldade_cod_dificuldade" name="dificuldade_cod_dificuldade" required>
-                        <option value="">Selecione uma Dificuldade</option>
-                        <?php
-                        $dificuldades = $conn->query("SELECT * FROM dificuldade");
-                        while ($dificuldade = $dificuldades->fetch_assoc()) {
-                            $selected = (isset($dificuldade_cod_dificuldade) && $dificuldade['cod_dificuldade'] == $dificuldade_cod_dificuldade) ? ' selected' : '';
-                            echo "<option value='" . $dificuldade['cod_dificuldade'] . "'" . $selected . ">" . htmlspecialchars($dificuldade['tipo_dificuldade']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="grid-item">
-                    <label for="disciplina_cod_disciplina">Disciplina:</label>
-                    <select id="disciplina_cod_disciplina" name="disciplina_cod_disciplina" required>
-                        <option value="">Selecione uma Disciplina</option>
-                        <?php
-                        $disciplinas = $conn->query("SELECT * FROM disciplina");
-                        while ($disciplina = $disciplinas->fetch_assoc()) {
-                            $selected = (isset($disciplina_cod_disciplina) && $disciplina['cod_disciplina'] == $disciplina_cod_disciplina) ? ' selected' : '';
-                            echo "<option value='" . $disciplina['cod_disciplina'] . "'" . $selected . ">" . htmlspecialchars($disciplina['nome']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <!-- Adicionar o campo para Prova -->
-                <div class="grid-item">
-                    <label for="prova_cod_prova">Prova:</label>
-                    <select id="prova_cod_prova" name="prova_cod_prova" required>
-                        <option value="">Selecione uma Prova</option>
-                        <?php
-                        $provas = $conn->query("SELECT * FROM prova");
-                        while ($prova = $provas->fetch_assoc()) {
-                            $selected = (isset($prova_cod_prova) && $prova['cod_prova'] == $prova_cod_prova) ? ' selected' : '';
-                            echo "<option value='" . $prova['cod_prova'] . "'" . $selected . ">" . htmlspecialchars($prova['nome']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <!-- Adicionar o campo para Concurso -->
-                <div class="grid-item">
-                    <label for="concurso_cod_concurso">Concurso:</label>
-                    <select id="concurso_cod_concurso" name="concurso_cod_concurso" required>
-                        <option value="">Selecione um Concurso</option>
-                        <?php
-                        $concursos = $conn->query("SELECT * FROM concurso");
-                        while ($concurso = $concursos->fetch_assoc()) {
-                            $selected = (isset($concurso_cod_concurso) && $concurso['cod_concurso'] == $concurso_cod_concurso) ? ' selected' : '';
-                            echo "<option value='" . $concurso['cod_concurso'] . "'" . $selected . ">" . htmlspecialchars($concurso['nome']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="button-container">
-                <button type="submit" class="save-button">Salvar</button>
-                <button type="button" class="clear-button" onclick="clearForm()">Limpar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-                <!-- Modal de confirmação -->
-                <div id="confirm-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-btn" onclick="closeModal()">&times;</span>
-                        <div class="modal-body">
-                            <p>Você tem certeza que quer excluir?</p>
-                            <div class="button-container">
-                                <button id="confirm-delete" class="btn-delete">Excluir</button>
-                                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modais de Sucesso e Erro -->
-                <div id="modal-erro" class="modal modal-erro">
-                    <div class="modal-content modal-content-erro">
-                        <span class="close-btn" onclick="closeModal('erro')">&times;</span>
-                        <p id="erro-mensagem">Erro!</p>
-                        <button id="ok-btn-erro" class="ok-btn ok-btn-erro">OK</button>
-                    </div>
-                </div>
-
-                <div id="modal-sucesso" class="modal modal-sucesso">
-                    <div class="modal-content modal-content-sucesso">
-                        <span class="close-btn" onclick="closeModal('sucesso')">&times;</span>
-                        <p id="sucesso-mensagem">Sucesso!</p>
-                        <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
-                    </div>
-                </div>
-
               <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">
@@ -508,7 +376,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                     <input type="text" id="resposta4_modal" name="resposta4" value="<?php echo htmlspecialchars($resposta4); ?>" placeholder="Preencha a resposta 4" required>
                 </div>
                 <div class="grid-item">
-                    <label for="respostacorreta_modal">Resposta Correta:</label>
+                <label for="respostacorreta_modal" style="color: #4CAF50; font-weight: bold;">Resposta Correta:</label>
                     <input type="text" id="respostacorreta_modal" name="respostacorreta" value="<?php echo htmlspecialchars($respostacorreta); ?>" placeholder="Preencha a resposta correta" required>
                 </div>
                 <div class="grid-item">
@@ -626,10 +494,14 @@ function loadCookies() {
     document.getElementById("concurso_cod_concurso").value = getCookie("concurso_cod_concurso") || '';
 }
 
-// Função para mostrar o modal de sucesso
+// Função para mostrar o modal de sucesso e fechar o modal de adição/edição
 function showSuccess(message) {
     document.getElementById('sucesso-mensagem').textContent = message;
     document.getElementById('modal-sucesso').style.display = 'block';
+
+    // Fechar o modal de adição/edição e limpar o formulário
+    closeAddModal();
+    clearForm();
 }
 
 // Função para fechar os modais
@@ -700,18 +572,19 @@ document.getElementById("ok-btn-sucesso").onclick = function() {
     closeModal('sucesso');
 };
 
-// Mostrar mensagens de erro ou sucesso com base nas variáveis PHP
 document.addEventListener('DOMContentLoaded', function() {
     <?php if ($error_message): ?>
         document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
         document.getElementById('modal-erro').style.display = "block";
     <?php elseif ($success_message): ?>
         showSuccess('<?php echo htmlspecialchars($success_message); ?>');
+        if (typeof saveSuccessful !== 'undefined' && saveSuccessful) {
+            closeAddModal();
+            clearForm();
+        }
     <?php endif; ?>
-    
-    // Carregar cookies ao carregar a página
-    loadCookies();
 });
+
 
 // Salvar automaticamente os dados quando a página for recarregada ou fechada
 window.addEventListener('beforeunload', function (event) {

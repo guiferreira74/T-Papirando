@@ -12,6 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden; 
 }
 
 .interface {
@@ -148,7 +149,6 @@ header .info ul li a {
     width: 100%;
     height: auto;
 }
-
 /* FAQ */
 .faq {
     width: 100%;
@@ -179,9 +179,8 @@ header .info ul li a {
     min-width: 320px;
     padding: 2% 0 4% 4%;
     border-left: 2px solid #2118CD;
-    max-height: 400px; /* Limita a altura visível inicialmente */
-    overflow-y: hidden; /* Esconde a rolagem inicialmente */
-    transition: max-height 0.4s ease; /* Animação para abertura */
+    max-height: 400px; /* Limita a altura visível do FAQ */
+    overflow-y: auto; /* Exibe a barra de rolagem dentro do FAQ */
 }
 
 .faq-wrapper {
@@ -216,7 +215,7 @@ header .info ul li a {
     letter-spacing: 1;
     max-height: 0;
     overflow: hidden;
-    transition: 0.3s ease-in-out;
+    transition: max-height 0.5s ease;
     font-size: 14px;
 }
 
@@ -225,7 +224,7 @@ header .info ul li a {
 }
 
 .faq-trigger:checked + .faq-title + .faq-detail {
-    max-height: 300px; /* Altura máxima quando a pergunta estiver aberta */
+    max-height: 300px; /* Define uma altura máxima para expandir o conteúdo */
 }
 
 .faq-trigger:checked + .faq-title::after {
@@ -233,10 +232,6 @@ header .info ul li a {
     transition: 0.4s ease-in-out;
 }
 
-.faq-trigger:checked ~ .faq-box {
-    max-height: 800px; /* Aumenta a altura quando qualquer pergunta é aberta */
-    overflow-y: auto;  /* Adiciona rolagem somente após abrir uma pergunta */
-}
 .modal {
     display: none; /* Esconde o modal por padrão */
     position: fixed;

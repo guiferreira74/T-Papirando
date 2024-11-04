@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 * {
     margin: 0;
@@ -19,284 +19,195 @@ body {
     margin: 0 auto;
 }
 
-.flex {
-    margin-top: 100px;
-    display: flex;
-}
-
-.info {
-    display: flex;
-    flex-direction: row;
-    gap: 20px; /* Espaçamento entre os itens */
-}
-
-/* Ajuste no tamanho da fonte dos itens do menu */
-header nav ul li a {
-    font-size: 18px; /* Tamanho da fonte dos itens do menu */
-}
-
-.btn-contato button {
-    padding: 10px 70px;
-    font-size: 18px;
-    font-weight: 600;
-    background-color: green;
-    border: 0;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: .2s;
-    color: white;
-}
-
-/* Estilo do cabeçalho */
-.logo img {
-    width: 250px; /* Ajuste da largura da logo */
-}
-
 header {
-    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
+    padding: 20px 4%;
     background-color: #2118CD;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-header > .interface {
+header .interface {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-header a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    transition: .2s;
-}
-
-header a:hover {
-    color: yellow;
-    transform: scale(1.05);
-}
-
 header nav ul {
     list-style: none;
-    display: flex; /* Exibe os itens na horizontal */
+    display: flex;
 }
 
 header nav ul li {
-    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
+    padding: 0 20px;
 }
 
-.btn-contato {
-    display: flex; /* Garante que o botão esteja na mesma linha */
-    align-items: center;
-}
-
-.btn-contato button:hover {
-    box-shadow: 0px 0px 8px #00ff08;
-    transform: scale(1.05);
-}
-
-header .info ul li a {
-    display: flex;
-    flex-direction: row;
-}
-
-.links {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end; /* Alinha os links no canto direito */
-    gap: 15px; /* Espaçamento entre os links */
-    margin-right: 250px;
-}
-
-.links a {
+header nav ul li a {
+    font-size: 18px;
+    text-decoration: none;
     color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding-left: 49px;
+    transition: color 0.3s;
 }
 
-.menu {
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no menu */
+header nav ul li a:hover {
+    color: yellow;
 }
 
-.menu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s, background-color 0.3s;  /* Transição suave */
-}
-/* Efeito de hover no menu */
-.menu a:hover {
-    color: #2118CD;  /* Cor do texto ao passar o mouse */
-    border-radius: 5px;  /* Cantos arredondados */
+.logo img {
+    width: 250px;
 }
 
-#main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 100px;
-    margin-top: 500px; /* Aumenta o espaço acima do conteúdo para 100px */
-}
-
-#corpo {
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 90px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    color:  rgba(0, 0, 0, 0.6);
-}
-#input{
-    width: 100%;
+.info {
     display: flex;
     gap: 20px;
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-#nome-sobrenome{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    padding-top: 30px;
-    border: none;
-    
-}
 
-#email-senha{
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 375px;
-  padding-top: 30px;
-  border: none;
-  
-}
-
-#button{
-    background-color: #00DB09;
-    width: 300px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-top: 25px;
-}
-
-.grid-duplo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 0px;
-    }
-    
-    .esquerda { grid-area: 1 / 1 / 2 / 2; }
-    .direita { grid-area: 1 / 2 / 2 / 3; }
-
-    .saudacao {
-        color: white;
-    }
-
-
-/* Div container com bordas arredondadas */
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 100px auto 20px; /* Adiciona margem superior para compensar o menu fixo */
     padding: 20px;
     background-color: white;
     border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-/* Estilização do container que envolve o gráfico e o botão */
-.chart-container {
-    display: flex; /* Alinha o gráfico e o botão lado a lado */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Alinha os itens ao centro */
-    gap: 20px; /* Espaçamento entre o gráfico e o botão */
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Div do gráfico */
-#donutchart {
-    width: 600px;
-    height: 400px;
-}
-
-/* Estilização do botão "Mais Detalhes" */
-.mais_detalhes button {
-    padding: 10px 20px; /* Ajuste do tamanho do botão */
-    background-color: #2118CD;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.mais_detalhes button:hover {
-    background-color: #1a1489;
-    transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
-}
-
-/* Responsividade para garantir que o layout se ajuste em telas menores */
-@media (max-width: 768px) {
-    .chart-container {
-        flex-direction: column; /* Empilha o gráfico e o botão verticalmente em telas menores */
-    }
-
-    #donutchart {
-        width: 100%; /* Garante que o gráfico ocupe a largura total em telas pequenas */
-        height: auto;
-    }
-}
-
-/* Seção de informações */
 .info-section {
-    padding: 20px;
-    margin-top: 20px;
     display: flex;
     justify-content: space-around;
+    padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
+    margin-top: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .info-item {
     text-align: center;
-    font-size: 16px;
 }
 
 .info-item h3 {
     font-size: 24px;
     color: #4CAF50;
-    margin-bottom: 5px;
+}
+/* Estilo para os links 'Sobre' e 'Ajuda' */
+.info a {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s;
+}
+
+
+
+
+/* Estilo do dropdown */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-toggle {
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+ 
+
+
+.profile-link {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    right: 0;
+    z-index: 1;
+    border-radius: 8px;
+    padding: 10px 0;
+    text-align: left;
+    min-width: 150px;
+}
+
+.profile-link.show {
+    display: block;
+}
+
+.profile-link li {
+    list-style-type: none;
+}
+
+.profile-link li a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #000;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.profile-link li a:hover {
+    background-color: #f1f1f1;
+}
+
+.profile-link li a i {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #000;
+}
+
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 20px;
 }
 
 #donutchart {
-    width: 600px;
+    width: 100%;
     height: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
+}
+
+.more-details {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #2118CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.more-details:hover {
+    background-color: #1a1489;
+    transform: translateY(-2px);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .chart-container {
+        flex-direction: column;
+    }
+
+    #donutchart {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .details-button {
@@ -318,3 +229,31 @@ header .info ul li a {
         color: white;
     }
     
+    .more-details {
+        display: inline-block; /* Altera para inline-block para que o botão se ajuste ao conteúdo */
+        padding: 8px 16px; /* Reduz o padding para diminuir o tamanho do botão */
+        background-color: #2118CD;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px; /* Diminui o tamanho da fonte */
+        font-weight: bold; /* Mantém o texto em negrito para visibilidade */
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 200px;
+    }
+    
+    .more-details:hover {
+        background-color: #1a1489;
+        transform: translateY(-2px); /* Mantém o efeito de elevação ao passar o mouse */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais profunda no hover */
+    }
+    
+    .more-details:active {
+        background-color: #150f6c;
+        transform: translateY(0);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Volta à sombra original ao clicar */
+    }

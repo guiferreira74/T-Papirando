@@ -117,7 +117,7 @@ header .info ul li a {
     margin: 0 auto;
     padding: 20px;
     gap: 40px;
-    margin-top: 50px; /* Reduzir a margem superior para aproximar o formulário do topo */
+    margin-top: 120px; /* Reduzir a margem superior para aproximar o formulário do topo */
 }
 
 .formulario-container {

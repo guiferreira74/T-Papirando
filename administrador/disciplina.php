@@ -71,7 +71,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	
 	<!-- SIDEBAR -->
 	<section id="sidebar">
-	    <a href="adm.php" class="brand"><i class='bx bxs-smile icon'></i> TÔPAPIRANDO</a>
+    <a href="adm.php" class="brand"><i class='bx bxs-smile icon'></i> TÔPAPIRANDO</a>
 	    <ul class="side-menu">
 	        <li><a href="adm.php" class="active"><i class='bx bxs-dashboard icon'></i> Início</a></li>
 	        <li><a href="ajuda_adm.php"><i class='bx bx-help-circle icon'></i> Ajuda</a></li>
@@ -97,15 +97,17 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	</section>
 
 	<!-- NAVBAR -->
-<section id="content">
-    <nav>
-        <i class='bx bx-menu toggle-sidebar' id="hg"></i>
-        <form action="#"></form>
-
-        <a href="sobre_adm.php" class="sobre">Sobre</a>
-        <a href="#" class="nav-link">
-            <i class='bx bxs-bell icon'></i>
-        </a>
+    <section id="content">
+	<nav>
+    <i class='bx bx-menu toggle-sidebar' id="hg"></i> <!-- Ícone do menu primeiro -->
+    <a href="adm.php" class="brand">
+        <img src="assets/logo_papirando_final.svg" alt="Logo" class="logo"> <!-- Logo após o menu -->
+    </a>
+    <form action="#"></form>
+    <a href="sobre_adm.php" class="sobre">Sobre</a>
+    <a href="#" class="nav-link">
+        <i class='bx bxs-bell icon'></i>
+    </a>
 
         <span class="divider"></span>
         <div class="profile">

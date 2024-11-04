@@ -18,7 +18,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desempenho</title>
-    <link rel="stylesheet" href="simulados.css">
+    <link rel="stylesheet" href="desempenhos.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -65,77 +65,67 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         chart.draw(data, options);
       }
     </script>
-
+    
     <style>
-     
-      .info {
-          display: flex;
-          gap: 20px;
-      }
+       
 
-      .info .saudacao {
-          color: white;
-      }
+        .info {
+            display: flex;
+            gap: 20px;
+        }
 
-      .container {
-          width: 90%;
-          max-width: 1200px;
-          margin: 20px auto;
-          padding: 20px;
-          background-color: white;
-          border-radius: 15px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          position: relative;
-      }
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
 
-      .chart-container {
-          position: relative;
-          width: 100%;
-          height: 400px;
-          margin-top: 20px;
-      }
+        .profile-toggle {
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
 
-      #donutchart {
-          width: 100%;
-          height: 100%;
-      }
+        .profile-link {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            right: 0;
+            z-index: 1;
+            border-radius: 8px;
+            padding: 10px 0;
+            text-align: left;
+        }
 
-      .more-details {
-          display: block;
-          width: 100%;
-          padding: 10px;
-          background-color: #2118CD;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          text-align: center;
-          cursor: pointer;
-          margin-top: 10px;
-          transition: background-color 0.3s ease;
-      }
+        .profile-link.show {
+            display: block;
+        }
 
-      .more-details:hover {
-          background-color: #1a1489;
-      }
+        .profile-link li {
+            list-style-type: none;
+        }
 
-      .info-section {
-          display: flex;
-          justify-content: space-around;
-          padding: 20px;
-          background-color: #f9f9f9;
-          border-radius: 10px;
-          margin-top: 20px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      }
+        .profile-link li a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #000;
+            text-decoration: none;
+        }
 
-      .info-item {
-          text-align: center;
-      }
+        .profile-link li a i {
+            margin-right: 8px;
+            font-size: 18px;
+            color: #000;
+        }
 
-      .info-item h3 {
-          font-size: 24px;
-          color: #4CAF50;
-      }
+        .profile-link li a:hover {
+            background-color: #f1f1f1;
+        }
+
+        
     </style>
 </head>
 
@@ -143,7 +133,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
 <header>
     <div class="interface">
         <div class="logo">
-            <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
+            <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>
         </div>
         <nav class="menu-desktop">
             <ul>
@@ -153,17 +143,13 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
         </nav>
-
-        <!-- Dropdown de Perfil -->
         <div class="info">
             <a href="sobre_user.php">Sobre</a>
             <a href="ajuda_user.php">Ajuda</a>
-            
-            <!-- Link de saudação com o nome e o dropdown -->
             <div class="profile-dropdown">
                 <a href="#" class="profile-toggle" id="profile-toggle">
                     Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>
-                    <i class='bx bx-chevron-down'></i> <!-- Ícone de seta para baixo -->
+                    <i class='bx bx-chevron-down'></i>
                 </a>
                 <ul class="profile-link" id="profile-dropdown">
                     <li><a href="editar_dados_user.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
@@ -173,143 +159,40 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         </div>
     </div>
 </header>
-<script>
-// Modal script
-document.addEventListener('DOMContentLoaded', function () {
-    // Modal de sucesso
-    const successModal = document.getElementById('successModal');
-    const okBtnSucesso = document.getElementById('okBtnSucesso');
 
-    if (successModal) {
-        successModal.style.display = 'block';
-        okBtnSucesso.addEventListener('click', function () {
-            window.location.href = '../index.php';
-        });
-    }
+<div class="container">
+    <div class="info-section">
+        <div class="info-item">
+            <h3>12</h3>
+            Simulados Feitos
+        </div>
+        <div class="info-item">
+            <h3>320</h3>
+            Questões Realizadas
+        </div>
+    </div>
 
-    // Modal de erro
-    const errorModal = document.getElementById('errorModal');
-    const okBtnErro = document.getElementById('okBtnErro');
-    const closeBtnErro = document.querySelector('.modal-erro .close-btn');
-
-    if (errorModal) {
-        errorModal.style.display = 'block';
-        okBtnErro.addEventListener('click', function () {
-            errorModal.style.display = 'none';
-        });
-
-        closeBtnErro.addEventListener('click', function () {
-            errorModal.style.display = 'none';
-        });
-    }
-});
-</script>
+    <div class="chart-container">
+        <button class="more-details">Mais detalhes</button>
+        <div id="donutchart"></div>
+    </div>
+</div>
 
 <script>
-  // Mostrar e esconder o dropdown quando o usuário clica
+// Mostrar e esconder o dropdown quando o usuário clica
 const profileToggle = document.getElementById('profile-toggle');
 const profileDropdown = document.getElementById('profile-dropdown');
 
 profileToggle.addEventListener('click', function (e) {
-    e.preventDefault(); // Evita o comportamento padrão do link
-    profileDropdown.classList.toggle('show'); // Alterna a classe "show"
+    e.preventDefault();
+    profileDropdown.classList.toggle('show');
 });
 
-// Fechar o dropdown quando o usuário clica fora dele
 window.addEventListener('click', function (e) {
     if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
         profileDropdown.classList.remove('show');
     }
 });
-
 </script>
-
-<style>
-/* Estilo para o dropdown */
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.profile-toggle {
-    color: white; /* Cor do texto de saudação */
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.profile-toggle i {
-    margin-left: 5px;
-}
-
-.profile-link {
-    display: none; /* O dropdown estará oculto inicialmente */
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    right: 0;
-    z-index: 1;
-    border-radius: 8px;
-    min-width: 150px;
-    padding: 10px 0;
-    text-align: left;
-}
-
-.profile-link.show {
-    display: block;
-}
-
-.profile-link li {
-    list-style-type: none;
-}
-
-.profile-link li a {
-    white-space: nowrap; /* Evita que o texto quebre a linha */
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    color: #000; /* Cor do texto */
-    text-decoration: none;
-}
-
-.profile-link li a i {
-    margin-right: 8px; /* Espaço entre o ícone e o texto */
-    font-size: 18px; /* Ajuste do tamanho dos ícones */
-    color: #000; /* Cor dos ícones */
-}
-
-.profile-link li a:hover {
-    background-color: #f1f1f1; /* Muda a cor ao passar o mouse */
-}
-
-/* Estilo adicional para o visual arredondado do dropdown */
-.profile-link {
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 10px;
-}
-
-</style>
-
-    <div class="container">
-        <!-- Seção de informações -->
-        <div class="info-section">
-            <div class="info-item">
-                <h3>12</h3>
-                Simulados Feitos
-            </div>
-            <div class="info-item">
-                <h3>320</h3>
-                Questões Realizadas
-            </div>
-        </div>
-
-        <!-- Gráfico e botão "Mais Detalhes" -->
-        <div class="chart-container">
-            <div id="donutchart"></div>
-           
-        </div>
-    </div>
 </body>
 </html>

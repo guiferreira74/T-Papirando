@@ -83,7 +83,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	            <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
 	                <li><a href="prova.php">Prova</a></li>
-	                <li><a href="disciplina.php">Disciplina</a></li>
+	                <li><a href="questao.php">Questão</a></li>
 	               
 	            </ul>
                 <hr>
