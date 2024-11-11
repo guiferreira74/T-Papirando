@@ -476,3 +476,15 @@ header .info ul li a {
 .modal-buttons .btn-cancel:hover {
     background-color: darkred; /* Efeito de hover para o botão Cancelar */
 }
+
+.lembrar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-top: 10px; /* Espaçamento acima do checkbox */
+    font-size: 14px; /* Tamanho da fonte ajustado */
+}
+
+.lembrar-container input[type="checkbox"] {
+    margin-right: 5px; /* Espaço entre o checkbox e o texto */
+}

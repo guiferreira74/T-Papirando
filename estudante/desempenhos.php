@@ -28,8 +28,9 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['Erros', 160],
-          ['Acertos', 160]
+          ['Acertos', 160],
+          ['Erros', 160]
+         
         ]);
 
         var options = {
@@ -41,7 +42,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
             italic: true
           },
           pieHole: 0.5,
-          colors: ['#e0440e', '#2118CD'],
+          colors: ['#2118CD', '#e0440e'],
           pieSliceText: 'percentage',
           legend: {
             position: 'bottom'

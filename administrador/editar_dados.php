@@ -19,12 +19,13 @@ if ($conn->connect_error) {
 // Inicializando variáveis de formulário para manter os valores inseridos
 $nome = '';
 $sobrenome = '';
+$email = '';
 
 // Verifica o administrador logado pela sessão
 $cod_administrador = $_SESSION['cod_administrador'];
 
 // Busca os dados do administrador no banco de dados
-$sql = "SELECT nome, sobrenome FROM administrador WHERE cod_administrador = ?";
+$sql = "SELECT nome, sobrenome, email FROM administrador WHERE cod_administrador = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $cod_administrador);
 $stmt->execute();
@@ -34,6 +35,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $nome = $row['nome'];
     $sobrenome = $row['sobrenome'];
+    $email = $row['email'];
 }
 
 $error_message = '';
@@ -43,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Receber dados do formulário
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
+    $email = $_POST['email'];
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
@@ -68,15 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $update_sql = "
                         UPDATE administrador 
-                        SET nome = ?, sobrenome = ?, senha = ?
+                        SET nome = ?, sobrenome = ?, email = ?, senha = ?
                         WHERE cod_administrador = ?
                     ";
 
                     $stmt = $conn->prepare($update_sql);
-                    $stmt->bind_param('sssi', $nome, $sobrenome, $new_password_hash, $cod_administrador);
+                    $stmt->bind_param('ssssi', $nome, $sobrenome, $email, $new_password_hash, $cod_administrador);
 
                     if ($stmt->execute()) {
-                        $success_message = "Senha atualizada com sucesso,<br>por favor registre-se novamente";
+                        $success_message = "Dados atualizados com sucesso,<br>por favor registre-se novamente";
                     } else {
                         $error_message = "Erro ao atualizar os dados. Por favor, tente novamente.";
                     }
@@ -92,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -118,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul class="side-dropdown">
                 <li><a href="concurso.php">Concurso</a></li>
                 <li><a href="prova.php">Prova</a></li>
-                <li><a href="disciplina.php">Disciplina</a></li>
+                <li><a href="questao.php">Questão</a></li>
             </ul>
             <hr>
         </li>
@@ -159,34 +163,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Formulário de edição de dados -->
         <form action="editar_dados.php" method="POST">
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" value="<?php echo htmlspecialchars($nome); ?>" required>
-            </div>
+        <div class="form-group">
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+</div>
 
-            <div class="form-group">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
-            </div>
+    <div class="form-group">
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
+    </div>
 
-            <div class="form-group">
-                <label for="current_password">Senha atual</label>
-                <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual" required>
-            </div>
+    <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
+    </div>
 
-            <div class="form-group">
-                <label for="new_password">Nova senha</label>
-                <input type="password" id="new_password" name="new_password" placeholder="Digite a nova senha" required>
-            </div>
+    <div class="form-group">
+        <label for="current_password">Senha atual</label>
+        <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual" required>
+    </div>
 
-            <div class="form-group">
-                <label for="confirm_password">Confirme a nova senha</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirme a nova senha" required>
-            </div>
+    <div class="form-group">
+        <label for="new_password">Nova senha</label>
+        <input type="password" id="new_password" name="new_password" placeholder="Digite a nova senha" required>
+    </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn-save">Salvar Alterações</button>
-            </div>
+    <div class="form-group">
+        <label for="confirm_password">Confirme a nova senha</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirme a nova senha" required>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn-save">Salvar Alterações</button>
+    </div>
+
         </form>
     </div>
 

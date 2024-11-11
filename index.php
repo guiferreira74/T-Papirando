@@ -77,13 +77,13 @@
         flex: 1;
     }
 
-    /* Estilos do rodapé */
     footer {
-        background-color: #333;
-        color: white;
-        padding: 20px 10px;
-        width: 100%;
-    }
+    background: linear-gradient(to bottom, #2118cd 65%, #4682b4 100%); /* Azul escuro até o meio, transição para azul intermediário */
+    color: white;
+    padding: 20px 10px;
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.9); /* Sombra para efeito de profundidade */
+}
 
     /* Layout flexível e responsivo */
     .footer-container {
@@ -125,7 +125,7 @@
         text-align: center;
         font-size: 10px;
         margin-top: 10px;
-        color: #888;
+        color: white;
     }
 
     /* Responsividade para telas menores */
@@ -146,15 +146,19 @@
         <!-- Informações da empresa -->
         <div class="footer-column">
             <h3>TôPapirando</h3>
-            <p>Plataforma para você testar seu conhecimento e se preparar para o seu concurso.<br>Acesse simulados, desempenho e mais recursos exclusivos!</p>
+            <p>Plataforma para você testar seu conhecimento e se preparar para o seu concurso.<br>Acesse simulados, desempenho e muito mais!</p>
         </div>
 
         <!-- Links sociais -->
         <div class="footer-column">
             <h4>Siga-nos</h4>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/topapirando/" target="_blank"><i class="fab fa-instagram"></i></a>
-            </div>
+            <a href="https://www.instagram.com/topapirando/" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 24px; height: 24px;">
+            <path fill="#E4405F" d="M224.1 141c-63.6 0-114.9 51.4-114.9 114.9S160.5 370.9 224.1 370.9 339 319.5 339 255.9 287.7 141 224.1 141zm0 186.6c-39.6 0-71.7-32.1-71.7-71.7s32.1-71.7 71.7-71.7 71.7 32.1 71.7 71.7-32.1 71.7-71.7 71.7zm146.4-194.3c0 14.9-12 27-27 27-14.9 0-27-12-27-27s12-27 27-27c15 0 27 12 27 27zm76.1 27.2c-1.7-35.7-9.9-67.5-36.2-93.8s-58-34.5-93.8-36.2c-37-2.1-148.5-2.1-185.5 0-35.7 1.7-67.5 9.9-93.8 36.2S4.6 125.2 2.9 160.9c-2.1 37-2.1 148.5 0 185.5 1.7 35.7 9.9 67.5 36.2 93.8s58 34.5 93.8 36.2c37 2.1 148.5 2.1 185.5 0 35.7-1.7 67.5-9.9 93.8-36.2s34.5-58 36.2-93.8c2.1-37 2.1-148.5 0-185.5zm-48.3 232c-7.8 19.6-22.9 34.7-42.5 42.5-29.4 11.7-99.2 9-132.7 9s-103.4 2.6-132.7-9c-19.6-7.8-34.7-22.9-42.5-42.5-11.7-29.4-9-99.2-9-132.7s-2.6-103.4 9-132.7c7.8-19.6 22.9-34.7 42.5-42.5 29.4-11.7 99.2-9 132.7-9s103.4-2.6 132.7 9c19.6 7.8 34.7 22.9 42.5 42.5 11.7 29.4 9 99.2 9 132.7s2.6 103.4-9 132.7z"/>
+        </svg>
+    </a>
+</div>
+
         </div>
     </div>
     <div class="footer-bottom">

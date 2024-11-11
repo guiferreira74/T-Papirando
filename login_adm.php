@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obter os dados do formulário
     $email = $conn->real_escape_string($_POST['email']);
     $senha = $_POST['senha'];
+    $lembrar_dados = isset($_POST['lembrar_dados']); // Verificar se o checkbox foi marcado
 
     // Verificar se o e-mail existe na tabela de administradores
     $sql_administrador = "SELECT cod_administrador, nome, sobrenome, senha FROM administrador WHERE email = ?";
@@ -34,43 +35,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_administrador->bind_result($cod_administrador, $nome, $sobrenome, $hashed_senha_administrador);
         $stmt_administrador->fetch();
 
-        // Verificar se a senha está criptografada
-        if (password_needs_rehash($hashed_senha_administrador, PASSWORD_DEFAULT)) {
-            // Se a senha não está criptografada, compará-la diretamente
-            if ($senha == $hashed_senha_administrador) {
-                // Se a senha for correta, criptografar e atualizar o banco de dados
-                $new_hashed_senha = password_hash($senha, PASSWORD_DEFAULT);
-                $update_sql = "UPDATE administrador SET senha = ? WHERE cod_administrador = ?";
-                $update_stmt = $conn->prepare($update_sql);
-                $update_stmt->bind_param("si", $new_hashed_senha, $cod_administrador);
-                $update_stmt->execute();
-                $update_stmt->close();
+        // Verificar a senha com hash
+        if (password_verify($senha, $hashed_senha_administrador)) {
+            // Definir sessão e redirecionar
+            $_SESSION['loggedin'] = true;
+            $_SESSION['cod_administrador'] = $cod_administrador;
+            $_SESSION['nome'] = $nome . ' ' . $sobrenome; // Armazenar o nome completo
+            $_SESSION['tipo_acesso'] = 3;
 
-                // Definir sessão e redirecionar
-                $_SESSION['loggedin'] = true;
-                $_SESSION['cod_administrador'] = $cod_administrador;
-                $_SESSION['nome'] = $nome . ' ' . $sobrenome; // Armazenar o nome completo
-                $_SESSION['tipo_acesso'] = 3;
-
-                header("Location: ./administrador/adm.php");
-                exit();
+            // Lembrar dados
+            if ($lembrar_dados) {
+                setcookie('email_adm', $email, time() + (86400 * 30), "/"); // 30 dias
+                setcookie('senha_adm', $senha, time() + (86400 * 30), "/"); // 30 dias
             } else {
-                $error_message = 'Senha incorreta.';
+                // Remover cookies se a opção não for marcada
+                setcookie('email_adm', '', time() - 3600, "/");
+                setcookie('senha_adm', '', time() - 3600, "/");
             }
+
+            // Redirecionar para a página do administrador
+            header("Location: ./administrador/adm.php");
+            exit();
         } else {
-            // Verificar a senha com hash
-            if (password_verify($senha, $hashed_senha_administrador)) {
-                // Definir sessão e redirecionar
-                $_SESSION['loggedin'] = true;
-                $_SESSION['cod_administrador'] = $cod_administrador;
-                $_SESSION['nome'] = $nome . ' ' . $sobrenome; // Armazenar o nome completo
-                $_SESSION['tipo_acesso'] = 3;
-
-                header("Location: ./administrador/adm.php");
-                exit();
-            } else {
-                $error_message = 'Senha incorreta.';
-            }
+            $error_message = 'Senha incorreta.';
         }
     } else {
         $error_message = 'E-mail não encontrado.';
@@ -82,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,26 +120,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         
         <!-- Formulário de login -->
-        <form action="" method="POST">
-            <div class="input-box">
-                <input type="email" name="email" required title="Preencha o seu email">
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <input type="password" name="senha" required title="Preencha a sua senha">
-                <label>Senha</label>
-            </div>
-
-            <!-- Botão de login -->
-            <button type="submit" class="login-btn">Entrar</button>
-        </form>
-
-     <!-- Link de senha esquecida -->
-<div class="forgot-password">
-    <a href="#">Esqueceu sua senha?</a>
-</div>
-
+<form action="" method="POST">
+    <div class="input-box">
+        <input type="email" name="email" value="<?php echo isset($_COOKIE['email_adm']) ? $_COOKIE['email_adm'] : ''; ?>" required>
+        <label>Email</label>
     </div>
+    <div class="input-box">
+        <input type="password" name="senha" value="<?php echo isset($_COOKIE['senha_adm']) ? $_COOKIE['senha_adm'] : ''; ?>" required>
+        <label>Senha</label>
+    </div>
+
+    <!-- Botão de login -->
+    <button type="submit" class="login-btn">Entrar</button>
+
+    <!-- Lembrar meus dados -->
+    <div class="lembrar-container">
+        <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email_adm']) ? 'checked' : ''; ?>>
+        <label for="checar">Lembrar meus dados</label>
+    </div>
+</form>
+
+</div>
 
     <div class="img_content">
         <img src="/administrador/assets/Login_Adm.svg" alt="Login Admin Image">

@@ -93,7 +93,7 @@ if ($stmt_estudante->num_rows > 0) {
 
             <nav class="menu-desktop">
                 <ul>
-                    <li><a href="index.php" class="simulados">Início</a></li>
+                    <li><a href="index.php" class="inicio">Início</a></li>
                     <li><a href="simulados.php" class="simulados">Simulados</a></li>
                     <li><a href="bancas.php" class="bancas">Bancas</a></li>
                     <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
@@ -103,7 +103,7 @@ if ($stmt_estudante->num_rows > 0) {
             <div class="info"> 
                 <a href="./estudante/sobre.php">Sobre</a>
                 <a href="./estudante/ajuda.php">Ajuda</a>
-                <a href="login_adm.php"><i class="fa-solid fa-gear" id="gear"></i></a>
+                <a href="#"><i class="fa-solid fa-gear" id="gear"></i></a>
                 </div>
             </div>
         </div>
@@ -139,6 +139,73 @@ if ($stmt_estudante->num_rows > 0) {
             </div>
         </div>
     </main>
+
+     <!-- Modal Simulados -->
+     <div id="modal-simulados" class="modal modal-custom">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, faça o login para ver o simulado.</p>
+            <button id="ok-btn-simulados" class="btn-custom">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal Desempenho -->
+    <div id="modal-desempenho" class="modal modal-custom">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Por favor, faça o login para ver o seu desempenho.</p>
+            <button id="ok-btn-desempenho" class="btn-custom">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Obter elementos dos modais e botões
+        var modalSimulados = document.getElementById("modal-simulados");
+        var modalDesempenho = document.getElementById("modal-desempenho");
+
+        var closeBtns = document.getElementsByClassName("close-btn");
+        var okBtnSimulados = document.getElementById("ok-btn-simulados");
+        var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+
+        // Função para mostrar um modal específico
+        function showModal(modal) {
+            modal.style.display = "block";
+        }
+
+        // Função para esconder o modal
+        function closeModal() {
+            modalSimulados.style.display = "none";
+            modalDesempenho.style.display = "none";
+        }
+
+        // Adicionar eventos de clique para os links Simulados e Desempenho
+        document.querySelectorAll('.menu-desktop a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (this.classList.contains("simulados")) {
+                    e.preventDefault(); 
+                    showModal(modalSimulados);
+                } else if (this.classList.contains("desempenho")) {
+                    e.preventDefault(); 
+                    showModal(modalDesempenho);
+                }
+            });
+        });
+
+        // Adicionar eventos de clique para os botões de fechar e os botões OK
+        Array.from(closeBtns).forEach(function(btn) {
+            btn.onclick = closeModal;
+        });
+        okBtnSimulados.onclick = closeModal;
+        okBtnDesempenho.onclick = closeModal;
+
+        // Fechar o modal se o usuário clicar fora dele
+        window.onclick = function(event) {
+            if (event.target == modalSimulados || event.target == modalDesempenho) {
+                closeModal();
+            }
+        }
+    </script>
+
 
     <!-- Modal Erro -->
     <div id="errorModal" class="modal modal-custom" style="<?php echo !empty($error_message) ? 'display:block;' : 'display:none;'; ?>">

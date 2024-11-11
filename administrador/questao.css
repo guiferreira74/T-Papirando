@@ -209,7 +209,7 @@ body {
     width: auto; /* Mantém a largura da tabela de acordo com o conteúdo */
     border-collapse: collapse;
     table-layout: auto;
-    margin-left: 250px;
+    margin-left: 50px;
 }
 
 
@@ -466,7 +466,45 @@ hr {
     position: relative;
     border-radius: 8px;
 }
+.horizontal-answers {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
 
+.vertical-answer {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.question-container {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.highlight-question {
+    font-size: 1.5rem; /* Larger font size for prominence */
+    font-weight: bold;
+    color: black; /* Highlighted in black */
+}
+
+.question-field {
+    width: 100%; /* Takes the full width */
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.details-container {
+    margin-top: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 .close-btn {
     color: #aaa;
     position: absolute;
@@ -603,3 +641,4 @@ hr {
     background-color: #000000; /* Preto absoluto */
     margin: 5px 0;
 }
+

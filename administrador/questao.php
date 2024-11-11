@@ -176,142 +176,127 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
         <h1></h1>
         
         <?php
-        // Conexão com o banco de dados
-        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+// Conexão com o banco de dados
+$conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
 
-        if ($conn->connect_error) {
-            die("Conexão falhou: " . $conn->connect_error);
-        }
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
 
-        $error_message = '';
-        $success_message = '';
+$error_message = '';
+$success_message = '';
 
-        // Inserir ou atualizar questão
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $pergunta = mysqli_real_escape_string($conn, $_POST['pergunta']);
-            $resposta1 = mysqli_real_escape_string($conn, $_POST['resposta1']);
-            $resposta2 = mysqli_real_escape_string($conn, $_POST['resposta2']);
-            $resposta3 = mysqli_real_escape_string($conn, $_POST['resposta3']);
-            $resposta4 = mysqli_real_escape_string($conn, $_POST['resposta4']);
-            $respostacorreta = mysqli_real_escape_string($conn, $_POST['respostacorreta']);
-            $dificuldade_cod_dificuldade = (int)$_POST['dificuldade_cod_dificuldade'];
-            $disciplina_cod_disciplina = (int)$_POST['disciplina_cod_disciplina'];
-            $prova_cod_prova = (int)$_POST['prova_cod_prova'];
-            $concurso_cod_concurso = (int)$_POST['concurso_cod_concurso'];
-            $cod_questao = $_POST['cod_questao'] ?? null;
+// Inserir ou atualizar questão
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $pergunta = mysqli_real_escape_string($conn, $_POST['pergunta']);
+    $resposta1 = mysqli_real_escape_string($conn, $_POST['resposta1']);
+    $desc1 = mysqli_real_escape_string($conn, $_POST['desc1']);
+    $resposta2 = mysqli_real_escape_string($conn, $_POST['resposta2']);
+    $desc2 = mysqli_real_escape_string($conn, $_POST['desc2']);
+    $resposta3 = mysqli_real_escape_string($conn, $_POST['resposta3']);
+    $desc3 = mysqli_real_escape_string($conn, $_POST['desc3']);
+    $resposta4 = mysqli_real_escape_string($conn, $_POST['resposta4']);
+    $desc4 = mysqli_real_escape_string($conn, $_POST['desc4']);
+    $respostacorreta = mysqli_real_escape_string($conn, $_POST['respostacorreta']);
+    $desc_correta = mysqli_real_escape_string($conn, $_POST['desc_correta']);
+    $dificuldade_cod_dificuldade = (int)$_POST['dificuldade_cod_dificuldade'];
+    $disciplina_cod_disciplina = (int)$_POST['disciplina_cod_disciplina'];
+    $prova_cod_prova = (int)$_POST['prova_cod_prova'];
+    $concurso_cod_concurso = (int)$_POST['concurso_cod_concurso'];
+    $cod_questao = $_POST['cod_questao'] ?? null;
 
-            // Verificar se a questão já está registrada
-            $check_sql = "SELECT * FROM questao WHERE pergunta='$pergunta'";
-            if ($cod_questao) {
-                $check_sql .= " AND cod_questao != $cod_questao";
-            }
-            $check_result = $conn->query($check_sql);
+    // Verificar se a questão já está registrada
+    $check_sql = "SELECT * FROM questao WHERE pergunta='$pergunta'";
+    if ($cod_questao) {
+        $check_sql .= " AND cod_questao != $cod_questao";
+    }
+    $check_result = $conn->query($check_sql);
 
-            if ($check_result->num_rows > 0) {
-                $error_message = "Erro: questão já registrada";
-            } else {
-                if ($cod_questao) {
-                    // Atualizar questão
-                    $sql = "UPDATE questao SET pergunta='$pergunta', resposta1='$resposta1', resposta2='$resposta2', resposta3='$resposta3', resposta4='$resposta4', respostacorreta='$respostacorreta', dificuldade_cod_dificuldade='$dificuldade_cod_dificuldade', disciplina_cod_disciplina='$disciplina_cod_disciplina', prova_cod_prova='$prova_cod_prova', concurso_cod_concurso='$concurso_cod_concurso' WHERE cod_questao=$cod_questao";
-                } else {
-                    // Inserir nova questão
-                    $sql = "INSERT INTO questao (pergunta, resposta1, resposta2, resposta3, resposta4, respostacorreta, dificuldade_cod_dificuldade, disciplina_cod_disciplina, prova_cod_prova, concurso_cod_concurso) VALUES ('$pergunta', '$resposta1', '$resposta2', '$resposta3', '$resposta4', '$respostacorreta', '$dificuldade_cod_dificuldade', '$disciplina_cod_disciplina', '$prova_cod_prova', '$concurso_cod_concurso')";
-                }
-
-                if ($conn->query($sql) === TRUE) {
-                    echo "<script>var saveSuccessful = true;</script>";
-                    $success_message = "Registro salvo com sucesso!";
-                } else {
-                    $error_message = "Erro: " . $conn->error;
-                }                
-            }
-        }
-
-        // Excluir questão
-        if (isset($_GET['delete'])) {
-            $cod_questao = (int)$_GET['delete'];
-            $sql = "DELETE FROM questao WHERE cod_questao=$cod_questao";
-            if ($conn->query($sql) === TRUE) {
-                $success_message = "Registro excluído com sucesso!";
-            } else {
-                $error_message = "Erro: " . $conn->error;
-            }
-        }
-
-        // Preencher os campos do modal para edição
-        $cod_questao = $_GET['edit'] ?? null;
-        $pergunta = '';
-        $resposta1 = '';
-        $resposta2 = '';
-        $resposta3 = '';
-        $resposta4 = '';
-        $respostacorreta = '';
-        $dificuldade_cod_dificuldade = '';
-        $disciplina_cod_disciplina = '';
-        $prova_cod_prova = '';
-        $concurso_cod_concurso = '';
-
+    if ($check_result->num_rows > 0) {
+        $error_message = "Erro: questão já registrada";
+    } else {
         if ($cod_questao) {
-            $result = $conn->query("SELECT * FROM questao WHERE cod_questao=$cod_questao");
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $pergunta = $row['pergunta'];
-                $resposta1 = $row['resposta1'];
-                $resposta2 = $row['resposta2'];
-                $resposta3 = $row['resposta3'];
-                $resposta4 = $row['resposta4'];
-                $respostacorreta = $row['respostacorreta'];
-                $dificuldade_cod_dificuldade = $row['dificuldade_cod_dificuldade'];
-                $disciplina_cod_disciplina = $row['disciplina_cod_disciplina'];
-                $prova_cod_prova = $row['prova_cod_prova'];
-                $concurso_cod_concurso = $row['concurso_cod_concurso'];
-            }
+            // Atualizar questão
+            $sql = "UPDATE questao SET pergunta='$pergunta', resposta1='$resposta1', desc1='$desc1',
+                    resposta2='$resposta2', desc2='$desc2', resposta3='$resposta3', desc3='$desc3',
+                    resposta4='$resposta4', desc4='$desc4', respostacorreta='$respostacorreta', desc_correta='$desc_correta',
+                    dificuldade_cod_dificuldade='$dificuldade_cod_dificuldade', disciplina_cod_disciplina='$disciplina_cod_disciplina',
+                    prova_cod_prova='$prova_cod_prova', concurso_cod_concurso='$concurso_cod_concurso' WHERE cod_questao=$cod_questao";
+        } else {
+            // Inserir nova questão
+            $sql = "INSERT INTO questao (pergunta, resposta1, desc1, resposta2, desc2, resposta3, desc3, resposta4, desc4, 
+                    respostacorreta, desc_correta, dificuldade_cod_dificuldade, disciplina_cod_disciplina, prova_cod_prova, concurso_cod_concurso) 
+                    VALUES ('$pergunta', '$resposta1', '$desc1', '$resposta2', '$desc2', '$resposta3', '$desc3', '$resposta4', '$desc4', 
+                    '$respostacorreta', '$desc_correta', '$dificuldade_cod_dificuldade', '$disciplina_cod_disciplina', '$prova_cod_prova', '$concurso_cod_concurso')";
         }
-        ?>
 
-        <div class="table-container container-principal">
-            <h2 style="margin-left:200px;">Gerenciar Questões</h2>
-            <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Questão</button>
+        if ($conn->query($sql) === TRUE) {
+            $success_message = "Registro salvo com sucesso!";
+        } else {
+            $error_message = "Erro: " . $conn->error;
+        }
+    }
+}
 
-            <?php
-            // Ajustar a consulta SQL para buscar os dados das tabelas estrangeiras
-            $result = $conn->query("
-                SELECT q.*, d.tipo_dificuldade, disc.nome as nome_disciplina, p.nome as nome_prova, c.nome as nome_concurso
-                FROM questao q
-                JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
-                JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
-                JOIN prova p ON q.prova_cod_prova = p.cod_prova
-                JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
-            ");
+// Excluir questão
+if (isset($_GET['delete'])) {
+    $cod_questao = (int)$_GET['delete'];
+    $sql = "DELETE FROM questao WHERE cod_questao=$cod_questao";
+    if ($conn->query($sql) === TRUE) {
+        $success_message = "Registro excluído com sucesso!";
+    } else {
+        $error_message = "Erro: " . $conn->error;
+    }
+}
+?>
 
-            if ($result->num_rows > 0) {
-                echo "<table id='questaoTable' class='tabela-registros'>";
-                echo "<thead><tr><th>Pergunta</th><th>Resposta 1</th><th>Resposta 2</th><th>Resposta 3</th><th>Resposta 4</th><th>Resposta Correta</th><th>Dificuldade</th><th>Disciplina</th><th>Prova</th><th>Concurso</th><th>Ações</th></tr></thead>";
-                echo "<tbody>";
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['pergunta']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['resposta1']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['resposta2']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['resposta3']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['resposta4']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['respostacorreta']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";  // Mostra o nome da dificuldade
-                    echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";  // Mostra o nome da disciplina
-                    echo "<td>" . htmlspecialchars($row['nome_prova']) . "</td>";  // Mostra o nome da prova
-                    echo "<td>" . htmlspecialchars($row['nome_concurso']) . "</td>";  // Mostra o nome do concurso
-                    echo "<td class='actions'>";
-                    echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
-                    echo "<button class='btn-excluir' onclick='openModal(\"questao.php?delete=" . $row['cod_questao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                echo "</tbody>";
-                echo "</table>";
-            } else {
-                echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
-            }
-            ?>
+<div class="table-container container-principal">
+    <h2 style="margin-left:200px;">Gerenciar Questões</h2>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Questão</button>
+
+    <?php
+    $result = $conn->query("
+        SELECT q.*, d.tipo_dificuldade, disc.nome as nome_disciplina, p.nome as nome_prova, c.nome as nome_concurso
+        FROM questao q
+        JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
+        JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
+        JOIN prova p ON q.prova_cod_prova = p.cod_prova
+        JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
+    ");
+
+    if ($result->num_rows > 0) {
+        echo "<table id='questaoTable' class='tabela-registros'>";
+        echo "<thead><tr><th>Pergunta</th><th>Resp 1</th><th>Desc 1</th><th>Resp 2</th><th>Desc 2</th><th>Resp 3</th><th>Desc 3</th><th>Resp 4</th><th>Desc 4</th><th>Resp Correta</th><th>Desc Correta</th><th>Dificuldade</th><th>Disciplina</th><th>Prova</th><th>Concurso</th><th>Ações</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['pergunta']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['resposta1']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['desc1']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['resposta2']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['desc2']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['resposta3']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['desc3']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['resposta4']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['desc4']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['respostacorreta']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['desc_correta']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nome_prova']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nome_concurso']) . "</td>";
+            echo "<td class='actions'>";
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"questao.php?delete=" . $row['cod_questao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
         </div>
     </div>
 </main>
@@ -347,90 +332,108 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </div>
 </div>
 
-<!-- Modal de Adicionar/Editar Questão -->
 <div id="add-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeAddModal()">&times;</span>
         <form action="questao.php" method="POST">
-            <input type="hidden" id="cod_questao" name="cod_questao" value="<?php echo htmlspecialchars($cod_questao); ?>">
+            <input type="hidden" id="cod_questao" name="cod_questao">
 
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="pergunta_modal">Pergunta:</label>
-                    <input type="text" id="pergunta_modal" name="pergunta" value="<?php echo htmlspecialchars($pergunta); ?>" placeholder="Preencha a pergunta" required>
+            <div class="question-container">
+                <label for="pergunta_modal" class="highlight-question">Pergunta:</label>
+                <input type="text" id="pergunta_modal" name="pergunta" placeholder="Preencha a pergunta" class="question-field" required>
+            </div>
+
+            <div class="answers-container">
+                <div class="horizontal-answers">
+                    <div>
+                        <label for="resposta1_modal">Resposta 1:</label>
+                        <input type="text" id="resposta1_modal" name="resposta1" placeholder="Resposta 1" required>
+                        <label for="desc1_modal">Descrição 1:</label>
+                        <input type="text" id="desc1_modal" name="desc1" placeholder="Descrição Resposta 1" required>
+                    </div>
+                    <div>
+                        <label for="resposta2_modal">Resposta 2:</label>
+                        <input type="text" id="resposta2_modal" name="resposta2" placeholder="Resposta 2" required>
+                        <label for="desc2_modal">Descrição 2:</label>
+                        <input type="text" id="desc2_modal" name="desc2" placeholder="Descrição Resposta 2" required>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <label for="resposta1_modal">Resposta 1:</label>
-                    <input type="text" id="resposta1_modal" name="resposta1" value="<?php echo htmlspecialchars($resposta1); ?>" placeholder="Preencha a resposta 1" required>
+                <div class="horizontal-answers">
+                    <div>
+                        <label for="resposta3_modal">Resposta 3:</label>
+                        <input type="text" id="resposta3_modal" name="resposta3" placeholder="Resposta 3" required>
+                        <label for="desc3_modal">Descrição 3:</label>
+                        <input type="text" id="desc3_modal" name="desc3" placeholder="Descrição Resposta 3" required>
+                    </div>
+                    <div>
+                        <label for="resposta4_modal">Resposta 4:</label>
+                        <input type="text" id="resposta4_modal" name="resposta4" placeholder="Resposta 4" required>
+                        <label for="desc4_modal">Descrição 4:</label>
+                        <input type="text" id="desc4_modal" name="desc4" placeholder="Descrição Resposta 4" required>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <label for="resposta2_modal">Resposta 2:</label>
-                    <input type="text" id="resposta2_modal" name="resposta2" value="<?php echo htmlspecialchars($resposta2); ?>" placeholder="Preencha a resposta 2" required>
+                <div class="vertical-answer">
+                    <label for="respostacorreta_modal" style="color: #4CAF50; font-weight: bold;">Resposta Correta:</label>
+                    <input type="text" id="respostacorreta_modal" name="respostacorreta" placeholder="Resposta Correta" required>
+                    <label for="desc_correta_modal">Descrição Correta:</label>
+                    <input type="text" id="desc_correta_modal" name="desc_correta" placeholder="Descrição Resposta Correta" required>
                 </div>
-                <div class="grid-item">
-                    <label for="resposta3_modal">Resposta 3:</label>
-                    <input type="text" id="resposta3_modal" name="resposta3" value="<?php echo htmlspecialchars($resposta3); ?>" placeholder="Preencha a resposta 3" required>
-                </div>
-                <div class="grid-item">
-                    <label for="resposta4_modal">Resposta 4:</label>
-                    <input type="text" id="resposta4_modal" name="resposta4" value="<?php echo htmlspecialchars($resposta4); ?>" placeholder="Preencha a resposta 4" required>
-                </div>
-                <div class="grid-item">
-                <label for="respostacorreta_modal" style="color: #4CAF50; font-weight: bold;">Resposta Correta:</label>
-                    <input type="text" id="respostacorreta_modal" name="respostacorreta" value="<?php echo htmlspecialchars($respostacorreta); ?>" placeholder="Preencha a resposta correta" required>
-                </div>
-                <div class="grid-item">
-                    <label for="dificuldade_cod_dificuldade">Dificuldade:</label>
-                    <select id="dificuldade_cod_dificuldade" name="dificuldade_cod_dificuldade" required>
-                        <option value="">Selecione uma Dificuldade</option>
-                        <?php
-                        $dificuldades = $conn->query("SELECT * FROM dificuldade");
+            </div>
+
+            <div class="details-container">
+                <label for="dificuldade_cod_dificuldade">Dificuldade:</label>
+                <select id="dificuldade_cod_dificuldade" name="dificuldade_cod_dificuldade" required>
+                    <option value="">Selecione uma Dificuldade</option>
+                    <?php
+                    $dificuldades = $conn->query("SELECT cod_dificuldade, tipo_dificuldade FROM dificuldade");
+                    if ($dificuldades->num_rows > 0) {
                         while ($dificuldade = $dificuldades->fetch_assoc()) {
-                            $selected = (isset($dificuldade_cod_dificuldade) && $dificuldade['cod_dificuldade'] == $dificuldade_cod_dificuldade) ? ' selected' : '';
-                            echo "<option value='" . $dificuldade['cod_dificuldade'] . "'" . $selected . ">" . htmlspecialchars($dificuldade['tipo_dificuldade']) . "</option>";
+                            echo "<option value='" . htmlspecialchars($dificuldade['cod_dificuldade']) . "'>" . htmlspecialchars($dificuldade['tipo_dificuldade']) . "</option>";
                         }
-                        ?>
-                    </select>
-                </div>
-                <div class="grid-item">
-                    <label for="disciplina_cod_disciplina">Disciplina:</label>
-                    <select id="disciplina_cod_disciplina" name="disciplina_cod_disciplina" required>
-                        <option value="">Selecione uma Disciplina</option>
-                        <?php
-                        $disciplinas = $conn->query("SELECT * FROM disciplina");
+                    }
+                    ?>
+                </select>
+
+                <label for="disciplina_cod_disciplina">Disciplina:</label>
+                <select id="disciplina_cod_disciplina" name="disciplina_cod_disciplina" required>
+                    <option value="">Selecione uma Disciplina</option>
+                    <?php
+                    $disciplinas = $conn->query("SELECT cod_disciplina, nome FROM disciplina");
+                    if ($disciplinas->num_rows > 0) {
                         while ($disciplina = $disciplinas->fetch_assoc()) {
-                            $selected = (isset($disciplina_cod_disciplina) && $disciplina['cod_disciplina'] == $disciplina_cod_disciplina) ? ' selected' : '';
-                            echo "<option value='" . $disciplina['cod_disciplina'] . "'" . $selected . ">" . htmlspecialchars($disciplina['nome']) . "</option>";
+                            echo "<option value='" . htmlspecialchars($disciplina['cod_disciplina']) . "'>" . htmlspecialchars($disciplina['nome']) . "</option>";
                         }
-                        ?>
-                    </select>
-                </div>
-                <div class="grid-item">
-                    <label for="prova_cod_prova">Prova:</label>
-                    <select id="prova_cod_prova" name="prova_cod_prova" required>
-                        <option value="">Selecione uma Prova</option>
-                        <?php
-                        $provas = $conn->query("SELECT * FROM prova");
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <div class="details-container">
+                <label for="prova_cod_prova">Prova:</label>
+                <select id="prova_cod_prova" name="prova_cod_prova" required>
+                    <option value="">Selecione uma Prova</option>
+                    <?php
+                    $provas = $conn->query("SELECT cod_prova, nome FROM prova");
+                    if ($provas->num_rows > 0) {
                         while ($prova = $provas->fetch_assoc()) {
-                            $selected = (isset($prova_cod_prova) && $prova['cod_prova'] == $prova_cod_prova) ? ' selected' : '';
-                            echo "<option value='" . $prova['cod_prova'] . "'" . $selected . ">" . htmlspecialchars($prova['nome']) . "</option>";
+                            echo "<option value='" . htmlspecialchars($prova['cod_prova']) . "'>" . htmlspecialchars($prova['nome']) . "</option>";
                         }
-                        ?>
-                    </select>
-                </div>
-                <div class="grid-item">
-                    <label for="concurso_cod_concurso">Concurso:</label>
-                    <select id="concurso_cod_concurso" name="concurso_cod_concurso" required>
-                        <option value="">Selecione um Concurso</option>
-                        <?php
-                        $concursos = $conn->query("SELECT * FROM concurso");
+                    }
+                    ?>
+                </select>
+
+                <label for="concurso_cod_concurso">Concurso:</label>
+                <select id="concurso_cod_concurso" name="concurso_cod_concurso" required>
+                    <option value="">Selecione um Concurso</option>
+                    <?php
+                    $concursos = $conn->query("SELECT cod_concurso, nome FROM concurso");
+                    if ($concursos->num_rows > 0) {
                         while ($concurso = $concursos->fetch_assoc()) {
-                            $selected = (isset($concurso_cod_concurso) && $concurso['cod_concurso'] == $concurso_cod_concurso) ? ' selected' : '';
-                            echo "<option value='" . $concurso['cod_concurso'] . "'" . $selected . ">" . htmlspecialchars($concurso['nome']) . "</option>";
+                            echo "<option value='" . htmlspecialchars($concurso['cod_concurso']) . "'>" . htmlspecialchars($concurso['nome']) . "</option>";
                         }
-                        ?>
-                    </select>
-                </div>
+                    }
+                    ?>
+                </select>
             </div>
 
             <div class="button-container">
@@ -441,130 +444,180 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </div>
 </div>
 
+
 <script>
-// Função para definir um cookie
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
+// Referência aos modais e botões
+var confirmModal = document.getElementById("confirm-modal");
+var addModal = document.getElementById("add-modal");
+var modalErro = document.getElementById("modal-erro");
+var modalSucesso = document.getElementById("modal-sucesso");
+var confirmButton = document.getElementById("confirm-delete");
 
-// Função para obter o valor de um cookie
-function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i].trim();
-        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
-    }
-    return null;
-}
-
-// Função para salvar cookies
-function saveCookies() {
-    setCookie("cod_questao", document.getElementById("cod_questao").value, 7);
-    setCookie("pergunta", document.getElementById("pergunta_modal").value, 7);
-    setCookie("resposta1", document.getElementById("resposta1_modal").value, 7);
-    setCookie("resposta2", document.getElementById("resposta2_modal").value, 7);
-    setCookie("resposta3", document.getElementById("resposta3_modal").value, 7);
-    setCookie("resposta4", document.getElementById("resposta4_modal").value, 7);
-    setCookie("respostacorreta", document.getElementById("respostacorreta_modal").value, 7);
-    setCookie("dificuldade_cod_dificuldade", document.getElementById("dificuldade_cod_dificuldade").value, 7);
-    setCookie("disciplina_cod_disciplina", document.getElementById("disciplina_cod_disciplina").value, 7);
-    setCookie("prova_cod_prova", document.getElementById("prova_cod_prova").value, 7);
-    setCookie("concurso_cod_concurso", document.getElementById("concurso_cod_concurso").value, 7);
-}
-
-// Função para carregar cookies nos campos do formulário
-function loadCookies() {
-    document.getElementById("cod_questao").value = getCookie("cod_questao") || '';
-    document.getElementById("pergunta_modal").value = getCookie("pergunta") || '';
-    document.getElementById("resposta1_modal").value = getCookie("resposta1") || '';
-    document.getElementById("resposta2_modal").value = getCookie("resposta2") || '';
-    document.getElementById("resposta3_modal").value = getCookie("resposta3") || '';
-    document.getElementById("resposta4_modal").value = getCookie("resposta4") || '';
-    document.getElementById("respostacorreta_modal").value = getCookie("respostacorreta") || '';
-    document.getElementById("dificuldade_cod_dificuldade").value = getCookie("dificuldade_cod_dificuldade") || '';
-    document.getElementById("disciplina_cod_disciplina").value = getCookie("disciplina_cod_disciplina") || '';
-    document.getElementById("prova_cod_prova").value = getCookie("prova_cod_prova") || '';
-    document.getElementById("concurso_cod_concurso").value = getCookie("concurso_cod_concurso") || '';
-}
-
-// Função para mostrar o modal de sucesso e fechar o modal de adição/edição
-function showSuccess(message) {
-    document.getElementById('sucesso-mensagem').textContent = message;
-    document.getElementById('modal-sucesso').style.display = 'block';
-
-    // Fechar o modal de adição/edição e limpar o formulário
-    closeAddModal();
+// Função para abrir o modal de adicionar
+function openAddModal() {
     clearForm();
+    loadCookies();
+    addModal.style.display = "block";
 }
 
-// Função para fechar os modais
-function closeModal(modalType) {
-    if (modalType === 'sucesso') {
-        document.getElementById('modal-sucesso').style.display = 'none';
-    } else if (modalType === 'erro') {
-        document.getElementById('modal-erro').style.display = 'none';
-    } else {
-        document.getElementById('confirm-modal').style.display = 'none';
-    }
+// Função para fechar o modal de adicionar
+function closeAddModal() {
+    saveCookies();
+    addModal.style.display = "none";
 }
 
-// Função para abrir o modal de confirmação
-function openModal(url) {
-    document.getElementById('confirm-modal').style.display = 'block';
-    document.getElementById('confirm-delete').onclick = function () {
-        window.location.href = url;
+// Função para abrir o modal de edição com dados da questão
+function openEditModal(data) {
+    const fields = [
+        "cod_questao",
+        "pergunta_modal",
+        "resposta1_modal",
+        "desc1_modal",
+        "resposta2_modal",
+        "desc2_modal",
+        "resposta3_modal",
+        "desc3_modal",
+        "resposta4_modal",
+        "desc4_modal",
+        "respostacorreta_modal",
+        "desc_correta_modal",
+        "dificuldade_cod_dificuldade",
+        "disciplina_cod_disciplina",
+        "prova_cod_prova",
+        "concurso_cod_concurso"
+    ];
+
+    fields.forEach(id => {
+        if (data[id]) {
+            document.getElementById(id).value = data[id];
+        }
+    });
+
+    addModal.style.display = 'block';
+}
+
+// Função para abrir o modal de confirmação para deletar
+function openModal(deleteUrl) {
+    confirmModal.style.display = "block";
+    confirmButton.onclick = function() {
+        window.location.href = deleteUrl;
     };
 }
 
-// Função para abrir o modal de adição/edição de questão
-function openAddModal() {
-    document.getElementById('add-modal').style.display = 'block';
+// Função para fechar os modais
+function closeModal(type) {
+    if (type === 'erro') {
+        modalErro.style.display = "none";
+    } else if (type === 'sucesso') {
+        modalSucesso.style.display = "none";
+    } else {
+        confirmModal.style.display = "none"; // Fecha o modal de confirmação
+    }
 }
 
-// Função para fechar o modal de adição/edição de questão
-function closeAddModal() {
-    document.getElementById('add-modal').style.display = 'none';
-}
-
-// Função para abrir o modal de edição de questão com os dados carregados
-function openEditModal(data) {
-    document.getElementById('cod_questao').value = data.cod_questao;
-    document.getElementById('pergunta_modal').value = data.pergunta;
-    document.getElementById('resposta1_modal').value = data.resposta1;
-    document.getElementById('resposta2_modal').value = data.resposta2;
-    document.getElementById('resposta3_modal').value = data.resposta3;
-    document.getElementById('resposta4_modal').value = data.resposta4;
-    document.getElementById('respostacorreta_modal').value = data.respostacorreta;
-    document.getElementById('dificuldade_cod_dificuldade').value = data.dificuldade_cod_dificuldade;
-    document.getElementById('disciplina_cod_disciplina').value = data.disciplina_cod_disciplina;
-    document.getElementById('prova_cod_prova').value = data.prova_cod_prova;
-    document.getElementById('concurso_cod_concurso').value = data.concurso_cod_concurso;
-    openAddModal();
-}
-
-// Função para limpar o formulário
+// Limpar formulário
 function clearForm() {
-    document.getElementById('cod_questao').value = '';
-    document.getElementById('pergunta_modal').value = '';
-    document.getElementById('resposta1_modal').value = '';
-    document.getElementById('resposta2_modal').value = '';
-    document.getElementById('resposta3_modal').value = '';
-    document.getElementById('resposta4_modal').value = '';
-    document.getElementById('respostacorreta_modal').value = '';
-    document.getElementById('dificuldade_cod_dificuldade').selectedIndex = 0;
-    document.getElementById('disciplina_cod_disciplina').selectedIndex = 0;
-    document.getElementById('prova_cod_prova').selectedIndex = 0;
-    document.getElementById('concurso_cod_concurso').selectedIndex = 0;
+    const fields = [
+        "cod_questao",
+        "pergunta_modal",
+        "resposta1_modal",
+        "desc1_modal",
+        "resposta2_modal",
+        "desc2_modal",
+        "resposta3_modal",
+        "desc3_modal",
+        "resposta4_modal",
+        "desc4_modal",
+        "respostacorreta_modal",
+        "desc_correta_modal",
+        "dificuldade_cod_dificuldade",
+        "disciplina_cod_disciplina",
+        "prova_cod_prova",
+        "concurso_cod_concurso"
+    ];
+
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = '';
+        }
+    });
 }
 
-// Adicionando funcionalidade aos botões OK dos modais de erro e sucesso
+// Função para salvar os valores dos inputs em cookies
+function saveCookies() {
+    const fields = [
+        "cod_questao",
+        "pergunta_modal",
+        "resposta1_modal",
+        "desc1_modal",
+        "resposta2_modal",
+        "desc2_modal",
+        "resposta3_modal",
+        "desc3_modal",
+        "resposta4_modal",
+        "desc4_modal",
+        "respostacorreta_modal",
+        "desc_correta_modal",
+        "dificuldade_cod_dificuldade",
+        "disciplina_cod_disciplina",
+        "prova_cod_prova",
+        "concurso_cod_concurso"
+    ];
+
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            document.cookie = id + "=" + encodeURIComponent(element.value) + "; path=/";
+        }
+    });
+}
+
+// Função para carregar os valores dos cookies nos inputs
+function loadCookies() {
+    const cookies = document.cookie.split(';');
+    cookies.forEach(function(cookie) {
+        const parts = cookie.split('=');
+        const name = parts[0].trim();
+        const value = parts[1] ? decodeURIComponent(parts[1].trim()) : '';
+
+        const element = document.getElementById(name);
+        if (element) {
+            element.value = value;
+        }
+    });
+}
+
+// Fechar o modal se o usuário clicar fora dele
+window.onclick = function(event) {
+    if (event.target === confirmModal) {
+        closeModal();
+    }
+    if (event.target === addModal) {
+        closeAddModal();
+    }
+    if (event.target === modalErro) {
+        closeModal('erro');
+    }
+    if (event.target === modalSucesso) {
+        closeModal('sucesso');
+    }
+};
+
+// Mostrar mensagens de erro ou sucesso baseadas nas variáveis PHP
+<?php if ($error_message): ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
+        modalErro.style.display = "block";
+    });
+<?php elseif ($success_message): ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sucesso-mensagem').textContent = '<?php echo htmlspecialchars($success_message); ?>';
+        modalSucesso.style.display = "block";
+    });
+<?php endif; ?>
+
+// Adicionando funcionalidade aos botões OK dos modais
 document.getElementById("ok-btn-erro").onclick = function() {
     closeModal('erro');
 };
@@ -572,22 +625,8 @@ document.getElementById("ok-btn-sucesso").onclick = function() {
     closeModal('sucesso');
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    <?php if ($error_message): ?>
-        document.getElementById('erro-mensagem').textContent = '<?php echo htmlspecialchars($error_message); ?>';
-        document.getElementById('modal-erro').style.display = "block";
-    <?php elseif ($success_message): ?>
-        showSuccess('<?php echo htmlspecialchars($success_message); ?>');
-        if (typeof saveSuccessful !== 'undefined' && saveSuccessful) {
-            closeAddModal();
-            clearForm();
-        }
-    <?php endif; ?>
-});
-
-
 // Salvar automaticamente os dados quando a página for recarregada ou fechada
-window.addEventListener('beforeunload', function (event) {
+window.addEventListener('beforeunload', function () {
     saveCookies();
 });
 

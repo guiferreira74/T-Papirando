@@ -41,10 +41,20 @@ $email = '';
 $success_message = '';
 $error_message = '';
 
+// Buscar os dados atuais do estudante, incluindo o e-mail
+$sql_estudante = "SELECT nome, sobrenome, email FROM estudante WHERE cod_estudante = ?";
+$stmt_estudante = $conn->prepare($sql_estudante);
+$stmt_estudante->bind_param("i", $cod_estudante);
+$stmt_estudante->execute();
+$stmt_estudante->bind_result($nome, $sobrenome, $email);
+$stmt_estudante->fetch();
+$stmt_estudante->close();
+
 // Verificar se o formulário foi enviado para atualizar os dados
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $conn->real_escape_string($_POST['nome']);
     $sobrenome = $conn->real_escape_string($_POST['sobrenome']);
+    $email = $conn->real_escape_string($_POST['email']);
     $senha_atual = $conn->real_escape_string($_POST['current_password']);
     $nova_senha = $conn->real_escape_string($_POST['new_password']);
     $confirmar_senha = $conn->real_escape_string($_POST['confirm_password']);
@@ -59,17 +69,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_senha->close();
 
     if (password_verify($senha_atual, $senha_bd)) {
-        // Verificar se a nova senha é diferente da senha atual
         if ($senha_atual === $nova_senha) {
             $error_message = "A nova senha não pode ser igual à senha atual.";
         } else {
-            // Verificar se as novas senhas coincidem
             if ($nova_senha === $confirmar_senha) {
                 $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-                // Atualizar os dados no banco de dados
-                $sql_update = "UPDATE estudante SET nome = ?, sobrenome = ?, senha = ? WHERE cod_estudante = ?";
+
+                // Atualizar os dados no banco de dados, incluindo o e-mail
+                $sql_update = "UPDATE estudante SET nome = ?, sobrenome = ?, email = ?, senha = ? WHERE cod_estudante = ?";
                 $stmt_update = $conn->prepare($sql_update);
-                $stmt_update->bind_param("sssi", $nome, $sobrenome, $nova_senha_hash, $cod_estudante);
+                $stmt_update->bind_param("ssssi", $nome, $sobrenome, $email, $nova_senha_hash, $cod_estudante);
 
                 if ($stmt_update->execute()) {
                     $success_message = "Dados atualizados com sucesso,<br>por favor registre novamente!";
@@ -86,15 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "A senha atual está incorreta.";
     }
 }
-
-// Buscar os dados atuais do estudante
-$sql_estudante = "SELECT nome, sobrenome FROM estudante WHERE cod_estudante = ?";
-$stmt_estudante = $conn->prepare($sql_estudante);
-$stmt_estudante->bind_param("i", $cod_estudante);
-$stmt_estudante->execute();
-$stmt_estudante->bind_result($nome, $sobrenome);
-$stmt_estudante->fetch();
-$stmt_estudante->close();
 
 // Fechar conexão
 $conn->close();
@@ -161,6 +161,11 @@ $conn->close();
             </div>
 
             <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
+            </div>
+
+            <div class="form-group">
                 <label for="current_password">Senha atual</label>
                 <input type="password" id="current_password" name="current_password" placeholder="Digite sua senha atual" required>
             </div>
@@ -179,6 +184,9 @@ $conn->close();
         </form>
     </div>
 </div>
+</body>
+</html>
+
 
 <!-- Modal de erro -->
 <?php if (!empty($error_message)): ?>

@@ -388,7 +388,7 @@ toggleSidebar.addEventListener('click', function () {
 <div id="logoutModal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <p>Muito obrigado Por acessar nosso site Tôpapirando!</p>
+        <p>Muito obrigado Por acessar nosso site Tôpapirando!!!</p>
         <a href="sair.php" class="btn-site">Ok</a>
     </div>
 </div>
