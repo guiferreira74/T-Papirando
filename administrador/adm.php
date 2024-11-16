@@ -153,7 +153,7 @@ function getTrendingIconClass($current) {
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
-            <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
 

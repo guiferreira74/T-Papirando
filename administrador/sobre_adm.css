@@ -1,6 +1,7 @@
-/* Estilo geral */
+/* Importação de fontes */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
+/* Reset e estilos gerais */
 * {
     margin: 0;
     padding: 0;
@@ -13,176 +14,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-.interface {
-    max-width: 1280px;
-    margin: 0 auto;
-}
-
-.flex {
-    margin-top: 100px;
-    display: flex;
-}
-
-.info {
-    display: flex;
-    flex-direction: row;
-    gap: 20px; /* Espaçamento entre os itens */
-}
-
-/* Ajuste no tamanho da fonte dos itens do menu */
-header nav ul li a {
-    font-size: 18px; /* Tamanho da fonte dos itens do menu */
-}
-
-.btn-contato button {
-    padding: 10px 70px;
-    font-size: 18px;
-    font-weight: 600;
-    background-color: green;
-    border: 0;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: .2s;
-    color: white;
-}
-
-/* Estilo do cabeçalho */
-.logo img {
-    width: 250px; /* Ajuste da largura da logo */
-}
-
-header {
-    position: fixed; /* Torna o cabeçalho fixo */
-    top: 0; /* Posiciona o cabeçalho no topo */
-    left: 0; /* Alinha à esquerda */
-    width: 100%; /* Largura total */
-    z-index: 1000; /* Garante que fique acima do conteúdo */
-    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
-    background-color: #2118CD; /* Fundo sólido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
-}
-
-header > .interface {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    transition: .2s;
-}
-
-header a:hover {
-    color: yellow;
-    transform: scale(1.05);
-}
-
-header nav ul {
-    list-style: none;
-    display: flex; /* Exibe os itens na horizontal */
-}
-
-header nav ul li {
-    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
-}
-
-.btn-contato {
-    display: flex; /* Garante que o botão esteja na mesma linha */
-    align-items: center;
-}
-
-.btn-contato button:hover {
-    box-shadow: 0px 0px 8px #00ff08;
-    transform: scale(1.05);
-}
-
-header .info ul li a {
-    display: flex;
-    flex-direction: row;
-}
-
-
-/* Conteúdo Principal */
-.sobre-container, .creditos-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px;
-    margin: 80px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-top: 100px;
-}
-
-.sobre-container .desenvolvedores, 
-.creditos-container .creditos {
-    flex: 1;
-    padding: 20px;
-}
-
-.sobre-container .foto, 
-.creditos-container .foto {
-    flex: 1;
-    text-align: center;
-}
-
-.sobre-container .foto img, 
-.creditos-container .foto img {
-    max-width: 50%;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
-    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sobre-container .foto img:hover, 
-.creditos-container .foto img:hover {
-    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    font-size: 18px;
-    margin-bottom: 8px;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Poppins", system-ui;
-    background: #E6E6E6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden; /* Remove a barra de rolagem horizontal e vertical */
 }
 
 .interface {
     max-width: 1280px;
     margin: auto;
-    align-items: center; /* Centraliza os itens do header verticalmente */
-    justify-content: space-between; /* Espaça os elementos igualmente */
 }
 
 .flex {
@@ -193,150 +30,7 @@ body {
 .info {
     display: flex;
     flex-direction: row;
-    gap: 20px; /* Espaçamento entre os itens */
-}
-
-/* Ajuste no tamanho da fonte dos itens do menu */
-header nav ul li a {
-    font-size: 18px; /* Tamanho da fonte dos itens do menu */
-}
-
-.btn-contato button {
-    padding: 10px 70px;
-    font-size: 18px;
-    font-weight: 600;
-    background-color: green;
-    border: 0;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: .2s;
-    color: white;
-}
-
-/* Estilo do cabeçalho */
-.logo img {
-    width: 200px; /* Ajuste da largura da logo */
-    margin-left: -20px;
-    align-items: center;
-    padding-top: 10px;
-    gap: 15px; /* Ajusta a distância entre o botão e a logo */
-    padding-top: 10px; 
-    display: flex;
-    margin-left: 100px;
-}
-
-header {
-    position: fixed; /* Torna o cabeçalho fixo */
-    top: 0; /* Posiciona o cabeçalho no topo */
-    left: 0; /* Alinha à esquerda */
-    width: 100%; /* Largura total */
-    z-index: 1000; /* Garante que fique acima do conteúdo */
-    padding: 20px 4%; /* Diminui o padding para reduzir a altura */
-    background-color: #2118CD; /* Fundo sólido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a sombra */
-  
-}
-
-header > .interface {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    transition: .2s;
-}
-
-header a:hover {
-    color: yellow;
-    transform: scale(1.05);
-}
-
-header nav ul {
-    list-style: none;
-    display: flex; /* Exibe os itens na horizontal */
-}
-
-header nav ul li {
-    padding: 0 20px; /* Ajusta o espaçamento entre os itens */
-}
-
-.btn-contato {
-    display: flex; /* Garante que o botão esteja na mesma linha */
-    align-items: center;
-}
-
-.btn-contato button:hover {
-    box-shadow: 0px 0px 8px #00ff08;
-    transform: scale(1.05);
-}
-
-header .info ul li a {
-    display: flex;
-    flex-direction: row;
-}
-
-.informacoes a {
-    margin-right: 20px;
-}
-
-
-.controle-navegacao {
-    display: flex;
-    align-items: center; /* Alinha verticalmente a logo e o botão */
-}
-
-.button{
-    justify-content: flex-start;
-}
-
-.mensagem-boas-vindas {
-    color: white; /* Define a cor do texto como branco */
-}
-
-* Conteúdo Principal */
-.sobre-container, .creditos-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-top: 100px;
-    width: 40px;
-}
-
-.sobre-container .desenvolvedores, 
-.creditos-container .creditos {
-    flex: 1;
-    padding: 20px;
-}
-
-.sobre-container .foto, 
-.creditos-container .foto {
-    flex: 1;
-    text-align: center;
-}
-
-.sobre-container .foto img, 
-.creditos-container .foto img {
-    max-width: 80%;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra maior para dar profundidade */
-    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sobre-container .foto img:hover, 
-.creditos-container .foto img:hover {
-    transform: rotateY(0deg) perspective(500px) scale(1.03); /* Retira a rotação ao passar o mouse e dá leve zoom */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
+    gap: 20px;
 }
 
 h2 {
@@ -354,14 +48,142 @@ ul li {
     margin-bottom: 8px;
 }
 
-/* Ajustes responsivos */
+/* Estilos do cabeçalho */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 4%;
+    background-color: #2118CD;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    padding: 0 20px;
+}
+
+header nav ul li a {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+header nav ul li a:hover {
+    color: yellow;
+    transform: scale(1.05);
+}
+
+.logo img {
+    width: 200px;
+    margin-left: 100px;
+}
+
+.btn-contato {
+    display: flex;
+    align-items: center;
+}
+
+.btn-contato button {
+    padding: 10px 70px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: green;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-contato button:hover {
+    box-shadow: 0px 0px 8px #00ff08;
+    transform: scale(1.05);
+}
+/* Ajustar os contêineres */
+.sobre-container, .creditos-container {
+    display: flex;
+    justify-content: space-between; /* Espaçamento uniforme entre elementos */
+    align-items: center; /* Alinhamento vertical */
+    padding: 30px; /* Aumenta o espaço interno */
+    margin: 20px auto; /* Centraliza horizontalmente */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 95%; /* Define uma largura maior */
+    max-width: 1200px; /* Define uma largura máxima maior */
+    gap: 20px; /* Espaçamento entre os elementos internos */
+}
+
+/* Ajuste de conteúdo */
+.sobre-container .desenvolvedores, 
+.creditos-container .creditos {
+    flex: 1; /* Ambos ocupam o mesmo espaço */
+    padding: 10px;
+}
+
+.sobre-container .foto, 
+.creditos-container .foto {
+    flex: 1; /* Ocupa metade do espaço disponível */
+    text-align: center;
+}
+
+/* Ajustar tamanho das imagens */
+.sobre-container .foto img, 
+.creditos-container .foto img {
+    max-width: 90%; /* Reduz o tamanho das imagens */
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    
+    transform: rotateY(-5deg) perspective(500px); /* Efeito de leve rotação */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-container .foto img:hover, 
+.creditos-container .foto img:hover {
+    transform: scale(1.03); /* Zoom leve ao passar o mouse */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Aumenta a sombra no hover */
+}
+
+/* Títulos */
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
     .sobre-container, .creditos-container {
-        flex-direction: column;
+        flex-direction: column; /* Empilha os elementos em telas menores */
+        text-align: center; /* Centraliza o texto */
     }
 
     .sobre-container .foto img, 
     .creditos-container .foto img {
-        max-width: 100%;
+        max-width: 100%; /* Ajusta imagens para telas menores */
     }
 }

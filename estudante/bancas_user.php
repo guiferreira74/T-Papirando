@@ -31,7 +31,15 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php" class="simulados-link">Simulados</a></li>
+                <li class="dropdown">
+                    <a href="#" class="simulados-link" id="simulados-toggle">
+                        Simulados <i class='bx bx-chevron-down'></i>
+                    </a>
+                    <ul class="dropdown-menu" id="simulados-dropdown">
+                        <li><a href="#">Simulado por Disciplina</a></li>
+                        <li><a href="simulados.php">Simulado por Concurso</a></li>
+                    </ul>
+                </li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -73,9 +81,114 @@ window.addEventListener('click', function (e) {
     }
 });
 
+
+// Mostrar e esconder o dropdown quando o usuário clica em "Simulados"
+const simuladosToggle = document.getElementById('simulados-toggle');
+const simuladosDropdown = document.getElementById('simulados-dropdown');
+
+simuladosToggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    simuladosDropdown.classList.toggle('show');
+});
+
+// Fechar o dropdown de "Simulados" ao clicar fora
+window.addEventListener('click', function (e) {
+    if (!simuladosToggle.contains(e.target) && !simuladosDropdown.contains(e.target)) {
+        simuladosDropdown.classList.remove('show');
+    }
+});
+
 </script>
 
 <style>
+        /* Estilo atualizado */
+        .banca {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            margin: 10px;
+            position: relative;
+        }
+
+        .banca h2 {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .banca img {
+        display: block;
+        margin: 0 auto;
+        width: 100px; 
+        height: 100px; 
+        object-fit: contain; 
+        margin-bottom: 15px;
+        max-height: 100px; 
+        }
+
+
+
+
+        .banca button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: auto;
+        }
+    </style>
+
+<style>
+
+/* Estilo para o dropdown *//* Estilo para o dropdown de Simulados */
+.menu-desktop ul .dropdown {
+    position: relative;
+}
+
+.menu-desktop ul .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    min-width: 200px;
+}
+
+.menu-desktop ul .dropdown-menu.show {
+    display: block;
+}
+
+.menu-desktop ul .dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-desktop ul .dropdown-menu li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.menu-desktop ul .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
 /* Estilo para o dropdown */
 .profile-dropdown {
     position: relative;
@@ -142,35 +255,40 @@ window.addEventListener('click', function (e) {
 }
 
 </style>
-    <h1 class="centered-title">Banca de Prova</h1>
-    <div class="banca-container">
-        <?php
-        // Conexão com o banco de dados
-        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+<h1 class="centered-title" style="font-size: 34px; font-weight: 600; text-align: center; color: #333333; margin-bottom: 20px; position: relative; padding-bottom: 10px;">
+    Banca de Prova
+    <span style="display: block; width: 80px; height: 3px; background-color: #007bff; margin: 10px auto 0; border-radius: 3px;"></span>
+</h1>
 
-        if ($conn->connect_error) {
-            die("Conexão falhou: " . $conn->connect_error);
-        }
 
-        // Buscar as bancas cadastradas
-        $result = $conn->query("SELECT * FROM banca");
+<div class="banca-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px;">
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='banca'>";
-                echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
-                echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width: 100px;'>";
-                
-                // Botão que chama o modal com a classe 'ok'
-                echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
-                
-                echo "</div>";
-            }
-        } else {
-            echo "<p>.</p>";
-        }
-        ?>
-  </div>
+    <?php
+    // Conexão com o banco de dados
+    $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+
+     // Buscar as bancas cadastradas
+     $result = $conn->query("SELECT * FROM banca");
+
+     if ($result->num_rows > 0) {
+         while ($row = $result->fetch_assoc()) {
+             echo "<div class='banca' style='width: 250px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 15px; text-align: center;'>";
+             echo "<h2 style='font-size: 18px; color: #333333; margin-bottom: 10px;'>" . htmlspecialchars($row['nome']) . "</h2>";
+             echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' class='banca-img'>";
+ 
+             // Botão que chama o modal com a classe 'ok'
+             echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "' style='background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 14px;'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
+             echo "</div>";
+         }
+     } else {
+         echo "<p>Nenhuma banca cadastrada.</p>";
+     }
+     ?>
+ </div>
         <!-- Modal -->
         <div id="myModal" class="modal">
             <div class="modal-content">

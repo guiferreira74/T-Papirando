@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -95,6 +94,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i>Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -124,7 +124,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 </section>
 
    <!-- Conteúdo Principal -->
-   <main>
+   <main id="content">
         <div class="sobre-container">
             <div class="desenvolvedores">
                 <h2>Desenvolvedores</h2>

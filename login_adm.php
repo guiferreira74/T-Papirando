@@ -35,7 +35,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_administrador->bind_result($cod_administrador, $nome, $sobrenome, $hashed_senha_administrador);
         $stmt_administrador->fetch();
 
-        // Verificar a senha com hash
+        // Verificar se a senha está criptografada ou em texto plano
+        if (password_needs_rehash($hashed_senha_administrador, PASSWORD_DEFAULT)) {
+            // Se a senha no banco não está criptografada
+            if ($senha === $hashed_senha_administrador) {
+                // Criptografar a senha e atualizar o banco de dados
+                $new_hashed_senha = password_hash($senha, PASSWORD_DEFAULT);
+                $update_sql = "UPDATE administrador SET senha = ? WHERE cod_administrador = ?";
+                $update_stmt = $conn->prepare($update_sql);
+                $update_stmt->bind_param("si", $new_hashed_senha, $cod_administrador);
+                $update_stmt->execute();
+                $update_stmt->close();
+
+                // Redefinir a senha para a versão criptografada para comparação futura
+                $hashed_senha_administrador = $new_hashed_senha;
+            } else {
+                $error_message = 'Senha incorreta.';
+            }
+        }
+
+        // Verificar a senha criptografada
         if (password_verify($senha, $hashed_senha_administrador)) {
             // Definir sessão e redirecionar
             $_SESSION['loggedin'] = true;
@@ -69,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

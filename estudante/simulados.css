@@ -8,7 +8,7 @@
 
 body {
     font-family: "Poppins", system-ui;
-    background: linear-gradient(to bottom left, #b5cdd4, #ffffff);
+    background:  #E6E6E6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -206,4 +206,87 @@ header .info ul li a {
     .saudacao {
         color: white;
     }
+
+    /* conteudo da pagina */
+    .topo {
+        width: 100%;
+        background-color: #2118CD;
+        text-align: center;
+        padding: 20px 0;
+      }
+      
+      .topo h1 {
+        color: #fff;
+        font-size: 24px;
+        text-align: center;
+      }
+      
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 150px;
+      }
+      
+      .conteudo {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+      }
+      
+      .simulados-lista {
+        list-style: disc;
+        font-size: 25px;
+        line-height: 1.6;
+        color: black;
+        padding: 0;
+        margin: 0;
+        flex: 2;
+      }
+      .simulados-lista li {
+        margin-bottom: 20px;
+      }
+      
+      .lado-direito {
+        flex: 1;
+        text-align: right;
+      }
+      
+      .botao-duracao {
+        background-color: #2118CD;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 50px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 40px;
+       
+      }
+      
+      .botao-duracao:hover {
+        background-color: #1a13a1;
+      }
+      
+      .imagem-cerebro img {
+        width: 250px;
+      }
+      
+      .frase-motivacional {
+        font-size: 19px;
+        color: black;
+        margin-top: 20px;
+        font-style: italic;
+        line-height: 1.4;
+        text-align: right;
+      }
+      .titulo{
+        display: flex;
+      text-align: center;
+      width: 100%; 
+      margin-left: 30px;          
     
+      }

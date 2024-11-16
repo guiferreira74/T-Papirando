@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
         <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
         <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
-        <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i>Disciplina</a></li>
+        <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i>Disciplina</a></li>
     </ul>
 </section>
 
@@ -137,43 +137,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <!-- Formulário de adição -->
-<div class="container-geral">
-    <div class="formulario-container">
-        <h1>Adicionar Novo Administrador</h1>
-        
-        <!-- Formulário de adição -->
-        <form action="adicionar_adm.php" method="POST">
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome" value="<?php echo htmlspecialchars($nome); ?>" required>
-            </div>
+<<div class="container-geral">
+    <div class="formulario-wrapper">
+        <!-- Lado esquerdo: Formulário -->
+        <div class="formulario-container">
+            <h1>Adicionar Novo Administrador</h1>
+            
+            <!-- Formulário de adição -->
+            <form action="adicionar_adm.php" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+                </div>
 
-            <div class="form-group">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite o sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
-            </div>
+                <div class="form-group">
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite o sobrenome" value="<?php echo htmlspecialchars($sobrenome); ?>" required>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
+                </div>
 
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
-            </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
+                </div>
 
-            <div class="form-group">
-                <label for="confirmar_senha">Confirmar Senha</label>
-                <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme a senha" required>
-            </div>
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirmar Senha</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme a senha" required>
+                </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn-save">Adicionar Administrador</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <button type="submit" class="btn-save">Adicionar Administrador</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lado direito: Espaço para a imagem -->
+        <div class="imagem-container">
+            <img src="assets/add_adm.svg" alt="Imagem do Administrador" class="img-preview">
+        </div>
     </div>
 </div>
+
 
 <!-- Modal de erro -->
 <?php if (!empty($error_message)): ?>

@@ -95,7 +95,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
-            <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i>Disciplina</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i>Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -468,33 +468,46 @@ function closeAddModal() {
 
 // Função para abrir o modal de edição com dados da questão
 function openEditModal(data) {
-    const fields = [
-        "cod_questao",
-        "pergunta_modal",
-        "resposta1_modal",
-        "desc1_modal",
-        "resposta2_modal",
-        "desc2_modal",
-        "resposta3_modal",
-        "desc3_modal",
-        "resposta4_modal",
-        "desc4_modal",
-        "respostacorreta_modal",
-        "desc_correta_modal",
-        "dificuldade_cod_dificuldade",
-        "disciplina_cod_disciplina",
-        "prova_cod_prova",
-        "concurso_cod_concurso"
-    ];
+    console.log("Dados recebidos para edição:", data); // Para verificar o que está sendo passado
 
-    fields.forEach(id => {
-        if (data[id]) {
-            document.getElementById(id).value = data[id];
+    // Mapear os campos no modal
+    const fieldMapping = {
+        "cod_questao": "cod_questao",
+        "pergunta": "pergunta_modal",
+        "resposta1": "resposta1_modal",
+        "desc1": "desc1_modal",
+        "resposta2": "resposta2_modal",
+        "desc2": "desc2_modal",
+        "resposta3": "resposta3_modal",
+        "desc3": "desc3_modal",
+        "resposta4": "resposta4_modal",
+        "desc4": "desc4_modal",
+        "respostacorreta": "respostacorreta_modal",
+        "desc_correta": "desc_correta_modal",
+        "dificuldade_cod_dificuldade": "dificuldade_cod_dificuldade",
+        "disciplina_cod_disciplina": "disciplina_cod_disciplina",
+        "prova_cod_prova": "prova_cod_prova",
+        "concurso_cod_concurso": "concurso_cod_concurso"
+    };
+
+    // Preencher os campos do modal
+    Object.keys(fieldMapping).forEach(key => {
+        const elementId = fieldMapping[key];
+        const element = document.getElementById(elementId);
+
+        if (element) {
+            // Preencher o valor no input ou select
+            element.value = data[key] ? data[key] : '';
         }
     });
 
-    addModal.style.display = 'block';
+    // Abrir o modal
+    const addModal = document.getElementById("add-modal");
+    if (addModal) {
+        addModal.style.display = 'block';
+    }
 }
+
 
 // Função para abrir o modal de confirmação para deletar
 function openModal(deleteUrl) {

@@ -33,7 +33,15 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="user.php">Início</a></li>
-                    <li><a class="simulados" href="simulados.php">Simulados</a></li>
+                    <li class="dropdown">
+                    <a href="#" class="simulados-link" id="simulados-toggle">
+                        Simulados <i class='bx bx-chevron-down'></i>
+                    </a>
+                    <ul class="dropdown-menu" id="simulados-dropdown">
+                        <li><a href="#">Simulado por Disciplina</a></li>
+                        <li><a href="simulados.php">Simulado por Concurso</a></li>
+                    </ul>
+                </li>
                     <li><a href="bancas_user.php">Bancas</a></li>
                     <li><a class="desempenhos." href="desempenhos.php">Desempenho</a></li>
                 </ul>
@@ -122,7 +130,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     </main>
 
     
-<script>
+    <script>
   // Mostrar e esconder o dropdown quando o usuário clica
 const profileToggle = document.getElementById('profile-toggle');
 const profileDropdown = document.getElementById('profile-dropdown');
@@ -139,9 +147,64 @@ window.addEventListener('click', function (e) {
     }
 });
 
+
+// Mostrar e esconder o dropdown quando o usuário clica em "Simulados"
+const simuladosToggle = document.getElementById('simulados-toggle');
+const simuladosDropdown = document.getElementById('simulados-dropdown');
+
+simuladosToggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    simuladosDropdown.classList.toggle('show');
+});
+
+// Fechar o dropdown de "Simulados" ao clicar fora
+window.addEventListener('click', function (e) {
+    if (!simuladosToggle.contains(e.target) && !simuladosDropdown.contains(e.target)) {
+        simuladosDropdown.classList.remove('show');
+    }
+});
+
 </script>
 
 <style>
+
+    /* Estilo para o dropdown *//* Estilo para o dropdown de Simulados */
+.menu-desktop ul .dropdown {
+    position: relative;
+}
+
+.menu-desktop ul .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    min-width: 200px;
+}
+
+.menu-desktop ul .dropdown-menu.show {
+    display: block;
+}
+
+.menu-desktop ul .dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-desktop ul .dropdown-menu li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.menu-desktop ul .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
 /* Estilo para o dropdown */
 .profile-dropdown {
     position: relative;

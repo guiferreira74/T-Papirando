@@ -13,14 +13,13 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado</title>
+    <title>Simulados</title>
     <link rel="stylesheet" href="simulados.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-</head>
 </head>
 <body>
 
@@ -32,7 +31,15 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php" class="simulados-link">Simulados</a></li>
+                <li class="dropdown">
+                    <a href="#" class="simulados-link" id="simulados-toggle">
+                        Simulados <i class='bx bx-chevron-down'></i>
+                    </a>
+                    <ul class="dropdown-menu" id="simulados-dropdown">
+                        <li><a href="#">Simulado por Disciplina</a></li>
+                        <li><a href="#">Simulado por Concurso</a></li>
+                    </ul>
+                </li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -47,7 +54,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
             <div class="profile-dropdown">
                 <a href="#" class="profile-toggle" id="profile-toggle">
                     Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>
-                    <i class='bx bx-chevron-down'></i> <!-- Ícone de seta para baixo -->
+                    <i class='bx bx-chevron-down'></i>
                 </a>
                 <ul class="profile-link" id="profile-dropdown">
                     <li><a href="editar_dados_user.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
@@ -57,8 +64,35 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         </div>
     </div>
 </header>
+
+<main>
+
+
+
+    <div class="container">
+        <div class="conteudo">
+            <ul class="simulados-lista">
+                <li>FAETEC</li>
+                <li>Polícia Militar do Estado do Rio de Janeiro (PMERJ)</li>
+                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
+                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
+                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
+            </ul>
+            <div class="lado-direito">
+                <button class="botao-duracao">Duração</button>
+                <div class="imagem-cerebro">
+                    <img src="../administrador/assets/cerebro.svg" alt="Cérebro graduado">
+                </div>
+                <p class="frase-motivacional">
+                    "O sucesso é a soma de pequenos esforços repetidos dia após dia"
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
 <script>
-  // Mostrar e esconder o dropdown quando o usuário clica
+// Mostrar e esconder o dropdown quando o usuário clica no perfil
 const profileToggle = document.getElementById('profile-toggle');
 const profileDropdown = document.getElementById('profile-dropdown');
 
@@ -67,24 +101,76 @@ profileToggle.addEventListener('click', function (e) {
     profileDropdown.classList.toggle('show'); // Alterna a classe "show"
 });
 
-// Fechar o dropdown quando o usuário clica fora dele
+// Fechar o dropdown quando o usuário clica fora do perfil
 window.addEventListener('click', function (e) {
     if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
         profileDropdown.classList.remove('show');
     }
 });
 
-</script>
+// Mostrar e esconder o dropdown quando o usuário clica em "Simulados"
+const simuladosToggle = document.getElementById('simulados-toggle');
+const simuladosDropdown = document.getElementById('simulados-dropdown');
 
+simuladosToggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    simuladosDropdown.classList.toggle('show');
+});
+
+// Fechar o dropdown de "Simulados" ao clicar fora
+window.addEventListener('click', function (e) {
+    if (!simuladosToggle.contains(e.target) && !simuladosDropdown.contains(e.target)) {
+        simuladosDropdown.classList.remove('show');
+    }
+});
+</script>
 <style>
-/* Estilo para o dropdown */
+/* Estilo para o dropdown de Simulados */
+.menu-desktop ul .dropdown {
+    position: relative;
+}
+
+.menu-desktop ul .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    min-width: 200px;
+}
+
+.menu-desktop ul .dropdown-menu.show {
+    display: block;
+}
+
+.menu-desktop ul .dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-desktop ul .dropdown-menu li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.menu-desktop ul .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
+/* Dropdown de Perfil */
 .profile-dropdown {
     position: relative;
     display: inline-block;
 }
 
 .profile-toggle {
-    color: white; /* Cor do texto de saudação */
+    color: white;
     font-size: 14px;
     cursor: pointer;
     display: flex;
@@ -96,7 +182,7 @@ window.addEventListener('click', function (e) {
 }
 
 .profile-link {
-    display: none; /* O dropdown estará oculto inicialmente */
+    display: none;
     position: absolute;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -117,31 +203,31 @@ window.addEventListener('click', function (e) {
 }
 
 .profile-link li a {
-    white-space: nowrap; /* Evita que o texto quebre a linha */
+    white-space: nowrap;
     display: flex;
     align-items: center;
     padding: 10px;
-    color: #000; /* Cor do texto */
+    color: #000;
     text-decoration: none;
 }
 
 .profile-link li a i {
-    margin-right: 8px; /* Espaço entre o ícone e o texto */
-    font-size: 18px; /* Ajuste do tamanho dos ícones */
-    color: #000; /* Cor dos ícones */
+    margin-right: 8px;
+    font-size: 18px;
+    color: #000;
 }
 
 .profile-link li a:hover {
-    background-color: #f1f1f1; /* Muda a cor ao passar o mouse */
+    background-color: #f1f1f1;
 }
 
-/* Estilo adicional para o visual arredondado do dropdown */
 .profile-link {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 10px;
 }
+
 </style>
-<center><h1>Simulados</h1></center>
+
 </body>
 </html>

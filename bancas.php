@@ -51,36 +51,89 @@
     </div>
 </div>
 
-
-<h1 class="centered-title">Banca de Prova</h1>
-    <div class="banca-container">
-        <?php
-        // Conexão com o banco de dados
-        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
-
-        if ($conn->connect_error) {
-            die("Conexão falhou: " . $conn->connect_error);
+<style>
+        /* Estilo atualizado */
+        .banca {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            margin: 10px;
+            position: relative;
         }
 
-        // Buscar as bancas cadastradas
-        $result = $conn->query("SELECT * FROM banca");
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='banca'>";
-                echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
-                echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width: 100px;'>";
-                
-                // Botão que chama o modal com a classe 'ok'
-                echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
-                
-                echo "</div>";
-            }
-        } else {
-            echo "<p>.</p>";
+        .banca h2 {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 10px;
+            text-align: center;
         }
-        ?>
-  </div>
+        .banca img {
+        display: block;
+        margin: 0 auto;
+        width: 100px; 
+        height: 100px; 
+        object-fit: contain; 
+        margin-bottom: 15px;
+        max-height: 100px; 
+        }
+
+
+
+
+        .banca button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: auto;
+        }
+    </style>
+
+<h1 class="centered-title" style="font-size: 34px; font-weight: 600; text-align: center; color: #333333; margin-bottom: 20px; position: relative; padding-bottom: 10px;">
+    Banca de Prova
+    <span style="display: block; width: 80px; height: 3px; background-color: #007bff; margin: 10px auto 0; border-radius: 3px;"></span>
+</h1>
+
+
+<div class="banca-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px;">
+
+    <?php
+    // Conexão com o banco de dados
+    $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+
+    // Buscar as bancas cadastradas
+    $result = $conn->query("SELECT * FROM banca");
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='banca' style='width: 250px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 15px; text-align: center;'>";
+            echo "<h2 style='font-size: 18px; color: #333333; margin-bottom: 10px;'>" . htmlspecialchars($row['nome']) . "</h2>";
+            echo "<img src='../administrador/" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' class='banca-img'>";
+
+            // Botão que chama o modal com a classe 'ok'
+            echo "<button class='open-modal button ok' data-link='" . htmlspecialchars($row['link']) . "' style='background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 14px;'>Acesse o site oficial " . htmlspecialchars($row['nome']) . "</button>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>Nenhuma banca cadastrada.</p>";
+    }
+    ?>
+</div>
         <!-- Modal -->
         <div id="myModal" class="modal">
             <div class="modal-content">

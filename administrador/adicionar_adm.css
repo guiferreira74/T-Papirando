@@ -13,66 +13,95 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 108vh;
-    padding: 20px;
+    padding: 40px;
+    background-color: #f8f8f8;
+    min-height: 100vh;
+}
+
+.formulario-wrapper {
+    display: flex;
+    flex-direction: row; /* Exibe o formulário e a imagem lado a lado */
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
 }
 
 .formulario-container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    flex: 2; /* Formulário ocupa mais espaço */
+    padding: 30px;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
+.formulario-container h1 {
     font-size: 24px;
+    margin-bottom: 20px;
     color: #333;
+    text-align: left;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-label {
+.form-group label {
     display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-weight: bold;
     color: #555;
+    margin-bottom: 5px;
 }
 
-input {
+.form-group input {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: #2118CD;
-    outline: none;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .btn-save {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
     background-color: #2118CD;
-    color: white;
+    color: #ffffff;
     border: none;
-    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-save:hover {
-    background-color: #1a159a;
+    background-color: #1a139d;
 }
+
+.linha-separacao {
+    width: 3px;
+    background-color: #2118CD;
+    height: auto;
+}
+
+.imagem-container {
+    flex: 1; /* Menor espaço para a imagem */
+    background-color: #ffffff; /* Fundo branco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.img-preview {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 
 /* Estilo dos modais */
 .modal {

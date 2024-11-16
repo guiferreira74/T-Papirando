@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -96,7 +95,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
 	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
-            <li><a href="disciplina.php"><i class='bx bx-time-five icon'></i> Disciplina</a></li>
+            <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
 
@@ -125,64 +124,41 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </nav>
 </section>
 
-   
-
-    <main>
-        <div class="topo">
-            <div class="topo-content">
-                <h1 class="topo-title">FAQ</h1>
-                <p class="topo-desc">Dúvidas frequentes</p>
-            </div>
-            <div class="img">
-                <img src="assets/faq2.svg" alt="">
-            </div>
-        </div>
-        
-        <div class="faq">
-            <div class="faq-name"> <!-- Corrigido para "faq-name" -->
-                <h1 class="faq-top"> Principais <br> Dúvidas</h1>
-                <img class="faq-img" src="assets/faq.svg" alt="">
-            </div>
-            <div class="faq-box">
-                <div class="faq-wrapper">
-                    <input type="checkbox" class="faq-trigger" id="faq-trigger-1">
-                    <label class="faq-title" for="faq-trigger-1">O que é o TÔPAPIRANDO?</label>
-                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
-                        <p>O TÔPAPIRANDO é uma plataforma para concurseiros que oferece simulados, acesso direto aos sites das bancas organizadoras e ferramentas para acompanhar seu desempenho após a realização dos simulados.</p>
-                    </div>
-                </div>
-
-                <div class="faq-wrapper">
-                    <input type="checkbox" class="faq-trigger" id="faq-trigger-2">
-                    <label class="faq-title" for="faq-trigger-2">Como faço para me cadastrar no site?</label>
-                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
-                        <p>Basta clicar no botão "Cadastrar", preencher suas informações pessoais e criar uma senha. Após o cadastro, você terá acesso a todas as funcionalidades do site.</p>
-                    </div>
-                </div>
-
-                
-
-                <div class="faq-wrapper">
-                    <input type="checkbox" class="faq-trigger" id="faq-trigger-3">
-                    <label class="faq-title" for="faq-trigger-3">Como funcionam os simulados?</label>
-                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
-                        <p>Os simulados são compostos por questões de provas anteriores e atualizadas. Você pode escolher a área de interesse, o nível de dificuldade e a quantidade de questões. Após a conclusão, você receberá um relatório de desempenho.</p>
-                    </div>
-                </div>
-                <div class="faq-wrapper">
-                    <input type="checkbox" class="faq-trigger" id="faq-trigger-4">
-                    <label class="faq-title" for="faq-trigger-4">Posso fazer os simulados quantas vezes quiser?</label>
-                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
-                        <p>Sim, você pode refazer os simulados quantas vezes quiser. A cada nova tentativa, as questões são embaralhadas, permitindo que você tenha uma experiência diferente e continue aprimorando seus conhecimentos.</p>
+<section class="faq">
+    <div class="faq-name">
+        <h1 class="faq-top">Dúvidas mais Frequentes</h1>
+        <img src="assets/faq.svg" alt="Question Mark" class="faq-img">
+    </div>
+    <div class="faq-box">
+        <div class="faq-wrapper">
+            <div class="faq-title">Como posso gerenciar as bancas organizadoras?</div>
+            <div class="faq-detail">
+                Para gerenciar as bancas, acesse a área "Gerenciar Bancas". Você pode adicionar novas bancas clicando em "Adicionar Banca" ou editar as existentes para atualizar detalhes como nome, website e outras informações.
             </div>
         </div>
         <div class="faq-wrapper">
-                    <input type="checkbox" class="faq-trigger" id="faq-trigger-5">
-                    <label class="faq-title" for="faq-trigger-5">Como o site pode me ajudar a me preparar melhor para o concurso?</label>
-                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
-                        <p>Os simulados ajudam a identificar suas dificuldades e lacunas no conhecimento, oferecendo uma forma prática de estudar. Além disso, ao realizar os simulados com regularidade, você se familiariza com o formato das provas, desenvolve agilidade e aumenta sua confiança.</p>
+            <div class="faq-title">Posso remover um concurso ou banca do sistema?</div>
+            <div class="faq-detail">
+            Sim, para remover um concurso ou uma banca, vá até a seção correspondente, selecione o item que deseja excluir e clique na opção "Excluir". Tenha cuidado, pois a exclusão é permanente.
             </div>
-    </main>
+        </div>
+        <div class="faq-wrapper">
+            <div class="faq-title">Posso adicionar um novo administrador?</div>
+            <div class="faq-detail">
+                Sim, vá nas configurações do seu perfil, clique em adicionar novo administrador e logo após coloque os dados requeridos.
+            </div>
+        </div>
+    
+    </div>
+</section>
+
+
+<!-- script do modal com a faq -->
+<Script>
+
+</Script>
+
+
     <!-- Modal de Confirmação -->
     <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -337,9 +313,18 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 }
             }
         };
+    
+    </script>
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+    <script>
+        document.querySelectorAll('.faq-title').forEach(title => {
+    title.addEventListener('click', () => {
+        const detail = title.nextElementSibling;
+        title.classList.toggle('active');
+        detail.style.maxHeight = detail.style.maxHeight ? null : detail.scrollHeight + 'px';
+    });
+});
+
     </script>
 
 </body>
