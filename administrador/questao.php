@@ -331,7 +331,7 @@ if (isset($_GET['delete'])) {
         <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
     </div>
 </div>
-
+<!-- modal de  -->
 <div id="add-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeAddModal()">&times;</span>

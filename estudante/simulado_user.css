@@ -7,11 +7,13 @@
 }
 
 body {
-    font-family: "Poppins", system-ui;
-    background:  #E6E6E6;
-    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -294,186 +296,141 @@ header .info ul li a {
       margin-left: 30px;          
     
       }
-
-      .container {
-        margin-top: auto; /* Ajuste do espaço inicial */
-        display: flex;
-        justify-content: space-between; /* Espaço entre imagem fixa e cartões */
-        max-width: 1280px;
+    
+      .simulado-container {
+        max-width: 800px;
+        width: 90%;
+        height: 80vh; /* Define uma altura fixa para o container */
+        overflow-y: auto; /* Adiciona barra de rolagem vertical */
+        background-color: #fff;
         padding: 20px;
-        gap: 50px;
-        height: calc(100vh - 120px); /* Altura total sem barra de rolagem externa */
-    }
-    .fixed-image {
-        width: 35%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
-        gap: 20px;
-        position: sticky;
-        top: 50px; /* Move a imagem mais para cima */
     }
     
-    .fixed-image img {
-        width: 450px; /* Diminuí a largura da imagem */
-        height: auto; /* Mantém a proporção da imagem */
-        border-radius: 50%; /* Continua com formato circular */
-        border: 4px solid #2118CD; /* Mantém a borda azul */
-        padding: 10px; /* Espaçamento interno */
+    h1 {
+        font-size: 32px;
+        color: #2118CD;
+        margin-bottom: 20px;
     }
     
+    .questao {
+        margin-bottom: 20px;
+        text-align: left;
+    }
     
-    .quote {
+    .questao p {
         font-size: 18px;
-        color: #444; /* Texto mais legível */
-        line-height: 1.6; /* Melhor espaçamento entre linhas */
-        max-width: 80%; /* Limita a largura */
-    }
-    .scrollable-cards {
-        width: 65%; /* Largura do container de cartões */
-        display: flex;
-        flex-direction: column; /* Organiza os cartões verticalmente */
-        gap: 20px; /* Espaçamento entre os cartões */
-        max-height: calc(100vh - 150px); /* Ajusta a altura do container em relação à viewport */
-        overflow-y: auto; /* Ativa a barra de rolagem vertical */
-        padding-right: 10px; /* Espaçamento interno à direita */
+        font-weight: bold;
+        margin-bottom: 10px;
     }
     
-    /* Estilizar a barra de rolagem */
-    .scrollable-cards::-webkit-scrollbar {
-        width: 6px; /* Largura da barra de rolagem */
+    .questao ul {
+        list-style: none; /* Remove as bolinhas pretas */
+        padding: 0;
     }
     
-    .scrollable-cards::-webkit-scrollbar-thumb {
-        background: #2118CD; /* Cor do polegar da barra */
-        border-radius: 10px; /* Borda arredondada */
+    .questao li {
+        margin-bottom: 10px;
     }
     
-    
-    /* Cartão individual */
-    .card {
-        background: #FFF; /* Fundo branco */
-        border: 1px solid #DDD; /* Borda fina */
-        border-radius: 12px; /* Cantos arredondados */
-        padding: 16px; /* Espaçamento interno */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animação suave */
-        min-height: 150px; /* Altura mínima do card */
-        flex-shrink: 0; /* Impede que o cartão diminua */
-        display: flex; /* Layout flexível interno */
-        flex-direction: column; /* Organiza o conteúdo verticalmente */
-        justify-content: space-between; /* Distribui o conteúdo de forma uniforme */
-    }
-    
-    .card:hover {
-        transform: translateY(-5px); /* Elevação ao passar o mouse */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
-    }
-    
-    .card h2 a {
-        color: #2b3eb6;
-        text-decoration: none;
-        font-size: 18px;
-    }
-    
-    .details-row {
-        display: flex; /* Exibição em linha */
-        justify-content: space-between; /* Espaço entre os elementos */
-        align-items: center;
-        margin-bottom: 6px; /* Menor espaçamento inferior */
-    }
-    
-    hr {
-        border: none; /* Remove borda padrão */
-        border-top: 1px solid #ddd; /* Linha fina */
-        margin: 12px 0; /* Margem vertical */
-    }
-    
-    .title {
-        font-size: 1rem; /* Tamanho menor da fonte */
-        margin: 0 0 6px; /* Margem inferior menor */
-        color: #333;
-    }
-    .badge {
-        font-size: 0.85rem;
-        background-color: #2118CD; /* Fundo azul */
-        color: #FFF; /* Texto branco */
-        padding: 4px 8px;
-        border-radius: 8px; /* Bordas mais suaves */
-        font-weight: 500;
-        text-transform: uppercase; /* Texto em caixa alta */
-    }
-    
-    .icon-text {
-        display: flex;
-        align-items: center;
-        font-size: 0.9rem; /* Texto levemente maior */
-        color: #666; /* Cor do texto mais suave */
-    }
-    
-    .icon {
+    .questao input[type="radio"] {
         margin-right: 8px;
     }
     
-    .icon.correios {
-        background-image: url('caminho-para-icone-correios.png');
-        width: 16px; /* Ajustado para ícones proporcionais */
-        height: 16px;
-        display: inline-block;
-        background-size: contain;
+    button {
+        background-color: #2118CD;
+        color: #fff;
+        font-size: 16px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease; /* Transição ao passar o mouse */
     }
     
-    .icon.money {
-        background-image: url('caminho-para-icone-dinheiro.png');
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        background-size: contain;
+    button:hover {
+        background-color: #1834A1;
     }
     
-    .card {
-        transform: translateY(0);
-        opacity: 0;
-        animation: fadeIn 0.8s ease forwards;
+    /* Barra de rolagem personalizada */
+    .simulado-container::-webkit-scrollbar {
+        width: 8px; /* Largura da barra */
     }
     
-    @keyframes fadeIn {
-        from {
-            transform: translateY(20px);
-            opacity: 0;
+    .simulado-container::-webkit-scrollbar-track {
+        background: #f3f3f3; /* Cor do fundo da barra */
+        border-radius: 10px;
+    }
+    
+    .simulado-container::-webkit-scrollbar-thumb {
+        background: #2118CD; /* Cor do controle da barra */
+        border-radius: 10px;
+    }
+    
+    .simulado-container::-webkit-scrollbar-thumb:hover {
+        background: #1834A1; /* Cor ao passar o mouse */
+    }
+    
+    /* Responsividade */
+    @media (max-width: 1024px) {
+        .simulado-container {
+            max-width: 700px;
+            padding: 15px;
         }
-        to {
-            transform: translateY(0);
-            opacity: 1;
+    
+        h1 {
+            font-size: 28px;
+        }
+    
+        .questao p {
+            font-size: 16px;
+        }
+    
+        button {
+            font-size: 14px;
+            padding: 8px 16px;
         }
     }
-    .page-header {
-        margin-top: 40px; /* Ajuste o valor conforme necessário */
-        margin-bottom: 20px; /* Espaçamento inferior para separar do próximo elemento */
-        text-align: center;
+    
+    @media (max-width: 768px) {
+        .simulado-container {
+            max-width: 600px;
+            padding: 10px;
+        }
+    
+        h1 {
+            font-size: 24px;
+        }
+    
+        .questao p {
+            font-size: 14px;
+        }
+    
+        button {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
     }
     
-    .page-title {
-        font-size: 28px;
-        font-weight: bold;
-        color: #2118CD;
-        margin: 0;
-        padding: 0;
-        line-height: 1.4;
-    }
-
-    .button-row {
-        display: flex;
-        justify-content: space-between; /* Botões nas extremidades */
-        margin-top: 10px;
-    }
+    @media (max-width: 480px) {
+        .simulado-container {
+            max-width: 90%;
+            padding: 5px;
+        }
     
-    .btn-left {
-        margin-right: auto; /* Alinha à esquerda */
-    }
+        h1 {
+            font-size: 20px;
+        }
     
-    .btn-right {
-        margin-left: auto; /* Alinha à direita */
-    }
+        .questao p {
+            font-size: 12px;
+        }
     
+        button {
+            font-size: 10px;
+            padding: 4px 8px;
+        }
+    }

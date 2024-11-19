@@ -10,18 +10,82 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
 // Capturando o nome e sobrenome do usuário da sessão
 $usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário'; // Nome padrão
 $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''; // Sobrenome padrão
+
+// Conexão com o banco de dados
+$host = "localhost";
+$user = "root";
+$password = "admin";
+$database = "Topapirando";
+
+$conn = new mysqli($host, $user, $password, $database);
+
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
+
+// Recupera o ID do concurso
+if (!isset($_GET['cod_concurso']) || empty($_GET['cod_concurso'])) {
+    die("Concurso inválido!.");
+}
+
+$cod_concurso = intval($_GET['cod_concurso']);
+
+// Busca questões do concurso
+$query = "SELECT * FROM questao WHERE concurso_cod_concurso = $cod_concurso";
+$result = $conn->query($query);
+
+if (!$result || $result->num_rows === 0) {
+    die("Nenhuma questão encontrada para este concurso.");
+}
+
+// Armazena as questões e ordem randomizada
+$questoes = [];
+$_SESSION['ordem_alternativas'] = []; // Salvar a ordem para cada questão
+
+while ($row = $result->fetch_assoc()) {
+    // Cria as alternativas com descrições
+    $alternativas = [
+        $row['desc1'],
+        $row['desc2'],
+        $row['desc3'],
+        $row['desc4'],
+        $row['desc_correta']
+    ];
+
+    // Embaralha as alternativas
+    $ordem = range(0, 4);
+    shuffle($ordem);
+
+    // Salva a ordem randomizada na sessão
+    $_SESSION['ordem_alternativas'][$row['cod_questao']] = $ordem;
+
+    // Reorganiza as alternativas
+    $alternativas_randomizadas = [];
+    foreach ($ordem as $indice) {
+        $alternativas_randomizadas[] = $alternativas[$indice];
+    }
+
+    $row['alternativas'] = $alternativas_randomizadas;
+    $questoes[] = $row;
+}
+
+if (empty($questoes)) {
+    die("Nenhuma questão encontrada após o processamento.");
+}
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre</title>
-    <link rel="stylesheet" href="sobre.css">
-    <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <title>Simulado</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href='simulado_user.css' rel='stylesheet'>
 </head>
 <body>
+
+
 <header>
     <div class="interface">
         <div class="logo">
@@ -30,7 +94,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php">Simulados</a></li>
+                <li><a href="simulados.php">Simulado</a></li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -45,7 +109,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
             <div class="profile-dropdown">
                 <a href="#" class="profile-toggle" id="profile-toggle">
                     Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>
-                    <i class='bx bx-chevron-down'></i> <!-- Ícone de seta para baixo -->
+                    <i class='bx bx-chevron-down'></i>
                 </a>
                 <ul class="profile-link" id="profile-dropdown">
                     <li><a href="editar_dados_user.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
@@ -56,35 +120,50 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     </div>
 </header>
 
-    <!-- Conteúdo Principal -->
-    <main>
-        <div class="sobre-container">
-            <div class="desenvolvedores">
-                <h2>Desenvolvedores</h2>
+<div class="simulado-container">
+    <h1>Simulado</h1>
+    <form method="POST" action="resultado.php">
+        <?php foreach ($questoes as $index => $questao): ?>
+            <div class="questao">
+                <p><?php echo $index + 1; ?>. <?php echo htmlspecialchars($questao['pergunta']); ?></p>
                 <ul>
-                    <li>Breno Soares Francisco</li>
-                    <li>Luca Kalyl da Cunha Beckman</li>
-                    <li>Guilherme Ferreira Alves Biserra</li>
-                    <li>Marcos Antonio Pinheiro de Queiroz</li>
+                    <?php
+                    // Letras para as opções
+                    $letras = ['A)', 'B)', 'C)', 'D)', 'E)'];
+                    foreach ($questao['alternativas'] as $key => $descricao): ?>
+                        <li>
+                            <input 
+                                type="radio" 
+                                name="resposta[<?php echo $questao['cod_questao']; ?>]" 
+                                value="<?php echo $key + 1; ?>" 
+                                id="questao-<?php echo $questao['cod_questao'] . '-' . $key; ?>"
+                            >
+                            <label for="questao-<?php echo $questao['cod_questao'] . '-' . $key; ?>">
+                                <?php echo $letras[$key]; ?> <?php echo htmlspecialchars($descricao); ?>
+                            </label>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
-            <div class="foto">
-                <img src="../administrador/assets/grupo.svg" alt="Foto dos Desenvolvedores">
-            </div>
-        </div>
+            <hr>
+        <?php endforeach; ?>
+        <button type="submit">Finalizar Simulado</button>
+    </form>
+</div>
 
-        <div class="creditos-container">
-            <div class="foto">
-                <img src="../administrador/assets/Faetec.svg" alt="Foto de Créditos">
-            </div>
-            <div class="creditos">
-                <h2>Créditos e Agradecimentos</h2>
-                <p>Gostaríamos de agradecer primeiramente a Deus, por nos dar força e disposição para nos levantar todos os dias. Agradecemos também nosso professor orientador Gustavo Mendonça por toda ajuda e esforço dedicado a nós por todo o nosso percurso de aprendizado. Agradecemos a Professora, Lidiana Silva por toda disponibilidade e atenção para tirar dúvidas e reforço dado a nós durante a realização do nosso trabalho de conclusão de curso. Agradecemos também à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio não só em nosso projeto, mas pela dedicação em estar todos os dias procurando o melhor para seus alunos. Agradecemos também a todos os profissionais da instituição que trabalham todos os dias para que nosso ambiente escolar fique o melhor possível.</p>
-            </div>
-        </div>
-    </main>
+
+    <style>
+    body {
+        padding-top: 120px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+</style>
+
     <script>
-  // Mostrar e esconder o dropdown quando o usuário clica
+// Mostrar e esconder o dropdown quando o usuário clica no perfil
 const profileToggle = document.getElementById('profile-toggle');
 const profileDropdown = document.getElementById('profile-dropdown');
 
@@ -93,13 +172,12 @@ profileToggle.addEventListener('click', function (e) {
     profileDropdown.classList.toggle('show'); // Alterna a classe "show"
 });
 
-// Fechar o dropdown quando o usuário clica fora dele
+// Fechar o dropdown quando o usuário clica fora do perfil
 window.addEventListener('click', function (e) {
     if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
         profileDropdown.classList.remove('show');
     }
 });
-
 
 // Mostrar e esconder o dropdown quando o usuário clica em "Simulados"
 const simuladosToggle = document.getElementById('simulados-toggle');
@@ -116,13 +194,9 @@ window.addEventListener('click', function (e) {
         simuladosDropdown.classList.remove('show');
     }
 });
-
 </script>
-
 <style>
-
-
-/* Estilo para o dropdown *//* Estilo para o dropdown de Simulados */
+/* Estilo para o dropdown de Simulados */
 .menu-desktop ul .dropdown {
     position: relative;
 }
@@ -159,13 +233,15 @@ window.addEventListener('click', function (e) {
 .menu-desktop ul .dropdown-menu li a:hover {
     background-color: #f4f4f4;
 }
+
+/* Dropdown de Perfil */
 .profile-dropdown {
     position: relative;
     display: inline-block;
 }
 
 .profile-toggle {
-    color: white; /* Cor do texto de saudação */
+    color: white;
     font-size: 14px;
     cursor: pointer;
     display: flex;
@@ -177,7 +253,7 @@ window.addEventListener('click', function (e) {
 }
 
 .profile-link {
-    display: none; /* O dropdown estará oculto inicialmente */
+    display: none;
     position: absolute;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -198,25 +274,24 @@ window.addEventListener('click', function (e) {
 }
 
 .profile-link li a {
-    white-space: nowrap; /* Evita que o texto quebre a linha */
+    white-space: nowrap;
     display: flex;
     align-items: center;
     padding: 10px;
-    color: #000; /* Cor do texto */
+    color: #000;
     text-decoration: none;
 }
 
 .profile-link li a i {
-    margin-right: 8px; /* Espaço entre o ícone e o texto */
-    font-size: 18px; /* Ajuste do tamanho dos ícones */
-    color: #000; /* Cor dos ícones */
+    margin-right: 8px;
+    font-size: 18px;
+    color: #000;
 }
 
 .profile-link li a:hover {
-    background-color: #f1f1f1; /* Muda a cor ao passar o mouse */
+    background-color: #f1f1f1;
 }
 
-/* Estilo adicional para o visual arredondado do dropdown */
 .profile-link {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -224,6 +299,5 @@ window.addEventListener('click', function (e) {
 }
 
 </style>
-   
 </body>
 </html>

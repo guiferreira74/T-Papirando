@@ -31,15 +31,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li class="dropdown">
-                    <a href="#" class="simulados-link" id="simulados-toggle">
-                        Simulados <i class='bx bx-chevron-down'></i>
-                    </a>
-                    <ul class="dropdown-menu" id="simulados-dropdown">
-                        <li><a href="#">Simulado por Disciplina</a></li>
-                        <li><a href="simulados.php">Simulado por Concurso</a></li>
-                    </ul>
-                </li>
+                <li><a href="simulados.php">Simulado</a></li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>

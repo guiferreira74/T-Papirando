@@ -212,59 +212,61 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 
         ?>
 
-        <div class="table-container container-principal">
-            <h2 style="margin-left:100px;">Gerenciar Concursos</h2>
+<div class="table-container container-principal">
+    <h2 style="margin-left:100px;">Gerenciar Concursos</h2>
 
-            <button class="btn-adicionar" onclick="openAddModal()">Adicionar Novo Concurso</button>
+    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Novo Concurso</button>
 
-            <?php
-            // Consultar todos os concursos com informações das chaves estrangeiras
-            $sql = "
-                SELECT c.*, 
-                       e.tipo_escolaridade, 
-                       i.nome AS nome_instituicao
-                FROM concurso c
-                JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
-                JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
-            ";
-            $result = $conn->query($sql);
+    <?php
+    // Consultar todos os concursos com informações das chaves estrangeiras
+    $sql = "
+        SELECT c.*, 
+               e.tipo_escolaridade, 
+               i.nome AS nome_instituicao
+        FROM concurso c
+        JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade
+        JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
+    ";
+    $result = $conn->query($sql);
 
-            if ($result && $result->num_rows > 0) {
-                echo "<table id='concursoTable' class='tabela-registros'>";
-                echo "<thead><tr>
-                        <th>Nome do Concurso</th>
-                        <th>Descrição</th>
-                        <th>Quantidade de Questões</th>
-                        <th>Realizado em:</th>
-                        <th>Vagas</th>
-                        <th>Escolaridade</th>
-                        <th>Instituição</th>
-                        <th>Ações</th>
-                    </tr></thead>";
-                echo "<tbody>";
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['data']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>"; // Mostra o nome da escolaridade
-                    echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";  // Mostra o nome da instituição
-                    echo "<td class='actions'>";
-                    echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
-                    echo "<button class='btn-excluir' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\")'><i class='fas fa-trash-alt'></i></button>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                echo "</tbody>";
-                echo "</table>";
-            } else {
-                echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
-            }
+    if ($result && $result->num_rows > 0) {
+        echo "<table id='concursoTable' class='tabela-registros'>";
+        echo "<thead><tr>
+                <th>Nome do Concurso</th>
+                <th>Descrição</th>
+                <th>Quantidade de Questões</th>
+                <th>Realizado em:</th>
+                <th>Vagas</th>
+                <th>Escolaridade</th>
+                <th>Instituição</th>
+                <th>Ações</th>
+            </tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            // Formatar a data no formato brasileiro
+            $data_brasileira = date("d/m/Y", strtotime($row['data']));
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['descricao']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['qtd_questoes']) . "</td>";
+            echo "<td>" . htmlspecialchars($data_brasileira) . "</td>"; // Data formatada
+            echo "<td>" . htmlspecialchars($row['vagas']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['tipo_escolaridade']) . "</td>"; // Mostra o nome da escolaridade
+            echo "<td>" . htmlspecialchars($row['nome_instituicao']) . "</td>";  // Mostra o nome da instituição
+            echo "<td class='actions'>";
+            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-excluir' onclick='openModal(\"concurso.php?delete=" . $row['cod_concurso'] . "\")'><i class='fas fa-trash-alt'></i></button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
+    }
+    ?>
+</div>
 
-            ?>
-        </div>
     </div>
 </main>
 

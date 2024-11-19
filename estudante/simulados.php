@@ -12,6 +12,7 @@ $usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário'; // No
 $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''; // Sobrenome padrão
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -31,15 +32,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li class="dropdown">
-                    <a href="#" class="simulados-link" id="simulados-toggle">
-                        Simulados <i class='bx bx-chevron-down'></i>
-                    </a>
-                    <ul class="dropdown-menu" id="simulados-dropdown">
-                        <li><a href="#">Simulado por Disciplina</a></li>
-                        <li><a href="#">Simulado por Concurso</a></li>
-                    </ul>
-                </li>
+                <li><a href="simulados.php">Simulados</a></li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -66,30 +59,157 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
 </header>
 
 <main>
+<?php
+session_start();
+
+// Conexão com o banco de dados
+$host = "localhost";
+$user = "root";
+$password = "admin";
+$database = "Topapirando";
+
+$conn = new mysqli($host, $user, $password, $database);
+
+// Verifica a conexão
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
+
+// Query para buscar os concursos (incluindo cod_concurso)
+$sql = "SELECT c.cod_concurso, c.nome, c.descricao, c.qtd_questoes, c.data, c.vagas, i.nome AS instituicao, e.tipo_escolaridade AS escolaridade
+        FROM concurso c
+        JOIN instituicao i ON c.instituicao_cod_instituicao = i.cod_instituicao
+        JOIN escolaridade e ON c.escolaridade_cod_escolaridade = e.cod_escolaridade";
+
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Erro na query: " . $conn->error);
+}
+
+$concursos = [];
+while ($row = $result->fetch_assoc()) {
+    $concursos[] = $row;
+}
+?>
+
+<div class="page-header">
+    <h1 class="page-title">Simulados por Concurso</h1>
+</div>
 
 
+<main class="container">
+    <div class="fixed-image">
+        <img src="/administrador/assets/estudo.svg" alt="Cérebro">
+        <p class="quote">O sucesso é a soma de pequenos esforços dia após dia</p>
+    </div>
 
-    <div class="container">
-        <div class="conteudo">
-            <ul class="simulados-lista">
-                <li>FAETEC</li>
-                <li>Polícia Militar do Estado do Rio de Janeiro (PMERJ)</li>
-                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
-                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
-                <li>Corpo de Bombeiros Militar do Estado do Rio de Janeiro</li>
-            </ul>
-            <div class="lado-direito">
-                <button class="botao-duracao">Duração</button>
-                <div class="imagem-cerebro">
-                    <img src="../administrador/assets/cerebro.svg" alt="Cérebro graduado">
+    <div class="scrollable-cards">
+    <?php if (!empty($concursos)): ?>
+        <?php foreach ($concursos as $index => $concurso): ?>
+            <?php 
+            // Converte a data para o formato brasileiro
+            $data_brasileira = date("d/m/Y", strtotime($concurso['data'])); 
+
+            // Verifica a quantidade de questões cadastradas e compara com o esperado
+            $cod_concurso = intval($concurso['cod_concurso']);
+            $query_questoes = "SELECT COUNT(*) AS total_questoes FROM questao WHERE concurso_cod_concurso = $cod_concurso";
+            $result_questoes = $conn->query($query_questoes);
+
+            $simulado_disponivel = false;
+            if ($result_questoes) {
+                $row_questoes = $result_questoes->fetch_assoc();
+                $questoes_cadastradas = $row_questoes['total_questoes'];
+                $simulado_disponivel = $questoes_cadastradas == intval($concurso['qtd_questoes']); // Verifica se há a quantidade correta de questões
+            }
+            ?>
+            <div class="card">
+                <h2 class="title"><?php echo htmlspecialchars($concurso['nome']); ?></h2>
+                <div class="details-row">
+                    <span class="badge">Escolaridade: <?php echo htmlspecialchars($concurso['escolaridade']); ?></span>
+                    <span class="badge">Realizado em: <?php echo htmlspecialchars($data_brasileira); ?></span>
                 </div>
-                <p class="frase-motivacional">
-                    "O sucesso é a soma de pequenos esforços repetidos dia após dia"
-                </p>
+                <hr>
+                <div class="details-row">
+                    <p>Instituição: <?php echo htmlspecialchars($concurso['instituicao']); ?></p>
+                    <p>Vagas: <?php echo htmlspecialchars($concurso['vagas']); ?></p>
+                </div>
+                <div class="button-row">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConcurso<?php echo $index; ?>">
+                        Mais Informações
+                    </button>
+                    <?php if ($simulado_disponivel): ?>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalDicas<?php echo $index; ?>">
+                            Iniciar Simulado
+                        </button>
+                    <?php else: ?>
+                        <button class="btn btn-secondary" disabled>Simulado não disponível</button>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
+
+            <!-- Modal do Concurso -->
+            <div class="modal fade" id="modalConcurso<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel<?php echo $index; ?>"><?php echo htmlspecialchars($concurso['nome']); ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Descrição:</strong> <?php echo htmlspecialchars($concurso['descricao']); ?></p>
+                            <p><strong>Quantidade de Questões:</strong> <?php echo $questoes_cadastradas; ?></p>
+                            <p><strong>Realizado em:</strong> <?php echo htmlspecialchars($data_brasileira); ?></p>
+                            <p><strong>Vagas:</strong> <?php echo htmlspecialchars($concurso['vagas']); ?></p>
+                            <p><strong>Instituição:</strong> <?php echo htmlspecialchars($concurso['instituicao']); ?></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Dicas -->
+            <div class="modal fade" id="modalDicas<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalDicasLabel<?php echo $index; ?>" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDicasLabel<?php echo $index; ?>">Dicas para o Simulado</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul>
+                                <li>Leia todas as questões atentamente antes de responder.</li>
+                                <li>Gerencie bem o seu tempo. Não passe muito tempo em uma única questão.</li>
+                                <li>Se não souber a resposta, elimine as opções que parecem menos prováveis.</li>
+                                <li>Certifique-se de estar em um local tranquilo para se concentrar melhor.</li>
+                                <li>Boa sorte!</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="simulado_user.php?cod_concurso=<?php echo $cod_concurso; ?>" class="btn btn-primary">
+                                Iniciar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="no-data">Nenhum concurso encontrado.</p>
+    <?php endif; ?>
     </div>
 </main>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 
 <script>
 // Mostrar e esconder o dropdown quando o usuário clica no perfil
