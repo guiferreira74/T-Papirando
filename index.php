@@ -33,34 +33,48 @@
         </div> 
     </header>
 
-    <main>
-        <section class="topo-do-site">
-            <div class="interface"> 
-                <div class="flex">
-                    <div class="txt-topo-site">
-                        <h1>Teste seu conhecimento e prepare-se melhor para o seu concurso</h1>
-                        <p>Crie sua conta para aproveitar todos os benefícios de ter uma conta</p>
+    <main class="hidden" id="content">
+    <section class="topo-do-site">
+        <div class="interface"> 
+            <div class="flex">
+                <div class="txt-topo-site">
+                    <h1>Teste seu conhecimento e prepare-se melhor para o seu concurso</h1>
+                    <p>Crie sua conta para aproveitar todos os benefícios de ter uma conta</p>
 
-                        <div class="btn-contato">
-                            <a href="cadastro.php">
-                                <button>Crie sua conta</button> 
+                    <div class="btn-contato">
+                        <a href="cadastro.php">
+                            <button>Crie sua conta</button> 
+                        </a>
+                        <p class="ou">Ou</p>
+                        <div class="entrar">
+                            <a href="login.php">
+                                <button>Entrar</button> 
                             </a>
-                            <p class="ou">Ou</p>
-                            <div class="entrar">
-                                <a href="login.php">
-                                    <button>Entrar</button> 
-                                </a>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="img-topo-site">
-                        <img id="img" src="administrador/assets/imagem mulher sentada.svg" alt="">
-                    </div>
                 </div>
-            </div> 
-        </section> 
-    </main>
+
+                <div class="img-topo-site">
+                    <img id="img" src="administrador/assets/imagem mulher sentada.svg" alt="">
+                </div>
+            </div>
+        </div> 
+    </section> 
+</main>
+
+<script>
+    // Verifica se o site está sendo acessado em localhost
+if (window.location.hostname === "localhost") {
+    const content = document.getElementById("content");
+
+    // Remove a classe "hidden" e adiciona a classe de animação
+    content.classList.remove("hidden");
+    content.classList.add("animate-slide-up");
+} else {
+    // Remove a classe "hidden" diretamente se não for localhost
+    document.getElementById("content").classList.remove("hidden");
+}
+</script>
 
     <style>
     /* Estilos básicos para o layout */

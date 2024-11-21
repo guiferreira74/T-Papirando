@@ -520,3 +520,25 @@ section.topo-do-site.flex {
 .modal-buttons .btn-cancel:hover {
     background-color: darkred; /* Efeito de hover para o botão Cancelar */
 }
+
+/* Efeito de animação de baixo para cima */
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(50px); /* Começa abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Volta à posição original */
+    }
+}
+
+/* Classe de animação */
+.animate-slide-up {
+    animation: slide-up 1s ease-out; /* Duração e suavização */
+}
+
+/* Conteúdo inicialmente invisível */
+.hidden {
+    opacity: 0; /* Esconde o conteúdo */
+}

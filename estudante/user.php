@@ -56,23 +56,36 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         </div>
     </div>
 </header>
-
 <main>
-    <div class="encima">
-        <h1> O que você está procurando?</h1>
-        <input id="pesquisa" type="text" placeholder="Digite seu texto aqui">
-    </div>
-
-    <div class="enbaixo">
-        <div class="esquerda">
-            <a href="simulados.php"><img src="../administrador/assets/Simualdos.svg" alt=""></a>
+    <!-- Primeira seção -->
+    <section class="section-light">
+        <div class="content">
+            <div class="text animate-text">
+                <h1>Simulados para aprimorar seus conhecimentos</h1>
+                <p>Realizar simulados é fundamental para identificar seus pontos fortes e fracos. Descubra onde melhorar para alcançar seus objetivos.</p>
+               <a href="simulados.php"> <button class="btn-simulado">Realizar Simulado</button></a>
+            </div>
+            <div class="image animate-image">
+                <img src="/administrador/assets/simulados.svg" alt="Imagem sobre simulados">
+            </div>
         </div>
+    </section>
 
-        <div class="direita">
-            <a href="desempenhos.php"><img src="../administrador/assets/Desempenho.svg" alt=""></a>
+    <!-- Segunda seção -->
+    <section class="section-dark">
+        <div class="content">
+            <div class="text animate-text">
+                <h1>Acompanhe e analise seu desempenho</h1>
+                <p>Entenda como você está evoluindo ao longo do tempo. Monitorar seu desempenho é essencial para o sucesso nos concursos.</p>
+                <a href="desempenhos.php"><button class="btn-desempenho">Ver Desempenho</button></a>
+            </div>
+            <div class="image animate-image">
+                <img src="/administrador/assets/desempenho2.svg" alt="Imagem sobre desempenho">
+            </div>
         </div>
-    </div>
+    </section>
 </main>
+
 
 <script>
   // Mostrar e esconder o dropdown quando o usuário clica

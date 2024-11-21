@@ -187,6 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
 <script>
     document.getElementById('form-cadastro').onsubmit = function(event) {
     const telefone = document.getElementById('telefone').value;

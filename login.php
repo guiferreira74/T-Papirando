@@ -110,35 +110,51 @@ if ($stmt_estudante->num_rows > 0) {
     </header>
 
     <main>
-        <div class="grid-duplo">
-            <div class="esquerda">
-                <img id="login" src="./administrador/assets/login azul.svg" alt="">
-                <h1>Já tem conta?</h1>
-                <p>Informe seus dados para acessá-la</p>
-                
-                <form action="login.php" method="post">
-                    <input id="input-email" name="email" type="text" placeholder="E-mail" value="<?php echo isset($_COOKIE['email']) ? $_COOKIE['email'] : ''; ?>" required>
-                    <input id="input-senha" name="senha" type="password" placeholder="Senha" value="<?php echo isset($_COOKIE['senha']) ? $_COOKIE['senha'] : ''; ?>" required>
+    <div class="grid-duplo">
+    <!-- Parte Esquerda -->
+    <div class="esquerda">
+        <img id="login" src="./administrador/assets/login azul.svg" alt="Login">
+        <h1>Já tem conta?</h1>
+        <p>Informe seus dados para acessá-la</p>
 
-                    <div id="checa">  
-                        <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
-                        <label for="checar">Lembrar meus dados</label>
-                    </div>
+        <!-- Formulário de Login -->
+        <form action="login.php" method="post">
+            <input 
+                id="input-email" 
+                name="email" 
+                type="text" 
+                placeholder="E-mail" 
+                value="<?php echo isset($_COOKIE['email']) ? htmlspecialchars($_COOKIE['email']) : ''; ?>" 
+                required
+            >
+            <input 
+                id="input-senha" 
+                name="senha" 
+                type="password" 
+                placeholder="Senha" 
+                value="<?php echo isset($_COOKIE['senha']) ? htmlspecialchars($_COOKIE['senha']) : ''; ?>" 
+                required
+            >
+            <div id="checa">  
+                <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
+                <label for="checar">Lembrar meus dados</label>
+            </div>
 
-                    <div class="button-container">
-                        <button id="button-esquerda" type="submit">Acessar Conta</button>
-                    </div>
-                </form>
+            <!-- Botão de Login -->
+            <div class="button-container">
+                <button id="button-esquerda" type="submit">Acessar Conta</button>
             </div>
-                
-            <div class="direita">
-                <img id="Log" src="./administrador/assets/login verde.svg" alt="">
-                <h1>Novo usuário</h1>
-                <p>Criar uma conta é fácil! Informe seus dados e uma senha para <br> aproveitar todos os benefícios de ter uma conta.</p>
-                <a href="cadastro.php"><button id="button-direita">Crie sua Conta</button></a>
-            </div>
-        </div>
-    </main>
+        </form>
+    </div>
+
+    <!-- Parte Direita -->
+    <div class="direita">
+        <img id="Log" src="./administrador/assets/login verde.svg" alt="Novo Usuário">
+        <h1>Novo usuário</h1>
+        <p>Criar uma conta é fácil! Informe seus dados e uma senha para <br> aproveitar todos os benefícios de ter uma conta.</p>
+        <a href="cadastro.php"><button id="button-direita">Crie sua Conta</button></a>
+    </div>
+</div>
 
      <!-- Modal Simulados -->
      <div id="modal-simulados" class="modal modal-custom">

@@ -201,7 +201,7 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
     color: white;
     border: none;
     border-radius: 10px;
-    margin-top: 50px;
+    margin-top: 10px;
     font-size: 20px;
 }
 
@@ -221,37 +221,63 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
     font-size: 20px;
 }
 
-#checar {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
 #checa {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-top: 15px;
+    align-items: center; /* Alinha verticalmente o texto com o checkbox */
+    gap: 10px; /* Adiciona espaçamento entre o checkbox e o texto */
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
-#input-email {
-    display: block;
-    margin: 25px auto 0;
-    width: 400px;
-    height: 35px;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
-    border-radius: 3px;
+#checar {
+    margin: 0; /* Remove margens extras do checkbox */
 }
 
-#input-senha {
+/* Inputs */
+input[type="text"], 
+input[type="password"] {
     display: block;
-    margin: 25px auto 0;
-    width: 400px;
-    height: 35px;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
-    border-radius: 3px;
+    margin: 20px auto;
+    width: 400px; /* Aumentado para quase preencher o formulário */
+    max-width: 450px; /* Limite para inputs largos */
+    padding: 12px 18px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Foco nos inputs */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #2118cd;
+    box-shadow: 0 0 6px rgba(33, 24, 205, 0.3);
+    outline: none;
+}
+
+/* Placeholder estilizado */
+input::placeholder {
+    color: #999;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    form {
+        width: 95%; /* Formulário mais ajustado em telas pequenas */
+        padding: 15px 20px;
+    }
+
+    input[type="text"], 
+    input[type="password"] {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
 }
 
 #cadastro, #login {

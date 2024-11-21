@@ -77,7 +77,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	    <ul class="side-menu">
 	        <li><a href="adm.php" class="active"><i class='bx bxs-dashboard icon'></i> Início</a></li>
 	        <li><a href="ajuda_adm.php"><i class='bx bx-help-circle icon'></i> Ajuda</a></li>
-	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
 	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
 	        <li class="dropdown">
 	            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado <i class='bx bx-chevron-right icon-right'></i></a>
@@ -266,10 +265,33 @@ if (isset($_GET['delete'])) {
 
     if ($result->num_rows > 0) {
         echo "<table id='questaoTable' class='tabela-registros'>";
-        echo "<thead><tr><th>Pergunta</th><th>Resp 1</th><th>Desc 1</th><th>Resp 2</th><th>Desc 2</th><th>Resp 3</th><th>Desc 3</th><th>Resp 4</th><th>Desc 4</th><th>Resp Correta</th><th>Desc Correta</th><th>Dificuldade</th><th>Disciplina</th><th>Prova</th><th>Concurso</th><th>Ações</th></tr></thead>";
+        echo "<thead>
+                <tr>
+                    <th>Concurso</th>
+                    <th>Prova</th>
+                    <th>Disciplina</th>
+                    <th>Dificuldade</th>
+                    <th>Pergunta</th>
+                    <th>Resp 1</th>
+                    <th>Desc 1</th>
+                    <th>Resp 2</th>
+                    <th>Desc 2</th>
+                    <th>Resp 3</th>
+                    <th>Desc 3</th>
+                    <th>Resp 4</th>
+                    <th>Desc 4</th>
+                    <th>Resp Correta</th>
+                    <th>Desc Correta</th>
+                    <th>Ações</th>
+                </tr>
+              </thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['nome_concurso']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nome_prova']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
             echo "<td>" . htmlspecialchars($row['pergunta']) . "</td>";
             echo "<td>" . htmlspecialchars($row['resposta1']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc1']) . "</td>";
@@ -281,10 +303,6 @@ if (isset($_GET['delete'])) {
             echo "<td>" . htmlspecialchars($row['desc4']) . "</td>";
             echo "<td>" . htmlspecialchars($row['respostacorreta']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc_correta']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nome_prova']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nome_concurso']) . "</td>";
             echo "<td class='actions'>";
             echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
             echo "<button class='btn-excluir' onclick='openModal(\"questao.php?delete=" . $row['cod_questao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
@@ -297,10 +315,10 @@ if (isset($_GET['delete'])) {
         echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
     }
     ?>
-        </div>
     </div>
-</main>
-
+    </div>
+    </main>
+    
               <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">

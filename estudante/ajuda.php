@@ -19,17 +19,9 @@
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="../index.php">Início</a></li>
-                    <li class="dropdown">
-                    <a href="#" class="simulados-link" id="simulados-toggle">
-                        Simulados <i class='bx bx-chevron-down'></i>
-                    </a>
-                    <ul class="dropdown-menu" id="simulados-dropdown">
-                        <li><a href="#">Simulado por Disciplina</a></li>
-                        <li><a href="#">Simulado por Concurso</a></li>
-                    </ul>
-                </li>
+                    <li><a href="#" class="simulados">Simulados</a></li>
                     <li><a href="../bancas.php">Bancas</a></li>
-                    <li><a class="desempenho" href="#">Desempenho</a></li>
+                    <li><a href="#" class="desempenho">Desempenho</a></li>
                 </ul>
             </nav>
 
@@ -105,27 +97,60 @@
     </div>
 
     <script>
-        // Obter elementos dos modais e botões
-        var modalSimulados = document.getElementById("modal-simulados");
-        var modalDesempenho = document.getElementById("modal-desempenho");
+    // Obter os elementos dos links que disparam os modais
+    var simuladosLink = document.querySelector(".simulados");
+    var desempenhoLink = document.querySelector(".desempenho");
 
-        var closeBtns = document.getElementsByClassName("close-btn");
-        var okBtnSimulados = document.getElementById("ok-btn-simulados");
-        var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+    // Obter os modais
+    var modalSimulados = document.getElementById("modal-simulados");
+    var modalDesempenho = document.getElementById("modal-desempenho");
 
-        // Função para mostrar um modal específico
-        function showModal(modal) {
-            modal.style.display = "block";
+    // Obter os botões de fechar dos modais
+    var closeBtns = document.querySelectorAll(".close-btn");
+
+    // Botões OK dos modais
+    var okBtnSimulados = document.getElementById("ok-btn-simulados");
+    var okBtnDesempenho = document.getElementById("ok-btn-desempenho");
+
+    // Função para abrir um modal específico
+    function showModal(modal) {
+        modal.style.display = "block";
+    }
+
+    // Função para fechar todos os modais
+    function closeModal() {
+        modalSimulados.style.display = "none";
+        modalDesempenho.style.display = "none";
+    }
+
+    // Adicionar eventos para abrir os modais
+    simuladosLink.addEventListener("click", function(event) {
+        event.preventDefault(); // Evitar navegação imediata
+        showModal(modalSimulados);
+    });
+
+    desempenhoLink.addEventListener("click", function(event) {
+        event.preventDefault(); // Evitar navegação imediata
+        showModal(modalDesempenho);
+    });
+
+    // Adicionar evento para fechar os modais ao clicar no botão de fechar
+    closeBtns.forEach(function(btn) {
+        btn.addEventListener("click", closeModal);
+    });
+
+    // Adicionar evento para fechar os modais ao clicar nos botões OK
+    okBtnSimulados.addEventListener("click", closeModal);
+    okBtnDesempenho.addEventListener("click", closeModal);
+
+    // Fechar o modal se o usuário clicar fora do conteúdo do modal
+    window.addEventListener("click", function(event) {
+        if (event.target === modalSimulados || event.target === modalDesempenho) {
+            closeModal();
         }
+    });
+</script>
 
-        // Função para esconder o modal
-        function closeModal() {
-            modalSimulados.style.display = "none";
-            modalDesempenho.style.display = "none";
-        }
-
-      
-    </script>
 
 <!-- Modal Acesso Restrito -->
 <div id="modal-acesso" class="modal">

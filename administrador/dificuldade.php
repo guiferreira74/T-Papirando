@@ -76,7 +76,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	    <ul class="side-menu">
 	        <li><a href="adm.php" class="active"><i class='bx bxs-dashboard icon'></i> Início</a></li>
 	        <li><a href="ajuda_adm.php"><i class='bx bx-help-circle icon'></i> Ajuda</a></li>
-	        <li><a href="parametros.php"><i class='bx bx-cog icon'></i> Parâmetros</a></li>
 	        <li class="divider" data-text="Gerenciamento">Gerenciamento</li>
 	        <li class="dropdown">
 	            <a href="#"><i class='bx bxs-folder-open icon'></i> Simulado  <i class='bx bx-chevron-right icon-right'></i></a>

@@ -1,9 +1,32 @@
 body {
-    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    
+    height: 100vh; /* Altura da viewport */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Container geral */
+.container-geral {
+    width: 100%;
+    max-width: 400px; /* Largura máxima */
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 60px ;
+}
+
+/* Cabeçalho do formulário */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2118CD;
+    font-weight: bold;
 }
 
 /* Estilo dos grupos de formulário */
@@ -12,29 +35,74 @@ body {
     text-align: left;
 }
 
-/* Estilo das labels dos inputs */
+/* Estilo das labels */
 .form-group label {
     display: block;
     font-size: 14px;
     color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 /* Estilo dos inputs */
 .form-group input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
 }
 
-/* Estilo do input ao focar */
+/* Input em foco */
 .form-group input:focus {
     border-color: #2118CD;
     outline: none;
-    box-shadow: 0 0 5px rgba(33, 24, 205, 0.3);
+    box-shadow: 0 0 8px rgba(33, 24, 205, 0.2);
+}
+
+/* Estilo do botão de salvar */
+.btn-save {
+    background-color: #2118CD;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Hover no botão */
+.btn-save:hover {
+    background-color: #1a139d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 24, 205, 0.2);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-geral {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .btn-save {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
 
 /* Estilo do botão de salvar */

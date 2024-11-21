@@ -1,135 +1,171 @@
 <?php
 session_start();
 
-// Verifica se o usuário está logado e tem o tipo de acesso correto
+// Verifica se o usuário está logado
 if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
     header("Location: ../administrador/login.php");
     exit();
 }
-
 // Capturando o nome e sobrenome do usuário da sessão
 $usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário'; // Nome padrão
 $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''; // Sobrenome padrão
+
+
+
+// Conexão com o banco de dados
+$host = "localhost";
+$user = "root";
+$password = "admin";
+$database = "Topapirando";
+
+$conn = new mysqli($host, $user, $password, $database);
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
+
+// Obtendo o ID do estudante
+$email_usuario = $_SESSION['email'];
+$sql_id = "SELECT cod_estudante, nome, sobrenome, qtd_questoes, acertos, erros, qtd_concursos FROM estudante WHERE email = ?";
+$stmt = $conn->prepare($sql_id);
+$stmt->bind_param("s", $email_usuario);
+$stmt->execute();
+$stmt->bind_result($cod_estudante, $nome, $sobrenome, $qtd_questoes, $acertos, $erros, $qtd_concursos);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desempenho</title>
-    <link rel="stylesheet" href="desempenhos.css">
+    <title>Meu Desempenho</title>
+    <link href='desempenhos.css' rel='stylesheet'>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {packages:['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Acertos', 160],
-          ['Erros', 160]
-         
-        ]);
-
-        var options = {
-          title: 'Gráfico de Desempenho',
-          titleTextStyle: {
-            color: '#4CAF50',
-            fontSize: 18,
-            bold: true,
-            italic: true
-          },
-          pieHole: 0.5,
-          colors: ['#2118CD', '#e0440e'],
-          pieSliceText: 'percentage',
-          legend: {
-            position: 'bottom'
-          },
-          fontName: 'Arial',
-          fontSize: 16,
-          backgroundColor: {
-            fill: 'transparent'
-          },
-          animation: {
-            startup: true,
-            duration: 1000,
-            easing: 'out'
-          },
-          slices: {
-            1: { offset: 0.2 }
-          }
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-    </script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <div class="container">
+    <h1>Meu Desempenho</h1>
+    <div class="info-section">
+        <p><strong>Nome:</strong> <span class="highlight"><?php echo htmlspecialchars($nome . ' ' . $sobrenome); ?></span></p>
+        <p><strong>Simulados Feitos:</strong> <span class="highlight"><?php echo $qtd_concursos; ?></span></p>
+        <p><strong>Questões Respondidas:</strong> <span class="highlight"><?php echo $qtd_questoes; ?></span></p>
+    </div>
     
+    <?php if ($acertos == 0 && $erros == 0): ?>
+        <div class="no-data-message">
+            <p>Para ver seu desempenho, você precisa realizar o simulado.</p>
+            <a href="simulados.php" class="btn-simulado">Ir para Simulados</a>
+        </div>
+    <?php else: ?>
+        <div id="donutchart"></div>
+    <?php endif; ?>
+</div>
+
+<style>
+    .no-data-message {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .no-data-message p {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .btn-simulado {
+        display: inline-block;
+        background-color: #2118CD;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-simulado:hover {
+        background-color: #1a14b2;
+    }
+</style>
+
+<script>
+   google.charts.load('current', {packages: ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var acertos = <?php echo intval($acertos); ?>;
+    var erros = <?php echo intval($erros); ?>;
+
+    var data = google.visualization.arrayToDataTable([
+        ['Status', 'Quantidade'],
+        ['Erros', erros],  // Vermelho para o lado direito
+        ['Acertos', acertos] // Azul para o lado esquerdo
+    ]);
+
+    var options = {
+        title: 'Gráfico de Desempenho',
+        pieHole: 0.4,
+        colors: ['#e53935', '#2118CD'], // Vermelho primeiro, Azul depois
+        legend: { position: 'top', alignment: 'center' },
+        pieStartAngle: 180, // Ângulo inicial ajustado para colocar azul à esquerda
+        chartArea: { width: '90%', height: '70%' }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+}
+
+</script>
+
     <style>
-       
 
-        .info {
-            display: flex;
-            gap: 20px;
-        }
 
-        .profile-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .profile-toggle {
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .profile-link {
-            display: none;
-            position: absolute;
+        .container {
+            text-align: center;
+            margin: 150px auto;
+            max-width: 900px;
+            padding: 30px;
             background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            right: 0;
-            z-index: 1;
             border-radius: 8px;
-            padding: 10px 0;
-            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .profile-link.show {
-            display: block;
+        .container h1 {
+            color: #2118CD;
+            margin-bottom: 20px;
         }
 
-        .profile-link li {
-            list-style-type: none;
-        }
-
-        .profile-link li a {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            color: #000;
-            text-decoration: none;
-        }
-
-        .profile-link li a i {
-            margin-right: 8px;
+        .info-section {
+            margin: 20px 0;
+            text-align: center;
             font-size: 18px;
-            color: #000;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
         }
 
-        .profile-link li a:hover {
-            background-color: #f1f1f1;
+        .info-section p {
+            margin: 10px 0;
+            font-weight: bold;
         }
 
-        
+        #donutchart {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
     </style>
 </head>
-
 <body>
 <header>
     <div class="interface">
@@ -139,7 +175,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php">Simulado</a></li>
+                <li><a href="simulados.php">Simulados</a></li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -161,23 +197,16 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     </div>
 </header>
 
-<div class="container">
-    <div class="info-section">
-        <div class="info-item">
-            <h3>12</h3>
-            Simulados Feitos
-        </div>
-        <div class="info-item">
-            <h3>320</h3>
-            Questões Realizadas
-        </div>
-    </div>
+<style>
+    .highlight {
+        color: green;
+        font-weight: bold;
+    }
+</style>
 
-    <div class="chart-container">
-        <button class="more-details">Mais detalhes</button>
-        <div id="donutchart"></div>
-    </div>
-</div>
+
+
+
 <style>
 /* Estilo para o dropdown */
 .profile-dropdown {

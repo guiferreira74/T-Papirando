@@ -94,7 +94,7 @@ if (empty($questoes)) {
         <nav class="menu-desktop">
             <ul>
                 <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php">Simulado</a></li>
+                <li><a href="simulados.php">Simulados</a></li>
                 <li><a href="bancas_user.php">Bancas</a></li>
                 <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
             </ul>
@@ -121,8 +121,8 @@ if (empty($questoes)) {
 </header>
 
 <div class="simulado-container">
-    <h1>Simulado</h1>
-    <form method="POST" action="resultado.php">
+    <h1 class="titulo-simulado">Simulado</h1>
+    <form id="simulado-form" method="POST" action="resultado.php" onsubmit="return verificarQuestoesEmBranco()">
         <?php foreach ($questoes as $index => $questao): ?>
             <div class="questao">
                 <p><?php echo $index + 1; ?>. <?php echo htmlspecialchars($questao['pergunta']); ?></p>
@@ -147,20 +147,164 @@ if (empty($questoes)) {
             </div>
             <hr>
         <?php endforeach; ?>
-        <button type="submit">Finalizar Simulado</button>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Finalizar Simulado</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancelar Simulado</button>
+        </div>
     </form>
 </div>
 
+<!-- Modal Bootstrap: Cancelar -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">Cancelar Simulado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Se você cancelar, este simulado não será contabilizado no seu desempenho. Você tem certeza que deseja cancelar?
+            </div>
+            <div class="modal-footer">
+                <a href="simulados.php" class="btn btn-primary">Sim</a>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <style>
-    body {
-        padding-top: 120px;
+<!-- Modal Bootstrap: Questões em Branco -->
+<div class="modal fade" id="blankModal" tabindex="-1" aria-labelledby="blankModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blankModalLabel">Questões em Branco</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Você deixou <span id="qtdEmBranco"></span> questão(ões) em branco. Tem certeza que deseja finalizar?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="confirmarFinalizacao()">Sim</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Bootstrap: Informar desempenho -->
+<div class="modal fade" id="informModal" tabindex="-1" aria-labelledby="informModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="informModalLabel">Informação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                As questões deixadas em branco não serão contabilizadas no seu desempenho.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="redirecionarResultado()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function verificarQuestoesEmBranco() {
+        const form = document.getElementById('simulado-form');
+        const inputs = form.querySelectorAll('input[type="radio"]');
+        const questoesRespondidas = new Set();
+        const totalQuestoes = <?php echo count($questoes); ?>;
+
+        inputs.forEach(input => {
+            if (input.checked) {
+                questoesRespondidas.add(input.name);
+            }
+        });
+
+        const emBranco = totalQuestoes - questoesRespondidas.size;
+        if (emBranco > 0) {
+            document.getElementById('qtdEmBranco').innerText = emBranco;
+            const blankModal = new bootstrap.Modal(document.getElementById('blankModal'));
+            blankModal.show();
+            return false;
+        }
+
+        return true;
     }
 
-    form {
+    function confirmarFinalizacao() {
+        const informModal = new bootstrap.Modal(document.getElementById('informModal'));
+        informModal.show();
+        const blankModal = bootstrap.Modal.getInstance(document.getElementById('blankModal'));
+        blankModal.hide();
+    }
+
+    function redirecionarResultado() {
+        document.getElementById('simulado-form').submit();
+    }
+</script>
+
+<!-- Adicione o Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<style>
+    .titulo-simulado {
+        text-align: center;
+        color: #2118CD;
+        font-weight: bold;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .simulado-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        max-height: calc(100vh - 120px);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
         margin-top: 20px;
     }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #2118CD;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #1a14b2;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
 </style>
+
 
     <script>
 // Mostrar e esconder o dropdown quando o usuário clica no perfil
