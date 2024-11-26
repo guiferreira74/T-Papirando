@@ -210,6 +210,13 @@ if (empty($questoes)) {
     </div>
 </div>
 
+<style>/* Estilo para os títulos dos modais */
+.modal-title {
+    color: #2118CD; /* Cor azul para o título */
+    font-weight: bold; /* Negrito */
+}
+</style>
+
 <script>
     function verificarQuestoesEmBranco() {
         const form = document.getElementById('simulado-form');

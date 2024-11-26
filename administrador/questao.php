@@ -175,93 +175,145 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
         <h1></h1>
         
         <?php
-// Conexão com o banco de dados
-$conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+        // Conexão com o banco de dados
+        $conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-$error_message = '';
-$success_message = '';
-
-// Inserir ou atualizar questão
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pergunta = mysqli_real_escape_string($conn, $_POST['pergunta']);
-    $resposta1 = mysqli_real_escape_string($conn, $_POST['resposta1']);
-    $desc1 = mysqli_real_escape_string($conn, $_POST['desc1']);
-    $resposta2 = mysqli_real_escape_string($conn, $_POST['resposta2']);
-    $desc2 = mysqli_real_escape_string($conn, $_POST['desc2']);
-    $resposta3 = mysqli_real_escape_string($conn, $_POST['resposta3']);
-    $desc3 = mysqli_real_escape_string($conn, $_POST['desc3']);
-    $resposta4 = mysqli_real_escape_string($conn, $_POST['resposta4']);
-    $desc4 = mysqli_real_escape_string($conn, $_POST['desc4']);
-    $respostacorreta = mysqli_real_escape_string($conn, $_POST['respostacorreta']);
-    $desc_correta = mysqli_real_escape_string($conn, $_POST['desc_correta']);
-    $dificuldade_cod_dificuldade = (int)$_POST['dificuldade_cod_dificuldade'];
-    $disciplina_cod_disciplina = (int)$_POST['disciplina_cod_disciplina'];
-    $prova_cod_prova = (int)$_POST['prova_cod_prova'];
-    $concurso_cod_concurso = (int)$_POST['concurso_cod_concurso'];
-    $cod_questao = $_POST['cod_questao'] ?? null;
-
-    // Verificar se a questão já está registrada
-    $check_sql = "SELECT * FROM questao WHERE pergunta='$pergunta'";
-    if ($cod_questao) {
-        $check_sql .= " AND cod_questao != $cod_questao";
-    }
-    $check_result = $conn->query($check_sql);
-
-    if ($check_result->num_rows > 0) {
-        $error_message = "Erro: questão já registrada";
-    } else {
-        if ($cod_questao) {
-            // Atualizar questão
-            $sql = "UPDATE questao SET pergunta='$pergunta', resposta1='$resposta1', desc1='$desc1',
-                    resposta2='$resposta2', desc2='$desc2', resposta3='$resposta3', desc3='$desc3',
-                    resposta4='$resposta4', desc4='$desc4', respostacorreta='$respostacorreta', desc_correta='$desc_correta',
-                    dificuldade_cod_dificuldade='$dificuldade_cod_dificuldade', disciplina_cod_disciplina='$disciplina_cod_disciplina',
-                    prova_cod_prova='$prova_cod_prova', concurso_cod_concurso='$concurso_cod_concurso' WHERE cod_questao=$cod_questao";
-        } else {
-            // Inserir nova questão
-            $sql = "INSERT INTO questao (pergunta, resposta1, desc1, resposta2, desc2, resposta3, desc3, resposta4, desc4, 
-                    respostacorreta, desc_correta, dificuldade_cod_dificuldade, disciplina_cod_disciplina, prova_cod_prova, concurso_cod_concurso) 
-                    VALUES ('$pergunta', '$resposta1', '$desc1', '$resposta2', '$desc2', '$resposta3', '$desc3', '$resposta4', '$desc4', 
-                    '$respostacorreta', '$desc_correta', '$dificuldade_cod_dificuldade', '$disciplina_cod_disciplina', '$prova_cod_prova', '$concurso_cod_concurso')";
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
         }
 
-        if ($conn->query($sql) === TRUE) {
-            $success_message = "Registro salvo com sucesso!";
-        } else {
-            $error_message = "Erro: " . $conn->error;
-        }
-    }
-}
+        $error_message = '';
+        $success_message = '';
 
-// Excluir questão
-if (isset($_GET['delete'])) {
-    $cod_questao = (int)$_GET['delete'];
-    $sql = "DELETE FROM questao WHERE cod_questao=$cod_questao";
-    if ($conn->query($sql) === TRUE) {
-        $success_message = "Registro excluído com sucesso!";
-    } else {
-        $error_message = "Erro: " . $conn->error;
-    }
-}
-?>
+        // Inserir ou atualizar questão
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pergunta = mysqli_real_escape_string($conn, $_POST['pergunta']);
+            $desc1 = mysqli_real_escape_string($conn, $_POST['desc1']);
+            $desc2 = mysqli_real_escape_string($conn, $_POST['desc2']);
+            $desc3 = mysqli_real_escape_string($conn, $_POST['desc3']);
+            $desc4 = mysqli_real_escape_string($conn, $_POST['desc4']);
+            $desc_correta = mysqli_real_escape_string($conn, $_POST['desc_correta']);
+            $dificuldade_cod_dificuldade = (int)$_POST['dificuldade_cod_dificuldade'];
+            $disciplina_cod_disciplina = (int)$_POST['disciplina_cod_disciplina'];
+            $prova_cod_prova = (int)$_POST['prova_cod_prova'];
+            $concurso_cod_concurso = (int)$_POST['concurso_cod_concurso'];
+            $cod_questao = $_POST['cod_questao'] ?? null;
+
+            // Verificar se a questão já está registrada
+            $check_sql = "SELECT * FROM questao WHERE pergunta='$pergunta'";
+            if ($cod_questao) {
+                $check_sql .= " AND cod_questao != $cod_questao";
+            }
+            $check_result = $conn->query($check_sql);
+
+            if ($check_result->num_rows > 0) {
+                $error_message = "Erro: questão já registrada";
+            } else {
+                if ($cod_questao) {
+                    // Atualizar questão
+                    $sql = "UPDATE questao SET pergunta='$pergunta', desc1='$desc1', desc2='$desc2', desc3='$desc3',
+                            desc4='$desc4', desc_correta='$desc_correta', dificuldade_cod_dificuldade='$dificuldade_cod_dificuldade',
+                            disciplina_cod_disciplina='$disciplina_cod_disciplina', prova_cod_prova='$prova_cod_prova',
+                            concurso_cod_concurso='$concurso_cod_concurso' WHERE cod_questao=$cod_questao";
+                } else {
+                    // Inserir nova questão
+                    $sql = "INSERT INTO questao (pergunta, desc1, desc2, desc3, desc4, desc_correta,
+                            dificuldade_cod_dificuldade, disciplina_cod_disciplina, prova_cod_prova, concurso_cod_concurso)
+                            VALUES ('$pergunta', '$desc1', '$desc2', '$desc3', '$desc4', '$desc_correta',
+                            '$dificuldade_cod_dificuldade', '$disciplina_cod_disciplina', '$prova_cod_prova', '$concurso_cod_concurso')";
+                }
+
+                if ($conn->query($sql) === TRUE) {
+                    $success_message = "Registro salvo com sucesso!";
+                } else {
+                    $error_message = "Erro: " . $conn->error;
+                }
+            }
+        }
+
+        // Excluir questão
+        if (isset($_GET['delete'])) {
+            $cod_questao = (int)$_GET['delete'];
+            $sql = "DELETE FROM questao WHERE cod_questao=$cod_questao";
+            if ($conn->query($sql) === TRUE) {
+                $success_message = "Registro excluído com sucesso!";
+            } else {
+                $error_message = "Erro: " . $conn->error;
+            }
+        }
+        ?>
 
 <div class="table-container container-principal">
-    <h2 style="margin-left:200px;">Gerenciar Questões</h2>
-    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Questão</button>
+    <h2>Gerenciar Questões</h2>
+    <!-- Formulário de Filtro -->
+    <form method="GET" action="" class="form-filtro">
+        <input type="text" name="filtro" placeholder="Pesquisar qualquer informação da tabela" 
+               value="<?php echo isset($_GET['filtro']) ? htmlspecialchars($_GET['filtro']) : ''; ?>" style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button type="submit" class="btn-filtrar" style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+    </form>
+    <button class="btn-adicionar" onclick="openAddModal()" style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Adicionar Nova Questão</button>
 
     <?php
-    $result = $conn->query("
+    $records_per_page = 6;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start_from = ($page - 1) * $records_per_page;
+
+    $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
+
+    $sql = "
         SELECT q.*, d.tipo_dificuldade, disc.nome as nome_disciplina, p.nome as nome_prova, c.nome as nome_concurso
         FROM questao q
         JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
         JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
         JOIN prova p ON q.prova_cod_prova = p.cod_prova
         JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
-    ");
+    ";
+
+    if (!empty($filtro)) {
+        $sql .= " WHERE 
+            c.nome LIKE '%$filtro%' OR
+            p.nome LIKE '%$filtro%' OR
+            disc.nome LIKE '%$filtro%' OR
+            d.tipo_dificuldade LIKE '%$filtro%' OR
+            q.pergunta LIKE '%$filtro%' OR
+            q.desc1 LIKE '%$filtro%' OR
+            q.desc2 LIKE '%$filtro%' OR
+            q.desc3 LIKE '%$filtro%' OR
+            q.desc4 LIKE '%$filtro%' OR
+            q.desc_correta LIKE '%$filtro%'
+        ";
+    }
+
+    $sql .= " LIMIT $start_from, $records_per_page";
+    $result = $conn->query($sql);
+
+    $count_sql = "
+        SELECT COUNT(*) as total
+        FROM questao q
+        JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
+        JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
+        JOIN prova p ON q.prova_cod_prova = p.cod_prova
+        JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
+    ";
+
+    if (!empty($filtro)) {
+        $count_sql .= " WHERE 
+            c.nome LIKE '%$filtro%' OR
+            p.nome LIKE '%$filtro%' OR
+            disc.nome LIKE '%$filtro%' OR
+            d.tipo_dificuldade LIKE '%$filtro%' OR
+            q.pergunta LIKE '%$filtro%' OR
+            q.desc1 LIKE '%$filtro%' OR
+            q.desc2 LIKE '%$filtro%' OR
+            q.desc3 LIKE '%$filtro%' OR
+            q.desc4 LIKE '%$filtro%' OR
+            q.desc_correta LIKE '%$filtro%'
+        ";
+    }
+
+    $count_result = $conn->query($count_sql);
+    $total_records = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_records / $records_per_page);
 
     if ($result->num_rows > 0) {
         echo "<table id='questaoTable' class='tabela-registros'>";
@@ -272,15 +324,10 @@ if (isset($_GET['delete'])) {
                     <th>Disciplina</th>
                     <th>Dificuldade</th>
                     <th>Pergunta</th>
-                    <th>Resp 1</th>
                     <th>Desc 1</th>
-                    <th>Resp 2</th>
                     <th>Desc 2</th>
-                    <th>Resp 3</th>
                     <th>Desc 3</th>
-                    <th>Resp 4</th>
                     <th>Desc 4</th>
-                    <th>Resp Correta</th>
                     <th>Desc Correta</th>
                     <th>Ações</th>
                 </tr>
@@ -293,32 +340,40 @@ if (isset($_GET['delete'])) {
             echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";
             echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
             echo "<td>" . htmlspecialchars($row['pergunta']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['resposta1']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc1']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['resposta2']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc2']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['resposta3']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc3']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['resposta4']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc4']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['respostacorreta']) . "</td>";
             echo "<td>" . htmlspecialchars($row['desc_correta']) . "</td>";
             echo "<td class='actions'>";
-            echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
+            echo "<button class='btn-editar' onclick='openEditModal(" . json_encode($row, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) . ")'><i class='fas fa-edit'></i></button>";
             echo "<button class='btn-excluir' onclick='openModal(\"questao.php?delete=" . $row['cod_questao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
             echo "</td>";
             echo "</tr>";
         }
         echo "</tbody>";
         echo "</table>";
+
+        echo "<div class='pagination-container'>";
+        echo "<ul class='pagination'>";
+        if ($page > 1) {
+            echo "<li><a href='?page=" . ($page - 1) . "&filtro=$filtro'>Anterior</a></li>";
+        }
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "<li class='" . ($i == $page ? 'active' : '') . "'><a href='?page=$i&filtro=$filtro'>$i</a></li>";
+        }
+        if ($page < $total_pages) {
+            echo "<li><a href='?page=" . ($page + 1) . "&filtro=$filtro'>Próximo</a></li>";
+        }
+        echo "</ul>";
+        echo "</div>";
     } else {
         echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
     }
     ?>
-    </div>
-    </div>
-    </main>
-    
+</div>
+
+
               <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">
@@ -349,7 +404,7 @@ if (isset($_GET['delete'])) {
         <button id="ok-btn-sucesso" class="ok-btn ok-btn-sucesso">OK</button>
     </div>
 </div>
-<!-- modal de  -->
+<!-- Modal para adicionar/editar questão -->
 <div id="add-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeAddModal()">&times;</span>
@@ -364,37 +419,27 @@ if (isset($_GET['delete'])) {
             <div class="answers-container">
                 <div class="horizontal-answers">
                     <div>
-                        <label for="resposta1_modal">Resposta 1:</label>
-                        <input type="text" id="resposta1_modal" name="resposta1" placeholder="Resposta 1" required>
                         <label for="desc1_modal">Descrição 1:</label>
                         <input type="text" id="desc1_modal" name="desc1" placeholder="Descrição Resposta 1" required>
                     </div>
                     <div>
-                        <label for="resposta2_modal">Resposta 2:</label>
-                        <input type="text" id="resposta2_modal" name="resposta2" placeholder="Resposta 2" required>
                         <label for="desc2_modal">Descrição 2:</label>
                         <input type="text" id="desc2_modal" name="desc2" placeholder="Descrição Resposta 2" required>
                     </div>
                 </div>
                 <div class="horizontal-answers">
                     <div>
-                        <label for="resposta3_modal">Resposta 3:</label>
-                        <input type="text" id="resposta3_modal" name="resposta3" placeholder="Resposta 3" required>
                         <label for="desc3_modal">Descrição 3:</label>
                         <input type="text" id="desc3_modal" name="desc3" placeholder="Descrição Resposta 3" required>
                     </div>
                     <div>
-                        <label for="resposta4_modal">Resposta 4:</label>
-                        <input type="text" id="resposta4_modal" name="resposta4" placeholder="Resposta 4" required>
                         <label for="desc4_modal">Descrição 4:</label>
                         <input type="text" id="desc4_modal" name="desc4" placeholder="Descrição Resposta 4" required>
                     </div>
                 </div>
                 <div class="vertical-answer">
-                    <label for="respostacorreta_modal" style="color: #4CAF50; font-weight: bold;">Resposta Correta:</label>
-                    <input type="text" id="respostacorreta_modal" name="respostacorreta" placeholder="Resposta Correta" required>
-                    <label for="desc_correta_modal">Descrição Correta:</label>
-                    <input type="text" id="desc_correta_modal" name="desc_correta" placeholder="Descrição Resposta Correta" required>
+                    <label for="desc_correta_modal" style="color: #4CAF50; font-weight: bold;">Descrição Correta:</label>
+                    <input type="text" id="desc_correta_modal" name="desc_correta" placeholder="Descrição da Resposta Correta" required>
                 </div>
             </div>
 
@@ -463,6 +508,7 @@ if (isset($_GET['delete'])) {
 </div>
 
 
+
 <script>
 // Referência aos modais e botões
 var confirmModal = document.getElementById("confirm-modal");
@@ -484,23 +530,22 @@ function closeAddModal() {
     addModal.style.display = "none";
 }
 
-// Função para abrir o modal de edição com dados da questão
 function openEditModal(data) {
-    console.log("Dados recebidos para edição:", data); // Para verificar o que está sendo passado
+    if (!data) {
+        alert("Dados inválidos para edição.");
+        return;
+    }
 
-    // Mapear os campos no modal
+    console.log("Dados recebidos para edição:", data); // Debugging: Log the data
+
+    // Map fields in the modal to the data received
     const fieldMapping = {
         "cod_questao": "cod_questao",
         "pergunta": "pergunta_modal",
-        "resposta1": "resposta1_modal",
         "desc1": "desc1_modal",
-        "resposta2": "resposta2_modal",
         "desc2": "desc2_modal",
-        "resposta3": "resposta3_modal",
         "desc3": "desc3_modal",
-        "resposta4": "resposta4_modal",
         "desc4": "desc4_modal",
-        "respostacorreta": "respostacorreta_modal",
         "desc_correta": "desc_correta_modal",
         "dificuldade_cod_dificuldade": "dificuldade_cod_dificuldade",
         "disciplina_cod_disciplina": "disciplina_cod_disciplina",
@@ -508,22 +553,18 @@ function openEditModal(data) {
         "concurso_cod_concurso": "concurso_cod_concurso"
     };
 
-    // Preencher os campos do modal
-    Object.keys(fieldMapping).forEach(key => {
-        const elementId = fieldMapping[key];
-        const element = document.getElementById(elementId);
+    // Iterate through the mapping and assign values
+    for (const key in fieldMapping) {
+        const fieldId = fieldMapping[key];
+        const fieldElement = document.getElementById(fieldId);
 
-        if (element) {
-            // Preencher o valor no input ou select
-            element.value = data[key] ? data[key] : '';
+        if (fieldElement) {
+            fieldElement.value = data[key] !== undefined ? data[key] : '';
         }
-    });
-
-    // Abrir o modal
-    const addModal = document.getElementById("add-modal");
-    if (addModal) {
-        addModal.style.display = 'block';
     }
+
+    // Open the modal
+    addModal.style.display = 'block';
 }
 
 
@@ -551,15 +592,10 @@ function clearForm() {
     const fields = [
         "cod_questao",
         "pergunta_modal",
-        "resposta1_modal",
         "desc1_modal",
-        "resposta2_modal",
         "desc2_modal",
-        "resposta3_modal",
         "desc3_modal",
-        "resposta4_modal",
         "desc4_modal",
-        "respostacorreta_modal",
         "desc_correta_modal",
         "dificuldade_cod_dificuldade",
         "disciplina_cod_disciplina",
@@ -580,15 +616,10 @@ function saveCookies() {
     const fields = [
         "cod_questao",
         "pergunta_modal",
-        "resposta1_modal",
         "desc1_modal",
-        "resposta2_modal",
         "desc2_modal",
-        "resposta3_modal",
         "desc3_modal",
-        "resposta4_modal",
         "desc4_modal",
-        "respostacorreta_modal",
         "desc_correta_modal",
         "dificuldade_cod_dificuldade",
         "disciplina_cod_disciplina",
@@ -667,6 +698,7 @@ document.querySelectorAll('#add-modal input, #add-modal select').forEach(functio
         saveCookies();
     });
 });
+
 </script>
 
 

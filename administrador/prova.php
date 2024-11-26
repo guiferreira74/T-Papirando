@@ -230,11 +230,29 @@ $concursos_result = $conn->query("SELECT * FROM concurso");
 
 <div class="table-container container-principal">
     <h2 style="margin-left:200px;">Gerenciar Provas</h2>
-    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Prova</button>
+
+    <form method="GET" action="" class="form-filtro" style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <input type="text" name="filtro" placeholder="Pesquisar qualquer informação da tabela" 
+               value="<?php echo isset($_GET['filtro']) ? htmlspecialchars($_GET['filtro']) : ''; ?>" 
+               style="margin-left:200px;width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button type="submit" class="btn-filtrar" 
+                style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+    </form>
+
+    <button class="btn-adicionar" onclick="openAddModal()" 
+            style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Adicionar Nova Prova</button>
 
     <?php
-    // Consultar todas as provas com as chaves estrangeiras para exibir a banca e disciplina associada
-    $result = $conn->query("
+    // Configuração de paginação
+    $records_per_page = 6;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start_from = ($page - 1) * $records_per_page;
+
+    // Obter filtro
+    $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
+
+    // Consulta SQL com filtro e paginação
+    $sql = "
         SELECT 
             prova.cod_prova, 
             prova.nome AS prova_nome, 
@@ -250,8 +268,44 @@ $concursos_result = $conn->query("SELECT * FROM concurso");
         INNER JOIN banca ON prova.banca_cod_banca = banca.cod_banca
         INNER JOIN disciplina ON prova.disciplina_cod_disciplina = disciplina.cod_disciplina
         INNER JOIN concurso ON prova.concurso_cod_concurso = concurso.cod_concurso
-    ");
+    ";
 
+    // Adicionar filtro
+    if (!empty($filtro)) {
+        $sql .= " WHERE 
+            prova.nome LIKE '%$filtro%' OR
+            banca.nome LIKE '%$filtro%' OR
+            disciplina.nome LIKE '%$filtro%' OR
+            concurso.nome LIKE '%$filtro%'
+        ";
+    }
+
+    // Adicionar limite e offset para paginação
+    $sql .= " LIMIT $start_from, $records_per_page";
+    $result = $conn->query($sql);
+
+    // Consulta para contar o total de registros (para paginação)
+    $count_sql = "
+        SELECT COUNT(*) as total
+        FROM prova
+        INNER JOIN banca ON prova.banca_cod_banca = banca.cod_banca
+        INNER JOIN disciplina ON prova.disciplina_cod_disciplina = disciplina.cod_disciplina
+        INNER JOIN concurso ON prova.concurso_cod_concurso = concurso.cod_concurso
+    ";
+    if (!empty($filtro)) {
+        $count_sql .= " WHERE 
+            prova.nome LIKE '%$filtro%' OR
+            banca.nome LIKE '%$filtro%' OR
+            disciplina.nome LIKE '%$filtro%' OR
+            concurso.nome LIKE '%$filtro%'
+        ";
+    }
+
+    $count_result = $conn->query($count_sql);
+    $total_records = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Exibir tabela
     if ($result->num_rows > 0) {
         echo "<table id='provaTable' class='tabela-registros'>";
         echo "<thead><tr><th>Nome da Prova</th><th>Tempo</th><th>Qtd. de Questões</th><th>Banca</th><th>Disciplina</th><th>Concurso</th><th>Ações</th></tr></thead>";
@@ -272,11 +326,27 @@ $concursos_result = $conn->query("SELECT * FROM concurso");
         }
         echo "</tbody>";
         echo "</table>";
+
+        // Exibir paginação
+        echo "<div class='pagination-container'>";
+        echo "<ul class='pagination'>";
+        if ($page > 1) {
+            echo "<li><a href='?page=" . ($page - 1) . "&filtro=$filtro'>Anterior</a></li>";
+        }
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "<li class='" . ($i == $page ? 'active' : '') . "'><a href='?page=$i&filtro=$filtro'>$i</a></li>";
+        }
+        if ($page < $total_pages) {
+            echo "<li><a href='?page=" . ($page + 1) . "&filtro=$filtro'>Próximo</a></li>";
+        }
+        echo "</ul>";
+        echo "</div>";
     } else {
         echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
     }
     ?>
 </div>
+
 
 <!-- Modal de Adicionar/Editar Prova -->
 <div id="add-modal" class="custom-modal">

@@ -150,25 +150,31 @@ while ($row = $result->fetch_assoc()) {
 
             <!-- Modal do Concurso -->
             <div class="modal fade" id="modalConcurso<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel<?php echo $index; ?>"><?php echo htmlspecialchars($concurso['nome']); ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p><strong>Descrição:</strong> <?php echo htmlspecialchars($concurso['descricao']); ?></p>
-                            <p><strong>Quantidade de Questões:</strong> <?php echo $questoes_cadastradas; ?></p>
-                            <p><strong>Realizado em:</strong> <?php echo htmlspecialchars($data_brasileira); ?></p>
-                            <p><strong>Vagas:</strong> <?php echo htmlspecialchars($concurso['vagas']); ?></p>
-                            <p><strong>Instituição:</strong> <?php echo htmlspecialchars($concurso['instituicao']); ?></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel<?php echo $index; ?>"><?php echo htmlspecialchars($concurso['nome']); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 15px;">
+                <!-- Conteúdo do modal -->
+                <div>
+                    <p><strong>Descrição:</strong> <?php echo htmlspecialchars($concurso['descricao']); ?></p>
+                    <p><strong>Quantidade de Questões:</strong> <?php echo $questoes_cadastradas; ?></p>
+                    <p><strong>Realizado em:</strong> <?php echo htmlspecialchars($data_brasileira); ?></p>
+                    <p><strong>Vagas:</strong> <?php echo htmlspecialchars($concurso['vagas']); ?></p>
+                    <p><strong>Instituição:</strong> <?php echo htmlspecialchars($concurso['instituicao']); ?></p>
+                </div>
+
+                <!-- Imagem estática -->
+                <img src="../administrador/assets/informações.svg" alt="Imagem ilustrativa" style="width: 150px; height: auto; border-radius: 8px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- Modal de Dicas -->
             <div class="modal fade" id="modalDicas<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalDicasLabel<?php echo $index; ?>" aria-hidden="true">
@@ -183,6 +189,7 @@ while ($row = $result->fetch_assoc()) {
                                 <li>Leia todas as questões atentamente antes de responder.</li>
                                 <li>Gerencie bem o seu tempo. Não passe muito tempo em uma única questão.</li>
                                 <li>Se não souber a resposta, elimine as opções que parecem menos prováveis.</li>
+                                <li>Caso deixe questões em branco,não seram contabilizadas no seu desempenho.</li>
                                 <li>Certifique-se de estar em um local tranquilo para se concentrar melhor.</li>
                                 <li>Boa sorte!</li>
                             </ul>
@@ -208,7 +215,11 @@ while ($row = $result->fetch_assoc()) {
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
-
+<style>.modal-title {
+    color: #2118CD; 
+    font-weight: bold;
+}
+</style>
 
 
 <script>

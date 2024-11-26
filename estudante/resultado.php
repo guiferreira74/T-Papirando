@@ -113,116 +113,151 @@ $conn->close();
     <link href='resultado.css' rel='stylesheet'>
     <style>
       
+      .resultado-simulado-container {
+    margin-top: 0;
+    padding: 20px;
+    max-width: 900px;
+    width: 800px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+    max-height: calc(100vh - 300px); /* Altura reduzida */
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    font-family: 'Poppins', sans-serif;
+}
 
-        .resultado-simulado-container {
-            margin-top: 100px; /* Espaço para compensar a header fixa */
-            padding: 20px;
-            max-width: 800px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto; /* Permite a rolagem do conteúdo */
-            max-height: calc(100vh - 120px); /* Define altura para permitir scroll */
-            margin: auto;
-        }
+/* Estilo da barra de rolagem */
+.resultado-simulado-container::-webkit-scrollbar {
+    width: 10px;
+}
 
-        .resultado-simulado h1 {
-            text-align: center;
-            font-size: 28px;
-            color: #2118CD;
-            margin-bottom: 20px;
-        }
+.resultado-simulado-container::-webkit-scrollbar-thumb {
+    background-color: #2118CD;
+    border-radius: 10px;
+}
 
-        .resultado-simulado p {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
+.resultado-simulado-container::-webkit-scrollbar-thumb:hover {
+    background-color: #1a14b2;
+}
 
-        .resultado-simulado hr {
-            border: none;
-            border-top: 2px solid #f4f4f9;
-            margin: 20px 0;
-        }
+.resultado-simulado-container::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
 
-        .questao {
-            margin-bottom: 20px;
-        }
+.resultado-simulado h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #2118CD;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
 
-        .questao strong {
-            font-size: 18px;
-            color: #333;
-        }
+.resultado-simulado p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
 
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-        }
+.resultado-simulado hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 25px 0;
+}
+/* Estilo para o container das questões */
+.questao {
+    width: 500px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    height: auto; /* Garante ajuste automático */
+    min-height: 150px; /* Aumenta a altura mínima */
+}
 
-        li {
-            margin: 5px 0;
-            font-size: 16px;
-        }
+.questao:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Suave destaque no hover */
+}
 
-        .correct {
-            color: green;
-            font-weight: bold;
-        }
+.questao strong {
+    font-size: 18px;
+    color: #2118CD;
+    display: block;
+    margin-bottom: 10px;
+}
 
-        .wrong {
-            color: red;
-            font-weight: bold;
-        }
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
 
-        .button-container {
-            text-align: center;
-            margin-top: 30px;
-        }
+li {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #555;
+}
 
-        .btn-desempenho {
-            background-color: #2118CD;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
+/* Resposta correta e errada */
+.correct {
+    color: #27ae60;
+    font-weight: bold;
+}
 
-        .btn-desempenho:hover {
-            background-color: #1a14b2;
-            transform: scale(1.05);
-        }
+.wrong {
+    color: #e74c3c;
+    font-weight: bold;
+}
 
-        @media (max-width: 768px) {
-            header .interface {
-                flex-direction: column;
-                align-items: center;
-            }
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+}
 
-            header nav ul {
-                flex-direction: column;
-                text-align: center;
-            }
+.btn-desempenho {
+    background-color: #2118CD;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-            header nav ul li {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
+.btn-desempenho:hover {
+    background-color: #1a14b2;
+    transform: scale(1.05);
+}
 
-            .resultado-simulado-container {
-                padding: 20px;
-            }
+@media (max-width: 768px) {
+    .resultado-simulado-container {
+        padding: 15px;
+        max-width: 95%;
+    }
 
-            .btn-desempenho {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
+    .btn-desempenho {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .questao {
+        padding: 10px;
+    }
+}
+
     </style>
 </head>
 <body>

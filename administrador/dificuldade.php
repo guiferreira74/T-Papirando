@@ -193,13 +193,51 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 ?>
 
 <div class="table-container container-principal">
-    <h2>Gerenciar Dificuldade</h2>
-    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Dificuldade</button>
+    <h2 style="text-align: center;">Gerenciar Dificuldade</h2>
+
+    <!-- Formulário de Filtro -->
+    <div class="filtro-container" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <form method="GET" action="" class="form-filtro" style="display: flex; gap: 10px;">
+            <input type="text" name="filtro" placeholder="Pesquisar por Tipo de Dificuldade" 
+                   value="<?php echo isset($_GET['filtro']) ? htmlspecialchars($_GET['filtro']) : ''; ?>" 
+                   style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+            <button type="submit" class="btn-filtrar" 
+                    style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+        </form>
+        <button class="btn-adicionar" onclick="openAddModal()" 
+                style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Adicionar Nova Dificuldade</button>
+    </div>
 
     <?php
-    // Query para obter os registros de dificuldade
-    $result = $conn->query("SELECT * FROM dificuldade");
+    // Configuração de paginação
+    $records_per_page = 6;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start_from = ($page - 1) * $records_per_page;
 
+    // Obter filtro
+    $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
+
+    // Consulta SQL com filtro e paginação
+    $sql = "SELECT * FROM dificuldade";
+
+    if (!empty($filtro)) {
+        $sql .= " WHERE tipo_dificuldade LIKE '%$filtro%'";
+    }
+
+    $sql .= " LIMIT $start_from, $records_per_page";
+    $result = $conn->query($sql);
+
+    // Consulta para contar o total de registros (para paginação)
+    $count_sql = "SELECT COUNT(*) as total FROM dificuldade";
+    if (!empty($filtro)) {
+        $count_sql .= " WHERE tipo_dificuldade LIKE '%$filtro%'";
+    }
+
+    $count_result = $conn->query($count_sql);
+    $total_records = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Exibir tabela
     if ($result->num_rows > 0) {
         echo "<table id='dificuldadeTable' class='tabela-registros'>";
         echo "<thead><tr><th>Tipo de Dificuldade</th><th>Ações</th></tr></thead>";
@@ -208,7 +246,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
             echo "<td class='actions'>";
-            // Botões de editar e excluir com o novo layout
             echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
             echo "<button class='btn-excluir' onclick='openModal(\"dificuldade.php?delete=" . $row['cod_dificuldade'] . "\")'><i class='fas fa-trash-alt'></i></button>";
             echo "</td>";
@@ -216,6 +253,21 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
         }
         echo "</tbody>";
         echo "</table>";
+
+        // Exibir paginação
+        echo "<div class='pagination-container'>";
+        echo "<ul class='pagination'>";
+        if ($page > 1) {
+            echo "<li><a href='?page=" . ($page - 1) . "&filtro=$filtro'>Anterior</a></li>";
+        }
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "<li class='" . ($i == $page ? 'active' : '') . "'><a href='?page=$i&filtro=$filtro'>$i</a></li>";
+        }
+        if ($page < $total_pages) {
+            echo "<li><a href='?page=" . ($page + 1) . "&filtro=$filtro'>Próximo</a></li>";
+        }
+        echo "</ul>";
+        echo "</div>";
     } else {
         echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
     }

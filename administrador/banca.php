@@ -239,12 +239,57 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="table-container container-principal">
-    <h2>Gerenciar Bancas</h2>
-    <button class="btn-adicionar" onclick="openAddModal()">Adicionar Nova Banca</button>
+    <h2 style="text-align: center;">Gerenciar Bancas</h2>
+
+    <!-- Formulário de Filtro -->
+    <div class="filtro-container" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <form method="GET" action="" class="form-filtro" style="display: flex; gap: 10px;">
+            <input type="text" name="filtro" placeholder="Pesquisar por Nome ou Link" 
+                   value="<?php echo isset($_GET['filtro']) ? htmlspecialchars($_GET['filtro']) : ''; ?>" 
+                   style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+            <button type="submit" class="btn-filtrar" 
+                    style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+        </form>
+        <button class="btn-adicionar" onclick="openAddModal()" 
+                style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Adicionar Nova Banca</button>
+    </div>
 
     <?php
-    $result = $conn->query("SELECT * FROM banca");
+    // Configuração de paginação
+    $records_per_page = 6;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start_from = ($page - 1) * $records_per_page;
 
+    // Obter filtro
+    $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
+
+    // Consulta SQL com filtro e paginação
+    $sql = "SELECT * FROM banca";
+
+    if (!empty($filtro)) {
+        $sql .= " WHERE 
+            nome LIKE '%$filtro%' OR
+            link LIKE '%$filtro%'
+        ";
+    }
+
+    $sql .= " LIMIT $start_from, $records_per_page";
+    $result = $conn->query($sql);
+
+    // Consulta para contar o total de registros (para paginação)
+    $count_sql = "SELECT COUNT(*) as total FROM banca";
+    if (!empty($filtro)) {
+        $count_sql .= " WHERE 
+            nome LIKE '%$filtro%' OR
+            link LIKE '%$filtro%'
+        ";
+    }
+
+    $count_result = $conn->query($count_sql);
+    $total_records = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Exibir tabela
     if ($result->num_rows > 0) {
         echo "<table id='bancaTable' class='tabela-registros'>";
         echo "<thead><tr><th>Nome da Banca</th><th>Link</th><th>Imagem</th><th>Ações</th></tr></thead>";
@@ -255,7 +300,6 @@ document.addEventListener('DOMContentLoaded', function() {
             echo "<td><a href='" . htmlspecialchars($row['link']) . "' target='_blank'>" . htmlspecialchars($row['link']) . "</a></td>";
             echo "<td><img src='" . htmlspecialchars($row['upload']) . "' alt='Imagem da Banca' style='width:50px;'></td>";
             echo "<td class='actions'>";
-            // Botão de adicionar, editar e excluir com o novo layout
             echo "<button class='btn-editar' onclick='openEditModal(" . htmlspecialchars(json_encode($row)) . ")'><i class='fas fa-edit'></i></button>";
             echo "<button class='btn-excluir' onclick='openModal(\"banca.php?delete=" . $row['cod_banca'] . "\")'><i class='fas fa-trash-alt'></i></button>";
             echo "</td>";
@@ -263,11 +307,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         echo "</tbody>";
         echo "</table>";
+
+        // Exibir paginação
+        echo "<div class='pagination-container'>";
+        echo "<ul class='pagination'>";
+        if ($page > 1) {
+            echo "<li><a href='?page=" . ($page - 1) . "&filtro=$filtro'>Anterior</a></li>";
+        }
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "<li class='" . ($i == $page ? 'active' : '') . "'><a href='?page=$i&filtro=$filtro'>$i</a></li>";
+        }
+        if ($page < $total_pages) {
+            echo "<li><a href='?page=" . ($page + 1) . "&filtro=$filtro'>Próximo</a></li>";
+        }
+        echo "</ul>";
+        echo "</div>";
     } else {
         echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
     }
     ?>
 </div>
+
 
          <!-- Modal de Adicionar/Editar Banca -->
         <div id="add-modal" class="modal" style="overflow: hidden;">
