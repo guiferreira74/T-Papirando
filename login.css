@@ -653,3 +653,30 @@ button:hover {
 .modal-buttons .btn-cancel:hover {
     background-color: darkred; /* Efeito de hover para o botão Cancelar */
 }
+
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.lembrar-dados {
+    display: flex;
+    align-items: center;
+}
+
+.lembrar-dados input {
+    margin-right: 5px;
+}
+
+.esqueci-senha {
+    color: #000;
+    text-decoration: none;
+}
+
+.esqueci-senha:hover {
+    color: #007bff;
+    text-decoration: underline;
+}

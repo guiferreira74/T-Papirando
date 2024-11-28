@@ -241,138 +241,218 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 $error_message = "Erro: " . $conn->error;
             }
         }
+
+      $records_per_page = 1; // Um concurso por página
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$start_from = ($page - 1) * $records_per_page;
+
+// Obter o concurso atual
+$sql_concursos_pag = "
+    SELECT DISTINCT c.cod_concurso, c.nome AS nome_concurso, c.qtd_questoes
+    FROM concurso c
+    LIMIT $start_from, $records_per_page";
+$result_concursos_pag = $conn->query($sql_concursos_pag);
+$concurso_atual = $result_concursos_pag->fetch_assoc();
+
+$cod_concurso_atual = $concurso_atual['cod_concurso'];
+$nome_concurso_atual = $concurso_atual['nome_concurso'];
+$total_questoes_concurso = $concurso_atual['qtd_questoes'];
+
+// Contar o total de registros para calcular o total de páginas
+$total_concursos_sql = "SELECT COUNT(*) AS total FROM concurso";
+$total_concursos_result = $conn->query($total_concursos_sql);
+$total_concursos = $total_concursos_result->fetch_assoc()['total'];
+$total_pages = ceil($total_concursos / $records_per_page); // Calcular o número total de páginas
+
+// Determinar o status do concurso
+$count_questoes_sql = "SELECT COUNT(*) AS total_questoes FROM questao WHERE concurso_cod_concurso = $cod_concurso_atual";
+$count_result = $conn->query($count_questoes_sql);
+$total_questoes_cadastradas = $count_result->fetch_assoc()['total_questoes'];
+$status = $total_questoes_cadastradas > $total_questoes_concurso ? "Excedido" : ($total_questoes_cadastradas === $total_questoes_concurso ? "Cadastrado" : "Pendente");
+$faltantes = max(0, $total_questoes_concurso - $total_questoes_cadastradas);
+
         ?>
+        
+
+<style>
+    .status {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        text-align: center;
+    }
+    .status.cadastrado {
+        color: #fff;
+        background-color: #28a745; /* Verde */
+    }
+    .status.pendente {
+        color: #000;
+        background-color: #ffc107; /* Amarelo */
+    }
+    .pagination {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+    }
+    .pagination li {
+        margin: 0 5px;
+    }
+    .pagination li a {
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .pagination li.active a {
+        background-color: #2118CD;
+        color: #fff;
+    }
+</style>
 
 <div class="table-container container-principal">
-    <h2>Gerenciar Questões</h2>
+    <h2>Gerenciar Questões - <?php echo htmlspecialchars($nome_concurso_atual); ?></h2>
+    <p>Status do Concurso: 
+        <span class="status <?php echo strtolower($status); ?>" 
+              style="<?php echo $status === 'Excedido' ? 'color: #fff; background-color: #dc3545;' : ''; ?>">
+            <?php echo $status; ?>
+        </span>
+    </p>
+    <?php if ($status === 'Pendente'): ?>
+        <p>Faltam <?php echo $faltantes; ?> questões para completar o concurso.</p>
+    <?php elseif ($status === 'Excedido'): ?>
+        <p style="color: #dc3545;">O concurso excedeu a quantidade de questões permitidas.</p>
+    <?php endif; ?>
+
     <!-- Formulário de Filtro -->
-    <form method="GET" action="" class="form-filtro">
-        <input type="text" name="filtro" placeholder="Pesquisar qualquer informação da tabela" 
-               value="<?php echo isset($_GET['filtro']) ? htmlspecialchars($_GET['filtro']) : ''; ?>" style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-        <button type="submit" class="btn-filtrar" style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Filtrar</button>
+    <form method="GET" action="" class="form-filtro" style="margin-bottom: 20px;">
+        <input type="text" name="filtro" placeholder="Pesquisar questões" 
+               value="<?php echo htmlspecialchars($filtro ?? ''); ?>" 
+               style="width: 300px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button type="submit" class="btn-filtrar" 
+                style="background-color: #2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Filtrar
+        </button>
     </form>
-    <button class="btn-adicionar" onclick="openAddModal()" style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Adicionar Nova Questão</button>
 
+    <!-- Botão Adicionar Nova Questão -->
+    <button onclick="document.getElementById('add-modal').style.display='block'" 
+            style="background-color:#2118CD; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">
+        Adicionar Nova Questão
+    </button>
+
+    <!-- Tabela -->
     <?php
-    $records_per_page = 6;
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-    $start_from = ($page - 1) * $records_per_page;
-
+    // Adicionar filtro na query de busca
     $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
-
     $sql = "
-        SELECT q.*, d.tipo_dificuldade, disc.nome as nome_disciplina, p.nome as nome_prova, c.nome as nome_concurso
+        SELECT q.*, d.tipo_dificuldade, disc.nome AS nome_disciplina, 
+               p.nome AS nome_prova
         FROM questao q
         JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
         JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
         JOIN prova p ON q.prova_cod_prova = p.cod_prova
-        JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
+        WHERE q.concurso_cod_concurso = $cod_concurso_atual
     ";
-
     if (!empty($filtro)) {
-        $sql .= " WHERE 
-            c.nome LIKE '%$filtro%' OR
-            p.nome LIKE '%$filtro%' OR
-            disc.nome LIKE '%$filtro%' OR
-            d.tipo_dificuldade LIKE '%$filtro%' OR
+        $sql .= " AND (
             q.pergunta LIKE '%$filtro%' OR
-            q.desc1 LIKE '%$filtro%' OR
-            q.desc2 LIKE '%$filtro%' OR
-            q.desc3 LIKE '%$filtro%' OR
-            q.desc4 LIKE '%$filtro%' OR
-            q.desc_correta LIKE '%$filtro%'
-        ";
+            disc.nome LIKE '%$filtro%' OR
+            p.nome LIKE '%$filtro%' OR
+            d.tipo_dificuldade LIKE '%$filtro%'
+        )";
     }
-
-    $sql .= " LIMIT $start_from, $records_per_page";
     $result = $conn->query($sql);
+    ?>
 
-    $count_sql = "
-        SELECT COUNT(*) as total
-        FROM questao q
-        JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
-        JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
-        JOIN prova p ON q.prova_cod_prova = p.cod_prova
-        JOIN concurso c ON q.concurso_cod_concurso = c.cod_concurso
-    ";
-
-    if (!empty($filtro)) {
-        $count_sql .= " WHERE 
-            c.nome LIKE '%$filtro%' OR
-            p.nome LIKE '%$filtro%' OR
-            disc.nome LIKE '%$filtro%' OR
-            d.tipo_dificuldade LIKE '%$filtro%' OR
-            q.pergunta LIKE '%$filtro%' OR
-            q.desc1 LIKE '%$filtro%' OR
-            q.desc2 LIKE '%$filtro%' OR
-            q.desc3 LIKE '%$filtro%' OR
-            q.desc4 LIKE '%$filtro%' OR
-            q.desc_correta LIKE '%$filtro%'
-        ";
-    }
-
-    $count_result = $conn->query($count_sql);
-    $total_records = $count_result->fetch_assoc()['total'];
-    $total_pages = ceil($total_records / $records_per_page);
-
-    if ($result->num_rows > 0) {
-        echo "<table id='questaoTable' class='tabela-registros'>";
-        echo "<thead>
+    <?php if ($result->num_rows > 0): ?>
+        <table id="questaoTable" class="tabela-registros" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead>
                 <tr>
-                    <th>Concurso</th>
                     <th>Prova</th>
                     <th>Disciplina</th>
                     <th>Dificuldade</th>
                     <th>Pergunta</th>
-                    <th>Desc 1</th>
-                    <th>Desc 2</th>
-                    <th>Desc 3</th>
-                    <th>Desc 4</th>
-                    <th>Desc Correta</th>
                     <th>Ações</th>
                 </tr>
-              </thead>";
-        echo "<tbody>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['nome_concurso']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nome_prova']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nome_disciplina']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['tipo_dificuldade']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['pergunta']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['desc1']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['desc2']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['desc3']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['desc4']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['desc_correta']) . "</td>";
-            echo "<td class='actions'>";
-            echo "<button class='btn-editar' onclick='openEditModal(" . json_encode($row, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) . ")'><i class='fas fa-edit'></i></button>";
-            echo "<button class='btn-excluir' onclick='openModal(\"questao.php?delete=" . $row['cod_questao'] . "\")'><i class='fas fa-trash-alt'></i></button>";
-            echo "</td>";
-            echo "</tr>";
-        }
-        echo "</tbody>";
-        echo "</table>";
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['nome_prova']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nome_disciplina']); ?></td>
+                        <td><?php echo htmlspecialchars($row['tipo_dificuldade']); ?></td>
+                        <td><?php echo htmlspecialchars($row['pergunta']); ?></td>
+                        <td class="actions">
+                            <button class="btn-editar" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-excluir" onclick="openModal('questao.php?delete=<?php echo $row['cod_questao']; ?>')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p class="text-muted text-center">Nenhuma questão encontrada para este concurso.</p>
+    <?php endif; ?>
 
-        echo "<div class='pagination-container'>";
-        echo "<ul class='pagination'>";
-        if ($page > 1) {
-            echo "<li><a href='?page=" . ($page - 1) . "&filtro=$filtro'>Anterior</a></li>";
-        }
-        for ($i = 1; $i <= $total_pages; $i++) {
-            echo "<li class='" . ($i == $page ? 'active' : '') . "'><a href='?page=$i&filtro=$filtro'>$i</a></li>";
-        }
-        if ($page < $total_pages) {
-            echo "<li><a href='?page=" . ($page + 1) . "&filtro=$filtro'>Próximo</a></li>";
-        }
-        echo "</ul>";
-        echo "</div>";
-    } else {
-        echo "<p class='text-muted text-center'>Nenhum registro encontrado.</p>";
-    }
-    ?>
+  <!-- Paginação -->
+  <?php if ($total_pages > 1): ?>
+        <div class="pagination-container">
+            <ul class="pagination">
+                <?php if ($page > 1): ?>
+                    <li><a href="?page=<?php echo $page - 1; ?>">Anterior</a></li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="<?php echo $i == $page ? 'active' : ''; ?>">
+                        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <?php if ($page < $total_pages): ?>
+                    <li><a href="?page=<?php echo $page + 1; ?>">Próximo</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 </div>
 
+
+    <?php
+// Conexão com o banco de dados
+$conn = new mysqli('localhost', 'root', 'admin', 'topapirando');
+
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+$records_per_page = 1; // Um concurso por página
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$start_from = ($page - 1) * $records_per_page;
+
+// Contar o total de concursos
+$total_concursos_sql = "SELECT COUNT(*) AS total FROM concurso";
+$total_concursos_result = $conn->query($total_concursos_sql);
+$total_concursos = $total_concursos_result->fetch_assoc()['total'];
+$total_pages = ceil($total_concursos / $records_per_page); // Calcular o total de páginas
+
+// Obter o concurso atual
+$sql_concursos_pag = "
+    SELECT DISTINCT c.cod_concurso, c.nome AS nome_concurso, c.qtd_questoes
+    FROM concurso c
+    LIMIT $start_from, $records_per_page";
+$result_concursos_pag = $conn->query($sql_concursos_pag);
+$concurso_atual = $result_concursos_pag->fetch_assoc();
+
+$cod_concurso_atual = $concurso_atual['cod_concurso'];
+$nome_concurso_atual = $concurso_atual['nome_concurso'];
+$total_questoes_concurso = $concurso_atual['qtd_questoes'];
+
+// Continue com o restante do código...
+?>
 
               <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">

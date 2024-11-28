@@ -4,6 +4,10 @@ session_start();
 $error_message = '';
 $success_message = '';
 
+// Verificar se os cookies estão definidos para preencher os campos
+$email = isset($_COOKIE['email_adm']) ? htmlspecialchars($_COOKIE['email_adm']) : (isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '');
+$senha_cookie = isset($_COOKIE['senha_adm']) ? $_COOKIE['senha_adm'] : ''; // Preencher senha se o cookie estiver ativo
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conectar ao banco de dados
     $servername = "localhost";
@@ -34,25 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt_administrador->num_rows > 0) {
         $stmt_administrador->bind_result($cod_administrador, $nome, $sobrenome, $hashed_senha_administrador);
         $stmt_administrador->fetch();
-
-        // Verificar se a senha está criptografada ou em texto plano
-        if (password_needs_rehash($hashed_senha_administrador, PASSWORD_DEFAULT)) {
-            // Se a senha no banco não está criptografada
-            if ($senha === $hashed_senha_administrador) {
-                // Criptografar a senha e atualizar o banco de dados
-                $new_hashed_senha = password_hash($senha, PASSWORD_DEFAULT);
-                $update_sql = "UPDATE administrador SET senha = ? WHERE cod_administrador = ?";
-                $update_stmt = $conn->prepare($update_sql);
-                $update_stmt->bind_param("si", $new_hashed_senha, $cod_administrador);
-                $update_stmt->execute();
-                $update_stmt->close();
-
-                // Redefinir a senha para a versão criptografada para comparação futura
-                $hashed_senha_administrador = $new_hashed_senha;
-            } else {
-                $error_message = 'Senha incorreta.';
-            }
-        }
 
         // Verificar a senha criptografada
         if (password_verify($senha, $hashed_senha_administrador)) {
@@ -139,26 +124,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <?php endif; ?>
         
-        <!-- Formulário de login -->
-<form action="" method="POST">
+        <form action="" method="POST">
     <div class="input-box">
-        <input type="email" name="email" value="<?php echo isset($_COOKIE['email_adm']) ? $_COOKIE['email_adm'] : ''; ?>" required>
+        <input type="email" name="email" value="<?php echo $email; ?>" required>
         <label>Email</label>
     </div>
     <div class="input-box">
-        <input type="password" name="senha" value="<?php echo isset($_COOKIE['senha_adm']) ? $_COOKIE['senha_adm'] : ''; ?>" required>
+        <input type="password" name="senha" value="<?php echo $senha_cookie; ?>" required>
         <label>Senha</label>
     </div>
 
     <!-- Botão de login -->
     <button type="submit" class="login-btn">Entrar</button>
 
-    <!-- Lembrar meus dados -->
-    <div class="lembrar-container">
-        <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email_adm']) ? 'checked' : ''; ?>>
-        <label for="checar">Lembrar meus dados</label>
+    <!-- Lembrar meus dados e esqueci minha senha -->
+    <div class="options-container">
+        <div class="lembrar-container">
+            <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email_adm']) ? 'checked' : ''; ?>>
+            <label for="checar">Lembrar meus dados</label>
+        </div>
+        <a href="./administrador/esqueci_senha.php?email=<?php echo urlencode($email); ?>" class="forgot-password-link">Esqueci minha senha</a>
     </div>
 </form>
+
 
 </div>
 
@@ -231,22 +219,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     };
 
-    // Modal de erro
+
     const errorModal = document.getElementById('errorModal');
     const okBtnErro = document.getElementById('okBtnErro');
     const closeBtnErro = document.querySelector('.close-btn');
 
     if (errorModal) {
         errorModal.style.display = 'block';
+
         okBtnErro.addEventListener('click', function () {
             errorModal.style.display = 'none';
         });
+
         closeBtnErro.addEventListener('click', function () {
             errorModal.style.display = 'none';
         });
 
         window.addEventListener('click', function (event) {
-            if (event.target == errorModal) {
+            if (event.target === errorModal) {
                 errorModal.style.display = 'none';
             }
         });

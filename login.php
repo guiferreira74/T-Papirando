@@ -117,34 +117,37 @@ if ($stmt_estudante->num_rows > 0) {
         <h1>Já tem conta?</h1>
         <p>Informe seus dados para acessá-la</p>
 
-        <!-- Formulário de Login -->
         <form action="login.php" method="post">
-            <input 
-                id="input-email" 
-                name="email" 
-                type="text" 
-                placeholder="E-mail" 
-                value="<?php echo isset($_COOKIE['email']) ? htmlspecialchars($_COOKIE['email']) : ''; ?>" 
-                required
-            >
-            <input 
-                id="input-senha" 
-                name="senha" 
-                type="password" 
-                placeholder="Senha" 
-                value="<?php echo isset($_COOKIE['senha']) ? htmlspecialchars($_COOKIE['senha']) : ''; ?>" 
-                required
-            >
-            <div id="checa">  
-                <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
-                <label for="checar">Lembrar meus dados</label>
-            </div>
+    <input 
+        id="input-email" 
+        name="email" 
+        type="text" 
+        placeholder="E-mail" 
+        value="<?php echo isset($_COOKIE['email']) ? htmlspecialchars($_COOKIE['email']) : ''; ?>" 
+        required
+    >
+    <input 
+        id="input-senha" 
+        name="senha" 
+        type="password" 
+        placeholder="Senha" 
+        value="<?php echo isset($_COOKIE['senha']) ? htmlspecialchars($_COOKIE['senha']) : ''; ?>" 
+        required>
+    <div class="options-row">
+        <div class="lembrar-dados">
+            <input type="checkbox" id="checar" name="lembrar_dados" <?php echo isset($_COOKIE['email']) ? 'checked' : ''; ?>>
+            <label for="checar">Lembrar meus dados</label>
+        </div>
+        <a href="./estudante/esqueci_senha_user.php?email=<?php echo urlencode(isset($_POST['email']) ? $_POST['email'] : ''); ?>" class="esqueci-senha">Esqueci minha senha</a>
 
-            <!-- Botão de Login -->
-            <div class="button-container">
-                <button id="button-esquerda" type="submit">Acessar Conta</button>
-            </div>
-        </form>
+    </div>
+
+    <!-- Botão de Login -->
+    <div class="button-container">
+        <button id="button-esquerda" type="submit">Acessar Conta</button>
+    </div>
+</form>
+
     </div>
 
     <!-- Parte Direita -->

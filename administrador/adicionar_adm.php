@@ -15,7 +15,7 @@ $error_message = '';
 $success_message = '';
 
 // Inicializar as variáveis de campos para manter os dados preenchidos
-$nome = $sobrenome = $email = '';
+$nome = $sobrenome = $email = $pergunta = $resposta = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Conectar ao banco de dados
@@ -28,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $conn->real_escape_string($_POST['nome']);
     $sobrenome = $conn->real_escape_string($_POST['sobrenome']);
     $email = $conn->real_escape_string($_POST['email']);
+    $pergunta = $conn->real_escape_string($_POST['pergunta']);
+    $resposta = $conn->real_escape_string($_POST['resposta']);
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     // Verificar se as senhas coincidem
@@ -47,16 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error_message = "Este e-mail já está cadastrado.";
             } else {
                 // Inserir o novo administrador
-                $insert_sql = "INSERT INTO administrador (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)";
+                $insert_sql = "INSERT INTO administrador (nome, sobrenome, email, pergunta, resposta, senha) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt_insert = $conn->prepare($insert_sql);
                 
                 if ($stmt_insert) {
-                    $stmt_insert->bind_param('ssss', $nome, $sobrenome, $email, $senha);
+                    $stmt_insert->bind_param('ssssss', $nome, $sobrenome, $email, $pergunta, $resposta, $senha);
 
                     if ($stmt_insert->execute()) {
                         $success_message = "Administrador adicionado com sucesso!";
                         // Limpar os campos após o sucesso
-                        $nome = $sobrenome = $email = '';
+                        $nome = $sobrenome = $email = $pergunta = $resposta = '';
                     } else {
                         $error_message = "Erro ao adicionar administrador.<br> Por favor, tente novamente.";
                     }
@@ -136,12 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <!-- Formulário de adição -->
-<<div class="container-geral">
+<div class="container-geral">
     <div class="formulario-wrapper">
         <!-- Lado esquerdo: Formulário -->
         <div class="formulario-container">
             <h1>Adicionar Novo Administrador</h1>
-            
+
             <!-- Formulário de adição -->
             <form action="adicionar_adm.php" method="POST">
                 <div class="form-group">
@@ -157,6 +159,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pergunta">Pergunta de Palavra-Chave</label>
+                    <input type="text" id="pergunta" name="pergunta" placeholder="Digite a pergunta de segurança" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="resposta">Resposta</label>
+                    <input type="text" id="resposta" name="resposta" placeholder="Digite a resposta da pergunta" required>
                 </div>
 
                 <div class="form-group">

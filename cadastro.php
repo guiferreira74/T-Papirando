@@ -46,17 +46,22 @@
         </div>    
 
         <input id="e-mail" name="email" type="email" placeholder="E-mail" required title="Preencha seu email">
+        <input id="pergunta" name="pergunta" type="text" placeholder="Pergunta de segurança" required title="Preencha a pergunta de segurança">
+        <input id="resposta" name="resposta" type="text" placeholder="Resposta de segurança" required title="Preencha a resposta de segurança">
         <input id="telefone" name="telefone" type="text" placeholder="Telefone" required title="Preencha o seu Telefone">
         <input id="senha" name="senha" type="password" placeholder="Senha" required title="Preencha a sua Senha">
         <input id="confirmar-senha" name="confirmar-senha" type="password" placeholder="Confirmar Senha" required title="Confirme a sua Senha">
+      
     </div>
 
     <button type="submit" id="button">Criar Conta</button>
 </form>
 
+
         <a href="login.php" class="login">Entrar com sua conta</a>
     </div>
 </main>
+
 
 <!-- Modal de erro para senhas -->
 <div id="modal-senha-erro" class="modal senha-erro" style="display:none;">
@@ -142,6 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefone = $conn->real_escape_string($_POST['telefone']);
     $senha = $_POST['senha']; // Senha em texto claro para validação
     $confirmar_senha = $_POST['confirmar-senha']; // Senha de confirmação
+    $pergunta = isset($_POST['pergunta']) ? $conn->real_escape_string($_POST['pergunta']) : '';
+    $resposta = isset($_POST['resposta']) ? $conn->real_escape_string($_POST['resposta']) : '';
+    
 
     // Verificar se o e-mail é válido
     if ($email === false) {
@@ -165,9 +173,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
 
             // Inserir o novo estudante na tabela estudante
-            $sql = "INSERT INTO estudante (nome, sobrenome, email, telefone, senha) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO estudante (nome, sobrenome, email, telefone, senha, pergunta, resposta) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssss", $nome, $sobrenome, $email, $telefone, $senha_hash);
+            $stmt->bind_param("sssssss", $nome, $sobrenome, $email, $telefone, $senha_hash, $pergunta, $resposta);
 
             if ($stmt->execute()) {
                 // Se a inserção for bem-sucedida, exibe o modal de sucesso
