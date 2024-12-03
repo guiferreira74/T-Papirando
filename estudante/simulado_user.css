@@ -14,7 +14,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    
+
 }
 
 .interface {
@@ -296,19 +297,71 @@ header .info ul li a {
       margin-left: 30px;          
     
       }
+/* Configuração geral do layout */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px; /* Aumenta o espaçamento entre os containers */
+    margin-top: 150px;
+}
+/* Ajusta o container de informações (cronômetro, etc.) */
+.info-container {
+    width: 600px; /* Largura fixa para o info-container */
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 100px; /* Mantém o container visível ao rolar */
+    height: fit-content;
+    z-index: 100;
+}
+
+.info-container .timer,
+.info-container .status {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.info-container .button-container {
+    display: flex;
+    flex-direction: column; /* Botões empilhados */
+    gap: 10px;
+}
     
-      .simulado-container {
-        max-width: 800px;
-        width: 90%;
-        height: 80vh; /* Define uma altura fixa para o container */
-        overflow-y: auto; /* Adiciona barra de rolagem vertical */
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
+ 
+/* Configuração do container do simulado */
+.simulado-container {
+    max-width: 1000px; /* Aumenta a largura máxima */
+    width: 900px; /* Ajusta a proporção de largura */
+    background-color: #fff;
+    padding: 30px; /* Aumenta o espaçamento interno */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    font-size: 18px; /* Torna o texto mais legível */
+}
+/* Layout responsivo */
+@media (max-width: 768px) {
+    .page-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Reduz o espaçamento em telas menores */
     }
-    
+
+    .simulado-container {
+        width: 90%; /* Ajusta para quase toda a largura em telas menores */
+    }
+
+    .info-container {
+        width: 90%; /* Ajusta para quase toda a largura em telas menores */
+        position: static; /* Remove o comportamento sticky */
+        margin-top: 20px;
+    }
+}
+
     h1 {
         font-size: 32px;
         color: #2118CD;
@@ -333,10 +386,102 @@ header .info ul li a {
     
     .questao li {
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
     }
     
     .questao input[type="radio"] {
-        margin-right: 8px;
+        display: none; /* Esconde o botão de rádio padrão */
+    }
+    
+    .questao label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px; /* Tamanho do círculo */
+        height: 25px; /* Tamanho do círculo */
+        border: 2px solid #2118CD; /* Cor da borda */
+        border-radius: 50%; /* Torna o elemento circular */
+        color: #2118CD; /* Cor do texto */
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        font-size: 13px;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+    }
+    
+    /* Estiliza o label quando o botão de rádio correspondente é selecionado */
+    .questao input[type="radio"]:checked + label {
+        background-color: #2118CD; /* Cor de fundo ao selecionar */
+        color: white; /* Cor do texto ao selecionar */
+        border-color: #2118CD; /* Garante que a borda tenha a mesma cor */
+    }
+    
+    /* Ajusta o espaçamento entre o círculo e o texto */
+    .questao label + span {
+        margin-left: 10px; /* Espaçamento entre o círculo e o texto */
+        font-size: 16px;
+        color: #000; /* Cor padrão do texto da alternativa */
+    }
+    
+   /* Configuração do container de informações */
+.info-container {
+    width: 350px; /* Aumenta a largura */
+    background-color: #f8f9fa;
+    padding: 25px; /* Aumenta o espaçamento interno */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 150px;
+    height: fit-content;
+    z-index: 1000;
+    font-size: 16px; /* Aumenta o tamanho do texto */
+}
+
+
+/* Estilo dos elementos dentro do info-container */
+.info-container .timer,
+.info-container .status {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Botões dentro do info-container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-primary {
+    background-color: #2118CD;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-danger {
+    background-color: #FF0000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+    
+    button {
+        cursor: pointer;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
     }
     
     button {
@@ -433,4 +578,14 @@ header .info ul li a {
             font-size: 10px;
             padding: 4px 8px;
         }
+    }
+    #parar-tempo {
+        background-color: white; /* Fundo branco */
+        color: black; /* Texto preto */
+        border: 2px solid black; /* Borda preta */
+        font-weight: bold; /* Texto em negrito */
+        padding: 10px 20px; /* Espaçamento interno */
+        border-radius: 5px; /* Bordas arredondadas */
+        cursor: pointer; /* Cursor para indicar que é clicável */
+        transition: all 0.3s ease; /* Suave transição ao interagir */
     }

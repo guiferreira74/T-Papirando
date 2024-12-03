@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Adicionar Administrador</title>
     <link rel="stylesheet" href="adicionar_adm.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link rel="stylesheet" href="adm.css">
 </head>
 <body>

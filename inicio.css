@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+   
 }
 
 .interface {
@@ -541,4 +541,197 @@ section.topo-do-site.flex {
 /* Conteúdo inicialmente invisível */
 .hidden {
     opacity: 0; /* Esconde o conteúdo */
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Menu escondido por padrão */
+    width: 250px;
+    height: 100%;
+    background-color: #f4f4f4;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease; /* Animação para o deslizamento */
+    padding: 20px;
+    z-index: 1000;
+}
+
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral ul li {
+    margin-bottom: 20px; /* Espaçamento entre os itens */
+}
+
+.menu-lateral ul li a {
+    text-decoration: none;
+    color: black; /* Cor do texto */
+    font-size: 18px; /* Tamanho da fonte */
+    display: flex; /* Para alinhar ícone e texto */
+    align-items: center; /* Alinha verticalmente ícone e texto */
+    gap: 15px; /* Espaço entre o ícone e o texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
+}
+
+.menu-lateral ul li a:hover {
+    background-color: #3b3b52; /* Cor de fundo no hover */
+    color: #ffd700; /* Cor do texto no hover */
+}
+
+.menu-lateral ul li a i {
+    font-size: 20px; /* Tamanho do ícone */
+    color: black; /* Cor padrão do ícone */
+}
+
+.menu-lateral ul li a:hover i {
+    color: #ffd700; /* Cor do ícone no hover */
+}
+
+/* Estilo para o título do menu lateral */
+.menu-lateral h3 {
+    color: #ffffff;
+    font-size: 22px;
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    text-align: center;
+    border-bottom: 1px solid #3b3b52;
+    padding-bottom: 10px;
+}
+.menu-lateral.show {
+    left: 0; /* Mostra o menu ao adicionar a classe 'show' */
+}
+
+/* Estilo para links desativados */
+.menu-lateral a.disabled-link {
+    pointer-events: none; /* Desativa o clique */
+    color: gray; /* Altera a cor para indicar que está desabilitado */
+    cursor: not-allowed; /* Muda o cursor para um ícone de "não permitido" */
+}
+
+/* Ajuste para o ícone de engrenagem */
+#gear {
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+
+/* Inicialmente, o ícone de abrir o menu fica escondido */
+.menu-toggle {
+    display: none; /* Esconde o ícone em telas grandes */
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white; /* Cor do ícone */
+    align-items: center;
+    margin-left: 10px; /* Ajuste de espaçamento */
+}
+
+/* Ícone de gear (sempre visível em telas pequenas) */
+  #gear {
+    color: white; /* Define a cor do ícone */
+    font-size: 25px; /* Tamanho do ícone */
+    align-items: center;
+    margin-left: 10px; /* Ajusta o espaçamento */
+    cursor: pointer;
+    display: inline-block; /* Garante que esteja visível sempre */
+}
+/* Controla o comportamento dos elementos da info em telas menores */
+@media screen and (max-width: 768px) {
+    header .info a {
+        display: none; /* Esconde os outros links (Sobre, Ajuda) */
+    }
+
+    header  #gear {
+        display: inline-block; /* Mantém o ícone visível */
+    }
+
+    .menu-toggle {
+        display: flex; /* Mostra o ícone do menu lateral */
+    }
+
+    header .menu-desktop {
+        display: none; /* Esconde o menu desktop */
+    }
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .menu-desktop {
+        display: none; /* Esconde o menu desktop */
+    }
+
+    .info {
+        display: flex; /* Mostra os ícones em linha */
+        justify-content: flex-end; /* Alinha à direita */
+    }
+
+      #gear, .menu-toggle {
+        display: inline-flex; /* Ambos visíveis */
+    }
+}
+.menu-lateral {
+    z-index: 1000; /* Garante que o menu lateral aparece acima */
+}
+
+/* Responsividade: Imagem acima do texto em telas menores */
+@media (max-width: 768px) {
+    .flex {
+        flex-direction: column; /* Alinha os elementos em coluna */
+        gap: 20px; /* Reduz o espaçamento */
+    }
+
+    .img-topo-site {
+        order: -1; /* Move a imagem para o topo */
+    }
+
+    .txt-topo-site {
+        text-align: center; /* Centraliza o texto */
+    }
+
+    h1 {
+        font-size: 28px; /* Reduz o tamanho do título */
+    }
+
+    p {
+        font-size: 16px; /* Reduz o tamanho do texto */
+    }
+}
+
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .txt-topo-site {
+        gap: 15px; /* Reduz o espaçamento entre elementos */
+    }
+
+    .txt-topo-site h1 {
+        font-size: 24px; /* Reduz o tamanho do título */
+        line-height: 1.2; /* Reduz o espaçamento das linhas */
+    }
+
+    .txt-topo-site p {
+        font-size: 16px; /* Reduz o tamanho do texto */
+        line-height: 1.4;
+    }
+
+    .btn-contato {
+        flex-direction: column; /* Coloca os botões em coluna */
+        gap: 10px; /* Reduz o espaçamento entre os botões */
+    }
+
+    .btn-contato .ou {
+        display: none; /* Remove o texto "Ou" para simplificar */
+    }
+
+    .btn-contato button {
+        width: 100%; /* Os botões ocupam toda a largura disponível */
+        max-width: 300px; /* Define uma largura máxima */
+    }
 }

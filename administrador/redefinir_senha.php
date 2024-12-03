@@ -43,8 +43,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha - Administrador</title>
-    <link rel="stylesheet" href="esqueci_senha.css">
+    <link rel="stylesheet" href="redefinir_senha.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
+    <header>
+    <div class="interface">
+        <div class="logo">
+            <a href="../index.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>
+        </div>
+        <nav class="menu-desktop">
+            <ul>
+                <li><a href="../index.php">Início</a></li>
+                <li><a href="#" class="simulados">Simulados</a></li>
+                <li><a href="../bancas.php">Bancas</a></li>
+                <li><a href="#" class="desempenho">Desempenho</a></li>
+            </ul>
+        </nav>
+        <div class="info">
+            <a href="../estudante/sobre.php">Sobre</a>
+            <a href="../estudante/ajuda.php">Ajuda</a>
+            <a href=""><i class="fa-solid fa-gear" id="gear" title="Acesso restrito"></i></a>
+        </div>
+    </div>
+</header>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 

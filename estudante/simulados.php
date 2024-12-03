@@ -21,7 +21,14 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     <title>Simulados</title>
     <link rel="stylesheet" href="simulados.css">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
+<!-- LTELA DE CARREGAMENTO -->
+<div id="loading-screen">
+    <div class="spinner"></div>
+    <p class="loading-text">Preparando seu Simulado, aguarde...</p>
+</div>
+
 <body>
 
 <header>
@@ -188,6 +195,7 @@ while ($row = $result->fetch_assoc()) {
                             <ul>
                                 <li>Leia todas as questões atentamente antes de responder.</li>
                                 <li>Gerencie bem o seu tempo. Não passe muito tempo em uma única questão.</li>
+                                <li>O cronômetro é opcional e serve para acompanhar o tempo que você leva para concluir o simulado. Caso prefira, você pode pausá-lo a qualquer momento.</li>
                                 <li>Se não souber a resposta, elimine as opções que parecem menos prováveis.</li>
                                 <li>Caso deixe questões em branco,não seram contabilizadas no seu desempenho.</li>
                                 <li>Certifique-se de estar em um local tranquilo para se concentrar melhor.</li>
@@ -221,6 +229,26 @@ while ($row = $result->fetch_assoc()) {
 }
 </style>
 
+!-- scripit para acionar a tela de carregamento -->
+<script>
+// Mostra a tela de carregamento e redireciona após 3 segundos
+function showLoadingScreenAndRedirect(url) {
+    const loadingScreen = document.getElementById('loading-screen');
+    loadingScreen.style.display = 'flex'; // Exibe a tela de carregamento
+    setTimeout(() => {
+        window.location.href = url; // Redireciona após 3 segundos
+    }, 2000);
+}
+
+// Adiciona evento ao botão "Iniciar"
+document.querySelectorAll('.btn-primary').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita o redirecionamento imediato
+        const url = this.closest('a').href; // Obtém o URL do botão
+        showLoadingScreenAndRedirect(url); // Mostra a tela de carregamento e redireciona
+    });
+});
+</script>
 
 <script>
 // Mostrar e esconder o dropdown quando o usuário clica no perfil

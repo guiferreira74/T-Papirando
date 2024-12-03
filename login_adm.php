@@ -39,7 +39,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_administrador->bind_result($cod_administrador, $nome, $sobrenome, $hashed_senha_administrador);
         $stmt_administrador->fetch();
 
-        // Verificar a senha criptografada
+        // Verificar se a senha está criptografada
+        if (!password_verify($senha, $hashed_senha_administrador)) {
+            // Senha não está criptografada, verificar se é igual à senha digitada
+            if ($senha === $hashed_senha_administrador) {
+                // Atualizar a senha para uma versão criptografada
+                $nova_senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+                $sql_update = "UPDATE administrador SET senha = ? WHERE cod_administrador = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("si", $nova_senha_hash, $cod_administrador);
+                $stmt_update->execute();
+                $stmt_update->close();
+            } else {
+                $error_message = 'Senha incorreta.';
+            }
+        }
+
+        // Após garantir a senha criptografada, verificar o login
         if (password_verify($senha, $hashed_senha_administrador)) {
             // Definir sessão e redirecionar
             $_SESSION['loggedin'] = true;
@@ -75,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login Administrador</title>
     <link rel="stylesheet" href="login_adm.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
 <body>
     <header>

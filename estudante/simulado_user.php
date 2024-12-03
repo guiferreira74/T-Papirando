@@ -30,6 +30,18 @@ if (!isset($_GET['cod_concurso']) || empty($_GET['cod_concurso'])) {
 
 $cod_concurso = intval($_GET['cod_concurso']);
 
+// Busca o nome do concurso
+$concurso_nome = '';
+$query_concurso = "SELECT nome FROM concurso WHERE cod_concurso = $cod_concurso";
+$result_concurso = $conn->query($query_concurso);
+
+if ($result_concurso && $result_concurso->num_rows > 0) {
+    $row_concurso = $result_concurso->fetch_assoc();
+    $concurso_nome = $row_concurso['nome'];
+} else {
+    die("Concurso não encontrado.");
+}
+
 // Busca questões do concurso
 $query = "SELECT * FROM questao WHERE concurso_cod_concurso = $cod_concurso";
 $result = $conn->query($query);
@@ -84,8 +96,6 @@ if (empty($questoes)) {
     <link href='simulado_user.css' rel='stylesheet'>
 </head>
 <body>
-
-
 <header>
     <div class="interface">
         <div class="logo">
@@ -100,12 +110,9 @@ if (empty($questoes)) {
             </ul>
         </nav>
 
-        <!-- Dropdown de Perfil -->
         <div class="info">
             <a href="sobre_user.php">Sobre</a>
             <a href="ajuda_user.php">Ajuda</a>
-            
-            <!-- Link de saudação com o nome e o dropdown -->
             <div class="profile-dropdown">
                 <a href="#" class="profile-toggle" id="profile-toggle">
                     Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>
@@ -120,16 +127,16 @@ if (empty($questoes)) {
     </div>
 </header>
 
-<div class="simulado-container">
-    <h1 class="titulo-simulado">Simulado</h1>
-    <form id="simulado-form" method="POST" action="resultado.php" onsubmit="return verificarQuestoesEmBranco()">
-        <?php foreach ($questoes as $index => $questao): ?>
-            <div class="questao">
+<div class="page-container">
+    <div class="simulado-container">
+        <h1 class="titulo-simulado">Simulado - <?php echo htmlspecialchars($concurso_nome); ?></h1>
+        <form id="simulado-form" method="POST" action="resultado.php" onsubmit="return verificarQuestoesEmBranco()">
+            <?php foreach ($questoes as $index => $questao): ?>
+                <div class="questao" id="questao-<?php echo $index + 1; ?>">
                 <p><?php echo $index + 1; ?>. <?php echo htmlspecialchars($questao['pergunta']); ?></p>
                 <ul>
                     <?php
-                    // Letras para as opções
-                    $letras = ['A)', 'B)', 'C)', 'D)', 'E)'];
+                    $letras = ['A', 'B', 'C', 'D', 'E']; // Letras das alternativas
                     foreach ($questao['alternativas'] as $key => $descricao): ?>
                         <li>
                             <input 
@@ -139,22 +146,239 @@ if (empty($questoes)) {
                                 id="questao-<?php echo $questao['cod_questao'] . '-' . $key; ?>"
                             >
                             <label for="questao-<?php echo $questao['cod_questao'] . '-' . $key; ?>">
-                                <?php echo $letras[$key]; ?> <?php echo htmlspecialchars($descricao); ?>
+                                <?php echo $letras[$key]; ?>
                             </label>
+                            <span><?php echo htmlspecialchars($descricao); ?></span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
             <hr>
-        <?php endforeach; ?>
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary">Finalizar Simulado</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancelar Simulado</button>
-        </div>
-    </form>
+            <?php endforeach; ?>
+        </form>
+    </div>
 </div>
 
-<!-- Modal Bootstrap: Cancelar -->
+    <div class="info-container">
+        <div class="timer">
+            <p><strong>Tempo Decorrido:</strong> <span id="cronometro">00:00:00</span></p>
+        </div>
+        <div class="status">
+        <p><strong>Questões Respondidas:</strong> <span id="questoes-respondidas">0 de <?php echo count($questoes); ?></span></p>
+        </div>
+        <div class="button-container">
+            <button id="parar-tempo" class="btn btn-warning">Parar Tempo</button>
+            <button type="submit" form="simulado-form" class="btn btn-primary">Finalizar Simulado</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancelar Simulado</button>
+        </div>
+        <div class="question-navigator">
+    <p><strong>Ir para questão:</strong></p>
+    <div class="question-links">
+        <?php foreach ($questoes as $index => $questao): ?>
+            <a href="#questao-<?php echo $index + 1; ?>" 
+               class="question-link" 
+               id="link-questao-<?php echo $index + 1; ?>">
+               <?php echo $index + 1; ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+</div>
+
+<style>
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .timer, .status, .button-container {
+        margin-bottom: 15px;
+    }
+
+    .question-navigator {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-navigator p {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .question-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .question-link {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid #007bff;
+        border-radius: 50%;
+        color: #007bff;
+        font-weight: bold;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    .question-link:hover {
+        background-color: #007bff;
+        color: white;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-link:active {
+        background-color: #0056b3;
+    }
+
+    .question-link.respondida {
+    background-color: #2118CD; /* Azul para questões respondidas */
+    color: white;
+    border-color: #2118CD;
+    transition: all 0.3s ease; /* Suaviza a transição de cores */
+}
+
+
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const radios = document.querySelectorAll('input[type="radio"]');
+
+    // Evento para cada botão de rádio
+    radios.forEach(radio => {
+        radio.addEventListener("change", function () {
+            const numeroQuestao = this.closest('.questao').id.match(/\d+/)[0]; // Obtém o número da questão pelo ID do contêiner
+            atualizarStatusQuestao(numeroQuestao);
+            atualizarContadorQuestoes();
+        });
+    });
+
+    // Permitir "desmarcar" um botão de rádio
+    radios.forEach(radio => {
+        radio.addEventListener('click', function () {
+            if (this.dataset.checked === 'true') {
+                this.checked = false;
+                this.dataset.checked = 'false';
+                const numeroQuestao = this.closest('.questao').id.match(/\d+/)[0];
+                atualizarStatusQuestao(numeroQuestao);
+                atualizarContadorQuestoes(); // Atualiza contador ao desmarcar
+            } else {
+                this.dataset.checked = 'true';
+                const grupo = document.getElementsByName(this.name);
+                grupo.forEach(input => {
+                    if (input !== this) {
+                        input.dataset.checked = 'false';
+                    }
+                });
+            }
+        });
+    });
+});
+
+// Atualizar o status do link da questão
+function atualizarStatusQuestao(numeroQuestao) {
+    const link = document.getElementById(`link-questao-${numeroQuestao}`);
+    const inputs = document.querySelectorAll(`#questao-${numeroQuestao} input[type="radio"]`);
+    const isChecked = Array.from(inputs).some(input => input.checked);
+
+    if (link) {
+        if (isChecked) {
+            link.classList.add('respondida');
+        } else {
+            link.classList.remove('respondida');
+        }
+    }
+}
+
+function atualizarContadorQuestoes() {
+    const totalQuestoes = document.querySelectorAll('.questao').length; // Total de questões
+    const respondidas = document.querySelectorAll('input[type="radio"]:checked').length; // Total de respostas marcadas
+    const contador = document.getElementById("questoes-respondidas"); // Elemento de contagem
+
+    if (contador) {
+        contador.textContent = `${respondidas} de ${totalQuestoes}`;
+    }
+}
+
+
+</script>
+
+
+<script>
+    let tempoDecorrido = 0; // Tempo inicial em segundos
+    let cronometroAtivo = true;
+
+    // Atualiza o cronômetro
+    function atualizarCronometro() {
+        if (!cronometroAtivo) return;
+
+        tempoDecorrido++;
+
+        const horas = String(Math.floor(tempoDecorrido / 3600)).padStart(2, '0');
+        const minutos = String(Math.floor((tempoDecorrido % 3600) / 60)).padStart(2, '0');
+        const segundos = String(tempoDecorrido % 60).padStart(2, '0');
+
+        document.getElementById('cronometro').textContent = `${horas}:${minutos}:${segundos}`;
+    }
+
+    const cronometroInterval = setInterval(atualizarCronometro, 1000);
+
+    document.getElementById("parar-tempo").addEventListener("click", function () {
+        cronometroAtivo = !cronometroAtivo;
+        this.textContent = cronometroAtivo ? "Parar Tempo" : "Retomar Tempo";
+    });
+
+    // Atualiza a quantidade de questões respondidas
+    function atualizarQuestoesRespondidas() {
+        const respondidas = document.querySelectorAll('input[type="radio"]:checked').length; // Contar inputs selecionados
+        const totalQuestoes = document.getElementById("total-questoes").textContent; // Total de questões
+
+        // Atualiza o contador na página
+        document.getElementById("questoes-respondidas").textContent = respondidas;
+    }
+
+    // Adiciona evento de mudança nos inputs
+    document.addEventListener("DOMContentLoaded", () => {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio) => {
+            radio.addEventListener("change", atualizarQuestoesRespondidas);
+        });
+
+        // Atualiza inicialmente para mostrar o estado atual
+        atualizarQuestoesRespondidas();
+    });
+
+    // Salvar o tempo ao enviar o formulário
+    document.getElementById("simulado-form").addEventListener("submit", function () {
+        const tempoFinal = document.getElementById('cronometro').textContent;
+        localStorage.setItem('tempoDecorrido', tempoFinal); // Salva o tempo no LocalStorage
+    });
+</script>
+
+
+
+
+<!-- Modal Cancelar Simulado -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -166,13 +390,12 @@ if (empty($questoes)) {
                 Se você cancelar, este simulado não será contabilizado no seu desempenho. Você tem certeza que deseja cancelar?
             </div>
             <div class="modal-footer">
-                <a href="simulados.php" class="btn btn-primary">Sim</a>
+                <button type="button" class="btn btn-primary" id="confirmarCancelarSimulado">Sim</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Modal Bootstrap: Questões em Branco -->
 <div class="modal fade" id="blankModal" tabindex="-1" aria-labelledby="blankModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -210,13 +433,16 @@ if (empty($questoes)) {
     </div>
 </div>
 
-<style>/* Estilo para os títulos dos modais */
-.modal-title {
-    color: #2118CD; /* Cor azul para o título */
-    font-weight: bold; /* Negrito */
-}
-</style>
-
+<script>
+    // Certifique-se de que o evento está configurado após o carregamento do DOM
+    document.addEventListener("DOMContentLoaded", function () {
+        // Evento de clique no botão "Sim"
+        document.getElementById("confirmarCancelarSimulado").addEventListener("click", function () {
+            // Redirecionar para a página desejada
+            window.location.href = "user.php";
+        });
+    });
+</script>
 <script>
     function verificarQuestoesEmBranco() {
         const form = document.getElementById('simulado-form');
@@ -252,6 +478,8 @@ if (empty($questoes)) {
         document.getElementById('simulado-form').submit();
     }
 </script>
+
+
 
 <!-- Adicione o Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

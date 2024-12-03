@@ -490,4 +490,82 @@ header .info ul li a {
 }
 
 
+.login-container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
 
+.login-wrapper {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.image-container {
+    flex: 1;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.form-image {
+    max-width: 90%;
+    height: auto;
+    object-fit: contain;
+}
+
+.login-box {
+    flex: 1;
+    padding: 20px 40px;
+}
+
+h2 {
+    color: #2118CD;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #2118CD;
+    outline: none;
+}
+
+.login-btn {
+    background-color: #2118CD;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.login-btn:hover {
+    background-color: #1935A6;
+}

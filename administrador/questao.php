@@ -22,6 +22,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link rel="stylesheet" href="adm.css">
 </head>
 <body>
@@ -347,58 +348,71 @@ $faltantes = max(0, $total_questoes_concurso - $total_questoes_cadastradas);
     // Adicionar filtro na query de busca
     $filtro = isset($_GET['filtro']) ? $conn->real_escape_string($_GET['filtro']) : '';
     $sql = "
-        SELECT q.*, d.tipo_dificuldade, disc.nome AS nome_disciplina, 
-               p.nome AS nome_prova
-        FROM questao q
-        JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
-        JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
-        JOIN prova p ON q.prova_cod_prova = p.cod_prova
-        WHERE q.concurso_cod_concurso = $cod_concurso_atual
-    ";
-    if (!empty($filtro)) {
-        $sql .= " AND (
-            q.pergunta LIKE '%$filtro%' OR
-            disc.nome LIKE '%$filtro%' OR
-            p.nome LIKE '%$filtro%' OR
-            d.tipo_dificuldade LIKE '%$filtro%'
-        )";
-    }
+    SELECT q.*, d.tipo_dificuldade, disc.nome AS nome_disciplina, 
+           p.nome AS nome_prova
+    FROM questao q
+    JOIN dificuldade d ON q.dificuldade_cod_dificuldade = d.cod_dificuldade
+    JOIN disciplina disc ON q.disciplina_cod_disciplina = disc.cod_disciplina
+    JOIN prova p ON q.prova_cod_prova = p.cod_prova
+    WHERE q.concurso_cod_concurso = $cod_concurso_atual
+";
+if (!empty($filtro)) {
+    $sql .= " AND (
+        q.pergunta LIKE '%$filtro%' OR
+        disc.nome LIKE '%$filtro%' OR
+        p.nome LIKE '%$filtro%' OR
+        d.tipo_dificuldade LIKE '%$filtro%'
+    )";
+}
+
     $result = $conn->query($sql);
     ?>
 
-    <?php if ($result->num_rows > 0): ?>
-        <table id="questaoTable" class="tabela-registros" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <thead>
-                <tr>
-                    <th>Prova</th>
-                    <th>Disciplina</th>
-                    <th>Dificuldade</th>
-                    <th>Pergunta</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['nome_prova']); ?></td>
-                        <td><?php echo htmlspecialchars($row['nome_disciplina']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tipo_dificuldade']); ?></td>
-                        <td><?php echo htmlspecialchars($row['pergunta']); ?></td>
-                        <td class="actions">
-                            <button class="btn-editar" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-excluir" onclick="openModal('questao.php?delete=<?php echo $row['cod_questao']; ?>')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p class="text-muted text-center">Nenhuma questão encontrada para este concurso.</p>
-    <?php endif; ?>
+<?php if ($result->num_rows > 0): ?>
+    <table id="questaoTable" class="tabela-registros" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+    <thead>
+        <tr>
+            <th>Prova</th>
+            <th>Disciplina</th>
+            <th>Dificuldade</th>
+            <th>Pergunta</th>
+            <th>Desc 1</th>
+            <th>Desc 2</th>
+            <th>Desc 3</th>
+            <th>Desc 4</th>
+            <th>Desc Correta</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['nome_prova']); ?></td>
+                <td><?php echo htmlspecialchars($row['nome_disciplina']); ?></td>
+                <td><?php echo htmlspecialchars($row['tipo_dificuldade']); ?></td>
+                <td><?php echo htmlspecialchars($row['pergunta']); ?></td>
+                <td><?php echo htmlspecialchars($row['desc1']); ?></td>
+                <td><?php echo htmlspecialchars($row['desc2']); ?></td>
+                <td><?php echo htmlspecialchars($row['desc3']); ?></td>
+                <td><?php echo htmlspecialchars($row['desc4']); ?></td>
+                <td><?php echo htmlspecialchars($row['desc_correta']); ?></td>
+                <td class="actions">
+                    <button class="btn-editar" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-excluir" onclick="openModal('questao.php?delete=<?php echo $row['cod_questao']; ?>')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
+
+<?php else: ?>
+    <p class="text-muted text-center">Nenhuma questão encontrada para este concurso.</p>
+<?php endif; ?>
+
 
   <!-- Paginação -->
   <?php if ($total_pages > 1): ?>

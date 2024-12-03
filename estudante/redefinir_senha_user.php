@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Redefinir Senha</title>
     <link rel="stylesheet" href="redefinir_senha_user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
 <body>
 <header>
@@ -74,128 +75,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </header>
-
-<main class="login-container">
-    <div class="login-box">
-        <h2>Redefinir Senha</h2>
-        <?php if (!empty($error_message)): ?>
-            <div id="errorModal" class="modal" style="display: block;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <p class="modal-text"><?php echo htmlspecialchars($error_message); ?></p>
-                    <button id="okBtnErro" class="ok-btn">OK</button>
+   <!-- Modais devem ser colocados fora do container -->
+   <?php if (!empty($error_message)): ?>
+        <div id="errorModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p class="modal-text"><?php echo htmlspecialchars($error_message); ?></p>
+                <button id="okBtnErro" class="ok-btn">OK</button>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($success_message)): ?>
+        <div id="successModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p class="modal-text" style="color: #2118CD;"><?php echo htmlspecialchars($success_message); ?></p>
+                <button id="okBtnSuccess" class="ok-btn">OK</button>
+            </div>
+        </div>
+    <?php endif; ?>
+    
+    <main class="login-container">
+        <div class="login-box">
+            <h2>Redefinir Senha</h2>
+            <form action="" method="POST">
+                <div class="input-box">
+                    <input type="password" name="nova_senha" placeholder=" " required>
+                    <label>Nova senha</label>
                 </div>
-            </div>
-        <?php endif; ?>
-        <?php if (!empty($success_message)): ?>
-            <div id="successModal" class="modal" style="display: block;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <p class="modal-text" style="color: #2118CD;"><?php echo htmlspecialchars($success_message); ?></p>
-                    <button id="okBtnSuccess" class="ok-btn">OK</button>
+                <div class="input-box">
+                    <input type="password" name="confirmar_senha" placeholder=" " required>
+                    <label>Confirmar nova senha</label>
                 </div>
-            </div>
-        <?php endif; ?>
-        <form action="" method="POST">
-            <div class="input-box">
-                <input type="password" name="nova_senha" placeholder="Digite a nova senha" required>
-                <label>Nova senha</label>
-            </div>
-            <div class="input-box">
-                <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha" required>
-                <label>Confirmar nova senha</label>
-            </div>
-            <button type="submit" class="login-btn">Redefinir</button>
-        </form>
-    </div>
-</main>
+                <button type="submit" class="login-btn">Redefinir</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const errorModal = document.getElementById('errorModal');
+            const successModal = document.getElementById('successModal');
+            const closeBtns = document.querySelectorAll('.close-btn');
+            const okBtnSuccess = document.getElementById('okBtnSuccess');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const errorModal = document.getElementById('errorModal');
-        const successModal = document.getElementById('successModal');
-        const closeBtns = document.querySelectorAll('.close-btn');
-        const okBtnSuccess = document.getElementById('okBtnSuccess');
+            // Fechar modal de erro
+            if (errorModal) {
+                errorModal.querySelector('.ok-btn').addEventListener('click', function () {
+                    errorModal.style.display = 'none';
+                });
+            }
 
-        // Fechar modal de erro
-        if (errorModal) {
-            errorModal.querySelector('.ok-btn').addEventListener('click', function () {
-                errorModal.style.display = 'none';
-            });
-        }
+            // Redirecionar ao clicar no botão "OK" do modal de sucesso
+            if (successModal) {
+                okBtnSuccess.addEventListener('click', function () {
+                    window.location.href = '../index.php'; // Redireciona para a página inicial
+                });
+            }
 
-        // Redirecionar ao clicar no botão "OK" do modal de sucesso
-        if (successModal) {
-            okBtnSuccess.addEventListener('click', function () {
-                window.location.href = '../index.php'; // Redireciona para a página inicial
-            });
-        }
-
-        // Fechar modal ao clicar no botão "X"
-        closeBtns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                if (successModal) successModal.style.display = 'none';
-                if (errorModal) errorModal.style.display = 'none';
+            // Fechar modal ao clicar no botão "X"
+            closeBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    if (successModal) successModal.style.display = 'none';
+                    if (errorModal) errorModal.style.display = 'none';
+                });
             });
         });
-    });
-</script>
+    </script>>
 
 <style>
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f5f5f5;
-    }
-
-    .login-box {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .input-box {
-        position: relative;
-        margin: 20px 0;
-    }
-
-    .input-box input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    .input-box label {
-        position: absolute;
-        top: -18px;
-        left: 10px;
-        font-size: 14px;
-        background: #fff;
-        padding: 0 5px;
-        color: #666;
-    }
-
-    .login-btn {
-        background: #2118CD;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .login-btn:hover {
-        background: #1b14b0;
-    }
 
     .modal {
         display: flex;

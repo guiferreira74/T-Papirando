@@ -83,6 +83,7 @@ if ($stmt_estudante->num_rows > 0) {
     <title>Login Estudante</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
 <body>
     <header>

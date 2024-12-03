@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+   
 }
 
 .interface {
@@ -295,58 +295,99 @@ header .info ul li a {
     
       }
 
-      .resultado-simulado {
-        max-width: 800px;
-        margin: 0 auto; /* Centraliza horizontalmente */
+     /* Container principal */
+     .resultado-simulado-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
         padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Centraliza verticalmente */
-        align-items: center;
-        min-height: 100vh; /* Garante que o contêiner ocupe toda a altura da tela */
-        text-align: center; /* Centraliza o texto */
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 150px;
     }
     
-    .titulo-simulado {
-        font-size: 32px;
-        font-weight: bold;
-        color: #2118CD;
+    /* Título */
+    .resultado-simulado h1 {
+        font-size: 28px;
+        color: #4a90e2;
         margin-bottom: 20px;
+        text-align: center;
     }
     
-    .resumo-desempenho p {
-        font-size: 18px;
-        margin: 5px 0;
+    /* Estatísticas */
+    .resultado-simulado p {
+        margin-bottom: 10px;
+        font-size: 16px;
     }
     
+    /* Questões */
     .questao {
         margin-bottom: 20px;
-        text-align: left; /* Opcional: deixa o texto das questões alinhado à esquerda */
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
     }
     
-    .pergunta {
-        font-size: 18px;
+    .questao p {
         margin-bottom: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #555;
     }
     
-    .alternativas {
-        list-style-type: none;
+    .questao ul {
+        list-style: none;
         padding: 0;
     }
     
-    .alternativas li {
+    .questao ul li {
         margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
     
-    .alternativa {
-        font-size: 16px;
-        color: #333;
+    .questao ul li.correct {
+        background-color: #dff0d8;
+        border-color: #3c763d;
+        color: #3c763d;
     }
     
-    .alternativa.correta {
+    .questao ul li.wrong {
+        background-color: #f2dede;
+        border-color: #a94442;
+        color: #a94442;
+    }
+    
+    /* Botões */
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .button-container a, .button-container button {
+        text-decoration: none;
+        color: white;
+        background: #4a90e2;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .button-container a:hover, .button-container button:hover {
+        background: #357ab9;
+    }
+        tiva.correta {
         color: green;
         font-weight: bold;
     }

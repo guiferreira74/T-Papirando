@@ -107,6 +107,7 @@ $conn->close();
     <title>Editar Dados do Estudante</title>
     <link rel="stylesheet" href="editar_dados_user.css">
     <link rel="stylesheet" href="user.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>

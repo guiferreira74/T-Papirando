@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="cadastro.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
 <body>
 

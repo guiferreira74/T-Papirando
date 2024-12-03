@@ -62,6 +62,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Desempenho</title>
     <link href='desempenhos.css' rel='stylesheet'>
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>

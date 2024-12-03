@@ -111,154 +111,6 @@ $conn->close();
     <title>Resultado do Simulado</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href='resultado.css' rel='stylesheet'>
-    <style>
-      
-      .resultado-simulado-container {
-    margin-top: 0;
-    padding: 20px;
-    max-width: 900px;
-    width: 800px;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    border-radius: 15px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-    overflow-y: auto;
-    max-height: calc(100vh - 300px); /* Altura reduzida */
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: none;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Estilo da barra de rolagem */
-.resultado-simulado-container::-webkit-scrollbar {
-    width: 10px;
-}
-
-.resultado-simulado-container::-webkit-scrollbar-thumb {
-    background-color: #2118CD;
-    border-radius: 10px;
-}
-
-.resultado-simulado-container::-webkit-scrollbar-thumb:hover {
-    background-color: #1a14b2;
-}
-
-.resultado-simulado-container::-webkit-scrollbar-track {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-}
-
-.resultado-simulado h1 {
-    text-align: center;
-    font-size: 32px;
-    color: #2118CD;
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-.resultado-simulado p {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.resultado-simulado hr {
-    border: none;
-    border-top: 2px solid #e0e0e0;
-    margin: 25px 0;
-}
-/* Estilo para o container das questões */
-.questao {
-    width: 500px;
-    margin-bottom: 25px;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    height: auto; /* Garante ajuste automático */
-    min-height: 150px; /* Aumenta a altura mínima */
-}
-
-.questao:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Suave destaque no hover */
-}
-
-.questao strong {
-    font-size: 18px;
-    color: #2118CD;
-    display: block;
-    margin-bottom: 10px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-}
-
-li {
-    margin: 8px 0;
-    font-size: 16px;
-    color: #555;
-}
-
-/* Resposta correta e errada */
-.correct {
-    color: #27ae60;
-    font-weight: bold;
-}
-
-.wrong {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-.button-container {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.btn-desempenho {
-    background-color: #2118CD;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.btn-desempenho:hover {
-    background-color: #1a14b2;
-    transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-    .resultado-simulado-container {
-        padding: 15px;
-        max-width: 95%;
-    }
-
-    .btn-desempenho {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-
-    .questao {
-        padding: 10px;
-    }
-}
-
-    </style>
 </head>
 <body>
 <header class="header">
@@ -291,38 +143,49 @@ li {
     </div>
 </header>
 <div class="resultado-simulado-container">
-    <div class="resultado-simulado">
-        <h1>Resultado do Simulado</h1>
-        <p><strong>Total de questões respondidas:</strong> <?php echo count($resultados); ?></p>
-        <p><strong>Acertos:</strong> <?php echo $acertos; ?></p>
-        <p><strong>Erros:</strong> <?php echo $erros; ?></p>
-        <hr>
-        <?php foreach ($resultados as $index => $resultado): ?>
-            <div class="questao">
-                <p><strong><?php echo $index + 1; ?>. <?php echo htmlspecialchars($resultado['pergunta']); ?></strong></p>
-                <ul>
-                    <?php 
-                    $letras = ['A', 'B', 'C', 'D', 'E'];
-                    foreach ($resultado['alternativas'] as $key => $descricao): ?>
-                        <li>
-                            <?php if ($key + 1 == $resultado['correta']): ?>
-                                <span class="correct">✔ <?php echo $letras[$key] . ") " . htmlspecialchars($descricao); ?></span>
-                            <?php elseif ($key + 1 == $resultado['usuario']): ?>
-                                <span class="wrong">❌ <?php echo $letras[$key] . ") " . htmlspecialchars($descricao); ?></span>
-                            <?php else: ?>
+        <div class="resultado-simulado">
+            <h1>Resultado do Simulado</h1>
+            <p><strong>Total de questões respondidas:</strong> <?php echo count($resultados); ?></p>
+            <p><strong>Acertos:</strong> <?php echo $acertos; ?></p>
+            <p><strong>Erros:</strong> <?php echo $erros; ?></p>
+            <p><strong>Tempo de Prova:</strong> <span id="tempo-de-prova">Carregando...</span></p> <!-- Tempo corrigido -->
+            <hr>
+            <?php foreach ($resultados as $index => $resultado): ?>
+                <div class="questao">
+                    <p><strong><?php echo $index + 1; ?>. <?php echo htmlspecialchars($resultado['pergunta']); ?></strong></p>
+                    <ul>
+                        <?php
+                        $letras = ['A', 'B', 'C', 'D', 'E'];
+                        foreach ($resultado['alternativas'] as $key => $descricao): ?>
+                            <li class="<?php echo $key + 1 == $resultado['correta'] ? 'correct' : ($key + 1 == $resultado['usuario'] ? 'wrong' : ''); ?>">
                                 <?php echo $letras[$key] . ") " . htmlspecialchars($descricao); ?>
-                            <?php endif; ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
+            <div class="button-container">
+                <a href="desempenhos.php" class="btn-desempenho">Ver Meu Desempenho</a>
+                <button class="btn-desempenho" onclick="printResultado()">Imprimir Resultado</button>
             </div>
-        <?php endforeach; ?>
-        <div class="button-container">
-            <a href="desempenhos.php" class="btn-desempenho">Ver Meu Desempenho</a>
-            <button class="btn-desempenho" onclick="printResultado()">Imprimir Resultado</button>
         </div>
     </div>
-</div>
+
+<script>
+    // Exibir o tempo de prova salvo no LocalStorage
+    function capturarTempoDeProva() {
+        const tempoDeProva = localStorage.getItem('tempoDecorrido');
+        const elementoTempoDeProva = document.getElementById('tempo-de-prova');
+
+        if (tempoDeProva) {
+            elementoTempoDeProva.textContent = tempoDeProva;
+        } else {
+            elementoTempoDeProva.textContent = "00:00:00"; // Caso não haja tempo salvo
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', capturarTempoDeProva);
+</script>
 
 <style>
 @media print {

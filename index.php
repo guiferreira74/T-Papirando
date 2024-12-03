@@ -4,34 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TôPapirando</title>
-    <link rel="icon" href="./administrador/assets/Pré - Projeto  TôPapirando! 1.svg" type="image/x-icon">
+    <link rel="icon" href="./administrador/assets/favicon t.png" type="image/x-icon">
     <link rel="stylesheet" href="inicio.css">
     <!-- awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="interface">
-            <div class="logo">
-                <a href="index.php"><img class="logo" src="administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
-            </div>
+<header>
+    <div class="interface">
+        <div class="logo">
+            <a href="index.php"><img class="logo" src="administrador/assets/logo_papirando_final.svg" alt="Logo"/></a>   
+        </div>
 
-            <nav class="menu-desktop">
-                <ul>
-                    <li><a href="index.php" class="inicio">Início</a></li>
-                    <li><a href="estudante/simulados.php" class="simulados">Simulados</a></li>
-                    <li><a href="bancas.php" class="bancas">Bancas</a></li> 
-                    <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
-                </ul>
-            </nav>
+        <nav class="menu-desktop">
+            <ul>
+                <li><a href="index.php" class="inicio">Início</a></li>
+                <li><a href="estudante/simulados.php" class="simulados">Simulados</a></li>
+                <li><a href="bancas.php" class="bancas">Bancas</a></li> 
+                <li><a href="desempenhos.php" class="desempenho">Desempenho</a></li>
+            </ul>
+        </nav>
 
             <div class="info"> 
-                <a href="estudante/sobre.php">Sobre</a>
-                <a href="estudante/ajuda.php">Ajuda</a>
-                <a href=""><i class="fa-solid fa-gear" id="gear" title="Acesso restrito"></i></a>
-            </div>
-        </div> 
-    </header>
+            <a href="estudante/sobre.php">Sobre</a>
+            <a href="estudante/ajuda.php">Ajuda</a>
+            <a href=""><i class="fa-solid fa-gear" id="gear" title="Acesso restrito"></i></a>
+            <button class="menu-toggle" aria-label="Abrir menu lateral">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+    </div> 
+</header>
+
+<nav class="menu-lateral">
+    <ul>
+        <li><a href="index.php">Início</a></li>
+        <li><a href="estudante/simulados.php" class="disabled-link">Simulados</a></li>
+        <li><a href="bancas.php">Bancas</a></li>
+        <li><a href="desempenhos.php" class="disabled-link">Desempenho</a></li>
+        <li><a href="estudante/sobre.php">Sobre</a></li>
+        <li><a href="estudante/ajuda.php">Ajuda</a></li>
+    </ul>
+</nav>
 
     <main class="hidden" id="content">
     <section class="topo-do-site">
@@ -61,7 +76,6 @@
         </div> 
     </section> 
 </main>
-
 <script>
     // Verifica se o site está sendo acessado em localhost
 if (window.location.hostname === "localhost") {
@@ -198,7 +212,45 @@ if (window.location.hostname === "localhost") {
         </div>
     </div>
 
+  <!-- abrir menu -->
+  <script>
+// Seleciona o botão de alternância e o menu lateral
+const menuToggle = document.querySelector('.menu-toggle');
+const menuLateral = document.querySelector('.menu-lateral');
 
+// Adiciona evento de clique para abrir e fechar o menu lateral
+menuToggle.addEventListener('click', (event) => {
+    event.stopPropagation(); // Evita propagação do clique
+    menuLateral.classList.toggle('show');
+});
+
+// Fecha o menu lateral se o usuário clicar fora dele
+document.addEventListener('click', (event) => {
+    if (!menuLateral.contains(event.target) && !menuToggle.contains(event.target)) {
+        menuLateral.classList.remove('show');
+    }
+});
+
+// Fecha o menu lateral se a tela for redimensionada para maior que 768px
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        menuLateral.classList.remove('show');
+    }
+});
+
+// Seleciona todos os links com a classe 'disabled-link'
+const disabledLinks = document.querySelectorAll('.menu-lateral a.disabled-link');
+
+// Adiciona um evento de clique que impede o comportamento padrão
+disabledLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault(); // Impede a navegação
+        alert("Este link está desativado no momento."); // Mensagem opcional
+    });
+});
+
+
+</script>
     <script>
         // Obter elementos dos modais e botões
         var modalSimulados = document.getElementById("modal-simulados");

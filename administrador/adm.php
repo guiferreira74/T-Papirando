@@ -84,6 +84,7 @@ function getTrendingIconClass($current) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 	<link rel="stylesheet" href="adm.css">
 	<title>Administrador</title>
     <style>

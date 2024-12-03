@@ -69,6 +69,7 @@ if (!empty($email)) {
     <title>Recuperar Senha Estudante</title>
     <link rel="stylesheet" href="esqueci_senha_user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
 </head>
 <body>
 <header>
@@ -91,58 +92,62 @@ if (!empty($email)) {
         </div>
     </div>
 </header>
-
 <main class="login-container">
-    <div class="login-box">
-        <h2>Recuperar Senha Estudante</h2>
+    <div class="login-wrapper">
+        <!-- Container da imagem -->
+        <div class="image-container">
+            <img src="../administrador/assets/autenticar.svg" alt="Imagem de Recuperação de Senha" class="form-image">
+        </div>
 
-        <!-- Modal de erro -->
-        <?php if (!empty($error_message)): ?>
-            <div id="errorModal" class="modal" style="display: block;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <p class="modal-text"><?php echo htmlspecialchars($error_message); ?></p>
-                    <button id="okBtnErro" class="ok-btn">OK</button>
+        <!-- Container do formulário -->
+        <div class="login-box">
+            <h2>Recuperar Senha Estudante</h2>
+
+            <!-- Modal de erro -->
+            <?php if (!empty($error_message)): ?>
+                <div id="errorModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <p class="modal-text"><?php echo htmlspecialchars($error_message); ?></p>
+                        <button id="okBtnErro" class="ok-btn">OK</button>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
 
-        <?php if (!empty($success_message)): ?>
-    <div id="successModal" class="modal" style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-        <div class="modal-content" style="background-color: #fff; border-radius: 8px; padding: 20px; width: 80%; max-width: 500px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); text-align: center; position: relative;">
-            <span class="close-btn" style="position: absolute; top: 10px; right: 10px; font-size: 20px; font-weight: bold; cursor: pointer; color: #000;">&times;</span>
-            <p class="modal-text" style="font-size: 20px; color: #2118CD; font-weight: bold; margin-bottom: 20px;"><?php echo htmlspecialchars($success_message); ?></p>
-            <button id="okBtnSuccess" class="ok-btn" style="background-color: #2118CD; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 16px; outline: none;">OK</button>
+            <?php if (!empty($success_message)): ?>
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" style="color: #2118CD;">&times;</span>
+            <p class="modal-text" style="color: #2118CD;"><?php echo htmlspecialchars($success_message); ?></p>
+            <button id="okBtnSuccess" class="ok-btn" style="background-color: #2118CD; color: white;">OK</button>
         </div>
     </div>
 <?php endif; ?>
 
+            <form action="" method="POST">
+                <input type="hidden" name="step" value="validate">
 
+                <!-- Campo de email -->
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" value="<?php echo $email; ?>" placeholder="Digite seu e-mail" required>
+                </div>
 
-<style></style>
+                <!-- Campo de pergunta -->
+                <div class="input-group">
+                    <label>Pergunta de Segurança</label>
+                    <input type="text" name="pergunta" placeholder="Digite sua pergunta de segurança" required>
+                </div>
 
+                <!-- Campo de resposta -->
+                <div class="input-group">
+                    <label>Resposta</label>
+                    <input type="text" name="resposta" placeholder="Digite sua resposta" required>
+                </div>
 
-        <form action="" method="POST">
-            <input type="hidden" name="step" value="validate">
-
-            <!-- Campo de email -->
-            <div class="input-box">
-                <input type="email" name="email" value="<?php echo $email; ?>" placeholder="Digite seu e-mail" required>
-                <label>Email</label>
-            </div>
-            <!-- Campo de pergunta -->
-            <div class="input-box">
-                <input type="text" name="pergunta" placeholder="Pergunta de segurança" required>
-                <label>Pergunta</label>
-            </div>
-            <!-- Campo de resposta -->
-            <div class="input-box">
-                <input type="text" name="resposta" placeholder="Digite a resposta" required>
-                <label>Resposta</label>
-            </div>
-
-            <button type="submit" class="login-btn">Validar</button>
-        </form>
+                <button type="submit" class="login-btn">Validar</button>
+            </form>
+        </div>
     </div>
 </main>
 
@@ -182,71 +187,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 </script>
 
-<style>
-    /* Estilo geral */
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f5f5f5;
-    }
-
-    .login-box {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .input-box {
-        position: relative;
-        margin: 20px 0;
-    }
-
-    .input-box input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    .input-box input[readonly] {
-        background-color: #e9ecef;
-        color: #000;
-        cursor: not-allowed;
-    }
-
-    .input-box label {
-        position: absolute;
-        top: -18px;
-        left: 10px;
-        font-size: 14px;
-        background: #fff;
-        padding: 0 5px;
-        color: #666;
-    }
-
-    .login-btn {
-        background: #2118CD;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .login-btn:hover {
-        background: #1b14b0;
-    }
-
-
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

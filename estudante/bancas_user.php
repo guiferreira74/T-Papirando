@@ -19,7 +19,7 @@ $sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banca</title>
     <link rel="stylesheet" href="bancas_user.css">
-    <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>

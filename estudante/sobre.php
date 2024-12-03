@@ -6,7 +6,7 @@
     <title>Sobre</title>
     <link rel="stylesheet" href="sobre.css">
     <script src="scripts.js"></script>
-    <link rel="icon" href="assets/Sorriso2.svg" type="image/x-icon">
+    <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
