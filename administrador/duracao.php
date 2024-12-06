@@ -107,9 +107,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </a>
     <form action="#"></form>
     <a href="sobre_adm.php" class="sobre">Sobre</a>
-    <a href="#" class="nav-link">
-        <i class='bx bxs-bell icon'></i>
-    </a>
 
         <span class="divider"></span>
         <div class="profile">

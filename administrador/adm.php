@@ -152,7 +152,6 @@ function getTrendingIconClass($current) {
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
-	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
             <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
@@ -166,9 +165,7 @@ function getTrendingIconClass($current) {
     </a>
     <form action="#"></form>
     <a href="sobre_adm.php" class="sobre">Sobre</a>
-    <a href="#" class="nav-link">
-        <i class='bx bxs-bell icon'></i>
-    </a>
+   
     <span class="divider"></span>
     <div class="profile">
         <a href="#" class="adm-link" id="profile-toggle">Olá, <?php echo htmlspecialchars($admin_nome); ?> <i class='bx bx-chevron-down'></i></a>
@@ -235,19 +232,6 @@ function getTrendingIconClass($current) {
         </div>
     </a>
 
-    <!-- Card 4: Durações -->
-    <a href="duracao.php" class="card-link">
-        <div class="card">
-            <div class="head">
-                <div>
-                    <h2><?php echo $total_duracao; ?></h2>
-                    <p>Durações cadastradas</p>
-                </div>
-                <i class='bx <?php echo getTrendingIconClass($total_duracao); ?> icon'></i>
-            </div>
-            <span class="progress" data-value="100%"></span>
-        </div>
-    </a>
 
     <!-- Segunda linha de cards -->
 
@@ -329,7 +313,6 @@ function getTrendingIconClass($current) {
 	      <?php echo $total_questoes; ?>, 
 	      <?php echo $total_dificuldades; ?>, 
 	      <?php echo $total_instituicoes; ?>, 
-	      <?php echo $total_duracao; ?>
 	    ]
 	  }],
 	  chart: {
@@ -345,7 +328,7 @@ function getTrendingIconClass($current) {
 	    enabled: false
 	  },
 	  xaxis: {
-	    categories: ['Bancas', 'Disciplinas', 'Provas', 'Concursos', 'Questões', 'Dificuldades', 'Instituições', 'Durações'],
+	    categories: ['Bancas', 'Disciplinas', 'Provas', 'Concursos', 'Questões', 'Dificuldades', 'Instituições'],
 	  }
 	};
 

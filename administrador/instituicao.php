@@ -94,7 +94,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
-	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
             <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i> Disciplina</a></li>
 	    </ul>
 	</section>
@@ -107,9 +106,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </a>
     <form action="#"></form>
     <a href="sobre_adm.php" class="sobre">Sobre</a>
-    <a href="#" class="nav-link">
-        <i class='bx bxs-bell icon'></i>
-    </a>
 
         <span class="divider"></span>
         <div class="profile">

@@ -96,56 +96,58 @@ if (!empty($email)) {
         </div>
     </div> <!--interface-->
 </header>
-
 <main class="login-container">
-    <div class="login-box">
-        <h2>Recuperar Senha Administrador</h2>
+        <div class="image-container">
+            <img src="./assets/senha-adm.svg" alt="">
+        </div>
+        <div class="login-box">
+            <h2>Recuperar Senha Administrador</h2>
 
-        <!-- Modal de erro -->
-        <?php if (!empty($error_message)): ?>
-            <div id="errorModal" class="modal" style="display: block;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <p class="modal-text" style="color: red;"><?php echo htmlspecialchars($error_message); ?></p>
-                    <button id="okBtnErro" class="ok-btn">OK</button>
+            <!-- Modal de erro -->
+            <?php if (!empty($error_message)): ?>
+                <div id="errorModal" class="modal" style="display: block;">
+                    <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <p class="modal-text" style="color: red;"><?php echo htmlspecialchars($error_message); ?></p>
+                        <button id="okBtnErro" class="ok-btn">OK</button>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
 
-        <!-- Modal de sucesso -->
-        <?php if (!empty($success_message)): ?>
-            <div id="successModal" class="modal" style="display: block;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <p class="modal-text" style="color: #2118CD;"><?php echo htmlspecialchars($success_message); ?></p>
-                    <button id="okBtnSuccess" class="ok-btn">OK</button>
+            <!-- Modal de sucesso -->
+            <?php if (!empty($success_message)): ?>
+                <div id="successModal" class="modal" style="display: block;">
+                    <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <p class="modal-text" style="color: #2118CD;"><?php echo htmlspecialchars($success_message); ?></p>
+                        <button id="okBtnSuccess" class="ok-btn">OK</button>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
 
-        <form action="" method="POST">
-            <input type="hidden" name="step" value="validate">
+            <form action="" method="POST">
+                <input type="hidden" name="step" value="validate">
 
-            <!-- Campo de email -->
-            <div class="input-box">
-                <input type="email" name="email" value="<?php echo $email; ?>" placeholder="Digite seu e-mail" required>
-                <label>Email</label>
-            </div>
-            <!-- Campo de pergunta -->
-            <div class="input-box">
-                <input type="text" name="pergunta" placeholder="Pergunta de segurança" required>
-                <label>Pergunta</label>
-            </div>
-            <!-- Campo de resposta -->
-            <div class="input-box">
-                <input type="text" name="resposta" placeholder="Digite a resposta" required>
-                <label>Resposta</label>
-            </div>
+                <!-- Campo de email -->
+                <div class="input-box">
+                    <input type="email" name="email" value="<?php echo $email; ?>" placeholder="Digite seu e-mail" required>
+                    <label>Email</label>
+                </div>
+                <!-- Campo de pergunta -->
+                <div class="input-box">
+                    <input type="text" name="pergunta" placeholder="Pergunta de segurança" required>
+                    <label>Pergunta</label>
+                </div>
+                <!-- Campo de resposta -->
+                <div class="input-box">
+                    <input type="text" name="resposta" placeholder="Digite a resposta" required>
+                    <label>Resposta</label>
+                </div>
 
-            <button type="submit" class="login-btn">Validar</button>
-        </form>
-    </div>
-</main>
+                <button type="submit" class="login-btn">Validar</button>
+            </form>
+        </div>
+    </main>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -185,68 +187,7 @@ if (!empty($email)) {
 
 <style>
     /* Estilo geral */
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f5f5f5;
-    }
-
-    .login-box {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .input-box {
-        position: relative;
-        margin: 20px 0;
-    }
-
-    .input-box input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    .input-box input[readonly] {
-        background-color: #e9ecef;
-        color: #000;
-        cursor: not-allowed;
-    }
-
-    .input-box label {
-        position: absolute;
-        top: -18px;
-        left: 10px;
-        font-size: 14px;
-        background: #fff;
-        padding: 0 5px;
-        color: #666;
-    }
-
-    .login-btn {
-        background: #2118CD;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .login-btn:hover {
-        background: #1b14b0;
-    }
-
-
+   
 </style>
 
 <script>

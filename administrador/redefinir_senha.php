@@ -201,11 +201,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (empty($success_message)): ?>
         <form action="" method="POST">
             <div class="input-box">
-                <input type="password" name="nova_senha" placeholder="Digite a nova senha" required>
+                <input type="password" name="nova_senha" placeholder="" required>
                 <label>Nova Senha</label>
             </div>
             <div class="input-box">
-                <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha" required>
+                <input type="password" name="confirmar_senha" placeholder="" required>
                 <label>Confirmar Senha</label>
             </div>
             <button type="submit" class="login-btn">Redefinir</button>

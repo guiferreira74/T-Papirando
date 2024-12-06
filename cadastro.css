@@ -656,3 +656,11 @@ input:not(:placeholder-shown) + label {
     transform: scale(1.02); /* Leve aumento ao passar o mouse */
     
 }
+
+#telefone-erro {
+    color: red;
+    display: none; /* Ocultar por padrão */
+    margin-left: 10px; /* Espaçamento entre o input e a mensagem */
+    font-size: 0.9em; /* Ajustar o tamanho da fonte */
+}
+

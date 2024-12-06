@@ -479,12 +479,33 @@ header .info ul li a {
 
 .lembrar-container {
     display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza horizontalmente */
-    margin-top: 10px; /* Espaçamento acima do checkbox */
-    font-size: 14px; /* Tamanho da fonte ajustado */
+    align-items: center; /* Centraliza verticalmente o checkbox e o texto */
+    font-size: 13px; /* Tamanho da fonte ajustado */
+    line-height: 1; /* Certifique-se de que a altura da linha seja consistente */
 }
 
 .lembrar-container input[type="checkbox"] {
     margin-right: 5px; /* Espaço entre o checkbox e o texto */
+    vertical-align: middle; /* Centraliza o checkbox com o texto */
+}
+
+.options-container {
+    display: flex; /* Alinha os itens lado a lado */
+    align-items: center; /* Centraliza verticalmente os elementos */
+    justify-content: space-between; /* Espaça os elementos uniformemente */
+    gap: 20px; /* Espaçamento entre "Lembrar meus dados" e o link */
+    margin-top: 20px;
+}
+
+.forgot-password-link {
+    color: black; /* Cor preta */
+    text-decoration: none; /* Remove a linha embaixo */
+    transition: color 0.3s, text-decoration 0.3s; /* Animação suave */
+    font-size: 13px; /* Tamanho da fonte igual ao "Lembrar meus dados" */
+    line-height: 1; /* Alinha consistentemente com o checkbox */
+}
+
+.forgot-password-link:hover {
+    color: blue; /* Cor azul ao passar o mouse */
+    text-decoration: underline; /* Adiciona a linha embaixo ao passar o mouse */
 }

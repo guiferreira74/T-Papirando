@@ -74,6 +74,36 @@
                         <p>Os simulados são compostos por questões de provas anteriores e atualizadas. Você pode escolher a área de interesse, o nível de dificuldade e a quantidade de questões. Após a conclusão, você receberá um relatório de desempenho.</p>
                     </div>
                 </div>
+
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-4">
+                    <label class="faq-title" for="faq-trigger-4">Por que não consigo acessar "Simulados" e "Desempenho" sem estar logado?
+                    </label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>As áreas de Simulados e Desempenho são personalizadas e requerem que você esteja logado para acessar seus dados e progresso individual.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-5">
+                    <label class="faq-title" for="faq-trigger-5">Esqueci minha senha. Como posso recuperá-la?
+                    </label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Clique em "Esqueci minha senha" na página de login. Você precisará responder à pergunta-chave e a resposta exatamente como a cadastrou ao criar sua conta para redefinir sua senha.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-wrapper">
+                    <input type="checkbox" class="faq-trigger" id="faq-trigger-6">
+                    <label class="faq-title" for="faq-trigger-6">O que são as "Bancas Organizadoras"?
+                    </label>
+                    <div class="faq-detail"> <!-- Corrigido: adicionado div -->
+                        <p>Bancas Organizadoras são as instituições responsáveis pela elaboração de exames e concursos. Nesta seção, você pode obter informações sobre elas.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

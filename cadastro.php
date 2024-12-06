@@ -49,7 +49,11 @@
         <input id="e-mail" name="email" type="email" placeholder="E-mail" required title="Preencha seu email">
         <input id="pergunta" name="pergunta" type="text" placeholder="Pergunta de segurança" required title="Preencha a pergunta de segurança">
         <input id="resposta" name="resposta" type="text" placeholder="Resposta de segurança" required title="Preencha a resposta de segurança">
+        <div>
         <input id="telefone" name="telefone" type="text" placeholder="Telefone" required title="Preencha o seu Telefone">
+        <small id="telefone-erro" style="color: red; display: none;">O número de telefone está incompleto.</small>
+        </div>
+
         <input id="senha" name="senha" type="password" placeholder="Senha" required title="Preencha a sua Senha">
         <input id="confirmar-senha" name="confirmar-senha" type="password" placeholder="Confirmar Senha" required title="Confirme a sua Senha">
       
@@ -198,24 +202,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <script>
-    document.getElementById('form-cadastro').onsubmit = function(event) {
-    const telefone = document.getElementById('telefone').value;
-    const senha = document.getElementById('senha').value;
-    const confirmarSenha = document.getElementById('confirmar-senha').value;
+    // Máscara para o campo telefone
+    document.getElementById('telefone').addEventListener('input', function (event) {
+        let input = event.target;
+        let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
 
-    // Validação do telefone (exemplo: verificar se não está vazio)
-    if (telefone.trim() === "") {
-        event.preventDefault();
-        alert("Preencha o campo telefone.");
-    }
+        // Formata com ou sem traço baseado no comprimento do número
+        if (value.length <= 10) {
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, function(_, ddd, part1, part2) {
+                return `(${ddd}) ${part1}${part2 ? '-' + part2 : ''}`;
+            });
+        } else if (value.length > 10) {
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, function(_, ddd, part1, part2) {
+                return `(${ddd}) ${part1}-${part2}`;
+            });
+        }
 
-    if (senha !== confirmarSenha) {
-        event.preventDefault(); // Impede o envio do formulário
-        document.getElementById('modal-senha-erro').style.display = 'block'; // Mostra o modal de erro
-    }
-};
+        input.value = value; // Atualiza o valor do campo
 
+        // Valida o número e exibe/oculta mensagem de erro
+        const telefoneErro = document.getElementById('telefone-erro');
+        if (value.replace(/\D/g, '').length >= 10) {
+            telefoneErro.style.display = 'none'; // Oculta a mensagem de erro
+        } else {
+            telefoneErro.style.display = 'block'; // Mostra a mensagem de erro
+            telefoneErro.textContent = "O número de telefone está incompleto.";
+        }
+    });
+
+    // Validação e prevenção de envio do formulário
+    document.getElementById('form-cadastro').onsubmit = function (event) {
+        const telefone = document.getElementById('telefone').value.replace(/\D/g, ''); // Remove a formatação
+        const telefoneErro = document.getElementById('telefone-erro');
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+        // Verifica se o telefone está completo
+        if (telefone.length < 10) {
+            event.preventDefault(); // Impede o envio do formulário
+            telefoneErro.style.display = 'block'; // Mostra a mensagem de erro
+            telefoneErro.textContent = 'Por favor, insira um número válido com DDD.';
+            return;
+        }
+
+        // Verifica se as senhas são iguais
+        if (senha !== confirmarSenha) {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById('modal-senha-erro').style.display = 'block'; // Mostra o modal de erro
+        }
+    };
 </script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

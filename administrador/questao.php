@@ -21,6 +21,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     <link rel="stylesheet" href="questao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" href="../administrador/assets/favicon t.png" type="image/x-icon">
     <link rel="stylesheet" href="adm.css">
@@ -94,7 +95,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 	        <li><a href="banca.php"><i class='bx bx-building icon'></i> Bancas</a></li>
 	        <li><a href="dificuldade.php"><i class='bx bx-layer icon'></i> Dificuldade</a></li>
 	        <li><a href="instituicao.php"><i class='bx bxs-graduation icon'></i> Instituições</a></li>
-	        <li><a href="duracao.php"><i class='bx bx-time-five icon'></i> Duração</a></li>
             <li><a href="disciplina.php"><i class='bx bx-book-open icon'></i>Disciplina</a></li>
 	    </ul>
 	</section>
@@ -107,9 +107,6 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
     </a>
     <form action="#"></form>
     <a href="sobre_adm.php" class="sobre">Sobre</a>
-    <a href="#" class="nav-link">
-        <i class='bx bxs-bell icon'></i>
-    </a>
 
         <span class="divider"></span>
         <div class="profile">
@@ -247,70 +244,55 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $start_from = ($page - 1) * $records_per_page;
 
-// Obter o concurso atual
+// Contar o total de registros para calcular o total de páginas
+$total_concursos_sql = "SELECT COUNT(*) AS total FROM concurso";
+$total_concursos_result = $conn->query($total_concursos_sql);
+
+if ($total_concursos_result) {
+    $total_concursos = $total_concursos_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_concursos / $records_per_page); // Calcular o número total de páginas
+} else {
+    $total_pages = 0; // Garantir que a variável seja definida
+}
+
+
+// Consulta SQL para obter os concursos
 $sql_concursos_pag = "
     SELECT DISTINCT c.cod_concurso, c.nome AS nome_concurso, c.qtd_questoes
     FROM concurso c
     LIMIT $start_from, $records_per_page";
 $result_concursos_pag = $conn->query($sql_concursos_pag);
-$concurso_atual = $result_concursos_pag->fetch_assoc();
 
-$cod_concurso_atual = $concurso_atual['cod_concurso'];
-$nome_concurso_atual = $concurso_atual['nome_concurso'];
-$total_questoes_concurso = $concurso_atual['qtd_questoes'];
+// Verifique se a consulta foi bem-sucedida
+if ($result_concursos_pag && $result_concursos_pag->num_rows > 0) {
+    $concurso_atual = $result_concursos_pag->fetch_assoc();
+    $cod_concurso_atual = $concurso_atual['cod_concurso'];
+    $nome_concurso_atual = $concurso_atual['nome_concurso'];
+    $total_questoes_concurso = $concurso_atual['qtd_questoes'];
 
-// Contar o total de registros para calcular o total de páginas
-$total_concursos_sql = "SELECT COUNT(*) AS total FROM concurso";
-$total_concursos_result = $conn->query($total_concursos_sql);
-$total_concursos = $total_concursos_result->fetch_assoc()['total'];
-$total_pages = ceil($total_concursos / $records_per_page); // Calcular o número total de páginas
+    // Contar questões cadastradas
+    $count_questoes_sql = "SELECT COUNT(*) AS total_questoes FROM questao WHERE concurso_cod_concurso = $cod_concurso_atual";
+    $count_result = $conn->query($count_questoes_sql);
 
-// Determinar o status do concurso
-$count_questoes_sql = "SELECT COUNT(*) AS total_questoes FROM questao WHERE concurso_cod_concurso = $cod_concurso_atual";
-$count_result = $conn->query($count_questoes_sql);
-$total_questoes_cadastradas = $count_result->fetch_assoc()['total_questoes'];
-$status = $total_questoes_cadastradas > $total_questoes_concurso ? "Excedido" : ($total_questoes_cadastradas === $total_questoes_concurso ? "Cadastrado" : "Pendente");
-$faltantes = max(0, $total_questoes_concurso - $total_questoes_cadastradas);
+    $total_questoes_cadastradas = $count_result ? $count_result->fetch_assoc()['total_questoes'] : 0;
 
-        ?>
-        
+    // Determinar o status do concurso
+    $status = $total_questoes_cadastradas > $total_questoes_concurso
+        ? "Excedido"
+        : ($total_questoes_cadastradas === $total_questoes_concurso ? "Cadastrado" : "Pendente");
+    $faltantes = max(0, $total_questoes_concurso - $total_questoes_cadastradas);
+} else {
+    // Caso nenhum concurso seja encontrado ou a consulta falhe
+    $result_concursos_pag = null; // Garantir que a variável seja nula
+    $cod_concurso_atual = null;
+    $nome_concurso_atual = "Nenhum concurso encontrado";
+    $total_questoes_concurso = 0;
+    $status = "Nenhum concurso cadastrado";
+    $faltantes = 0;
+}
 
-<style>
-    .status {
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 5px;
-        display: inline-block;
-        text-align: center;
-    }
-    .status.cadastrado {
-        color: #fff;
-        background-color: #28a745; /* Verde */
-    }
-    .status.pendente {
-        color: #000;
-        background-color: #ffc107; /* Amarelo */
-    }
-    .pagination {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        padding: 0;
-    }
-    .pagination li {
-        margin: 0 5px;
-    }
-    .pagination li a {
-        text-decoration: none;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    .pagination li.active a {
-        background-color: #2118CD;
-        color: #fff;
-    }
-</style>
+
+?>
 
 <div class="table-container container-principal">
     <h2>Gerenciar Questões - <?php echo htmlspecialchars($nome_concurso_atual); ?></h2>
@@ -368,7 +350,8 @@ if (!empty($filtro)) {
     $result = $conn->query($sql);
     ?>
 
-<?php if ($result->num_rows > 0): ?>
+<?php if (isset($result) && $result && $result->num_rows > 0): ?>
+
     <table id="questaoTable" class="tabela-registros" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
     <thead>
         <tr>
@@ -390,12 +373,43 @@ if (!empty($filtro)) {
                 <td><?php echo htmlspecialchars($row['nome_prova']); ?></td>
                 <td><?php echo htmlspecialchars($row['nome_disciplina']); ?></td>
                 <td><?php echo htmlspecialchars($row['tipo_dificuldade']); ?></td>
-                <td><?php echo htmlspecialchars($row['pergunta']); ?></td>
-                <td><?php echo htmlspecialchars($row['desc1']); ?></td>
-                <td><?php echo htmlspecialchars($row['desc2']); ?></td>
-                <td><?php echo htmlspecialchars($row['desc3']); ?></td>
-                <td><?php echo htmlspecialchars($row['desc4']); ?></td>
-                <td><?php echo htmlspecialchars($row['desc_correta']); ?></td>
+                <td>
+                <?php echo substr(htmlspecialchars($row['pergunta']), 0, 10); ?>
+                <?php if (strlen($row['pergunta']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['pergunta']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo substr(htmlspecialchars($row['desc1']), 0, 10); ?>
+                <?php if (strlen($row['desc1']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc1']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo substr(htmlspecialchars($row['desc2']), 0, 10); ?>
+                <?php if (strlen($row['desc2']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc2']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo substr(htmlspecialchars($row['desc3']), 0, 10); ?>
+                <?php if (strlen($row['desc3']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc3']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo substr(htmlspecialchars($row['desc4']), 0, 10); ?>
+                <?php if (strlen($row['desc4']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc4']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo substr(htmlspecialchars($row['desc_correta']), 0, 10); ?>
+                <?php if (strlen($row['desc_correta']) > 10): ?>
+                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc_correta']); ?>">Ver mais</button>
+                <?php endif; ?>
+            </td>
+
                 <td class="actions">
                     <button class="btn-editar" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
                         <i class="fas fa-edit"></i>
@@ -409,30 +423,74 @@ if (!empty($filtro)) {
     </tbody>
 </table>
 
+<div class="modal fade" id="verMaisModal" tabindex="-1" aria-labelledby="verMaisModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verMaisModalLabel">Conteúdo Completo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="verMaisContent">
+                <!-- O conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var verMaisModal = document.getElementById('verMaisModal');
+    var verMaisContent = document.getElementById('verMaisContent');
+
+    verMaisModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Botão que acionou o modal
+        var content = button.getAttribute('data-content'); // Conteúdo a ser exibido
+        verMaisContent.textContent = content; // Preenche o modal
+    });
+
+    verMaisModal.addEventListener('hidden.bs.modal', function () {
+        verMaisContent.textContent = ''; // Limpa o conteúdo ao fechar
+    });
+});
+
+</script>
+
+<!-- CSS do Bootstrap -->
+
+
+<!-- JavaScript do Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 <?php else: ?>
     <p class="text-muted text-center">Nenhuma questão encontrada para este concurso.</p>
 <?php endif; ?>
 
 
-  <!-- Paginação -->
-  <?php if ($total_pages > 1): ?>
-        <div class="pagination-container">
-            <ul class="pagination">
-                <?php if ($page > 1): ?>
-                    <li><a href="?page=<?php echo $page - 1; ?>">Anterior</a></li>
-                <?php endif; ?>
-                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <li class="<?php echo $i == $page ? 'active' : ''; ?>">
-                        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
-                <?php if ($page < $total_pages): ?>
-                    <li><a href="?page=<?php echo $page + 1; ?>">Próximo</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-</div>
+<?php if ($total_pages > 1): ?>
+    <div class="pagination-container">
+        <ul class="pagination">
+            <?php if ($page > 1): ?>
+                <li><a href="?page=<?php echo $page - 1; ?>">Anterior</a></li>
+            <?php endif; ?>
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <li class="<?php echo $i == $page ? 'active' : ''; ?>">
+                    <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+            <?php if ($page < $total_pages): ?>
+                <li><a href="?page=<?php echo $page + 1; ?>">Próximo</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 
 
     <?php
@@ -447,11 +505,23 @@ $records_per_page = 1; // Um concurso por página
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $start_from = ($page - 1) * $records_per_page;
 
-// Contar o total de concursos
-$total_concursos_sql = "SELECT COUNT(*) AS total FROM concurso";
-$total_concursos_result = $conn->query($total_concursos_sql);
-$total_concursos = $total_concursos_result->fetch_assoc()['total'];
-$total_pages = ceil($total_concursos / $records_per_page); // Calcular o total de páginas
+$sql_concursos_pag = "
+    SELECT DISTINCT c.cod_concurso, c.nome AS nome_concurso, c.qtd_questoes
+    FROM concurso c
+    LIMIT $start_from, $records_per_page";
+$result_concursos_pag = $conn->query($sql_concursos_pag);
+
+if (!$result_concursos_pag) {
+    die("Erro na consulta SQL: " . $conn->error); // Para debug
+}
+
+if ($result_concursos_pag->num_rows > 0) {
+    $concurso_atual = $result_concursos_pag->fetch_assoc();
+} else {
+    $concurso_atual = null; // Caso não haja resultados
+}
+
+
 
 // Obter o concurso atual
 $sql_concursos_pag = "
@@ -461,12 +531,62 @@ $sql_concursos_pag = "
 $result_concursos_pag = $conn->query($sql_concursos_pag);
 $concurso_atual = $result_concursos_pag->fetch_assoc();
 
-$cod_concurso_atual = $concurso_atual['cod_concurso'];
-$nome_concurso_atual = $concurso_atual['nome_concurso'];
-$total_questoes_concurso = $concurso_atual['qtd_questoes'];
+if (isset($concurso_atual) && $concurso_atual) {
+    $cod_concurso_atual = $concurso_atual['cod_concurso'] ?? null;
+    $nome_concurso_atual = $concurso_atual['nome_concurso'] ?? "Nenhum concurso encontrado";
+    $total_questoes_concurso = $concurso_atual['qtd_questoes'] ?? 0;
+} else {
+    $cod_concurso_atual = null;
+    $nome_concurso_atual = "Nenhum concurso encontrado";
+    $total_questoes_concurso = 0;
+}
+
 
 // Continue com o restante do código...
 ?>
+
+<style>
+    .status {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        text-align: center;
+    }
+    .status.cadastrado {
+        color: #fff;
+        background-color: #28a745; /* Verde */
+    }
+    .status.pendente {
+        color: #000;
+        background-color: #ffc107; /* Amarelo */
+    }
+    .status.nenhum {
+        color: #6c757d; /* Cinza */
+        background-color: #f8f9fa; /* Fundo claro */
+        border: 1px solid #dee2e6; /* Borda cinza claro */
+    }
+    .pagination {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+    }
+    .pagination li {
+        margin: 0 5px;
+    }
+    .pagination li a {
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .pagination li.active a {
+        background-color: #2118CD;
+        color: #fff;
+    }
+</style>
+
 
               <!-- Modal de confirmação -->
 <div id="confirm-modal" class="modal">

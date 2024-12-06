@@ -233,6 +233,7 @@ cursor: not-allowed; /* Muda o cursor para indicar que a ação não é permitid
 
 #checar {
     margin: 0; /* Remove margens extras do checkbox */
+    margin-right: 5px;
 }
 
 /* Inputs */
