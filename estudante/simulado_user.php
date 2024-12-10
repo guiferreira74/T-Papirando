@@ -99,28 +99,28 @@ if (empty($questoes)) {
 <header>
     <div class="interface">
         <div class="logo">
-            <a href="user.php"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
+            <a href="#"><img class="logo" src="../administrador/assets/logo_papirando_final.svg" alt="Logo"/></a> 
         </div>
         <nav class="menu-desktop">
             <ul>
-                <li><a href="user.php">Início</a></li>
-                <li><a href="simulados.php">Simulados</a></li>
-                <li><a href="bancas_user.php">Bancas</a></li>
-                <li><a href="desempenhos.php" class="desempenho-link">Desempenho</a></li>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Simulados</a></li>
+                <li><a href="#">Bancas</a></li>
+                <li><a href="#" class="desempenho-link">Desempenho</a></li>
             </ul>
         </nav>
 
         <div class="info">
-            <a href="sobre_user.php">Sobre</a>
-            <a href="ajuda_user.php">Ajuda</a>
+            <a href="#">Sobre</a>
+            <a href="#">Ajuda</a>
             <div class="profile-dropdown">
                 <a href="#" class="profile-toggle" id="profile-toggle">
                     Olá, <?php echo htmlspecialchars($usuario_nome . ' ' . $sobrenome_usuario); ?>
                     <i class='bx bx-chevron-down'></i>
                 </a>
                 <ul class="profile-link" id="profile-dropdown">
-                    <li><a href="editar_dados_user.php"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
-                    <li><a href="../administrador/sair.php"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
+                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> Editar dados</a></li>
+                    <li><a href="#"><i class='bx bxs-log-out-circle'></i> Sair</a></li>
                 </ul>
             </div>
         </div>

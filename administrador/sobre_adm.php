@@ -132,7 +132,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
                 </ul>
             </div>
             <div class="foto">
-                <img src="../administrador/assets/grupo.svg" alt="Foto dos Desenvolvedores">
+                <img src="../administrador/assets/grupo-faetec (2).jpeg" alt="Foto dos Desenvolvedores">
             </div>
         </div>
 
@@ -142,7 +142,7 @@ $admin_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Administrador';
             </div>
             <div class="creditos">
                 <h2>Créditos e Agradecimentos</h2>
-                <p>Gostaríamos de agradecer primeiramente a Deus, por nos dar força e disposição para nos levantar todos os dias. Agradecemos também nosso professor orientador Gustavo Mendonça por toda ajuda e esforço dedicado a nós por todo o nosso percurso de aprendizado. Agradecemos a Professora, Lidiana Silva por toda disponibilidade e atenção para tirar dúvidas e reforço dado a nós durante a realização do nosso trabalho de conclusão de curso. Agradecemos também à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio não só em nosso projeto, mas pela dedicação em estar todos os dias procurando o melhor para seus alunos. Agradecemos também a todos os profissionais da instituição que trabalham todos os dias para que nosso ambiente escolar fique o melhor possível.</p>
+                <p>Gostaríamos de agradecer, primeiramente, a Deus, por nos conceder força e disposição para nos levantarmos todos os dias. Agradecemos também ao nosso professor orientador, Gustavo Mendonça, por toda a ajuda e esforço dedicados a nós ao longo de nosso percurso de aprendizado. Estendemos nossos agradecimentos à professora Lidiana Silva pela disponibilidade e atenção concedidas. Por fim, agradecemos à diretora da FAETEC CVT Nilópolis, Patrícia Monteiro, pelo grande apoio, não apenas ao nosso projeto, mas também pela dedicação diária aos alunos.</p>
             </div>
         </div>
     </main>

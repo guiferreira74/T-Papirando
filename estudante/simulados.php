@@ -199,7 +199,7 @@ while ($row = $result->fetch_assoc()) {
                                 <li>Se não souber a resposta, elimine as opções que parecem menos prováveis.</li>
                                 <li>Caso deixe questões em branco,não seram contabilizadas no seu desempenho.</li>
                                 <li>Certifique-se de estar em um local tranquilo para se concentrar melhor.</li>
-                                <li>Boa sorte!</li>
+                                <li>Boa prova!</li>
                             </ul>
                         </div>
                         <div class="modal-footer">

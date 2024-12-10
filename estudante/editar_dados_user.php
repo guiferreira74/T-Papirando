@@ -8,8 +8,8 @@ if (!isset($_SESSION['email']) || $_SESSION['tipo_acesso'] != 2) {
 }
 
 // Capturando o nome e sobrenome do usuário da sessão
-$usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário'; // Nome padrão
-$sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : ''; // Sobrenome padrão
+$usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário';
+$sobrenome_usuario = isset($_SESSION['sobrenome']) ? $_SESSION['sobrenome'] : '';
 
 // Verifique se o estudante está logado
 if (!isset($_SESSION['cod_estudante'])) {
@@ -38,15 +38,17 @@ $cod_estudante = $_SESSION['cod_estudante'];
 $nome = '';
 $sobrenome = '';
 $email = '';
+$pergunta = '';
+$resposta = '';
 $success_message = '';
 $error_message = '';
 
-// Buscar os dados atuais do estudante, incluindo o e-mail
-$sql_estudante = "SELECT nome, sobrenome, email FROM estudante WHERE cod_estudante = ?";
+// Buscar os dados atuais do estudante, incluindo "pergunta" e "resposta"
+$sql_estudante = "SELECT nome, sobrenome, email, pergunta, resposta FROM estudante WHERE cod_estudante = ?";
 $stmt_estudante = $conn->prepare($sql_estudante);
 $stmt_estudante->bind_param("i", $cod_estudante);
 $stmt_estudante->execute();
-$stmt_estudante->bind_result($nome, $sobrenome, $email);
+$stmt_estudante->bind_result($nome, $sobrenome, $email, $pergunta, $resposta);
 $stmt_estudante->fetch();
 $stmt_estudante->close();
 
@@ -55,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $conn->real_escape_string($_POST['nome']);
     $sobrenome = $conn->real_escape_string($_POST['sobrenome']);
     $email = $conn->real_escape_string($_POST['email']);
+    $pergunta = $conn->real_escape_string($_POST['pergunta']);
+    $resposta = $conn->real_escape_string($_POST['resposta']);
     $senha_atual = $conn->real_escape_string($_POST['current_password']);
     $nova_senha = $conn->real_escape_string($_POST['new_password']);
     $confirmar_senha = $conn->real_escape_string($_POST['confirm_password']);
@@ -75,10 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($nova_senha === $confirmar_senha) {
                 $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
 
-                // Atualizar os dados no banco de dados, incluindo o e-mail
-                $sql_update = "UPDATE estudante SET nome = ?, sobrenome = ?, email = ?, senha = ? WHERE cod_estudante = ?";
+                // Atualizar os dados no banco de dados, incluindo "pergunta" e "resposta"
+                $sql_update = "UPDATE estudante SET nome = ?, sobrenome = ?, email = ?, senha = ?, pergunta = ?, resposta = ? WHERE cod_estudante = ?";
                 $stmt_update = $conn->prepare($sql_update);
-                $stmt_update->bind_param("ssssi", $nome, $sobrenome, $email, $nova_senha_hash, $cod_estudante);
+                $stmt_update->bind_param("ssssssi", $nome, $sobrenome, $email, $nova_senha_hash, $pergunta, $resposta, $cod_estudante);
 
                 if ($stmt_update->execute()) {
                     $success_message = "Dados atualizados com sucesso,<br>por favor registre novamente!";
@@ -99,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Fechar conexão
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -164,6 +169,16 @@ $conn->close();
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
+            </div>
+
+            <div class="form-group">
+            <label for="pergunta">Pergunta de Segurança</label>
+            <input type="text" id="pergunta" name="pergunta" placeholder="Digite sua pergunta de segurança" value="<?php echo htmlspecialchars($pergunta); ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="resposta">Resposta de Segurança</label>
+                <input type="text" id="resposta" name="resposta" placeholder="Digite sua resposta de segurança" value="<?php echo htmlspecialchars($resposta); ?>" required>
             </div>
 
             <div class="form-group">

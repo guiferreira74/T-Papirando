@@ -295,7 +295,9 @@ if ($result_concursos_pag && $result_concursos_pag->num_rows > 0) {
 ?>
 
 <div class="table-container container-principal">
-    <h2>Gerenciar Questões - <?php echo htmlspecialchars($nome_concurso_atual); ?></h2>
+<h2>Gerenciar Questões</h2>
+<p class="titulo-concurso"><strong>Concurso:</strong> <?php echo htmlspecialchars($nome_concurso_atual); ?></p>
+
     <p>Status do Concurso: 
         <span class="status <?php echo strtolower($status); ?>" 
               style="<?php echo $status === 'Excedido' ? 'color: #fff; background-color: #dc3545;' : ''; ?>">
@@ -374,41 +376,41 @@ if (!empty($filtro)) {
                 <td><?php echo htmlspecialchars($row['nome_disciplina']); ?></td>
                 <td><?php echo htmlspecialchars($row['tipo_dificuldade']); ?></td>
                 <td>
-                <?php echo substr(htmlspecialchars($row['pergunta']), 0, 10); ?>
-                <?php if (strlen($row['pergunta']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['pergunta']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
-            <td>
-                <?php echo substr(htmlspecialchars($row['desc1']), 0, 10); ?>
-                <?php if (strlen($row['desc1']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc1']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
-            <td>
-                <?php echo substr(htmlspecialchars($row['desc2']), 0, 10); ?>
-                <?php if (strlen($row['desc2']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc2']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
-            <td>
-                <?php echo substr(htmlspecialchars($row['desc3']), 0, 10); ?>
-                <?php if (strlen($row['desc3']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc3']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
-            <td>
-                <?php echo substr(htmlspecialchars($row['desc4']), 0, 10); ?>
-                <?php if (strlen($row['desc4']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc4']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
-            <td>
-                <?php echo substr(htmlspecialchars($row['desc_correta']), 0, 10); ?>
-                <?php if (strlen($row['desc_correta']) > 10): ?>
-                    <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc_correta']); ?>">Ver mais</button>
-                <?php endif; ?>
-            </td>
+                    <?php echo substr(htmlspecialchars($row['pergunta']), 0, 15); ?>
+                    <?php if (strlen($row['pergunta']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['pergunta']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo substr(htmlspecialchars($row['desc1']), 0, 15); ?>
+                    <?php if (strlen($row['desc1']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc1']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo substr(htmlspecialchars($row['desc2']), 0, 15); ?>
+                    <?php if (strlen($row['desc2']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc2']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo substr(htmlspecialchars($row['desc3']), 0, 15); ?>
+                    <?php if (strlen($row['desc3']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc3']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo substr(htmlspecialchars($row['desc4']), 0, 15); ?>
+                    <?php if (strlen($row['desc4']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc4']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo substr(htmlspecialchars($row['desc_correta']), 0, 15); ?>
+                    <?php if (strlen($row['desc_correta']) > 15): ?>
+                        <button class="btn-ver-mais" data-bs-toggle="modal" data-bs-target="#verMaisModal" data-content="<?php echo htmlspecialchars($row['desc_correta']); ?>">...</button>
+                    <?php endif; ?>
+                </td>
 
                 <td class="actions">
                     <button class="btn-editar" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">

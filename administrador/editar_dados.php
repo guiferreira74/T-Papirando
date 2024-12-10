@@ -20,12 +20,14 @@ if ($conn->connect_error) {
 $nome = '';
 $sobrenome = '';
 $email = '';
+$pergunta = '';
+$resposta = '';
 
 // Verifica o administrador logado pela sessão
 $cod_administrador = $_SESSION['cod_administrador'];
 
 // Busca os dados do administrador no banco de dados
-$sql = "SELECT nome, sobrenome, email FROM administrador WHERE cod_administrador = ?";
+$sql = "SELECT nome, sobrenome, email, pergunta, resposta FROM administrador WHERE cod_administrador = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $cod_administrador);
 $stmt->execute();
@@ -36,6 +38,8 @@ if ($result->num_rows > 0) {
     $nome = $row['nome'];
     $sobrenome = $row['sobrenome'];
     $email = $row['email'];
+    $pergunta = $row['pergunta'];
+    $resposta = $row['resposta'];
 }
 
 $error_message = '';
@@ -46,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
     $email = $_POST['email'];
+    $pergunta = $_POST['pergunta'];
+    $resposta = $_POST['resposta'];
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
@@ -71,12 +77,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $update_sql = "
                         UPDATE administrador 
-                        SET nome = ?, sobrenome = ?, email = ?, senha = ?
+                        SET nome = ?, sobrenome = ?, email = ?, senha = ?, pergunta = ?, resposta = ?
                         WHERE cod_administrador = ?
                     ";
 
                     $stmt = $conn->prepare($update_sql);
-                    $stmt->bind_param('ssssi', $nome, $sobrenome, $email, $new_password_hash, $cod_administrador);
+                    $stmt->bind_param(
+                        'ssssssi',
+                        $nome,
+                        $sobrenome,
+                        $email,
+                        $new_password_hash,
+                        $pergunta,
+                        $resposta,
+                        $cod_administrador
+                    );
 
                     if ($stmt->execute()) {
                         $success_message = "Dados atualizados com sucesso,<br>por favor registre-se novamente";
@@ -95,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 
 
@@ -174,6 +190,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($email); ?>" required>
     </div>
+
+    <div class="form-group">
+    <label for="pergunta">Pergunta de Segurança</label>
+    <input type="text" id="pergunta" name="pergunta" placeholder="Digite a pergunta de segurança" value="<?php echo htmlspecialchars($pergunta); ?>" required>
+</div>
+
+<div class="form-group">
+    <label for="resposta">Resposta de Segurança</label>
+    <input type="text" id="resposta" name="resposta" placeholder="Digite a resposta de segurança" value="<?php echo htmlspecialchars($resposta); ?>" required>
+</div>
+
 
     <div class="form-group">
         <label for="current_password">Senha atual</label>

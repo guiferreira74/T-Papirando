@@ -691,19 +691,17 @@ hr {
 
 .btn-ver-mais {
     text-decoration: none;
-    font-size: 12px;
+    font-size: 20px;
     color: #0056b3;
     padding: 2px 6px;
-    border: 1px solid #0056b3;
-    border-radius: 4px;
     background-color: #f8f9fa;
     transition: all 0.2s ease-in-out;
 }
 
-
-.btn-ver-mais:hover {
-    background-color: #0056b3;
-    color: white;
-    border-color: #0056b3;
+.titulo-concurso {
+    font-size: 25px; /* Ajuste para o tamanho desejado */
+    font-weight: bold; /* Para destacar */
+    margin-bottom: 10px; /* Adiciona espaço entre o concurso e o próximo elemento */
+    color: #333; /* Ajuste a cor conforme o design */
 }
 
